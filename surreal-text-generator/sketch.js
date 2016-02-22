@@ -22,7 +22,7 @@ function setup() {
   clearButton.mousePressed(clear);
   textSize(30);
   heading = createElement('h1', 'surrealist text generator');
-  inputText = createElement('h2', 'rearrange the sentences and take away punctuation');
+  inputText = createElement('h2', 'enter some paragraphs of text and see the poetry that can be found');
   aLink = createElement('h3', 'try it with: https://www.gutenberg.org/files/11/11-h/11-h.htm');
   heading.position(35,20);
   inputText.position(35, 55);
