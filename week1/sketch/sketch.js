@@ -41,6 +41,8 @@ function draw () {
    
    push();
 //  pushMatrix();
+    strokeWeight(20);
+    stroke(0);
     translate(width/2, height/2);
     rotate(radians(minuteRotation));
     line(0, 0, 0, -140);          //Draws the invisible line to go slightly past the minute hand arch
@@ -49,6 +51,8 @@ function draw () {
    
    push();
 //  pushMatrix();
+    strokeWeight(20);
+    stroke(0);
     translate(width/2, height/2);
     rotate(radians(hourRotation));
     line(0, 0, 0, -70);          //Draws the invisible line to go slightly past the hour hand arch
