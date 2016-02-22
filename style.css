@@ -1,0 +1,41 @@
+#header { 
+	text-align: center;
+	margin-top: 5%;
+	margin-left: 0%;
+ 	font-size: 25px;
+ }
+
+ #subheader {
+ 	text-align: center;
+ 	margin-top: 2%;
+ 	margin-left: 0%;
+ 	font-size: 20px;
+ }
+
+ #week1 {
+ 	text-align: center;
+ 	margin-top: 3%;
+ 	font-size: 20px;
+ }
+
+ #week3 {
+ 	text-align: center;
+ 	margin-top: 2%;
+ 	font-size: 20px;
+ }
+
+
+/* selected link */
+/* unvisited link */
+a:link {
+    color: blue;
+}
+
+/* visited link */
+a:visited {
+    color: blue;
+}
+
+a:active {
+    color: blue;
+}
