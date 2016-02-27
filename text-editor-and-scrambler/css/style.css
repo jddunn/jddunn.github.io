@@ -142,7 +142,7 @@ a:hover, a:active { text-decoration: none; color:black }
 	margin-top: -22.25%;
 	margin-left: 13%;
 	height: 415px;
-    resize: both;
+    /*resize: both;*/
     overflow: scroll;
 }
 
@@ -153,7 +153,7 @@ a:hover, a:active { text-decoration: none; color:black }
 	margin-top: -22.25%;
 	margin-left: 13%;
 	height: 415px;
-    resize: both;
+    /*resize: both;*/
     overflow: scroll;
 }
 
