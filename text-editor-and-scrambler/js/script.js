@@ -46,6 +46,7 @@ var decryptedTextOn = false;
 
 var cipheredText = "";
 var decipheredText = "";
+var cipheredTextSplit = "";
 
 function textInput() {
 
@@ -246,22 +247,26 @@ function unscrambleText () {			//	Turn off text scrambling
 	textInput();
 }
 
-
 //CIPHER CODE
 function doClick(){
     keyCipher = document.getElementById("firstkey").value;
-    alert("You have entered the cipher key: " + " " + keyCipher + "." + " " + 
-      	"Use this cipher key to decode text you encrypt on this page.");
+    alert("You have entered the cipher: " + " " + keyCipher + ".");
+
+    // alert("You have entered the cipher key: " + " " + keyCipher + "." + " " + 
+    //   	"Use this cipher key to decode any text you encrypt on this page.");
     return keyCipher;
     // var key2 = document.getElementById("secondkey").value;
     // textEncoded.value = decryptStr(encryptStr(originalText,key));
 }
+
+
 
 function cipherOn () {
 	encryptedTextOn = true;
 	decryptedTextOn = false;
 	if (encryptedTextOn) {
 		printEncryption();
+		formatCiphering();
 		document.getElementById('textWritten').innerHTML = cipheredText;
 		// document.getElementById('textWritten').innerHTML = encryptedBox.value;
 		// encryptedBox = encryptStr(originalText,keyCipher);
@@ -306,6 +311,18 @@ function printDecryption () {
 	decipheredText = Cipher.keyRotate(cipheredText, keyCipher, true);
 	return decipheredText;
 }
+
+function formatCiphering () {		//	Tabs some of the spliced, scrambled strings for formatting.
+		// var scrambledTextHTML = document.getElementById('textScrambled').innerHTML;
+   		// console.log(scrambledTextHTML);	
+   		var splitBy = ['a','?','.','='];
+		cipheredTextSplit = cipheredText.split(splitBy).join("\n");
+		// console.log(scrambledSplit);
+		return cipheredTextSplit; 
+}
+
+
+
 
 //	The code for getting the font interface to work, but it doesn't right now..
 function mod_selection (val1,val2) {	
