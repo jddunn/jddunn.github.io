@@ -307,9 +307,9 @@ function decodingSomeText () {
 function formatCiphering () {		//	Tabs some of the spliced, scrambled strings for formatting.
 		// var scrambledTextHTML = document.getElementById('textScrambled').innerHTML;
    		// console.log(scrambledTextHTML);	
-   		var splitBy = ['a','?','.','='];
+   		var splitBy = ['>','<','?','.','='];
 		cipheredTextSplit = cipheredText.split(splitBy).join("\n");
-		// console.log(scrambledSplit);
+		console.log(scrambledSplit);
 		return cipheredTextSplit; 
 }
 
