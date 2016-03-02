@@ -183,14 +183,19 @@ function scrambler () {						//	Scrambles all the text on the page except for wh
 		 var charIndex = Math.floor(Math.random() * printThisScrambledLength/20);
 		 //console.log(whatsThisTextScrambled.length)
 	 	    //var textToBeScrambled = whatsThisText;
-         	scrambled += printThisScrambled.charAt(charIndex);
+         	 scrambled += printThisScrambled.charAt(charIndex);
+         	 	 	    printThisScrambled =  printThisScrambled.substr(0, charIndex) + printThisScrambled.substr(charIndex + 1);
+
          	// console.log(scrambled);
-         	printThisScrambled =  printThisScrambled.substr(0, charIndex) + printThisScrambled.substr(charIndex + 1);
+         	scrambled = scrambled.split('/<br>').join('');
+			scrambled =  scrambled.split('<br>').join('');
+			scrambled =  scrambled.split('<>').join('');
+			// scrambled = printThisScrambled;
             scrollDown();
 
          }
               // console.log(printThisScrambled);
-				scrambled = String(scrambled);
+				// scrambled = String(scrambled);
 				// formatScrambling();
 				//scrambled =  scrambled;
 		     	// var splitBy = ['<', '>', '<>'];
