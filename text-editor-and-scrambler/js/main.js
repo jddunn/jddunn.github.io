@@ -188,9 +188,9 @@ function scrambler () {						//	Scrambles all the text on the page except for wh
          scrambled += printThisScrambled.charAt(charIndex);
          printThisScrambled =  printThisScrambled.substr(0, charIndex) + printThisScrambled.substr(charIndex + 1);
          // console.log(scrambled);
-         scrambled = scrambled.split('/<br>').join('');
-		 scrambled =  scrambled.split('<br>').join('');
-		 scrambled =  scrambled.split('<>').join('');
+         scrambled = scrambled.split('/<br>').join(' ');
+		 scrambled =  scrambled.split('<br>').join(' ');
+		 scrambled =  scrambled.split('<>').join(' ');
 		 // scrambled = printThisScrambled;
          scrollDown();
          }
