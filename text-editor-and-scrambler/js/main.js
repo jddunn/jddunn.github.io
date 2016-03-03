@@ -190,7 +190,7 @@ function scrambler () {						//	Scrambles all the text on the page except for wh
          // console.log(scrambled);
          scrambled = scrambled.split('/<br>').join('');
 		 scrambled =  scrambled.split('<br>').join('');
-		 scrambled =  scrambled.split('<>').join('');c
+		 scrambled =  scrambled.split('<>').join('');
 		 // scrambled = printThisScrambled;
          scrollDown();
          }
