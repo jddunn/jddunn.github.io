@@ -41,11 +41,6 @@ var reportDiv;
 var dataVisualizingOn = false;
 
 function setup() {
-  // noCanvas();
-
-
-
-
   dropzone = select('#dropzone');
   dropzone.dragOver(highlight);
   dropzone.dragLeave(unhighlight);
@@ -88,9 +83,6 @@ function gotFile(file) {
     alert('That was not a text file!');
   }
   //	Hides all the previous HTML elements once user submits data
-
-
-
   // document.getElementById("lead").style.visibility = "hidden";
   // document.getElementById("cover-heading").style.visibility = "hidden";
   // document.getElementById("dropzone").style.visibility = "hidden";
@@ -118,7 +110,6 @@ function handleInput() {
   // document.getElementById("dropzone").style.visibility = "hidden";
   // document.getElementById("textInputArea").style.visibility = "hidden";
   // document.getElementById("submitButton").style.visibility = "hidden";
-
 }
 
 //	The initial text processing: Worcd counter, sentence counting
@@ -128,7 +119,6 @@ function beginProcessing (data) {
   if (data.length === 0) {
     alert("Nothing entered");
   } else {
-
   	data = data.toLowerCase();
     //look for word delimiters
     var delimiters = '.:;?! !@#$%^&*()+';
@@ -141,16 +131,13 @@ function beginProcessing (data) {
       totalSyllables += countSyllables(word);
       totalWords++;
     }
-
     //look for sentence delimiters
     var sentenceDelim = '.:;?!';
     var sentences = splitTokens(data, sentenceDelim);
     phrases = sentences;
     totalSentences = sentences.length;
-
     calculateFlesch(totalSyllables, totalWords, totalSentences);
     // findWordFrequency();
-
     avgWordsPerSentence = totalWords / totalSentences;
     avgSyllablesPerSentence = totalSyllables / totalSentences;
     avgSyllablesPerWord = totalSyllables / totalWords;
@@ -272,6 +259,7 @@ function isVowel(c) {
 //   // console.log(frequentWords);
 // }
 
+
 function draw() {
   if (dataVisualizingOn == true) {
 
@@ -289,7 +277,6 @@ function draw() {
     pop();
   }
 }
-
 
 
 function renderWords() {
@@ -320,29 +307,3 @@ function renderWords() {
     left += w;
   }
 }
-
-
-
-
-// A random box object
-// function Box() {
-//   this.x = random(width);
-//   this.y = random(height);
-//   this.w = random(10, 200);
-//   this.h = random(1, 200);
-  
-//   // Does this box overlap another box?
-//   this.overlaps = function(other) {
-    
-//     // If it's to the right it does not
-//     if (this.x                   > other.x + other.w) return false;
-//     // If it's to the left it does not
-//     if (this.x + this.w          < other.x)           return false;
-//     // If it's below it does not
-//     if (this.y                   > other.y + other.h) return false;
-//     // If it's above it does not
-//     if (this.y + this.h         < other.y)            return false;
-//     // Well if none of these are true then it overlaps
-//     return true; 
-//   }
-// }
