@@ -97,6 +97,7 @@ function gotFile(file) {
 }
 
 function handleInput() {
+  if (input.value() !=== null) {}
   theText = input.value();
   theTextCopy = theText;
   beginProcessing(theText);
@@ -133,7 +134,7 @@ function handleInput() {
   dataVisualizingOn = true;
   var canvas = createCanvas(windowWidth, windowHeight);
   canvas.position(0,0);
-
+}
 }
 
 
