@@ -18,7 +18,7 @@ function setup() {
   concordance = new Concordance();
 
   // Just loading from a file for simplicity
-  var stuff = loadStrings("C:\\Users\\JD\\Downloads\\Programming-from-A-to-Z-F14-master\\Programming-from-A-to-Z-F14-master\\week5_visualization\\03_concordance\\02_concordance_DOM_animated\\data\\hamlet.txt");
+ var stuff = loadStrings("http://jddunn.github.io/new-word-cloud/concordance/data/hamlet.txt");
 }
 
 function process(data) {

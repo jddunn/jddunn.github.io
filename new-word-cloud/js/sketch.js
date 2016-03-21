@@ -5,6 +5,7 @@
 
 var dropzone, input, button;
 var theText;
+var theTextCopy;
 
 var totalSyllables = 0;
 var totalSentences = 0;
@@ -25,6 +26,10 @@ var keys = [];
 var keysArray = [];
 var concordanceKeysArray = [];
 
+var concordance;
+var lines;
+var left = 0;
+
 var wordCounterString;
 var frequentWords = [];
 var frequentWordsCount = [];
@@ -35,7 +40,10 @@ var reportDiv;
 var dataVisualizingOn = false;
 
 function setup() {
-  noCanvas();
+  // noCanvas();
+
+
+
 
   dropzone = select('#dropzone');
   dropzone.dragOver(highlight);
@@ -54,20 +62,27 @@ function unhighlight() {
 function gotFile(file) {
   if (file.type === 'text') {
     theText = file.data;
+    theTextCopy = theText;
+    // theTextCopy = lines.join(' ');
     beginProcessing(theText);
 
-	var parent = document.getElementById("innerCover");
-	var child = document.getElementById("lead");
-	parent.removeChild(child);
-	child = document.getElementById("cover-heading");
-	parent.removeChild(child);
-	parent = document.getElementById("dropzone");
-	parent.remove();
-	parent = document.getElementById("textInputArea");
-	parent.remove();
-	parent = document.getElementById("submitButton");
-	parent.remove();
-  dataVisualizingOn = true;
+    concordance = new Concordance();
+    concordance.process(theTextCopy);
+    concordance.sortByCount();
+	  var parent = document.getElementById("innerCover");
+	  var child = document.getElementById("lead");
+	  parent.removeChild(child);
+	  child = document.getElementById("cover-heading");
+	  parent.removeChild(child);
+	  parent = document.getElementById("dropzone");
+	  parent.remove();
+	  parent = document.getElementById("textInputArea");
+	  // parent.remove();
+	  parent = document.getElementById("submitButton");
+	  // parent.remove();
+    dataVisualizingOn = true;
+    var canvas = createCanvas(windowWidth, windowHeight);
+    canvas.position(0,0);
   } else {
     alert('That was not a text file!');
   }
@@ -133,22 +148,22 @@ function beginProcessing (data) {
     totalSentences = sentences.length;
 
     calculateFlesch(totalSyllables, totalWords, totalSentences);
-    findWordFrequency();
+    // findWordFrequency();
 
     avgWordsPerSentence = totalWords / totalSentences;
     avgSyllablesPerSentence = totalSyllables / totalSentences;
     avgSyllablesPerWord = totalSyllables / totalWords;
-	 flesch = + flesch.toFixed(3);
-	avgWordsPerSentence = +avgWordsPerSentence.toFixed(3);
-	avgSyllablesPerSentence = +avgSyllablesPerSentence.toFixed(3);
-	avgSyllablesPerWord = +avgSyllablesPerWord.toFixed(3);
-    report += "Total Syllables  :  " + totalSyllables + "<br>";
-    report += "Total Words  :  " + totalWords + "<br>";
-    report += "Total Sentences  :  " + totalSentences + "<br>";
-    report += "Avg Words Per Sentence  :  " + avgWordsPerSentence + "<br>";
-    report += "Avg Syllables Per Word  :  " + avgSyllablesPerWord + "<br>";
-    report += "Avg Syllables Per Sentence  :  " + avgSyllablesPerSentence + "<br>";
-    report += "Flesch Readability Index  :  " + flesch + "<br>";
+	  flesch = + flesch.toFixed(3);
+	  avgWordsPerSentence = +avgWordsPerSentence.toFixed(3);
+	  avgSyllablesPerSentence = +avgSyllablesPerSentence.toFixed(3);
+	  avgSyllablesPerWord = +avgSyllablesPerWord.toFixed(3);
+    report += "Total Syllables  :  " + totalSyllables +"\n";
+    report += "Total Words  :  " + totalWords + "\n";
+    report += "Total Sentences  :  " + totalSentences + "\n";
+    report += "Avg Words Per Sentence  :  " + avgWordsPerSentence + "\n";
+    report += "Avg Syllables Per Word  :  " + avgSyllablesPerWord + "\n";
+    report += "Avg Syllables Per Sentence  :  " + avgSyllablesPerSentence + "\n";
+    report += "Flesch Readability Index  :  " + flesch + "\n";
     // report += "Word Frequency Counter (Ignore the 'undefined')  :  "  + "<br>";
     // report += wordCounterString;
     // var wordCounterString = keys[i] + " : " + concordance[keys[i];
@@ -168,10 +183,10 @@ function removeWord(tokens) {
 
 
 function createNewDiv() {
-	reportDiv = createDiv(report);
-	  // text.style("color", black);
-	reportDiv.class("reportDiv");
-	reportDiv.position(50, 50);
+	// reportDiv = createDiv(report);
+	//   // text.style("color", black);
+	// reportDiv.class("reportDiv");
+	// reportDiv.position(50, 50);
 }
 
 //	Calculates the Flesch reading ease
@@ -221,67 +236,112 @@ function isVowel(c) {
   else { return false; }
 }
 
-function findWordFrequency() {
-  for (var i = 0; i < tokens.length; i++) {
-    var word = tokens[i];
-    if (concordance[word] === undefined) {
-      concordance[word] = 1;
-      keys.push(word); //if we have a new word, add it to the array.
-    } else {
-      concordance[word]++;
-    }
-  }
-  keys.sort(function(a, b) {
-    return (concordance[b] - concordance[a]);
-  });
+// function findWordFrequency() {
+//   for (var i = 0; i < tokens.length; i++) {
+//     var word = tokens[i];
+//     if (concordance[word] === undefined) {
+//       concordance[word] = 1;
+//       keys.push(word); //if we have a new word, add it to the array.
+//     } else {
+//       concordance[word]++;
+//     }
+//   }
+//   keys.sort(function(a, b) {
+//     return (concordance[b] - concordance[a]);
+//   });
 
-  //or,
-  // var concordanceSort = function(a, b) {
-  //   return (concordance[b] - concordance[a]);
-  // }
-  // keys.sort(concordanceSort);
+//   //or,
+//   // var concordanceSort = function(a, b) {
+//   //   return (concordance[b] - concordance[a]);
+//   // }
+//   // keys.sort(concordanceSort);
 
-  //next, now that we have sorted keys, we can iterate over the concordance.
-  for (var i = 0; i < keys.length; i++) {
-    console.log(keys[i] + ': ' + concordance[keys[i]]); //THIS IS THE IMPORTANT PART!
-    wordCounterString +=  "<br>" + keys[i] + " : " + concordance[keys[i]];
+//   //next, now that we have sorted keys, we can iterate over the concordance.
+//   for (var i = 0; i < keys.length; i++) {
+//     console.log(keys[i] + ': ' + concordance[keys[i]]); //THIS IS THE IMPORTANT PART!
+//     wordCounterString +=  "<br>" + keys[i] + " : " + concordance[keys[i]];
 
-    keysArray.push(keys[i]);
-    concordanceKeysArray.push(concordance[keys[i]]);
-  	if (concordance[keys[i]] > 5) {
-  		frequentWords.push(keys[i]);
-  		frequentWordsCount.push(concordance[keys[i]]); 
-  	}
-  } 
-  // console.log(frequentWords);
-  ellipse()
-}
+//     keysArray.push(keys[i]);
+//     concordanceKeysArray.push(concordance[keys[i]]);
+//   	if (concordance[keys[i]] > 5) {
+//   		frequentWords.push(keys[i]);
+//   		frequentWordsCount.push(concordance[keys[i]]); 
+//   	}
+//   } 
+//   // console.log(frequentWords);
+// }
 
 function draw() {
-  if (dataVisualizingOn) {
-    background(200);
+  if (dataVisualizingOn == true) {
+
+    // console.log("YEAH");
+    console.log(report);
+    background(0);
+    textSize(14);
+    fill(255, 255, 255);
+    text(report, 10, 10, 1000, 1000);
+    var xOffset = map(mouseX, 0, width, 0, left - width);
+  
+    push();
+    translate(-xOffset, 0);
+    renderWords();
+    pop();
   }
 }
 
-// A random box object
-function Box() {
-  this.x = random(width);
-  this.y = random(height);
-  this.w = random(10, 200);
-  this.h = random(1, 200);
+
+
+function renderWords() {
+  randomSeed(1);
+  var theKeys = concordance.getKeys();
   
-  // Does this box overlap another box?
-  this.overlaps = function(other) {
+  left = 0;
+  for (var i = 0; i < 100; i++) {
+    var word = theKeys[i];
+    var count = concordance.getCount(word);
+    var x = i * 50;
+    var y = 300;
+
+    var s = sqrt(count) * 5;
     
-    // If it's to the right it does not
-    if (this.x                   > other.x + other.w) return false;
-    // If it's to the left it does not
-    if (this.x + this.w          < other.x)           return false;
-    // If it's below it does not
-    if (this.y                   > other.y + other.h) return false;
-    // If it's above it does not
-    if (this.y + this.h         < other.y)            return false;
-    // Well if none of these are true then it overlaps
-    return true; 
+    fill(255,100);
+    textSize(s);
+    
+    var w = textWidth(word);
+    
+    text(word, 0, y);
+    fill(255);
+    textSize(16);
+    text(count, 0, y + 20);
+    
+    //rotate(map(mouseX, 0, width, 0, 1));
+    translate(w,0);
+    left += w;
   }
 }
+
+
+
+
+// A random box object
+// function Box() {
+//   this.x = random(width);
+//   this.y = random(height);
+//   this.w = random(10, 200);
+//   this.h = random(1, 200);
+  
+//   // Does this box overlap another box?
+//   this.overlaps = function(other) {
+    
+//     // If it's to the right it does not
+//     if (this.x                   > other.x + other.w) return false;
+//     // If it's to the left it does not
+//     if (this.x + this.w          < other.x)           return false;
+//     // If it's below it does not
+//     if (this.y                   > other.y + other.h) return false;
+//     // If it's above it does not
+//     if (this.y + this.h         < other.y)            return false;
+//     // Well if none of these are true then it overlaps
+//     return true; 
+//   }
+// }
