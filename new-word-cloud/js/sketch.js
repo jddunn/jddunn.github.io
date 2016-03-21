@@ -36,7 +36,10 @@ var frequentWords = [];
 var frequentWordsCount = [];
 var report = "";
 
+
 var reportDiv;
+
+var wordSize = 50;
 
 var dataVisualizingOn = false;
 
@@ -45,6 +48,9 @@ function setup() {
   dropzone.dragOver(highlight);
   dropzone.dragLeave(unhighlight);
   dropzone.drop(gotFile, unhighlight);
+  input = select('#textinput');
+  button = select('#submit');
+  button.mousePressed(handleInput);
 }
 
 function highlight() {
@@ -92,7 +98,26 @@ function gotFile(file) {
 
 function handleInput() {
   theText = input.value();
+  theTextCopy = theText;
   beginProcessing(theText);
+
+  // var parent = document.getElementById("innerCover");
+  // var child = document.getElementById("lead");
+  // parent.removeChild(child);
+  // child = document.getElementById("cover-heading");
+  // parent.removeChild(child);
+  // parent = document.getElementById("dropzone");
+  // parent.remove();
+  // parent = document.getElementById("textInputArea");
+  // parent.remove();
+  // parent = document.getElementById("submitButton");
+  // parent.remove();
+
+  concordance = new Concordance();
+  concordance.process(theTextCopy);
+  concordance.sortByCount();
+
+
   var parent = document.getElementById("innerCover");
   var child = document.getElementById("lead");
   parent.removeChild(child);
@@ -104,13 +129,21 @@ function handleInput() {
   parent.remove();
   parent = document.getElementById("submitButton");
   parent.remove();
-  //	Hides all the previous HTML elements once user submits data
-  // document.getElementById("lead").style.visibility = "hidden";
-  // document.getElementById("cover-heading").style.visibility = "hidden";
-  // document.getElementById("dropzone").style.visibility = "hidden";
-  // document.getElementById("textInputArea").style.visibility = "hidden";
-  // document.getElementById("submitButton").style.visibility = "hidden";
+
+  dataVisualizingOn = true;
+  var canvas = createCanvas(windowWidth, windowHeight);
+  canvas.position(0,0);
+
 }
+
+
+  //	Hides all the previous HTML elements once user submits data
+//   document.getElementById("lead").style.visibility = "hidden";
+//   document.getElementById("cover-heading").style.visibility = "hidden";
+//   document.getElementById("dropzone").style.visibility = "hidden";
+//   document.getElementById("textInputArea").style.visibility = "hidden";
+//   document.getElementById("submitButton").style.visibility = "hidden";
+// }
 
 //	The initial text processing: Worcd counter, sentence counting
 function beginProcessing (data) {
@@ -261,14 +294,14 @@ function isVowel(c) {
 
 
 function draw() {
-  if (dataVisualizingOn == true) {
+  if (dataVisualizingOn === true) {
 
-    // console.log("YEAH");
-    console.log(report);
     background(0);
-    textSize(14);
+    // textSize(14);
     fill(255, 255, 255);
-    text(report, 10, 10, 1000, 1000);
+    textFont("Lucida Console");
+    textSize(14);
+    text(report, 20, 20, 500, 500);
     var xOffset = map(mouseX, 0, width, 0, left - width);
   
     push();
@@ -287,12 +320,13 @@ function renderWords() {
   for (var i = 0; i < 100; i++) {
     var word = theKeys[i];
     var count = concordance.getCount(word);
-    var x = i * 50;
-    var y = 300;
+    var x = i * 70;
+    var y = 500;
 
-    var s = sqrt(count) * 5;
+    var s = sqrt(count) * wordSize;
     
     fill(255,100);
+    textFont("Lucida Console");
     textSize(s);
     
     var w = textWidth(word);
@@ -305,5 +339,13 @@ function renderWords() {
     //rotate(map(mouseX, 0, width, 0, 1));
     translate(w,0);
     left += w;
+  }
+}
+
+function keyPressed() {
+  if (keyCode === UP_ARROW) {
+    wordSize += 1;
+  } else if (keyCode === DOWN_ARROW) {
+    wordSize-= 1;
   }
 }

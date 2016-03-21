@@ -1,9 +1,12 @@
 /*background-color:#e6e6e6;
 background-image: linear-gradient(bottom left, #e6e6e6, #ffffff 56.0%)
 */
-p {
-  color: #101010;
+
+body {
+  background-color: #080808;
 }
+
+
 
 #innerCover {
   text-align: center;
@@ -15,9 +18,15 @@ p {
   padding: 2%;
   width: 45%;
   margin-left: 15%;
-  color: white;
+  color: #F8F8F8;
 }
 
+#enterSomeText {
+  padding: 2%;
+  margin-top: -4.5%;
+  margin-left: 31.5%;
+  color: #A8A8A8;
+}
 
 #dropzone {
   font-family: 'Segoe UI', Frutiger, 'Frutiger Linotype', 'Dejavu Sans', 'Helvetica Neue', Arial, sans-serif;
@@ -27,20 +36,33 @@ p {
   width: 30%;
   margin-left: 35%;
   text-align: center;
-  color: #707070;
+  color:  #B8B8B8;
   font-size: 110%;
 }
 
 #textInputArea {
     font-family: 'Segoe UI', Frutiger, 'Frutiger Linotype', 'Dejavu Sans', 'Helvetica Neue', Arial, sans-serif;
-    padding: 1%;
-    color: #707070;
+    padding: 2%;
+    color: #B8B8B8;
+    margin-top: -.5%;
+
+}
+
+#textinput {
+  font-family: 'Segoe UI', Frutiger, 'Frutiger Linotype', 'Dejavu Sans', 'Helvetica Neue', Arial, sans-serif;  
+  margin-top: .50%;
+  margin-left: 1%;
+  width: 52.5%;
+  line-height: 300%;
+  font-size: 100%;
+  color: #282828;
+
 }
 
 #cover-heading {
   padding: 3%;
   font-family: 'Segoe UI', Frutiger, 'Frutiger Linotype', 'Dejavu Sans', 'Helvetica Neue', Arial, sans-serif;  
-  color: #505050;
+  color: #B8B8B8;
 }
 
 #reportDiv {
@@ -52,24 +74,28 @@ p {
   margin-top: -.65%;
   padding: .3%;
   text-align: center;
+  color: #B8B8B8;
 }
 
-#textInput {
-  margin-top: -.75%;
-  margin-left: 35%;
-}
 
 #submitButton {
   text-align: center;
+  color: #B8B8B8;
+}
+
+#submit {
+  color: #282828;
 }
 
 #lead {
   text-align: center;
   margin-left: 25%;
+  margin-top: -3.5%;
   width: 50%;
   font-family: 'Segoe UI', Frutiger, 'Frutiger Linotype', 'Dejavu Sans', 'Helvetica Neue', Arial, sans-serif;  
-  color: #707070;
-  font-size: 120%;
+  color: #B8B8B8;
+
+  font-size: 110%;
   padding: 1%;
 }
 
