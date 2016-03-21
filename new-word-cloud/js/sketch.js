@@ -1,6 +1,7 @@
 //	Main code for a suite of text analysis / visualization tools for the web
 //	Adapted from Code 2 Data Poetics, SP16, Bryan Ma
-//		& Daniel Shiffman's A2Z example
+//		& Daniel Shiffman's A2Z example & Daniel Shiffman's
+//    Word Count Visualization Example
 //	Uses P5.js, D3.js, and Bootstrap for the web interface
 
 var dropzone, input, button;
