@@ -1,2 +1,2 @@
-# text-analyzer-with-word-visualizer
-A web app that uses P5.js to track and visualize word frequencies when the user submits a text file. Other features include: word / syllable / sentence counter, a basic statistics calculator, and a Flesch-Kincaid readability level calculator. Includes an HTML page for the user interface.
+# web-text-editor-and-scrambler
+A clean, minimal text editor made in JavaScript that lets you instantly scramble / unscramble all the text saved on the page, allowing you to easily keep other people from seeing what you're writing.
