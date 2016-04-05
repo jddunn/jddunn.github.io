@@ -312,7 +312,75 @@ Code below is for the icon social navigation */
 
 /*  CONTACT FORM STYLING  */
 
-input, textarea {
+#contactForm {
+  /*background-color: (255, 255, 255, 50);*/
+}
+
+.wrapper {
+  margin: 47px auto;
+  max-width:580px;
+}
+
+#contact_form {
+  text-shadow:0 1px 0 #FFF;
+  border-radius:4px;
+  -webkit-border-radius:4px;
+  -moz-border-radius:4px;
+  background:#F9F9F9;
+  padding:25px;
+
+}
+
+#ff label {
+  cursor:pointer;
+  margin:4px 0;
+  color:#ed7700;
+  display:block;
+  font-weight:800;
+
+}
+
+input {
+  display:block;
+  width:90%;
+  border-radius:4px;
+  -webkit-border-radius:4px;
+  -moz-border-radius:4px;
+  background-color:#f4f4f4;
+  color:#000;
+  border:1px solid #5f5f5f;
+  padding:10px;
+  margin-bottom:25px;
+}
+
+.sendButton {
+  cursor:pointer;
+  -moz-box-shadow:inset 0px 1px 0px 0px #fce2c1;
+  -webkit-box-shadow:inset 0px 1px 0px 0px #fce2c1;
+  box-shadow:inset 0px 1px 0px 0px #fce2c1;
+  background:-webkit-gradient( linear, left top, left bottom, color-stop(0.05, #ffc477), color-stop(1, #fb9e25) );
+  background:-moz-linear-gradient( center top, #ffc477 5%, #fb9e25 100% );
+  filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffc477', endColorstr='#fb9e25');
+  background-color:#ffc477;
+  -webkit-border-radius:16px;
+  -moz-border-radius:16px;
+  border-radius:16px;
+  border:1px solid #eeb44f;
+  color:#ffffff;
+  font-family:Arial;
+  font-size:14px;
+  width:25%;
+  font-weight:bold;
+  text-shadow:1px 1px 0px #cc9f52;
+}
+.sendButton:hover {
+  background:-webkit-gradient( linear, left top, left bottom, color-stop(0.05, #fb9e25), color-stop(1, #ffc477) );
+  background:-moz-linear-gradient( center top, #fb9e25 5%, #ffc477 100% );
+  filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#fb9e25', endColorstr='#ffc477');
+  background-color:#fb9e25;
+}
+
+/*input, textarea {
     padding: 5px;
     margin: 10px;
     font-family: Cambria, Cochin, serif;
@@ -340,7 +408,7 @@ input[type=submit]:hover {
 input[type=submit]:active {
     background-color: #4A6F00;
 }
-  
+  */
 
 
 
