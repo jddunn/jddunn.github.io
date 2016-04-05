@@ -357,7 +357,7 @@ function updateKWIC() {
   // });
  kwic = RiTa.kwic(theTextCopy, word, {
     ignorePunctuation: true,
-    ignoreStopWords: true,
+    // ignoreStopWords: true,
     wordCount: 10
   });
   // console.log(kwic);
