@@ -309,6 +309,41 @@ Code below is for the icon social navigation */
 .overlay-fade-in-new-background:hover .button {
   transition-delay: 0.2s; }
 
+
+/*  CONTACT FORM STYLING  */
+
+input, textarea {
+    padding: 5px;
+    margin: 10px;
+    font-family: Cambria, Cochin, serif;
+    font-size: medium;
+    font-weight: bold;
+    outline: none;
+}
+
+input[type=text], textarea {
+    width: 350px;
+    background-color: #DDEDFF;
+    border: 1px solid #97C9FF;
+}
+input[type=submit] {
+    width: 100px;
+    background-color: #669900;
+    border: 1px solid #336600;
+    font-size: large;
+    color: #FFFFFF;
+}
+input[type=submit]:hover {
+    background-color: #78B300;
+    cursor: pointer;
+}
+input[type=submit]:active {
+    background-color: #4A6F00;
+}
+  
+
+
+
 /*  CONTACT FOOTER STYLING */
 @charset "UTF-8";
 .hero {
