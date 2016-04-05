@@ -1,13 +1,14 @@
 #title {
-	font-size: 150%;
 	padding: 1%;
-	margin-top: -7.5%;
-	margin-left: 20%;
+	/*margin-top: -15.5%;*/
+	margin-left: 12%;
 	/*margin-top: -2.5%;*/
 }
 
 #title h3 {
-	font-size: 50px;
+  padding: 3.3%;
+  margin-top: -13%;
+	font-size: 60px;
    background: -webkit-linear-gradient(#006596, #c0d2db);
   /*background: -webkit-linear-gradient(#eee, #333);*/
   -webkit-background-clip: text;
