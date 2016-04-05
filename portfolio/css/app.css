@@ -147,6 +147,10 @@ Code below is for the icon social navigation */
   font-size: 2.6rem;
   line-height: 3.9rem; }
 
+#fullNavMenuLinks a {
+  target-name:new;
+  target-new: tab;
+}
 
 
 #imageOfMe {
