@@ -14,14 +14,10 @@
   text-align: center;
   /*padding: 1%;*/
   font-size: 100%;
+  width: 85%;
 }
 
-#randomQuoteSource {
-  /*margin-top: 20%;*/
-  /*margin-left: 45%;*/
-  width: 90%
-  font-style: italic;
-}
+
 
 #title h3 {
   padding: 3.3%;
