@@ -181,12 +181,12 @@ var quotes;
 
     })();
 
-	function func() {
-        var quote = quotes[Math.floor(Math.random() * quotes.length)];
-      document.getElementById("randomQuote").innerHTML =
-        '<p>' + ' ' +quote.text + ' ' + '&nbsp' + '&nbsp'  +  '---' +
-         quote.source + ' ' + '</p>';
-             setTimeout(func, 4000);
+function func() {
+    var quote = quotes[Math.floor(Math.random() * quotes.length)];
+    document.getElementById("randomQuote").innerHTML =
+    '<p>' + ' ' +quote.text + ' ' + '&nbsp' + '&nbsp'  +  '---' +
+    quote.source + ' ' + '</p>';
+    setTimeout(func, 4000);
 
 }
 
