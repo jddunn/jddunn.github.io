@@ -1,19 +1,22 @@
 #title {
-	padding: 1%;
+	padding: 4%;
 	/*margin-top: -15.5%;*/
-	margin-left: 12%;
+	margin-left: -86%;
+  margin-top: 2.2%;
 	/*margin-top: -2.5%;*/
 }
 
 #title h3 {
   padding: 3.3%;
-  margin-top: -13%;
-	font-size: 350%;
+  margin-top: -14.3%;
+	font-size: 3.9em;
    background: -webkit-linear-gradient(#006596, #c0d2db);
   /*background: -webkit-linear-gradient(#eee, #333);*/
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
+
+
 
 #fullMenuTitle h4 {
   /*background: -webkit-linear-gradient(#475e69, #8fb8cc);*/
@@ -40,6 +43,8 @@
   font-size: 20%; }
 .accordion-navigation.active > a:after {
   content: "↟"; }
+
+
 
 .buttonGrad {
   margin-left: 30%;
