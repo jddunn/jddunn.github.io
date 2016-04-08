@@ -57,7 +57,9 @@
 .accordion-navigation.active > a:after {
   content: "↟"; }
 
-
+#accordionWebsites.a {
+  background: white;
+}
 
 .buttonGrad {
   margin-left: 30%;
@@ -82,6 +84,7 @@
 
 #bannerImage {
 	margin-top: .5%;
+  width: 80%;
 }
 
 #buttonGradDiv {
@@ -90,6 +93,10 @@
 
 #bannerImageGallery {
 	padding: 1%;
+}
+
+#panel1aSite {
+   margin-top: -2.5%
 }
 
 
