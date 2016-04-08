@@ -6,6 +6,22 @@
 	/*margin-top: -2.5%;*/
 }
 
+
+#randomQuote {
+  /*margin-top: -5%;*/
+  margin-left: 2%;
+  margin-top: -5%;
+  text-align: center;
+  /*padding: 1%;*/
+  font-size: 100%;
+}
+
+#randomQuoteSource {
+  /*margin-top: 20%;*/
+  /*margin-left: 45%;*/
+  font-style: italic;
+}
+
 #title h3 {
   padding: 3.3%;
   margin-top: -14.3%;
