@@ -186,7 +186,7 @@ function func() {
     document.getElementById("randomQuote").innerHTML =
     '<p>' + ' ' +quote.text + ' ' + '&nbsp' + '&nbsp'  +  '---' +
     quote.source + ' ' + '</p>';
-    setTimeout(func, 5500);
+    setTimeout(func, 6000);
 
 }
 
