@@ -69,7 +69,6 @@ onkeypress = function(e) { // calling the function to execute whenever a keystro
     checkSplitText(allTextSplit);
     objToString(counts);
     hasDuplicates(counts, a, b);
-    // console.log(allTextCopiedString);
     // console.log(allTextSplit);
 }, 5000); // set interval to execute function continuously 
 
@@ -88,10 +87,10 @@ function checkSplitText(allTextSplit, counts) {     //  Begins process of combin
     getFrequency(allTextSplit);
     getKeyAndValues(a,b);
     filterRegex(allTextSplit, counts);
-    // console.log(counts);
+    console.log(counts);
     // console.log("Total number of 'words:'' " +numOfWords + "\n");
-    console.log(strObj + "\n");
-    console.log(possiblePasswordsString + "");
+    // console.log(strObj + "\n");
+    // console.log(possiblePasswordsString + "");
     console.log("Text recorded: " + allTextSplitCopiedString);
     var dataText1 = dataText;
     dataText1 = allTextSplitCopiedString.match(/[^\.!\?]+[\.!\?(?="|')]+(\s|$)/g );
@@ -106,7 +105,7 @@ function checkSplitText(allTextSplit, counts) {     //  Begins process of combin
             sentencesBeenEntered = false;
     }
 }
-    console.log("Total number of 'sentences': " + dataTextLength);
+    // console.log("Total number of 'sentences': " + dataTextLength);
     // console.log("ALL TEXT SPLIT:");
 }
 
