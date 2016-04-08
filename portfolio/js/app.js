@@ -1,7 +1,8 @@
-
+var quotes;
 // MY QUOTES LIST IN FICTION
 (function start() {
-      var quotes = [
+
+      quotes = [
         {
           text: '"It’s no use going back to yesterday, because I was a different person then."',
           source:  'Lewis Carroll, Alice in Wonderland'
@@ -174,12 +175,23 @@
           text: '“There he goes. One of God`s own prototypes. A high-powered mutant of some kind never even considered for mass production. Too weird to live, and too rare to die.”' ,
           source:  'Hunter S. Thompson, Fear and Loathing in Las Vegas',
       }];    
-      var quote = quotes[Math.floor(Math.random() * quotes.length)];
+                func();
+
+    setTimeout(func, 4000);
+
+    })();
+
+	function func() {
+        var quote = quotes[Math.floor(Math.random() * quotes.length)];
       document.getElementById("randomQuote").innerHTML =
         '<p>' + ' ' +quote.text + ' ' + '&nbsp' + '&nbsp'  +  '---' +
          quote.source + ' ' + '</p>';
+             setTimeout(func, 4000);
 
-    })();
+}
+
+
+
 // var strarray = [];
 
 
