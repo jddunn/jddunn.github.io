@@ -177,7 +177,6 @@ var quotes;
       }];    
                 func();
 
-    setTimeout(func, 4000);
 
     })();
 
