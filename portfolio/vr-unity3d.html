@@ -150,33 +150,22 @@
 
   <li class="accordion-navigation">
 
-    <a style="background: #e6f7ff; font-size: 1.2em; color:  #006bb3; text-decoration: underline; margin-top: -1.5%" href="#panel1a">Space Girl- Horror Game Stimulating Blindness</a>
+    <a style="background: #e6f7ff; font-size: 1.2em; color:  #006bb3; text-decoration: underline; margin-top: -1.5%" href="#panel1a">Space Girl - Horror Game Stimulating Blindness</a>
     <div id="panel1a" class="content">
       <iframe width="560" height="315" src="https://www.youtube.com/embed/T7_16aSXsRM" frameborder="0" allowfullscreen></iframe>
 <!--         <a target="_blank" style="background: transparent; color:  #33adff; text-decoration: underline; margin-top: -4%;" href="http://freewriter.cf"><p style="text-align:center">Link here</a></p>
  -->
-<div id = "websitesGallery">
-<ul class="clearing-thumbs small-block-grid-4" data-clearing>
-<!--  <script>
-   $('.open-clearing').on('click', function(e) {
-   e.preventDefault();
-   $('[data-clearing] li img').eq($(this).data('thumb-index')).trigger('click');
-  });
- </script> -->
-  <li><a href=""><img data-caption="freewriter: a web text editor with real-time cryptography features" src="http://jddunn-photography.com/wp-content/uploads/2016/04/freewriter-demo.png"></a></li>
-  <li><a href=""><img data-caption="freewriter can instantly scramble / unscramble your text by just tapping the 'CTRL' button." src="http://jddunn-photography.com/wp-content/uploads/2016/04/freewriter-demo-scrambled.png"></a></li>
-  <li><a href=""><img data-caption="freewriter allows you to enter any combination and length of letters / numbers for secure, personal ciphers."src="http://jddunn-photography.com/wp-content/uploads/2016/04/freewriter-demo-cipher.png"></a></li>
-  <li><a href=""><img data-caption="This is what the text of the first image looks like once encrypted." src="http://jddunn-photography.com/wp-content/uploads/2016/04/freewriter-instructions-demo-encoded1.png"></a></li>
-</ul>
-</div>
 
 
 <p style="text-align:center">
 
-     Freewriter is a web text editor designed as a response to the notorious prevalence of surveilance and lack of privacy in urban cities. No data is kept on the site or sent anywhere else. Freewriter has some basic real-time cryptography features, including a one-button text scrambler and a system that automatically encrpyts text randomly based on an oscillating animated UI, leaving the unsecure text visible for only short periods of time. 
+    This was developed in Unity3D (C#), and is meant to be a virtual reality horror game simulating blindness, so there are no graphics in the game.
+    You play as an astronaut who has been blinded in an accident in space, and you attempt to navigate your ship to find a mysterious child amongst dangerous alien creatures which have taken it over. Currently, you move using keyboard controls as an advanced virtual sonar system with AI in your helmet guides your navigation differentiating walls, doors, enemies, and other objects. A rich and detailed 3D sound design reveals the environment of the spaceship for you (You need stereo headphones or surround-sound speakers to play this game well).
      <br><br>
-     The cryptography is not meant to be that secure but just convenient. Consequently, users can encode and decrypt their texts with the same cipher key anytime they revisit the site. You can, however, make the cipher key very complex with as many different characters as you want. 
-     <br><br> See the source code on <a target="_blank"href="https://github.com/jddunn/web-text-editor-and-scrambler-encryptor">GitHub</a>.</p>
+    I coded the sonar system from scratch; the system uses raycasting and gameobject tags for the object recognition / distance, and pitches turn higher and occur faster as objects become closer. A basic AI voice differentiates between walls, doors, enemies, and other objects in the game, allowing you to navigate around the ship. Within the game’s story / logic, the “enemy” detection is fast-moving objects, and the “other” objects are anything that does not move.
+    <br><br>
+    Currently a rough and unpolished version; for now you only avoid the alien creatures while trying to find the mysterious girl, and the sound design is rough. Eventually I plan on refining and finishing the game with the actual story and fleshed-out world and making it work with virtual reality controllers, so the user is genuinely blind while playing.
+     <!-- <br><br> See the source code on <a target="_blank"href="https://github.com/jddunn/web-text-editor-and-scrambler-encryptor">GitHub</a>.</p> -->
     </div>
 
   </li>
