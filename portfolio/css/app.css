@@ -1,8 +1,8 @@
 #title {
-	padding: 4%;
+	padding: 6%;
 	/*margin-top: -15.5%;*/
-	margin-left: -86%;
-  margin-top: 2.2%;
+	margin-left: -88%;
+  margin-top: 0.1%;
 	/*margin-top: -2.5%;*/
 }
 
@@ -14,6 +14,7 @@
   text-align: center;
   /*padding: 1%;*/
   font-size: 100%;
+  color: #343F45;
   width: 85%;
 }
 
@@ -80,6 +81,29 @@
 
 #accordionDescription {
 	margin-top: 3%;
+  color: #343F45;
+}
+
+#websitesGallery  {
+
+  margin-top: 5%;
+  width: 85%;
+  margin-left: 7.5%;
+     /*display:inline-block;*/
+}
+
+
+#websitesListGallery {
+  padding: 1%;
+  margin-left: 15%;
+
+}
+
+#websitesList {
+  margin-top: -.5%;
+  margin-left: -9%;
+  width: 100%;
+
 }
 
 #bannerImage {
