@@ -14,8 +14,7 @@
 <link href='http://cdnjs.cloudflare.com/ajax/libs/foundicons/3.0.0/foundation-icons.css' rel='stylesheet' type='text/css'>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js"></script>
 <script src="js/app.js"></script>
-<script src="https://code.jquery.com/jquery-1.12.0.min.js"></script>
-<script src="https://code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+
 
 </head>
 
@@ -73,7 +72,7 @@
         <li><a href="websites-web-apps.html" class="off-canvas-submenu-call">Websites / Web Apps<!-- <span class="right"> + </span> --></a></li>
           <ul class="off-canvas-submenu">
               <li style><a target="_blank" href="freewriter.html">freewriter</a></li>
-              <li> <a target="" href="new-word-cloud.html">New Word Cloud</a></li>
+              <li> <a target="_blank" href="new-word-cloud.html">New Word Cloud</a></li>
               <li><a target="_blank" href="analytical-keylogger-safe-demo.html">Analytical Keylogger (Safe, Contained Demo)</a></li>
               <li><a target="_blank" href="http://rough-copies.com/">Rough Copies</a></li>
               <li><a target="_blank" href="solitary-soundscape.html">Solitary - the Soundscape</a></li>
@@ -109,7 +108,6 @@
         <li><a target="_blank"href="https://soundcloud.com/J-D-D-music/tracks">Music</a></li>
         <li><a target="_blank"href="http://jddunn-photography.com/writings/">Writings</a></li>
       </ul>
-      
     </aside>
 </div>
 <h4 style="color:#343F45;text-align:center;margin-top:2%;">Websites / web apps I've created </h4><hr>
@@ -123,16 +121,17 @@
   });
  </script> -->
   <li><a href=""><img data-caption="freewriter: a web text editor with real-time cryptography features" src="http://jddunn-photography.com/wp-content/uploads/2016/04/freewriter-instructions-demo-encoded.png"></a></li>
+  <li><a href=""><img data-caption="New Word Cloud: a suite of text analyzing & visualizing features" src="http://jddunn-photography.com/wp-content/uploads/2016/03/New-Word-Cloud-Demo-4.png"></a></li>
   <li><a href=""><img data-caption="New Word Cloud allows you to search for key words and find their surrounding context sentences, organized so that you can see the various relationships of the key words." src="http://jddunn-photography.com/wp-content/uploads/2016/03/New-Word-Cloud-Demo-1-1.png"></a></li>
-  <li><a href=""><img data-caption="Experience Solitary - the Soundscape online. How long can you last in virtual solitary isolation?" src="http://jddunn-photography.com/wp-content/uploads/2016/04/solitary-soundscape-demo4.png"></a></li>
-  <li><a href=""><img data-caption="Rough Copies is the digital platform in which I publish all my documentation and research on lucid dreaming." src="http://jddunn-photography.com/wp-content/uploads/2016/04/rough-copies-demo-1.png"></a></li>
+  <li><a href=""><img data-caption="Simple web app simulating Dadist cut-up poetry. Phrases are chopped up and randomly ordered / repeated with punctuation removed." src="http://jddunn-photography.com/wp-content/uploads/2016/04/surreal-text-rearranger-demo.png"></a></li>
 </ul>
-</div>
 
 
+</ul>
 <p style="font-size: 1em;margin-top:-1%;text-align:center; color: #60696C">Featured Gallery</p>
-<p style="margin-top: -2.5%;text-align:center; color:#60696C">-</p><br>
+<p style="margin-top: -2.3%;text-align:center; color:#60696C">-</p><br>
 </div>
+
 
 
 <div id = "websitesListGallery">
@@ -151,7 +150,7 @@
   <li class="accordion-navigation">
 
     <a style="background: #e6f7ff; font-size: 1.2em; color:  #006bb3; text-decoration: underline; margin-top: -1.5%" href="#panel1a">freewriter</a>
-    <div id="panel1a" class="content">
+    <div id="panel1a" class="content-active">
 
         <a target="_blank" style="background: transparent; color:  #33adff; text-decoration: underline; margin-top: -4%;" href="http://freewriter.cf"><p style="text-align:center">Link here</a></p>
 
@@ -208,11 +207,11 @@
 </div>
 
 <p style="text-align:center">
-     This is a web app that contains a suite of data analyzing features, including syllable / word / sentence counters, a reading level counter, basic statistical tools, and a visual way of exploring word frequencies. The app also allows users to input up to three different key words, and it will show them all the context sentences surrounding the key word that are found organized so that the exact relationships of the context words to all the others are easily revealed. 
+     This is a web app that contains a suite of data analyzing features, including syllable / word / sentence counters, a reading level counter, basic statistical tools, and a visual way of exploring word frequencies. The app also allows users to input up to three different key words, and it will show them all the context sentences surrounding the key words found in an organized way so that the exact relationships of the context words to the rest of the text are clear. 
      <br><br>
      The visualization works only for texts longer than 100 words. Drag and drop any text file, or enter something in the text box and submit. Move your mouse on the x-axis to explore the words on the visualization, and use the ‘UP’ and ‘DOWN’ arrow keys to change the text size. Enter in 1-3 words and submit.
      <br><br>
-     Obviously, this tool works well to analyze articles and novels and other conventional forms of text, but the program can also parse lists of email addresses based on email domain (gmail, yahoo, msn, etc.) or the email address names. Thus, the site works well with going through data log files for emails as well as phone numbers. 
+     Obviously, this tool works well to analyze articles and novels and other conventional forms of text, but the program can also parse email address lists and phone number lists too. 
      <br><br> See the source code on <a target="_blank"href="https://github.com/jddunn/text-analyzer-with-word-visualizer">GitHub</a>.</p>
     </div>
   </li>
@@ -241,7 +240,7 @@
 </div>
   <p style = "text-align:center">
      This site is meant to be a demonstration of the dangers a keylogger with even basic data analyzing features can pose. All text typed on the page is recorded (Not just the message box), with the word frequencies tracked. There is also a potential password finder, which works by checking for phrases that have been entered exactly twice. 
-     <br><br>You can download the data saved from the page, although none of it is stored or sent anywhere, so it's all safe! For practical demonstrations, the JavaScript file can be copied and pasted in the console window of any browser, and the data will be stored and printed in the console. The code for this is for security demoing purposes only. 
+     <br><br>You can download the data saved from the page, although none of it is stored or sent anywhere online, so it's all safe! For practical demonstrations, the JavaScript file can be copied and pasted in the console window of any browser, and the data will be stored and printed in the console. The code for this is for security demoing purposes only. 
      <br><br> See the source code on <a target="_blank"href="https://github.com/jddunn/keylogger-analyzer-js">GitHub</a>.</p>
     </div>
   </li>
@@ -266,7 +265,7 @@
   <li><a href=""><img data-caption="Rough Copies is where I publish the results of my findings and research." src="http://jddunn-photography.com/wp-content/uploads/2016/04/rough-copies-demo-2.png"></a></li>
 </ul>
     <p style="text-align:center">
-     Rough Copies is the web platform in which I publish the documentation and research I have conducted while building electronic prototypes to help induce lucid dreaming (See my lucid dreaming machine / software <a target="_blank"href="lucid-dreaming-machine.html">here</a>.<br><br> Back when I was performing research and tests, the data recorded by my software was then automatically organized into a spreadsheet and injected into a page on my website. I've published the findings of my researching experiments on the site, and plan on continually updating it as I continue my research and begin my senior thesis. 
+     Rough Copies is the web platform in which I publish the documentation and research I have conducted while building electronic prototypes to help induce lucid dreaming (See my lucid dreaming machine / software <a target="_blank"href="lucid-dreaming-machine.html">here)</a>.<br><br> Back when I was performing research and tests, the data recorded by my software was then automatically organized into a spreadsheet and injected into a page on my website. I've published the findings of my researching experiments on the site, and plan on continually updating it as I continue my research and begin my senior thesis. 
      <br><br> See the source code on <a target="_blank"href="https://github.com/jddunn/rough-copies.com">GitHub</a>.</p>
     </div>
   </li>
@@ -298,8 +297,8 @@
 </ul>
 </div>
   <p style="text-align:center">
-    I designed this site in Wix to use this as a digital platform for an abstractified, visual soundscape I developed in Unity3D (With the visuals done in After Effects) based on the concept of solitary isolation in Rikers Island, after having done much research on the controversies and events surrounding Rikers. The soundscape was meant to be played and projected on a large screen in a dark room with surround speakers, but I also wanted the experience to be accessible easily online.
-    <br><br>The soundscape is meant to fully transport you into the confines of solitary isolation with dynamic, immersive, and random sounds. Solitary is meant to wear you down with its dark undertones and purposed repetition, as a means of introducing the cruel experience of solitary isolation to the general public, in hopes of raising public awareness. 
+    I designed this site in Wix to use iy as a digital platform for an abstractified, visual soundscape I developed in Unity3D (With the visuals done in After Effects) based on the concept of solitary isolation in Rikers Island, after having done much research on the controversies and events surrounding Rikers. The soundscape was meant to be played and projected on a large screen in a dark room with surround sound speakers, but I also wanted the experience to be accessible easily online.
+    <br><br>The soundscape is meant to fully transport you into the confines of solitary isolation with dynamic, immersive, and randomized sounds. Solitary is meant to wear you down with its dark undertones and purposed repetition as a means of introducing the cruel experience of solitary isolation to the general public, in hopes of raising public awareness. 
      <!-- <br><br> See the source code on <a target="_blank"href="http://jddunn-photography.com/wp-content/uploads/2016/03/Johnny_Dunn_Resume_2016.pdf">GitHub</a>.</p> -->
     </div>
   </li>
@@ -325,7 +324,7 @@
   <li><a href=""><img data-caption="" src="http://jddunn-photography.com/wp-content/uploads/2016/04/surreal-text-rearranger-demo4.png"></a></li>
 </ul>
   <p style="text-align:center">
-     This site was both an artistic tribute and a virtual recreation of the poetic "cut-up technique" for text, developed out of the Dadaist art movement. Input text, and phrases are chopped, rearranged, randomized, and the ending punctuation removed for better flow. You can easily produce many different iterations of Dadaist poetry this way while remaining technically true to its roots. 
+     This site was both an artistic tribute and a virtual recreation of the poetic "cut-up technique" for text developed and experimented with by the Daidist artists. Input text, and phrases are chopped, rearranged, randomized, and the ending punctuation removed for better flow. You can easily produce many different iterations of Dadaist poetry this way while remaining technically true to its roots. 
      <br><br> See the source code on <a target="_blank"href="https://github.com/jddunn/surrealist-text-generator-rearranger">GitHub</a>.</p>
     </div>
   </li>
@@ -567,7 +566,6 @@ function goBack() {
     <div class="small-12 medium-6 medium-pull-6 columns">
       <!-- <p class="logo hide-for-small-only"><i class="fi-target"></i>J.D. DUNN</p>  -->
       <p style = "font-size: 100%; color: #f4f4f4">This site was coded from scratch, with Foundation</p>
-            <p style = "font-size: 85%; color: #f4f4f4">It works best in Chrome! Might have a few issues with some versions of Firefox.</p>
         <a target="_blank"href="https://github.com/jddunn/jddunn.github.io/tree/master/portfolio"> <p style = "font-size: 85%; color: #ebebe0">Click here to see the source code for the site</p></a>
         <a target="_blank"href="http://jddunn-photography.com"> <p style = "font-size: 85%; color: #ebebe0">Click here to see my other digital portfolio focusing on photography, film, and design</p></a>
       <p style = "font-size: 85%; color: #ebebe0">Email me at <a style = "color: #ebebe0"; href="mailto:johnnyddunn@gmail.com" target="_top">johnnyddunn@gmail.com</a>
@@ -585,12 +583,10 @@ function goBack() {
     </div>
   </div>
 </footer>
-
 <script>
 var element = document.getElementById("panel3a");
 element.scrollIntoView();
 </script>
-
 <script>
   (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
   (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
