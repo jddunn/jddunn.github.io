@@ -19,8 +19,15 @@
 
 
 #buttonStyle {
-  margin-top: -25%;
+  margin-top: -5%;
   margin-left: 1%;
+  /*margin-left: 1%;*/
+  display: block;
+  float: left;
+  
+  
+  /*position: absolute;*/
+  bottom: 0;
   /*margin-left: -55%;*/
 }
 
