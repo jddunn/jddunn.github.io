@@ -92,6 +92,7 @@
                 <li><a target="_blank" href="lucid-dreaming-machine.html">Lucid Dreaming Machine</a></li>
                 <li><a target="_blank" href="full-sight-jacket.html">Full Sight Jacket - See Behind Your Head</a></li>
                 <li><a target="_blank" href="jasper-talking-assistant-chatbot.html">Jasper 2.0 - Talking Virtual Assistant / ChatBot</a></li>
+                                <li><a target="_blank" href="real-life-pip-boy">Real Life Pip-Boy</a></li>
                 <li><a target="_blank" href="binface.html">BinFace - Friendly, Electronic Trashcan Robot</a></li>
                 </ul>
         <li><a href="other-software.html">Other Software / Programs</a></li>
@@ -113,25 +114,7 @@
 
 <h4 style="color:#343F45;text-align:center;margin-top:2%;">Other Software / Programs:</h4><hr>
 
-<div id = "websitesGallery">
-<ul class="clearing-thumbs small-block-grid-4" data-clearing>
-<!--  <script>
-   $('.open-clearing').on('click', function(e) {
-   e.preventDefault();
-   $('[data-clearing] li img').eq($(this).data('thumb-index')).trigger('click');
-  });
- </script> -->
-   <li><a href=""><img data-caption="Lucid dreaming mask prototype that I am currently planning a second, more refined iteration for. Uses an EEG sensor and a pulse sensor to send signals to the wearer when the program detects periods of REM sleep."src="http://jddunn-photography.com/wp-content/uploads/2016/04/Lucid-Dreaming-Mask-Prototype-e1459794658585.jpg"></a></li>
-  <li><a href=""><img data-caption="Full-Sight Jacket: See the general location of moving objects behind you. When the left lights up, something has moved behind you on your left, and the same with the right side. When both sides light up, the object is near your center area."src="http://jddunn-photography.com/wp-content/uploads/2016/04/full-sight-jacket-prototypejpg-1-e1459795111811.jpg"></a></li>
-  <li><a href=""><img data-caption="Jasper 2.0 - A lo-tech robot with speech synthesis / recognition AI, as well as a ChatBot AI! (Amazon Echo Alternative)" src="http://jddunn-photography.com/wp-content/uploads/2015/04/IMG_0729.jpg"></a></li>
-  <li><a href=""><img data-caption="The components inside the shell of my Real-Life PipBoy, which is a product design based off the fictional PipBoy item in the Fallout game series. Includes a temperature / humidity sensor, barometer, accelerometer, compass, motion sensor, air contaminants sensor, GPS, and SDR."src="http://jddunn-photography.com/wp-content/uploads/2016/02/Pipboy12.jpg"></a></li>
-</ul>
 
-
-</ul>
-<p style="font-size: 1em;margin-top:-1%;text-align:center; color: #60696C">Featured Gallery</p>
-<p style="margin-top: -2.3%;text-align:center; color:#60696C">-</p><br>
-</div>
 
 
 <div id = "websitesListGallery">
@@ -143,19 +126,18 @@
 <div class="large-36 columns">
 
 
-<h4 style ="text-align: center; margin-top: -3.5%; font-size:1.2em; color: #343F45;">Click the blocks</h4>
+<h4 style ="text-align: center; margin-top: -1.5%; font-size:1.2em; color: #343F45;">Click the blocks</h4>
 <br>
 
 
 <ul class="accordion" data-accordion>
 
 
+
 <li class="accordion-navigation">
-<a style="background: #e6f7ff; font-size: 1.2em; color:  #006bb3; text-decoration: underline; margin-top: -1.5%" href="#panel1a">Lucid Dreaming Mask Prototype</a>
-    <div id="panel1a" class="content">
-<!--         <a target="_blank" style="background: transparent; color:  #33adff; text-decoration: underline; margin-top: -4%;" href="http://freewriter.cf"><p style="text-align:center">Link here</a></p>
- -->
-<div id = "websitesGallery">
+<a style="background: #e6f7ff; font-size: 1.2em; color:  #006bb3; text-decoration: underline" href="#panel3a">Jasper 2.0 - Talking Virtual Assistant / ChatBot</a>
+<div id="panel3a" class="content">
+                       <div id = "websitesGallery">
 <ul class="clearing-thumbs small-block-grid-2" data-clearing>
 <!--  <script>
    $('.open-clearing').on('click', function(e) {
@@ -163,21 +145,43 @@
    $('[data-clearing] li img').eq($(this).data('thumb-index')).trigger('click');
   });
  </script> -->
-  <li><a href=""><img data-caption="" src="http://jddunn-photography.com/wp-content/uploads/2015/04/2.jpg"></a></li>
-  <li><a href=""><img data-caption="" src="http://jddunn-photography.com/wp-content/uploads/2016/02/roughcopies.png"></a></li>
 </ul>
-  <p style="text-align:center">
+<p style ="text-align:center">This project is expanded off the Jasper speech recognition / synthesis library written in Python. Jasper 2.0 is a portable, wireless system coded running on a Raspberry Pi that has a variety of information processing features, a ChatBot functionality, and the ability to be run locally offline or to be expanded by connecting to online databases.<br><br>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/xSaKdExKoXo" frameborder="0" allowfullscreen></iframe><br><br>
+This version is housed in a lo-tech robot, where all the components are reattachable and reconfigurable, but the AI software only needs to be run on a Raspberry Pi.
+<br><br>Currently, Jasper 2.0 can do things like timekeeping, calendar / event management, note taking / transcription, web search, Wikipedia search, IMDB search, picture taking, telling jokes, controlling media, playing games like asking trivia questions, and he has access to various local / cloud databases.
+<br><br>The most compelling function Jasper 2.0 has is that he will recognize automatically when you are conversing to him, not commanding him, and using the ChatBot (CleverBot) library, he will be able to have a stimulating, intellectual, and often entertaining conversation with you.<br><br>Jasper 2.0 can be run on any Raspberry Pi with the correct libraries installed.<br>
+    </div>
+  </li>
+  <br>
 
-This app uses the NeuroSky MindWave (EEG sensor) with an Ardunio connected to a pulse sensor along with the Processing IDE because of its compatibility with the libraries. The MindWave was taken apart and reassembled with a durable sleeping mask for comfort. Its main function is to induce lucid dreams through playing musical triggers and binaural beats when the program detects the user to be in REM sleep, but it also functions excellently as a real-time EEG / biometric monitor, as the program records data and organizes it into spreadsheets and images for researching purposes.
+
+
+
+<li class="accordion-navigation">
+<a style="background: #e6f7ff; font-size: 1.2em; color:  #006bb3; text-decoration: underline" href="#panel4a">Software for the Lucid Dreaming Mask Prototype</a>
+<div id="panel4a" class="content">
+
+<ul class="clearing-thumbs small-block-grid-1" data-clearing>
+<li><a href=""><img data-caption="" src="http://jddunn-photography.com/wp-content/uploads/2016/02/roughcopies.png"></a></li>
+
+
+<!--  <script>
+   $('.open-clearing').on('click', function(e) {
+   e.preventDefault();
+   $('[data-clearing] li img').eq($(this).data('thumb-index')).trigger('click');
+  });
+ </script> -->
+</ul>
+
+<p style ="text-align:center">The software for my lucid dreaming mask was coded in Processing for its easy compatibility with the NeuroSky MindWave. I programmed a sleep detection algorithim based using the pulse sensor and Arduino, and then I programmed an algorithim to detect stages of REM sleep using the MindWave. Once the program detected a stage of REM sleep, sounds are played to alert and remind the dreamer that he is in a dream. I plan on refining and expanding the hardware and programming drastically for my senior thesis.</p>
 <br><br>
-<iframe width="560" height="315" src="https://www.youtube.com/embed/N_l1COTufZE" frameborder="0" allowfullscreen></iframe><br><br>
-Users will eventually be able to send data into the machine during their dreams by controlling eye blinking, and the software will be expanded with binaural beats, dynamic soundscapes, and visual cues (which would affect the environments of the dreams), and a refined, 3D printed mask will be created to house the components. Virtual reality environments (Through using Google Cardboard lenses and a smartphone) will immerse the user in order to stimulate a specific dream. I plan on creating an app for the device for Android / iOS, using Bluetooth to communicate between the two, and putting the final, refined product up on KickStarter.
-<br><br> See the website in which I publish my research and findings on lucid dreams <a target="_blank"href="http://rough-copies.com">here</a>.</p>
+It also functions excellently as a real-time EEG / biometric monitor, as the program records data and organizes it into spreadsheets and images for researching purposes. 
+
 </div>
 </li>
+
 <br>
-
-
 
 <li class="accordion-navigation">
 <a style="background: #e6f7ff; font-size: 1.2em; color:  #006bb3; text-decoration: underline" href="#panel2a">Full-Sight Jacket: See Behind Your Head</a>
@@ -199,46 +203,6 @@ Users will eventually be able to send data into the machine during their dreams 
   </li>
   <br>
 
-<li class="accordion-navigation">
-<a style="background: #e6f7ff; font-size: 1.2em; color:  #006bb3; text-decoration: underline" href="#panel3a">Jasper 2.0 - Talking Virtual Assistant / ChatBot</a>
-<div id="panel3a" class="content">
-                       <div id = "websitesGallery">
-<ul class="clearing-thumbs small-block-grid-2" data-clearing>
-<!--  <script>
-   $('.open-clearing').on('click', function(e) {
-   e.preventDefault();
-   $('[data-clearing] li img').eq($(this).data('thumb-index')).trigger('click');
-  });
- </script> -->
-  <li><a href=""><img data-caption="" src="http://jddunn-photography.com/wp-content/uploads/2015/04/IMG_0728.jpg"></a></li>
-  <li><a href=""><img data-caption="" src="http://jddunn-photography.com/wp-content/uploads/2015/04/IMG_0729.jpg"></a></li>
-</ul>
-<p style ="text-align:center">This project is expanded off the Jasper speech recognition / synthesis library written in Python. Jasper 2.0 is a portable, wireless system coded running on a Raspberry Pi that has a variety of information processing features, a ChatBot functionality, and the ability to be run locally offline or to be expanded by connecting to online databases.<br><br>
-<iframe width="560" height="315" src="https://www.youtube.com/embed/xSaKdExKoXo" frameborder="0" allowfullscreen></iframe><br><br>
-This version is housed in a lo-tech robot, where all the components are reattachable and reconfigurable, but the AI software only needs to be run on a Raspberry Pi.
-<br><br>Currently, Jasper 2.0 can do things like timekeeping, calendar / event management, note taking / transcription, web search, Wikipedia search, IMDB search, picture taking, telling jokes, controlling media, playing games like asking trivia questions, and he has access to various local / cloud databases.
-<br><br>The most compelling function Jasper 2.0 has is that he will recognize automatically when you are conversing to him, not commanding him, and using the ChatBot (CleverBot) library, he will be able to have a stimulating, intellectual, and often entertaining conversation with you.<br><br>Note: This prototype is a proof-of-concept only; there are no plans to create a more refined robotic enclosure; however, the software of Jasper 2.0 will be improved upon and live on in upcoming projects.<br>
-    </div>
-  </li>
-  <br>
-
-
-<li class="accordion-navigation">
-<a style="background: #e6f7ff; font-size: 1.2em; color:  #006bb3; text-decoration: underline" href="#panel4a">BinFace: Trash Bin Robot</a>
-<div id="panel4a" class="content">
-<ul class="clearing-thumbs small-block-grid-2" data-clearing>
-<!--  <script>
-   $('.open-clearing').on('click', function(e) {
-   e.preventDefault();
-   $('[data-clearing] li img').eq($(this).data('thumb-index')).trigger('click');
-  });
- </script> -->
-</ul>
-<p style ="text-align:center">For a project about making a trash bin more appealing, we hooked up LED matrices, a motion sensor, a flex sensor, and a LCD screen to an Arduino. The eyes and the mouth of the face change when someone comes near it and before and after it’s used; it displays banter in a youth-friendly tone.</p>
-<br><iframe width="560" height="315" src="https://www.youtube.com/embed/lji9veWWvjY" frameborder="0" allowfullscreen></iframe>
-
-</div>
-</li>
 
 </ul>
 </div>
