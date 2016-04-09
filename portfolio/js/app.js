@@ -1,3 +1,16 @@
+var is_chrome = navigator.userAgent.toLowerCase().indexOf('chrome') > -1;
+
+if(!is_chrome)
+{
+  alert("Please try running this site in Google Chrome for best results!");
+//do stuff
+}  
+
+if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
+    alert("Turn your screen sideways for mobile!");
+ // some code..
+}
+
 var quotes;
 // MY QUOTES LIST IN FICTION
 (function start() {
