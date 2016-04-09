@@ -33,7 +33,7 @@
 <li><a href="hardware.html" class="button">Hardware</a></li>
 <li><a href="other-software.html" class="button">Software</a></li>
 </ul>
-</div>
+</div>  
 
 
 <div id = "title">
@@ -74,7 +74,7 @@
               <li style><a target="_blank" href="freewriter.html">freewriter</a></li>
               <li> <a target="_blank" href="new-word-cloud.html">New Word Cloud</a></li>
               <li><a target="_blank" href="analytical-keylogger-safe-demo.html">Analytical Keylogger (Safe, Contained Demo)</a></li>
-              <li><a target="_blank" href="http://rough-copies.com/">Rough Copies</a></li>
+              <li><a target="_blank" href="rough-copies.html">Rough Copies</a></li>
               <li><a target="_blank" href="solitary-soundscape.html">Solitary - the Soundscape</a></li>
               <li><a target="_blank" href="https://github.com/jddunn">GitHub</a></li>
             </ul>
@@ -111,62 +111,208 @@
     </aside>
 </div>
 
-<div id = "bannerImageGallery">
+<h4 style="color:#343F45;text-align:center;margin-top:2%;">VR Experiences & Unity3D Apps / Games:</h4><hr>
+
+<div id = "websitesGallery">
+<ul class="clearing-thumbs small-block-grid-4" data-clearing>
+<!--  <script>
+   $('.open-clearing').on('click', function(e) {
+   e.preventDefault();
+   $('[data-clearing] li img').eq($(this).data('thumb-index')).trigger('click');
+  });
+ </script> -->
+  <li><a href=""><img data-caption="VR experience that is a quick two-minute demo to bring immersive nature scenes to people living in urban areas. Made for the Samsung Gear."src="http://jddunn-photography.com/wp-content/uploads/2016/02/Tree-3.png"></a></li>
+  <li><a href=""><img data-caption="The leaves pile up and up until the musical track ends and the scene restarts."src="http://jddunn-photography.com/wp-content/uploads/2016/02/Tree-5.png"></a></li>
+  <li><a href=""><img data-caption="VR experience of being imprisoned on an alien world. Made for Google Cardboard." src="http://jddunn-photography.com/wp-content/uploads/2015/04/Prison-Game-Unity-2.png"></a></li>
+  <li><a href=""><img data-caption="The soundscape is dynamically designed with complex AI. The user is meant to stay in the VR experience for as long as he can until he cannot bear the frustration, repitition, and darkness of the experience any longer."src="http://jddunn-photography.com/wp-content/uploads/2015/04/Prison-Game-Unity.png"></a></li>
+</ul>
+
+
+</ul>
+<p style="font-size: 1em;margin-top:-1%;text-align:center; color: #60696C">Featured Gallery</p>
+<p style="margin-top: -2.3%;text-align:center; color:#60696C">-</p><br>
+</div>
+
+
+<div id = "websitesListGallery">
 <div class="row">
 <div class="large-12 columns">
-<div id = "bannerImage">
-<!-- <img src="http://placehold.it/1000x500&text=[banner img]"> -->
+<div id = "websitesList">
 
 <div class="row">
-  <div class="small-4 columns">
-    <div class="image-wrapper overlay-fade-in">
-  
-      <img src="http://jddunn-photography.com/wp-content/uploads/2016/04/Lucid-Dreaming-Mask-Prototype-e1459794658585.jpg"/>
-      
-      <div class="image-overlay-content">
-        <h2 style="margin-top: 10%; font-size: 1.5em">Lucid Dreaming Machine</h2>
-        <p style="font-size: .75em">Revolutionizing sleep and dreams</p>
-        <a style="font-size: .75em"href="lucid-dreaming-machine.html" class="button">More info</a>
+<div class="large-36 columns">
 
-      </div>
+
+<h4 style ="text-align: center; margin-top: -3.5%; font-size:1.2em; color: #343F45;">Click the blocks</h4>
+<br>
+<ul class="accordion" data-accordion>
+
+  <li class="accordion-navigation">
+
+    <a style="background: #e6f7ff; font-size: 1.2em; color:  #006bb3; text-decoration: underline; margin-top: -1.5%" href="#panel1a">Space Girl - Horror Game Stimulating Blindness</a>
+    <div id="panel1a" class="content">
+      <iframe width="560" height="315" src="https://www.youtube.com/embed/T7_16aSXsRM" frameborder="0" allowfullscreen></iframe>
+<!--         <a target="_blank" style="background: transparent; color:  #33adff; text-decoration: underline; margin-top: -4%;" href="http://freewriter.cf"><p style="text-align:center">Link here</a></p>
+ -->
+
+
+<p style="text-align:center">
+
+    This was developed in Unity3D (C#), and is meant to be a virtual reality horror game simulating blindness, so there are no graphics in the game.
+    You play as an astronaut who has been blinded in an accident in space, and you attempt to navigate your ship to find a mysterious child amongst dangerous alien creatures which have taken it over. Currently, you move using keyboard controls as an advanced virtual sonar system with AI in your helmet guides your navigation differentiating walls, doors, enemies, and other objects. A rich and detailed 3D sound design reveals the environment of the spaceship for you (You need stereo headphones or surround-sound speakers to play this game well).
+     <br><br>
+    I coded the sonar system from scratch; the system uses raycasting and gameobject tags for the object recognition / distance, and pitches turn higher and occur faster as objects become closer. A basic AI voice differentiates between walls, doors, enemies, and other objects in the game, allowing you to navigate around the ship. Within the game’s story / logic, the “enemy” detection is fast-moving objects, and the “other” objects are anything that does not move.
+    <br><br>
+    Currently a rough and unpolished version; for now you only avoid the alien creatures while trying to find the mysterious girl, and the sound design is rough. Eventually I plan on refining and finishing the game with the actual story and fleshed-out world and making it work with virtual reality controllers, so the user is genuinely blind while playing.
+     <!-- <br><br> See the source code on <a target="_blank"href="https://github.com/jddunn/web-text-editor-and-scrambler-encryptor">GitHub</a>.</p> -->
     </div>
-  </div>
 
-  <div class="small-4 columns">
-     <div class="image-wrapper overlay-fade-in">
+  </li>
+<br>
 
-      <img src="http://jddunn-photography.com/wp-content/uploads/2016/04/full-sight-jacket-prototypejpg-1-e1459795111811.jpg" />
-      
-      <div class="image-overlay-content">
-        <h2 style ="margin-top: 10%; font-size: 1.5em">Full-Sight Jacket</h2>
-        <p style="font-size: .75em">See Behind Your Head</p>
-        <a style="font-size: .75em" href="full-sight-jacket.html" class="button">More info</a>
-      </div>
+
+  <li class="accordion-navigation">
+
+    <a target="_blank" style="background: #e6f7ff; font-size: 1.2em; color:  #006bb3; text-decoration: underline" href="#panel2a">Sonance: ASMR-Based, Noise-Isolating Soundscapes</a>
+    <div id="panel2a" class="content">
+<iframe width="560" height="315" src="https://www.youtube.com/embed/CmG03Qt5nco" frameborder="0" allowfullscreen></iframe>
+
+<p style="text-align:center">
+     Sonance is an app developed in Unity3D; Sonance immerses you in worlds of layered 3D sounds, all of of which are ASMR-based (Autonomous Sensor Meridian Response, a euphoric, tingling sensation that goes through the upper body and can be triggered by sounds) and also designed to emulate specific environments, which in this prototype is a serene house by a river. The software detects how loud your environment from whichever mic is detected as default, and the louder your environment is, the louder and more active the sounds become, with a greater variety. Thus, this app functions as a noise-cancellation device by replacing the sounds around you with a soundscape you’d like to escape to.
+     <br><br>
+     It can be released for all platforms, including mobile, PC, and on the web.
     </div>
-  </div> 
+  </li>
 
-  <div class="small-4 columns">
-    <div class="image-wrapper overlay-fade-in">
 
-      <img src="http://jddunn-photography.com/wp-content/uploads/2016/04/Jasper-2.0-Talking-AI-Prototype-e1459794635315.jpg"/>
-      
-      <div class="image-overlay-content">
-        <h2 style ="margin-top: 10%; font-size: 1.5em">Jasper 2.0 - Talking Virtual Assistant / ChatBot</h2>
-        <p style="font-size: .75em">Speech Recognition / Synthesis AI</p>
-        <a style="font-size: .75em" href="jasper-talking-assistant-chatbot.html" class="button">More Info</a>
-      </div>
+  <br>
+  <li class="accordion-navigation">
+
+    <a style="background: #e6f7ff; font-size: 1.2em; color:  #006bb3; text-decoration: underline" href="#panel4a">Leaves Falling Upon You (VR)</a>
+    <div id="panel4a" class="content">
+        <a target="_blank" style="background: transparent; color:  #33adff; text-decoration: underline; margin-top: -4%;" href="http://rough-copies.com/"><p style="text-align:center">Link here</a>
+               <div id = "websitesGallery">
+<ul class="clearing-thumbs small-block-grid-4" data-clearing>
+<!--  <script>
+   $('.open-clearing').on('click', function(e) {
+   e.preventDefault();
+   $('[data-clearing] li img').eq($(this).data('thumb-index')).trigger('click');
+  });
+ </script> -->
+  <li><a href=""><img data-caption="" src="http://jddunn-photography.com/wp-content/uploads/2016/02/Tree-2.png"></a></li>
+  <li><a href=""><img data-caption=""src"http://jddunn-photography.com/wp-content/uploads/2016/02/Tree-3.png"></a></li>
+  <li><a href=""><img data-caption=""src="http://jddunn-photography.com/wp-content/uploads/2016/02/Tree-5.png"></a></li>
+  <li><a href=""><img data-caption="" src="http://jddunn-photography.com/wp-content/uploads/2016/02/Tree-4.png"></a></li>
+</ul>
+    <p style="text-align:center">
+  VR experience that is a quick two-minute demo to bring immersive nature scenes to people living in urban areas. Made for the Samsung Gear VR. The leaves pile up and up until the musical track ends and the scene restarts.
+     <br><br> See the source code on <a target="_blank"href="https://github.com/jddunn/rough-copies.com">GitHub</a>.</p>
     </div>
-  </div>
+  </li>
+  <br>
+
+  <li class="accordion-navigation">
+
+    <a style="background: #e6f7ff; font-size: 1.2em; color:  #006bb3; text-decoration: underline" href="#panel5a">Imprisoned on an Alien World (VR)</a>
+    <div id="panel5a" class="content">
+                       <div id = "websitesGallery">
+<ul class="clearing-thumbs small-block-grid-4" data-clearing>
+<!--  <script>
+   $('.open-clearing').on('click', function(e) {
+   e.preventDefault();
+   $('[data-clearing] li img').eq($(this).data('thumb-index')).trigger('click');
+  });
+ </script> -->
+  <li><a href=""><img data-caption="" src="http://jddunn-photography.com/wp-content/uploads/2015/04/Prison-Game-Unity-3.png"></a></li>
+  <li><a href=""><img data-caption=""src="http://jddunn-photography.com/wp-content/uploads/2015/04/Prison-Game-Unity-2.png"></a></li>
+  <li><a href=""><img data-caption="" src="http://jddunn-photography.com/wp-content/uploads/2015/04/Prison-Game-Unity.png"></a></li>
+</ul>
+  <p style="text-align:center">
+  VR experience of being imprisoned on an alien world. Made for Google Cardboard. The soundscape is dynamically designed with complex AI. The user is meant to stay in the VR experience for as long as he can until he cannot bear the frustration, repitition, and darkness of the experience any longer.
+    </div>
+  </li>
+  <br>
+
+
+  <li class="accordion-navigation">
+
+    <a style="background: #e6f7ff; font-size: 1.2em; color:  #006bb3; text-decoration: underline" href="#panel5a">Above the Clouds (VR)</a>
+    <div id="panel6a" class="content-active">
+                       <div id = "websitesGallery">
+<ul class="clearing-thumbs small-block-grid-4" data-clearing>
+<!--  <script>
+   $('.open-clearing').on('click', function(e) {
+   e.preventDefault();
+   $('[data-clearing] li img').eq($(this).data('thumb-index')).trigger('click');
+  });
+ </script> -->
+  <li><a href=""><img data-caption="" src="http://jddunn-photography.com/wp-content/uploads/2016/02/Above-The-Clouds-1.png"></a></li>
+  <li><a href=""><img data-caption="" src="http://jddunn-photography.com/wp-content/uploads/2016/02/Above-The-Clouds-2.png"></a></li>
+  <li><a href=""><img data-caption=""src="http://jddunn-photography.com/wp-content/uploads/2016/02/Above-The-Clouds-3.png"></a></li>
+</ul>
+  <p style="text-align:center">
+     VR experience of a sea of clouds infinitely moving below you. Made for the Samsung Gear VR.
+    </div>
+  </li>
+  <br>
+
+
+
+
+
+
+<li class="accordion-navigation">
+
+    <a style="background: #e6f7ff; font-size: 1.2em; color:  #006bb3; text-decoration: underline" href="#panel6a">Solitary - the Soundscape</a>
+    <div id="panel6a" class="content">
+        <a starget="_blank" style="background: transparent; color:  #33adff; text-decoration: underline; margin-top: -4%;" href="http://solitary-soundscape.tk/"><p style="text-align:center">Link here</a>
+
+        <div id = "websitesGallery">
+<ul class="clearing-thumbs small-block-grid-4" data-clearing>
+<!--  <script>
+   $('.open-clearing').on('click', function(e) {
+   e.preventDefault();
+   $('[data-clearing] li img').eq($(this).data('thumb-index')).trigger('click');
+  });
+ </script> -->
+  <li><a href=""><img data-caption="Solitary is an immersive, dynamic 3D soundscape made in Unity3D based off of solitary confinement in Rikers Island." src="http://jddunn-photography.com/wp-content/uploads/2016/04/solitary-soundscape-demo.png"></a></li>
+  <li><a href=""><img data-caption="Full artist statement for this piece on this page." src="http://jddunn-photography.com/wp-content/uploads/2016/04/solitary-soundscape-demo3.png"></a></li>
+  <li><a href=""><img data-caption="Run Solitary the Soundscape in your browser with the Unity Web Player. Use stereo headphones or surround sound speakers."src="http://jddunn-photography.com/wp-content/uploads/2016/04/solitary-soundscape-demo4.png"></a></li>
+  <li><a href=""><img data-caption="The soundscape goes on forever and forever, and each loop is a slightly different experience. How long do you think you could last in Solitary?" src="http://jddunn-photography.com/wp-content/uploads/2016/04/solitary-soundscape-demo9.png"></a></li>
+  <li><a href=""><img data-caption="The sounds are accompanied animated graphics done in After Effects that are also dynamic and were designed to represent the sounds in abstractified ways." src="http://jddunn-photography.com/wp-content/uploads/2016/04/solitary-soundscape-demo6.png"></a></li>
+  <li><a href=""><img data-caption="The art direction / visual design was based on the idea of constant sensory deprivation (Extended periods of darkness) and increasing mental instability (Extended periods of isolation) leading to hallucinations, hence the visuals even in darkness, and the stylization." src="http://jddunn-photography.com/wp-content/uploads/2016/04/solitary-soundscape-demo7.png"></a></li>
+  <li><a href=""><img data-caption="There's also a potential password finding feature, where the program looks for strings entered exactly twice."src="http://jddunn-photography.com/wp-content/uploads/2016/04/solitary-soundscape-demo5.png"></a></li>
+  <li><a href=""><img data-caption="The script for the analytical keylogger can be copied into the console of any browser with any webpage open. When the console is closed, the keys will still be recorded, and they can be viewed when the console is reopened again. This is for live, practical security testing purposes." src="http://jddunn-photography.com/wp-content/uploads/2016/04/solitary-soundscape-demo8.png"></a></li>
+</ul>
 </div>
+  <p style="text-align:center">
+    I designed this site in Wix to use iy as a digital platform for an abstractified, visual soundscape I developed in Unity3D (With the visuals done in After Effects) based on the concept of solitary isolation in Rikers Island, after having done much research on the controversies and events surrounding Rikers. The soundscape was meant to be played and projected on a large screen in a dark room with surround sound speakers, but I also wanted the experience to be accessible easily online.
+    <br><br>The soundscape is meant to fully transport you into the confines of solitary isolation with dynamic, immersive, and randomized sounds. Solitary is meant to wear you down with its dark undertones and purposed repetition as a means of introducing the cruel experience of solitary isolation to the general public, in hopes of raising public awareness. 
+     <!-- <br><br> See the source code on <a target="_blank"href="http://jddunn-photography.com/wp-content/uploads/2016/03/Johnny_Dunn_Resume_2016.pdf">GitHub</a>.</p> -->
+    </div>
+  </li>
+
+  <br>
+
+
+
+</ul>
 </div>
-<div id = "buttonGradDiv">
+
+</div><!-- <img src="http://placehold.it/1000x500&text=[banner img]"> -->
 </div>
-<a class="buttonGrad" href="#">FEATURED WORKS</a>
 </div>
 </div>
 </div>
 
-<div class="row">
+<button style="padding:1%;margin-left:45%;margin-top:1%;" onclick="goBack()">Go Back</button>
+<script>
+function goBack() {
+    window.history.back();
+}
+</script>
+
+<!-- <div class="row">
 <hr>
 <div class="large-8 columns">
 <h4>Who I Am</h4>
@@ -252,6 +398,7 @@
   </li>
 </ul>
 </div>
+ -->
 
 <!-- 
     <section class="main-section">
@@ -402,6 +549,10 @@
     </div>
   </div>
 </footer>
+<script>
+var element = document.getElementById("panel6a");
+element.scrollIntoView();
+</script>
 <script>
   (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
   (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
