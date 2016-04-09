@@ -338,7 +338,7 @@ if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(naviga
 </div>
 
 
-
+<div id = "footerDiv">
 <header class="hero">
   <h1></h1>
   <h2 class="subheader"></h2>
@@ -396,8 +396,10 @@ if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(naviga
 </div>
 
 
-<!-- Footer code -->
 </div>
+
+<div id = "footerDiv">
+
     <div class="small-12 medium-6 medium-pull-6 columns">
       <!-- <p class="logo hide-for-small-only"><i class="fi-target"></i>J.D. DUNN</p>  -->
             <p style = "font-size: 100%; color: #f4f4f4">This site was coded from scratch, with Foundation</p>
@@ -420,6 +422,32 @@ if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(naviga
     </div>
   </div>
 </footer>
+</div>
+<script>
+var elem;
+function start () {
+  elem = document.getElementById('footerDiv');
+  var is_chrome = navigator.userAgent.toLowerCase().indexOf('chrome') > -1;
+// var x = document.getElementsById("footerDiv");
+  if(!is_chrome)
+    {
+  elem.background.color = "grey";
+  }
+}
+
+function changeText(text)
+{
+  console.log("SDA");
+ elem = document.getElementById('footerDiv');
+ elem.style.backgroundColor="grey";
+
+}
+</script>
+
+<div id = "buttonStyle">
+<button onclick="changeText('Mkyong1');">Non-Chrome users: Can't see the footer? Click this button.</button>
+</div>
+
 <script>
   (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
   (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),

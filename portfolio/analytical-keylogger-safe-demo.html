@@ -586,6 +586,30 @@ function goBack() {
   </div>
 </footer>
 <script>
+var elem;
+function start () {
+  elem = document.getElementById('footerDiv');
+  var is_chrome = navigator.userAgent.toLowerCase().indexOf('chrome') > -1;
+// var x = document.getElementsById("footerDiv");
+  if(!is_chrome)
+    {
+  elem.background.color = "grey";
+  }
+}
+
+function changeText(text)
+{
+  console.log("SDA");
+ elem = document.getElementById('footerDiv');
+ elem.style.backgroundColor="grey";
+
+}
+</script>
+
+<div id = "buttonStyle">
+<button onclick="changeText('Mkyong1');">Non-Chrome users: Can't see the footer? Click this button.</button>
+</div>
+<script>
 var element = document.getElementById("panel3a");
 element.scrollIntoView();
 </script>

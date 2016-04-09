@@ -9,7 +9,7 @@
 #randomQuote {
   /*margin-top: -5%;*/
   margin-left: 9%;
-  margin-top: -5%;
+  margin-top: -7%;
   text-align: center;
   /*padding: 1%;*/
   font-size: 100%;
@@ -18,6 +18,11 @@
 }
 
 
+#buttonStyle {
+  margin-top: -25%;
+  margin-left: 1%;
+  /*margin-left: -55%;*/
+}
 
 #title h3 {
   padding: 3.3%;

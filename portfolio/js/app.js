@@ -1,8 +1,11 @@
 
 
+
 var quotes;
 // MY QUOTES LIST IN FICTION
 (function start() {
+
+
 
       quotes = [
         {
