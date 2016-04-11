@@ -1,3 +1,8 @@
+#randomQuote {
+	text-align: center;
+	padding: 2%;
+}
+
 #header { 
 	text-align: center;
 	margin-top: 5%;
@@ -14,7 +19,7 @@
 
  #week1 {
  	text-align: center;
- 	margin-top: 3%;
+ 	margin-top: 1%;
  	font-size: 20px;
  }
 
