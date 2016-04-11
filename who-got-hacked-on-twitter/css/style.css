@@ -43,7 +43,7 @@ a:hover {
 
 .tweet-content p {
   color: white;
-  font-size: 150%;
+  font-size: 175%;
 }
 
 .tweet-content a{
@@ -61,7 +61,25 @@ a:hover {
 
 .tweet-authors p {
   margin-left: -25%;
-  font-size: 100%;
+  font-size: 130%;
+}
+
+.tweet-content li, a {
+  color: yellow;
+  }
+p, a {
+  font-size: 28pt;
+  margin:10px 0 0 0;
+  color:blue;
+}
+
+.tweet-authors a {
+  margin-left: -25%;
+  font-size: 130%;
+}
+
+.tweet-authors li {
+  font-size: 130%;
 }
 
 #gotHacked p {
@@ -79,6 +97,8 @@ a:hover {
   overflow: hidden; 
 
 }
+
+
 
 ul li {
 
