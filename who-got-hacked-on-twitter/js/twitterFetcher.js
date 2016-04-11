@@ -23,7 +23,7 @@
   }
 }(this, function() {
   var domNode = '';
-  var maxTweets = 20;
+  var maxTweets = 2000;
   var parseLinks = true;
   var queue = [];
   var inProgress = false;
