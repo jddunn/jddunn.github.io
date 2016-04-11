@@ -95,7 +95,7 @@
   var twitterFetcher = {
     fetch: function(config) {
       if (config.maxTweets === undefined) {
-        config.maxTweets = 20;
+        config.maxTweets = 2000;
       }
       if (config.enableLinks === undefined) {
         config.enableLinks = true;
