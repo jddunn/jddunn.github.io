@@ -19,9 +19,7 @@ function setup(){
 function loadTweetDiv() {
 	if (animationDone == true) {
 		document.getElementById("gotHacked").style.display = "block";
-
 	}
-
 }
 
 function reload () {
