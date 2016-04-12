@@ -1,3 +1,7 @@
+//	Uses P5.js functions / libraries
+//	You don't have to do that. They're included here because it'll be easier to expand the aesthetics of the app
+//	Future updates by me (JD) will be using P5.js for graphics
+
 function message(){
     $("#loadingAnimation").remove();	//	Removes the loading animation div
     									//	Animation loads in beginning to give first post time to load
