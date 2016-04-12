@@ -2,6 +2,7 @@
 //  Single Twitter posts appear in a clear, stylized manner on the page. Then, every 3 seconds (Change the timer if you want!), the next most recent
 //  post is selected and replaces the previous. 
 //  The code for the timer and animation is in sketch.js and other web files
+//  You'll also need twitterFetcher.js and twitterFetcher_min.js from the Twitter Fetcher's library / example
 //  Written by: J.D. Dunn
 //  Credit to Jason Mayes for the library / example
 
@@ -89,36 +90,41 @@
 // twitterFetcher.fetch(config1);
 
 
-// ##### Advanced example 3 #####
-// An advance example to get data in Objects, instead of HTML Strings,
-// to populate a template for example.
-var i = 0;
-var increment = 0;
+var increment = 0;  //  Which post number are we on..?
+
+//    ADD DIFFERENT CONFIG OBJECTS IF YOU WANT DIFFERENT TWITTER WIDGETS (CHANGE THE ID)
 var config8 = {
-  "id": '719300266374406145',
+  "id": '719300266374406145',     //    THIS IS THE SPECIFIC TWITTER WIDGET THAT YOU WANT TO POPULATE THE SPECIFIED DIV WITH
   "dataOnly": true,
   "customCallback": populateTplTimer
 };
 
 twitterFetcher.fetch(config8);
+
+//  Trying to make the scrollbars disabled..
 if ($(document).height() > $(window).height()) {
      var scrollTop = ($('html').scrollTop()) ? $('html').scrollTop() : $('body').scrollTop(); // Works for Chrome, Firefox, IE...
      $('html').addClass('noscroll').css('top',-scrollTop);         
 }
 
+
+//  Change the displayed tweet to the next one every 3 seconds
 function populateTplTimer(tweets) {
    setInterval(function(){  
-   populateTpl(tweets)}, 3000);
+   populateTpl(tweets)}, 3000);   //  Update this timer to change how often you want the tweets to update
 }
 
+
+//  This code below actually draws the tweets
 function populateTpl(tweets){
   console.log("populated");
-  var element = document.getElementById('gotHacked');
+  var element = document.getElementById('gotHacked'); //  Div element you're writing the data to
   var html = '<ul>';
-  increment++;
-  for (i = 0, lgth = i+1; i < lgth ; i++) {
+  increment++;      //  Every time this is called, skip to the next tweet
+  for (var i = 0, lgth = i+1; i < lgth ; i++) {
     var tweetObject = tweets[increment];
-    html += '<li>'
+    // Write the HTML code as a string to display in the div
+    html += '<li>'  
       + (tweetObject.image ? '<div class="tweet-img"><img src="'+tweetObject.image+'" /></div>' : '') +
      // '<h2 style="margin-left: -75%;color:white;font-size:150%">"</h>'+
       // '<p style="text-align:none;margin-top:0%;margin-left:-95%;padding:-10%;font-size:160%"class="tweet-content">"'+
@@ -133,5 +139,5 @@ function populateTpl(tweets){
     + '</li>';
   }
   html += '</ul>';
-  element.innerHTML = html;
+  element.innerHTML = html;     //Set the HTML code to the HTML string
 }
