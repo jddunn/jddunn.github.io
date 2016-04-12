@@ -117,7 +117,6 @@ function populateTplTimer(tweets) {
 
 //  This code below actually draws the tweets
 function populateTpl(tweets){
-  console.log("populated");
   var element = document.getElementById('gotHacked'); //  Div element you're writing the data to
   var html = '<ul>';
   increment++;      //  Every time this is called, skip to the next tweet
