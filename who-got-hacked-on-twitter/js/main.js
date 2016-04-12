@@ -108,7 +108,6 @@ if ($(document).height() > $(window).height()) {
 
 function populateTplTimer(tweets) {
    setInterval(function(){  
-
    populateTpl(tweets)}, 3000);
 }
 
@@ -127,12 +126,12 @@ function populateTpl(tweets){
        tweetObject.tweet +'   "'
   // '<p style="font-size:160%"class="tweet-content">"' +'</p>' +'</p>' +'</p>'
   // '<h2 style=margin-left: 10%;color:white;font-size:150%">"'  +'</h>'+
-      + '<p style="text-align:none;margin-top:5%;margin-left:55%;color:grey;font-size:130%"class="tweet-infos">POSTED : <br></p> ' +'<p style="margin-top:0%;margin-left:54%;color:red">'+ tweetObject.time + '</p>'
-      + '<p style="font-size:150%;color:light-blue";class="tweet-authors">' +'<a style="font-size:150%;margin-left:1%;padding:5%;color:grey;padding:5%;color:grey"href="' +tweetObject.author + '</p>'+'</a>'
-     + '<p style="font-size:90%;margin-left: 8%; margin-top: 1%;padding:5%;color:grey"class="tweet-link"><a style="font-size:150%;margin-left: 1%;padding:5%;color:grey;padding:5%;color:grey"href="' + tweetObject.permalinkURL + '">link</a></p>'
+      + '<p style="text-align:none;margin-top:5%;margin-left:55%;font-size:130%"class="tweet-infos">POSTED : <br></p> ' +'<p style="margin-top:0%;margin-left:54%;color:red">'+ tweetObject.time + '</p>'
+      + '<p style="margin-left:54%;margin-top:-.25%;color: grey;text-align:none">AGO'
+      + '<p class="tweet-authors">' + tweetObject.author + '</p>'
+     + '<p style="margin-left: 1%;padding:5%;color:grey"class="tweet-link"><a style="padding:5%;color:grey"href="' + tweetObject.permalinkURL + '">link</a></p>'
     + '</li>';
   }
   html += '</ul>';
   element.innerHTML = html;
-
 }
