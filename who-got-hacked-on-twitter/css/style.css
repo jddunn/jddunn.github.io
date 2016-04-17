@@ -12,10 +12,10 @@ body {
   /*display: flex;*/
   background-color: black;
   /*text-align: center;*/
-  font-family:Arial,"Liberation Sans",sans-serif;
-  overflow: hidden;
+  font-family: 'Raleway', sans-serif;  overflow: hidden;
 
 }
+
 
 #loadingAnimation {
   /*text-align: center;*/
@@ -28,7 +28,7 @@ h2 {
 }
 
 p, a {
-  font-size:9pt;
+  /*font-size:9pt;*/
   margin:10px 0 0 0;
   color:#3d3d3d;
 }
@@ -43,12 +43,16 @@ a:hover {
 
 .tweet-content p {
   color: white;
-  font-size: 175%;
+  /*font-size: 175%;*/
+}
+
+.tweet-link p,a {
+  color:  #7575a3;
 }
 
 .tweet-content a{
-    color: white;
-  font-size: 120%;
+    color: blue;
+  font-size: 90%;
 }
 
 .tweet-infos p {
@@ -56,12 +60,20 @@ a:hover {
   margin-top: 5%;
   padding: 5%;
   margin-left: -25%;
-  font-size: 100%;
+  /*font-size: 100%;*/
 }
 
 .tweet-authors p {
-  margin-left: -25%;
-  font-size: 130%;
+  margin-left: -125%;
+    /*font-size: 10px;*/
+
+}
+
+.tweet-authors {
+    /*margin-left: -125%;*/
+    font-size: 150%;
+  /*font-size: 10px;*/
+
 }
 
 .tweet-content li, a {
@@ -74,18 +86,59 @@ p, a {
 }
 
 .tweet-authors a {
-  margin-left: -25%;
-  font-size: 130%;
+
+  /*margin-left: -125%;*/
+  /*font-size: 10px;*/
 }
 
 .tweet-authors li {
-  font-size: 130%;
+  /*font-size: 90%;*/
 }
 
-#gotHacked p {
-  font-size: 120%;
-  color: white;
+#gotHacked {
+  margin-top: -2%;
 }
+
+
+#gotHacked p {
+  color: white;
+  font-size: 120%;
+}
+
+#gotHacked a {
+  color: white;
+  /*font-size: 910%;*/
+}
+
+
+#tweetAuthor {
+  display: inline-block;
+  text-align: center;
+  padding: 1%;
+  max-width: 75%;
+  border-color: #BFDBFF;
+  border-style: ridge;
+  border-radius: 5px;
+
+}
+
+#tweetAuthor a {
+  /*padding: 20px;*/
+  color:   #297AB8;
+  margin-top: -35%;
+  font-size: 100%;
+}
+
+
+.tweetAuthor p {
+    /*border-style: groove;*/
+
+  color: white;
+  padding: 5%;
+  margin-top: -15%;
+  font-size: 10%;
+}
+
 
 
 #gotHacked {
@@ -95,7 +148,6 @@ p, a {
   margin-left: 5%;
   margin-top: 8%;
   overflow: hidden; 
-
 }
 
 
@@ -134,15 +186,15 @@ ul li:hover {
 }
 
 .user a {
- width: 100px;
+ width: 50px;
 }
 
 .tweet-img img {
   align: middle;
   text-align: center;
-  margin-top: -15%;
-  height: 25%;
-  width: 25%;
+  margin-top: 5%;
+  height: 5%;
+  width: 15%;
 }
 
 .user span span {
@@ -171,8 +223,8 @@ ul li:hover {
 }
 
 .media img {
-  max-width:50%;
-  max-height:50%;
+  max-width:20%;
+  max-height:20%;
 }
 
 #linkage {

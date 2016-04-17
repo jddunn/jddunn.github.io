@@ -123,18 +123,19 @@ function populateTpl(tweets){
   for (var i = 0, lgth = i+1; i < lgth ; i++) {
     var tweetObject = tweets[increment];
     // Write the HTML code as a string to display in the div
-    html += '<li>'  
+    html += '<li>'       
+     + '<div id = "tweetAuthor">' + tweetObject.author + '</div>' +"<br>" + "<br>" +
+
       + (tweetObject.image ? '<div class="tweet-img"><img src="'+tweetObject.image+'" /></div>' : '') +
      // '<h2 style="margin-left: -75%;color:white;font-size:150%">"</h>'+
       // '<p style="text-align:none;margin-top:0%;margin-left:-95%;padding:-10%;font-size:160%"class="tweet-content">"'+
-      '<p style="font-size:120%"class="tweet-content">"  '+   
+      '<p style=""class="tweet-content">"  '+   
        tweetObject.tweet +'   "'
   // '<p style="font-size:160%"class="tweet-content">"' +'</p>' +'</p>' +'</p>'
   // '<h2 style=margin-left: 10%;color:white;font-size:150%">"'  +'</h>'+
-      + '<p style="text-align:none;margin-top:5%;margin-left:55%;font-size:130%"class="tweet-infos">POSTED : <br></p> ' +'<p style="margin-top:0%;margin-left:54%;color:red">'+ tweetObject.time + '</p>'
-      + '<p style="margin-left:54%;margin-top:-.25%;color: grey;text-align:none">AGO'
-      + '<p class="tweet-authors">' + tweetObject.author + '</p>'
-     + '<p style="margin-left: 1%;padding:5%;color:grey"class="tweet-link"><a style="padding:5%;color:grey"href="' + tweetObject.permalinkURL + '">link</a></p>'
+      + '<p style="text-align:none;margin-top:5%;margin-left:55%;color:  #ff3333;"class="tweet-infos">TWEETED <br></p> ' +'<p style="margin-top:0%;margin-left:54%;color: #ff4d4d;">'+ tweetObject.time + 'ago</p>'
+      // + '<p style="margin-left:54%;margin-top:-.05%;color:   #C5D0D4;text-align:none">ago'
+     + '<p style="margin-left: 1%;padding:5%;color: #7575a3"class="tweet-link"><a style="padding:5%;color:  #ccccff; font-size: 90%;"href="' + tweetObject.permalinkURL + '">link</a></p>'
     + '</li>';
   }
   html += '</ul>';
