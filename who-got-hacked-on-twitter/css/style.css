@@ -2,20 +2,20 @@
 * Example style!
 * You can do whatever the hell you want on your site :-)
 */
-
+html {
+  overflow: hidden;
+}
 
 body {
-
-  margin: 0;
-  height: 100%;
-  width: 100%;
+    margin: 0;
+    height: 100%;
+    width: 100%;
+    overflow: hidden;
   /*display: flex;*/
   background-color: black;
   /*text-align: center;*/
-  font-family: 'Raleway', sans-serif;  overflow: hidden;
-
+  font-family: 'Indie Flower', cursive;
 }
-
 
 #loadingAnimation {
   /*text-align: center;*/
@@ -41,10 +41,6 @@ a:hover {
   color:#82afff;
 }
 
-.tweet-content p {
-  color: white;
-  /*font-size: 175%;*/
-}
 
 .tweet-link p,a {
   color:  #7575a3;
@@ -53,6 +49,8 @@ a:hover {
 .tweet-content a{
     color: blue;
   font-size: 90%;
+    overflow: hidden; 
+
 }
 
 .tweet-infos p {
@@ -60,10 +58,14 @@ a:hover {
   margin-top: 5%;
   padding: 5%;
   margin-left: -25%;
+    overflow: hidden; 
+
   /*font-size: 100%;*/
 }
 
 .tweet-authors p {
+    overflow: hidden; 
+
   margin-left: -125%;
     /*font-size: 10px;*/
 
@@ -72,6 +74,8 @@ a:hover {
 .tweet-authors {
     /*margin-left: -125%;*/
     font-size: 150%;
+      overflow: hidden; 
+
   /*font-size: 10px;*/
 
 }
@@ -97,15 +101,21 @@ p, a {
 
 #gotHacked {
   margin-top: -2%;
+    overflow: hidden; 
+
 }
 
 
 #gotHacked p {
+    overflow: hidden; 
+
   color: white;
   font-size: 120%;
 }
 
 #gotHacked a {
+
+  overflow: hidden; 
   color: white;
   /*font-size: 910%;*/
 }
@@ -119,6 +129,8 @@ p, a {
   border-color: #BFDBFF;
   border-style: ridge;
   border-radius: 5px;
+    overflow: hidden; 
+
 
 }
 
@@ -127,6 +139,8 @@ p, a {
   color:   #297AB8;
   margin-top: -35%;
   font-size: 100%;
+    overflow: hidden; 
+
 }
 
 
@@ -137,6 +151,8 @@ p, a {
   padding: 5%;
   margin-top: -15%;
   font-size: 10%;
+    overflow: hidden; 
+
 }
 
 
@@ -147,6 +163,7 @@ p, a {
   width: 75%;
   margin-left: 5%;
   margin-top: 8%;
+
   overflow: hidden; 
 }
 

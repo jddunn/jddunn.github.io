@@ -129,13 +129,13 @@ function populateTpl(tweets){
       + (tweetObject.image ? '<div class="tweet-img"><img src="'+tweetObject.image+'" /></div>' : '') +
      // '<h2 style="margin-left: -75%;color:white;font-size:150%">"</h>'+
       // '<p style="text-align:none;margin-top:0%;margin-left:-95%;padding:-10%;font-size:160%"class="tweet-content">"'+
-      '<p style=""class="tweet-content">"  '+   
+      '<p style="font-size:150%"class="tweet-content">"  '+   
        tweetObject.tweet +'   "'
   // '<p style="font-size:160%"class="tweet-content">"' +'</p>' +'</p>' +'</p>'
   // '<h2 style=margin-left: 10%;color:white;font-size:150%">"'  +'</h>'+
       + '<p style="text-align:none;margin-top:5%;margin-left:55%;color:  #ff3333;"class="tweet-infos">TWEETED <br></p> ' +'<p style="margin-top:0%;margin-left:54%;color: #ff4d4d;">'+ tweetObject.time + 'ago</p>'
       // + '<p style="margin-left:54%;margin-top:-.05%;color:   #C5D0D4;text-align:none">ago'
-     + '<p style="margin-left: 1%;padding:5%;color: #7575a3"class="tweet-link"><a style="padding:5%;color:  #ccccff; font-size: 90%;"href="' + tweetObject.permalinkURL + '">link</a></p>'
+     + '<p style="margin-left: 1%;padding:5%;color: #7575a3;margin-top:-15;%"class="tweet-link"><a style="padding:5%;color:  #ccccff; font-size: 90%;"href="' + tweetObject.permalinkURL + '">link</a></p>'
     + '</li>';
   }
   html += '</ul>';
