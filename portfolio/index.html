@@ -11,12 +11,15 @@
 	<link rel="shortcut icon" href="../favicon.ico">
 	<link rel="stylesheet" type="text/css" href="css/elastic_grid.min.css" />
     <link rel="stylesheet" type="text/css" href="css/demo.css"/>
-    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/rr_dark.css"/>
+
     <script>
     if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
         alert("This site is kind of annoying to browse in mobile and you can't see all the pictures, but go for it.");
     }
     </script>
+
+
 </head>
 <body style="background:#fff;">
 <div id="elastic_grid_demo"></div>
@@ -26,19 +29,22 @@
 <script src="js/classie.js"></script>
 <script src="https://use.fontawesome.com/f986fb3504.js"></script>
 <script type="text/javascript" src="js/elastic_grid.min.js"></script>
+<script src="js/readremaining.jquery.js"></script>
+
 <!-- Latest compiled and minified CSS -->
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 
 <!-- Optional theme -->
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+<link rel="stylesheet" href="css/rr_light.css"/>
 
 <!-- Latest compiled and minified JavaScript -->
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
-<script type="text/javascript" src="jquery-1.3.2.min.js"></script>
+<!-- <script type="text/javascript" src="jquery-1.3.2.min.js"></script> -->
 
 <body>
 
-  <div id = "header" style = "float: top; position: absolute;   z-index: 10;">
+  <div id = "header" style = "float: top;">
   <div class="row">
     <div class="col-xs-12 col-md-6">
         <h1 style = "padding-left: 50px; margin-top: 15px; letter-spacing: 15px; float: top; float: left;">JOHNNY DUNN
@@ -74,6 +80,7 @@
         <li><a href="https://www.youtube.com/user/jddunnfilms" target="_blank"><i class="fa fa-sm fa-youtube"></i></a></li>
         <li><a href="https://soundcloud.com/j-d-d-music" target="_blank"><i class="fa fa-sm fa-soundcloud"></i></a></li>
         <li><a href="https://plus.google.com/102290549326843448610" target="_blank"><i class="fa fa-sm fa-google-plus"></i></a></li>
+
         <!-- <li><a href="#"><i class="fa fa-lg fa-rss"></i></a></li> -->
         <!-- <li><a href="#"><i class="fa fa-lg fa-foursquare"></i></a></li> -->
         <!-- <li><a href="#"><i class="fa fa-lg fa-youtube-play"></i></a></li> -->
@@ -82,13 +89,15 @@
  </div>
  </div>
 </div>
-<div id = "portfolio" style = "padding-top: 0px; position: relative; float: bottom;   z-index: 1;">
+<div id = "portfolio" style = "padding-top: 0px;">
 </body>
+
+
 <script type="text/javascript">
     $(function(){
         $("#portfolio").elastic_grid({
             'showAllText' : 'ALL',
-            'filterEffect': 'helix', // moveup, scaleup, fallperspective, fly, flip, helix , popup
+            'filterEffect': 'fly', // moveup, scaleup, fallperspective, fly, flip, helix , popup
             'hoverDirection': true,
             'hoverDelay': 0,
             'hoverInverse': false,
@@ -409,4 +418,9 @@
         });
     });
 </script>
+
+    <script>
+    $('body').readRemaining();
+    </script>
+
 </html>
