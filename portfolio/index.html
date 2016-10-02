@@ -34,10 +34,11 @@
 
 <!-- Latest compiled and minified JavaScript -->
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+<script type="text/javascript" src="jquery-1.3.2.min.js"></script>
 
 <body>
 
-  <div id = "header" style = "float: top; position: fixed;   z-index: 10;">
+  <div id = "header" style = "float: top; position: absolute;   z-index: 10;">
   <div class="row">
     <div class="col-xs-12 col-md-6">
         <h1 style = "padding-left: 50px; margin-top: 15px; letter-spacing: 15px; float: top; float: left;">JOHNNY DUNN
@@ -77,23 +78,15 @@
         <!-- <li><a href="#"><i class="fa fa-lg fa-foursquare"></i></a></li> -->
         <!-- <li><a href="#"><i class="fa fa-lg fa-youtube-play"></i></a></li> -->
     </ul>
-    <!-- </div> -->
-   <!-- </div> -->
-    <!-- </div> -->
-    <!-- </div> - ->
-<!--     </div>
- -->    
  </div>
  </div>
  </div>
-
-<div id = "elastic_grid_demo" style = "padding-top: 0px; position: relative; float: bottom;   z-index: 1;">
-
-
+</div>
+<div id = "portfolio" style = "padding-top: 0px; position: relative; float: bottom;   z-index: 1;">
 </body>
 <script type="text/javascript">
     $(function(){
-        $("#elastic_grid_demo").elastic_grid({
+        $("#portfolio").elastic_grid({
             'showAllText' : 'ALL',
             'filterEffect': 'helix', // moveup, scaleup, fallperspective, fly, flip, helix , popup
             'hoverDirection': true,
