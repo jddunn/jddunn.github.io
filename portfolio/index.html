@@ -6,21 +6,13 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>Johnny Dunn Portfolio</title>
 	<meta name="description" content="Johnny Dunn Portfolio"/>
-	<meta name="keywords" content="responsive grid, responsive gallery, porfolio, thumbnails, grid, preview, google image search, jquery, image grid, expanding, preview, portfolio" />
-	<meta name="author" content="Johnny Dunn | Developer / Designer Portfolio" />
+	<meta name="keywords" content="johnny dunn, NYC, new york city, Parsons, virtual reality, augmented reality, VR, AR, cybersecurity, interactive, creative technology, creative technologist, user experience, user interaction, UI, UX, UI/UX, UI / UX"/>
+	<meta name="author" content="Johnny Dunn | Developer / designer studying at Parsons and living in NYC. Focused on AI (machine learning, natural language processing), VR / AR, cybersecurity, and meaningful interactive experiences." />
 	<link rel="shortcut icon" href="../favicon.ico">
     <link rel="stylesheet" type="text/css" href="css/demo.css" />
 	<link rel="stylesheet" type="text/css" href="css/elastic_grid.min.css" />
     <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
     <script>
-    // var is_chrome = navigator.userAgent.toLowerCase().indexOf('chrome') > -1;
-
-    // if(!is_chrome)
-    // {
-    //   alert("Please try running this site in Chrome! Some versions of Firefox / IE will mess with the colors / positions.");
-    // //do stuff
-    // }  
-
     if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
         alert("This site is kind of annoying to browse in mobile and you can't see all the pictures, but go for it.");
     }
@@ -32,14 +24,13 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 <script src="js/modernizr.custom.js"></script>
 <script src="js/classie.js"></script>
-
+<script src="https://use.fontawesome.com/f986fb3504.js"></script>
 <script type="text/javascript" src="js/elastic_grid.min.js"></script>
 <!-- Latest compiled and minified CSS -->
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 
 <!-- Optional theme -->
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
-<script src="https://use.fontawesome.com/f986fb3504.js"></script>
 
 <!-- Latest compiled and minified JavaScript -->
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
@@ -90,22 +81,20 @@
     </div>
 </div>
     
-
 <div id = "grid" style = "padding-top: 0px">
 </div>
 
-<!-- <div id = "elastic_grid_demo"> -->
 </body>
 <script type="text/javascript">
     $(function(){
         $("#grid").elastic_grid({
             'showAllText' : 'ALL',
-            'filterEffect': 'popup', // moveup, scaleup, fallperspective, fly, flip, helix , popup
+            'filterEffect': 'helix', // moveup, scaleup, fallperspective, fly, flip, helix , popup
             'hoverDirection': true,
             'hoverDelay': 0,
             'hoverInverse': false,
-            'expandingSpeed': 50,
-            'expandingHeight': 500,
+            'expandingSpeed': 200,
+            'expandingHeight': 600,
             'items' :
             [
                 {
@@ -416,11 +405,6 @@
                     ],
                     'tags'          : ['FILM/PHOTO']
                 },
-
-
-
-   
-
 
             ]
         });
