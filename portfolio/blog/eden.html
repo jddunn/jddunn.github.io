@@ -8,33 +8,33 @@
 
   <!-- Site Properties -->
   <title>Johnny Dunn</title>
-  <link rel="stylesheet" type="text/css" href="../dist/semantic.css">
-  <link rel="stylesheet" type="text/css" href="components/reset.css">
+  <link rel="stylesheet" type="text/css" href="../../dist/semantic.css">
+  <link rel="stylesheet" type="text/css" href="../components/reset.css">
 
-  <link rel="stylesheet" type="text/css" href="components/site.css">
+  <link rel="stylesheet" type="text/css" href="../components/site.css">
 
-  <link rel="stylesheet" type="text/css" href="components/container.css">
+  <link rel="stylesheet" type="text/css" href="../components/container.css">
 
-  <link rel="stylesheet" type="text/css" href="components/grid.css">
+  <link rel="stylesheet" type="text/css" href="../components/grid.css">
 
-  <link rel="stylesheet" type="text/css" href="components/header.css">
+  <link rel="stylesheet" type="text/css" href="../components/header.css">
 
-  <link rel="stylesheet" type="text/css" href="components/image.css">
+  <link rel="stylesheet" type="text/css" href="../components/image.css">
 
-  <link rel="stylesheet" type="text/css" href="components/menu.css">
+  <link rel="stylesheet" type="text/css" href="../components/menu.css">
 
-  <link rel="stylesheet" type="text/css" href="components/divider.css">
-  <link rel="stylesheet" type="text/css" href="components/segment.css">
-  <link rel="stylesheet" type="text/css" href="components/form.css">
-  <link rel="stylesheet" type="text/css" href="components/input.css">
-  <link rel="stylesheet" type="text/css" href="components/button.css">
-  <link rel="stylesheet" type="text/css" href="components/list.css">
-  <link rel="stylesheet" type="text/css" href="components/message.css">
-  <link rel="stylesheet" type="text/css" href="components/icon.css">  
-  <link rel="stylesheet" type="text/css" href="components/table.css"> 
+  <link rel="stylesheet" type="text/css" href="../components/divider.css">
+  <link rel="stylesheet" type="text/css" href="../components/segment.css">
+  <link rel="stylesheet" type="text/css" href="../components/form.css">
+  <link rel="stylesheet" type="text/css" href="../components/input.css">
+  <link rel="stylesheet" type="text/css" href="../components/button.css">
+  <link rel="stylesheet" type="text/css" href="../components/list.css">
+  <link rel="stylesheet" type="text/css" href="../components/message.css">
+  <link rel="stylesheet" type="text/css" href="../components/icon.css">  
+  <link rel="stylesheet" type="text/css" href="../components/table.css"> 
 
-  <script src="assets/library/jquery.min.js"></script>
-  <script src="../dist/semantic.js"></script>
+  <script src="../assets/library/jquery.min.js"></script>
+  <script src="../../dist/semantic.js"></script>
   <script src="https://use.fontawesome.com/f986fb3504.js"></script>
 
 </head>
@@ -47,13 +47,6 @@
   <p class="ui center aligned header" style = "letter-spacing: 3px; padding-top: 0px; margin-top: 40px">a one-sided conversation about me</p>
   <p class="ui center aligned header" style = "letter-spacing: 3px">to you.</p>
   <br>
-  <div class="ui raised very padded text container segment" style = "margin: 0; padding: 25px" id = "main">
-     <p style = "letter-spacing: 2px; display: inline">my name is <div id = "name" style = "display: inline; letter-spacing: 2px"><a href = "#"  style = "display: inline;">johnny dunn</a></div>.</p>
-     <p style = "letter-spacing: 2px; display: inline">do you remember me? did i apply to a job you posted? did you see a project i made online, or in a show? <div id = "openSourceInfoHover" style = "letter-spacing: 2px; display: inline"> <a href = "#" style = "display: inline"> do you want to make or use something i made? </a> </p></div>
-     <p style = "letter-spacing: 2px; display: inline"><br>are you a friend, or do you want to be? maybe i could just ask if this is a personal visit, or if it's something work-related. either way it goes,<div id = "madeThisHover" style = "letter-spacing: 2px; display: inline"> <a href = "#" style = "display: inline"> i made this for you. </a> </p> </div>
-     <!-- <a href="javascript:ReplaceContentInContainer('example1div','Whew! You clicked!')" style = "float: right; margin: 0; margin-top: 20px; padding: 0">next </a> -->
-     </p>
-  </div>
 
   <div class="ui raised very padded text container segment" style = "margin: 0; padding: 25px; display: none" id = "titleInfo">
       <p style = "letter-spacing: 2px; display: inline">does it bother you that the title isn't a palindrome? email with your feedback</p>
@@ -67,6 +60,35 @@
         $("#titleInfo").hide();
       });
   </script>
+
+
+  <div class="ui raised very padded text container segment" style = "margin: 0; padding: 25px" id = "main">
+        <a href = "../index.html"><i class="close icon" id = "close-icon-about" style = "float: right; float: top; margin-top: -15px; margin-right: -10px; cursor: pointer;
+        color: #919191;" onMouseOver="this.style.color='#efefef'" onMouseOut="this.style.color='#919191'"></i></a>
+     <div style = "text-align: center"><h3 style = "letter-spacing: 3px; display: inline;">Eden</h3></div>
+    <div class="ui divider"></div>
+     <div style = "text-align: center"><p style = "letter-spacing: 2px; display: inline; font-size: .8em;">Last updated on March 5th, 2017</p><br>
+          <!-- <a href="http://try-emote.ml" target="_blank" style = "font-size: .85em">GitHub</a><br> -->
+          <!-- <a href="http://emoter.me" target="_blank" style = "font-size: .85em">Website</a><br> -->
+    <div class="ui divider"></div>
+      </div>
+     <div style = "text-align: center">  <p style = "font-size: .85em; letter-spacing: 1px; text-align: center">Eden is an interactive fiction game with a morality-based storyline, incorporated with <a href = "emoter.html">Emoter</a>, the chatbot, to use conversations as the player interaction to drive the branching narrative. Currently the game is built entirely in Python, and played through a command line interface. An online website to play the game will be created as part of my final thesis demo. Eden will also be open-sourced further on.<br><br>
+                  The game begins with a someone named Charles waking you, and asking you what you were thinking about. The only player interaction is what you say to Charles. As your conversation develops, the story unfolds and character actions are done and described automatically. This is meant to be a story driven by the visual imagery of the writing, as well as the dialog.</p>
+                    <a href = "../images/eden_demo_1.png" target="_blank"><img class="ui center medium image" style = "display: block; margin-left: auto; margin-right: auto" src="../images/eden_demo_1.png"></a>
+
+                    <p style = "font-size: .85em; letter-spacing: 1px; text-align: center; margin: 10px">You can choose to continue questioning why you're here and what you're doing, or you can just follow along with what Charles says to a game end. You can also refuse to go with Charles. There are four paths to four possible endings.</p>
+                    <a href = "../images/eden_demo_2.png" target="_blank"><img class="ui center medium image" style = "display: block; margin-left: auto; margin-right: auto" src="../images/eden_demo_2.png"></a>
+
+
+                      <p style = "font-size: .85em; letter-spacing: 1px; text-align: center; margin: 10px">Eden keeps track of things you said in the game as items, and thus is able to be a branching narrative with different paths, because the Charles technically does have some basic memory of the conversation.</p>
+
+                      <!-- <p style = "font-size: .85em; letter-spacing: 1px; text-align: center; margin: 10px">Emote has a mass analysis feature for analyzing CSV data.</p> -->
+                    <a href = "../images/eden_demo_3.png" target="_blank"><img class="ui center medium image" style = "display: block; margin-left: auto; margin-right: auto" src="../images/eden_demo_3.png"></a>
+                    <br>
+
+    <!-- <div class="ui divider"></div> -->
+    </div>
+  </div>
 
   <div class="ui raised very padded text container segment" style = "margin: 0; padding: 25px; display: none" id = "aboutMe">
         <i class="close icon" id = "close-icon-about" style = "float: right; float: top; margin-top: -15px; margin-right: -10px; cursor: pointer;
@@ -101,12 +123,10 @@
         });
     </script>
 
-
-
   <div class="ui raised very padded text container segment" style = "margin: 0; padding: 25px; display: none" id = "openSourceInfo">
         <i class="close icon" id = "close-icon-openSource" style = "float: right; float: top; margin-top: -15px; margin-right: -10px; cursor: pointer;
         color: #919191;" onMouseOver="this.style.color='#efefef'" onMouseOut="this.style.color='#919191'"></i>
-     <p style = "letter-spacing: 2px; display: inline">most of my personal projects are open-source, and on  <a href = "https://github.com/jddunn" target="_blank" style = "display: inline"> github with docs</a> (or not with docs).
+     <p style = "letter-spacing: 2px; display: inline">most of my personal projects are open-source, and on  <a href = "https://github.com/jddunn" target="_blank" style = "display: inline"> github with docs</a> (or not).
      </p>
   </div>
 
@@ -125,10 +145,10 @@
 
           <div><p style = "font-size: .8em; margin-bottom: 5px; letter-spacing: 2px">year 2017 (and some of 2016)</p></div>
 
-              <span class="span-item" style = "margin: 5px;" id = "span-item-1"><strong>Emote / Emoter</strong>  -  a customizable chatbot incorporated with a custom sentiment analyzer library in Python, to give empathy and emotional intelligence (in-progress; as part of my undergrad thesis)</span><br>
-
-  <!--               <div class='' id='b1' style = "display: inline; display: none; margin-top: 20px; margin-bottom: 40px; text-align: center"> 
+              <span class="span-item" style = "margin: 5px;" id = "span-item-1"><strong>Emote / Emoter</strong>  -  a customizable chatbot incorporated with a custom sentiment analyzer library in Python, to give empathy and emotional intelligence (created for my undergrad thesis)</span><br>
+                <div class='' id='b1' style = "display: inline; display: none; margin-top: 20px; margin-bottom: 40px; text-align: center"> 
                   <div class="ui divider"></div>
+                    <a href="http://try-emote.ml" target="_blank" style = "font-size: .85em">Blog Post</a><br>
                     <a href="http://try-emote.ml" target="_blank" style = "font-size: .85em">GitHub</a><br>
                     <a href="http://try-emote.ml" target="_blank" style = "font-size: .85em">Online Demo</a><br><br>
                     <div>
@@ -136,112 +156,55 @@
                     <img class="ui center medium image" style = "display: block; margin-left: auto; margin-right: auto" src="images/emote-demo-2.png">
                     </div>
                   <div class="ui divider"></div>
-                </div> -->
+                </div>
 
 
-                <div class='' id='b1' style = "display: inline; display: none; margin-top: 20px; margin-bottom: 40px;"> 
+
+<!--                 <div class='' id='b1' style = "display: inline; display: none; margin-top: 20px; margin-bottom: 40px;"> 
                   <div class="ui divider"></div>
-                  <p style = "text-align: center; margin-bottom: 10px; letter-spacing: 3px;"><strong>Emote</strong></p>
+                  <p style = "text-align: center; margin-bottom: 10px"><strong>Emote</strong></p>
                     <div style = "text-align: center; margin: 10px">
-                    <a href="blog/emoter.html" style = "font-size: .85em">Full Post</a><br>
-                    <a href="http://emoter.me" target="_blank" style = "font-size: .85em">Website</a><br>
-                    <!-- <a href="http://try-emote.ml" target="_blank" style = "font-size: .85em">Emote Online Demo</a><br> -->
+                    <a href="http://try-emote.ml" target="_blank" style = "font-size: .85em">Online Demo</a><br>
                     <a href="http://try-emote.ml" target="_blank" style = "font-size: .85em">GitHub</a><br>
                     </div>
-                  <p style = "font-size: .85em; letter-spacing: 1px; text-align: center">Emote was written in Python and uses the TextBlob / NLTK, NumPy, SciPy, pandas, and scikit-learn libraries to build a probabilistic sentiment analyzer for 26 different classifications. These classifications have been divided into 13 pairs of opposites, and are designed to be grouped together to create tone clusters that can then encompass more values as well as decrease false positives. Based off these tone clusters, a further 10 additional tone classifications are derived, allowing for 36 different tones to be detected.</p><br>
-                    <a href = "images/emote-demo-1.png" target="_blank"><img class="ui center medium image" style = "display: block; margin-left: auto; margin-right: auto" src="images/emote-demo-1.png"></a>
-                      <p style = "font-size: .85em; letter-spacing: 1px; text-align: center; margin: 10px">Emote has a web interface built in Flask and with Bootstrap.</p>
-
-                    <a href = "images/emote-demo-2.png" target="_blank"><img class="ui center medium image" style = "display: block; margin-left: auto; margin-right: auto" src="images/emote-demo-2.png"></a>
-
-                      <p style = "font-size: .85em; letter-spacing: 1px; text-align: center; margin: 10px">Emote has a mass analysis feature for analyzing CSV data.</p>
-                    <a href = "images/emote-demo-4.png" target="_blank"><img class="ui center medium image" style = "display: block; margin-left: auto; margin-right: auto" src="images/emote-demo-4.png"></a>
+                  <p style = "font-size: .9em">Emote uses the TextBlob / NLTK, NumPy, SciPy, pandas, and scikit-learn libraries to build a probabilistic sentiment analyzer for 26 different classifications. These classifications have been divided into 13 pairs of opposites, and are designed to be grouped together to create tone clusters that can then encompass more values as well as decrease false positives. Based off these tone clusters, a further 10 additional tone classifications are derived, allowing for 36 different tones to be detected.</p>
+                  <p style = "font-size: .9em; text-align: center">Emote has a web interface built in Flask and Bootstrap.</p>
+                    <img class="ui center medium image" src="images/emote-demo-1.png">
+                    <img class="ui center medium image" src="images/emote-demo-2.png">
+                  <p style = "font-size: .9em; text-align: center">Emote has a mass analysis feature for analyzing CSV data.</p>
+                    <img class="ui center medium image" src="images/emote-demo-3.png">
+                    <img class="ui center medium image" src="images/emote-demo-4.png">
                     <br>
                   <p style = "text-align: center;"><strong> Emoter</strong> </p>
-                  <p style = "font-size: .85em; letter-spacing: 1px; text-align: center">Emoter is a basic but functional chatbot platform intergrated with Emote (also in Python), in order to give chatbot agents the ability to empathize with users and give back emotionally appropriate responses. Emoter agents thus can operate on a "higher level of thinking", by first categorizing messages and then choosing specific, interchangable "conversations" (lists of text responses) to respond from based on certain emotional tones. Within these conversations, Emoter looks for matching text in its database and compares it with the user input on a sliding threshold, outputting the corresponding response if the threshold is met.
-                  </p>
-                  
-                  <a href = "images/emoter-website-screenshot.png" target="_blank"><img class="ui center medium image" style = "display: block; margin-left: auto; margin-right: auto" src="images/emoter-website-screenshot.png"></a>
-                        <p style = "font-size: .85em; text-align: center; margin: 10px; letter-spacing: 1px;">Emoter's website was created with three.js and SemanticUI. The globe displays quotes that have been classified according to Emote.</p>
-                    <a href = "images/emoter_demo_3.png" target="_blank"><img class="ui center medium image" style = "display: block; margin-left: auto; margin-right: auto" src="images/emoter_demo_3.png"></a>
-                    <br>
-                    <a href = "images/emoter_demo_5.png" target="_blank"><img class="ui center medium image" style = "display: block; margin-left: auto; margin-right: auto" src="images/emoter_demo_5.png"></a>
-                                      <p style = "font-size: .85em; text-align: center; letter-spacing: 1px; margin: 10px">A demo 'Emoter agent' with a persona of a fitness coach.</p>
-                    <p style = "font-size: .85em; letter-spacing: 1px; text-align: center">
-                                    In Emoter's training data, values can be passed after the matching input-response pair, and checked for before Emoter gives out a response. In my interactive fiction game <a href = "/blog/eden.html">Eden</a>, I used this to allow for a branching narrative to continue driven by the mechanic of talking to a mysterious character in the game. The Emoter bot was able to keep track of whether or not certain things were said by the user previously, and how often each thing was said. Thus, Emoter has a basic short-term memory in store, so that the bots can carry out an intelligent, coherent conversation (as opposed to Cleverbot, which cannot carry on with the same conversation).<br><br>
-                  Both Emote and Emoter can be run offline. Emoter has also been open-sourced, and is included with Emote's source code.</p>
-                  <div class="ui divider"></div>
-
-                </div>
+                  <p style = "font-size: .9em">Emote uses the TextBlob / NLTK, NumPy, SciPy, pandas, and scikit-learn libraries to build a probabilistic sentiment analyzer for 26 different classifications. These classifications have been divided into 13 pairs of opposites, and are designed to be grouped together to create tone clusters that can then encompass more values as well as decrease false positives. Based off these tone clusters, a further 10 additional tone classifications are derived, allowing for 36 different tones to be detected.</p>
+                  <p style = "font-size: .9em; text-align: center">Emote has a web interface built in Flask and Bootstrap.</p>
+                    <img class="ui center medium image" src="images/emote-demo-1.png">
+                    <img class="ui center medium image" src="images/emote-demo-2.png">
+                  <p style = "font-size: .9em; text-align: center">Emote has a mass analysis feature for analyzing CSV data.</p>
+                    <img class="ui center medium image" src="images/emote-demo-3.png">
+                    <img class="ui center medium image" src="images/emote-demo-4.png">
+                </div> -->
 
               <span class="span-item" style = "margin: 5px" id = "span-item-2"><strong>Eden</strong>  -  a morality-based interactive fiction game, where you chat in a conversation to drive the narrative (in-progress, as part of my undergrad thesis)</span><br>
-
-                   <div class='' id='b2' style = "display: inline; display: none; margin-top: 20px; margin-bottom: 40px;"> 
+                 <div class='' id='b2' style = "display: inline; display: none; margin-top: 20px; margin-bottom: 40px; text-align: center"> 
                   <div class="ui divider"></div>
-                  <p style = "text-align: center; margin-bottom: 10px; letter-spacing: 3px;"><strong>Eden</strong></p>
-                    <div style = "text-align: center; margin: 10px">
-                    <a href="blog/eden.html" style = "font-size: .85em">Full Post</a><br>
-<!--                     <a href="http://emoter.me" target="_blank" style = "font-size: .85em">Website</a><br>
- -->                    <!-- <a href="http://try-emote.ml" target="_blank" style = "font-size: .85em">Emote Online Demo</a><br> -->
-                    <!-- <a href="http://try-emote.ml" target="_blank" style = "font-size: .85em">GitHub</a><br> -->
-                    </div>
-                  <p style = "font-size: .85em; letter-spacing: 1px; text-align: center">Eden is an interactive fiction game with a morality-based storyline, incorporated with <a href = "blog/emoter.html">Emoter</a>, the chatbot, to use conversations as the player interaction to drive the branching narrative. Currently the game is built entirely in Python, and played through a command line interface. An online website to play the game will be created as part of my final thesis demo. Eden will also be open-sourced further on.<br><br>
-                  The game begins with a someone named Charles waking you, and asking you what you were thinking about. The only player interaction is what you say to Charles. As your conversation develops, the story unfolds and character actions are done and described automatically. This is meant to be a story driven by the visual imagery of the writing, as well as the dialog.</p>
-                    <a href = "images/eden_demo_1.png" target="_blank"><img class="ui center medium image" style = "display: block; margin-left: auto; margin-right: auto" src="images/eden_demo_1.png"></a>
+                    <a href="http://try-emote.ml" target="_blank" style = "font-size: .85em">Blog Post</a><br>
+                    <a href="http://try-emote.ml" target="_blank" style = "font-size: .85em">GitHub</a><br>
+                    <a href="http://try-emote.ml" target="_blank" style = "font-size: .85em">Online Demo</a><br>
+                  <div class="ui divider"></div>
+                  </div>
 
-                    <p style = "font-size: .85em; letter-spacing: 1px; text-align: center; margin: 10px">You can choose to continue questioning why you're here and what you're doing, or you can just follow along with what Charles says to a game end. You can also refuse to go with Charles. There are four paths to four possible endings.</p>
-                    <a href = "images/eden_demo_2.png" target="_blank"><img class="ui center medium image" style = "display: block; margin-left: auto; margin-right: auto" src="images/eden_demo_2.png"></a>
-
-
-                      <p style = "font-size: .85em; letter-spacing: 1px; text-align: center; margin: 10px">Eden keeps track of things you said in the game as items, and thus is able to be a branching narrative with different paths, because the Charles technically does have some basic memory of the conversation.</p>
-
-                      <!-- <p style = "font-size: .85em; letter-spacing: 1px; text-align: center; margin: 10px">Emote has a mass analysis feature for analyzing CSV data.</p> -->
-                    <a href = "images/eden_demo_3.png" target="_blank"><img class="ui center medium image" style = "display: block; margin-left: auto; margin-right: auto" src="images/eden_demo_3.png"></a>
-                    <br>
-                 
-                    <div class="ui divider"></div>
-                </div>
-
+                <!-- <div class='' id='b2' style = "display: inline; display: none">  -->
+                <!-- abstract content  -->
+                <!-- </div> -->
 
               <span class="span-item" style = "margin: 5px" id = "span-item-3"><strong>Dreamgazer</strong>  -  a lucid dreaming machine and brain computer interface made with an Arduino and an EEG sensor</span><br>
 
-                <div class='' id='b3' style = "display: inline; display: none; margin-top: 20px; margin-bottom: 40px;"> 
+             <div class='' id='b3' style = "display: inline; display: none; margin-top: 20px; margin-bottom: 40px; text-align: center"> 
                   <div class="ui divider"></div>
-                  <p style = "text-align: center; margin-bottom: 10px; letter-spacing: 3px;"><strong>Dreamgazer</strong></p>
-                    <div style = "text-align: center; margin: 10px">
-                    <a href="blog/dreamgazer.html" style = "font-size: .85em">Full Post</a><br>
-                    <a href="http://jddunn.github.io/rough-copies" target="_blank" style = "font-size: .85em">Website (No longer updated as of 2015)</a><br>
-                    <!-- <a href="http://try-emote.ml" target="_blank" style = "font-size: .85em">Emote Online Demo</a><br> -->
-                    <!-- <a href="http://try-emote.ml" target="_blank" style = "font-size: .85em">GitHub</a><br> -->
-                    </div>
-                  <p style = "font-size: .85em; letter-spacing: 1px; text-align: center">Dreamgazer is a mostly conceptualized VR / AR, EEG, tDCS (transcranial direct current stimulation) designed to be 3D printed and then hand-assembled. Dreamgazer's software was planned to be intergrated with an AI (<a href = "blog/emoter.html">Emoter</a>) that would train users to dream, and guide them through their dreams vocally by talking and responding to biofeedback. 
-                  <br><br>Lucid dreaming in wearable tech is something I will continue exploring, but it may be a long time before I get around to making any more iterations of Dreamgazer. I have plans to open-source the early software, as well as the 3D printed plans.</p><br>
-
-                    <a href = "images/DreamGazer-3D-Front.png" target="_blank"><img class="ui center medium image" style = "display: block; margin-left: auto; margin-right: auto" src="images/DreamGazer-3D-Front.png"></a>
-
-                      <p style = "font-size: .85em; letter-spacing: 1px; text-align: center; margin: 10px">The plans were made to be fully functional, with the proper materials and construction once printed.</p>
-
-                    <a href = "images/DreamGazer-Diagram.jpg" target="_blank"><img class="ui center medium image" style = "display: block; margin-left: auto; margin-right: auto" src="images/DreamGazer-Diagram.jpg"></a><br>
-
-                    <div style = "text-align: center">
-                    <iframe width="373" height="210" src="https://www.youtube.com/embed/rFekLHHXhHs" frameborder="0" allowfullscreen></iframe>
-                    </div>
-
-                      <p style = "font-size: .85em; letter-spacing: 1px; text-align: center; margin: 10px">Dreamgazer was designed with a VR interface, in Unity.</p>
-
-                      <a href = "images/DreamGazer-Main-Flowchart.png" target="_blank"><img class="ui center medium image" style = "display: block; margin-left: auto; margin-right: auto" src="images/DreamGazer-Main-Flowchart.png"></a>
-
-                     <p style = "font-size: .85em; letter-spacing: 1px; text-align: center; margin: 10px">The full process of Dreamgazer's functionality.</p>
-
-                    <a href = "images/dreamgazer-prototype-front.jpg" target="_blank"><img class="ui center medium image" style = "display: block; margin-left: auto; margin-right: auto" src="images/dreamgazer-prototype-front.jpg"></a>
-
-                      <p style = "font-size: .85em; letter-spacing: 1px; text-align: center; margin: 10px">In 2015, I made a wearable prototype to induce lucid dreaming using an Arduino, a pulse sensor, the NeuroSky MindWave (EEG), and Processing (for software).<br><br> I was able to detect when I fell asleep within an accuracy of five minutes, and was able to successfully induce lucid dreaming by playing music when REM sleep was detected.</p>
-
-                    <a href = "images/DreamGazer Early Prototype with MindWave - Success Trial Night 1 - Close Look Chart.png" target="_blank"><img class="ui center medium image" style = "display: block; margin-left: auto; margin-right: auto" src="images/DreamGazer Early Prototype with MindWave - Success Trial Night 1 - Close Look Chart.png"></a>
-                    <br>
-                   
-                    <a href = "images/DreamGazer Early Prototype with MindWave - Success Trial Night 2 (Full Log).png" target="_blank"><img class="ui center medium image" style = "display: block; margin-left: auto; margin-right: auto" src="images/DreamGazer Early Prototype with MindWave - Success Trial Night 2 (Full Log).png"></a>
-
+                    <a href="http://try-emote.ml" target="_blank" style = "font-size: .85em">Blog Post</a><br>
+                    <a href="http://try-emote.ml" target="_blank" style = "font-size: .85em">GitHub</a><br>
+                    <a href="http://try-emote.ml" target="_blank" style = "font-size: .85em">Online Demo</a><br>
                   <div class="ui divider"></div>
                 </div>
 
@@ -342,6 +305,7 @@
         </div>
   </div>
 
+
   <div class = "container" style = "text-align: center; padding-top: 40px; padding-bottom: 20px; float: bottom">
     <div class="social">
     <ul>
@@ -367,11 +331,13 @@
         <!-- <li><a href="#"><i class="fa fa-lg fa-foursquare"></i></a></li> -->
         <!-- <li><a href="#"><i class="fa fa-lg fa-youtube-play"></i></a></li> -->
     </ul>
-   </div>
+ </div>
 
   </div>
 
 </div>
+
+
 
     <script>
         $("#close-icon-projects").click(function() { 
@@ -381,6 +347,8 @@
   
         });
     </script>
+
+
 
     <script>
       $('#span-item-1').click(function(){
@@ -520,7 +488,6 @@ $(document).ready(function() {
   ;
 });
 </script>
-</body>
 <script>
 
       $("#name").mouseover(function() {
@@ -528,26 +495,18 @@ $(document).ready(function() {
           $("#projectsList").hide();
           $("#aboutMe2").hide();
           $("#aboutMe").show();
-          $("#projectsList").hide();
-          $("#b1").hide(); $("#b2").hide(); $("#b3").hide(); $("#b4").hide(); $("#b5").hide(); $("#b6").hide(); $("#b7").hide(); $("#b8").hide(); $("#b9").hide();
-          $("#b10").hide(); $("#b11").hide(); $("#b12").hide(); $("#b13").hide(); $("#b14").hide(); $("#b15").hide(); $("#b16").hide(); $("#b17").hide();
       });
       $("#openSourceInfoHover").mouseover(function() {
           $("#aboutMe").hide();
           $("#projectsList").hide();
           $("#aboutMe2").hide();
           $("#openSourceInfo").show();
-          $("#projectsList").hide();
-          $("#b1").hide(); $("#b2").hide(); $("#b3").hide(); $("#b4").hide(); $("#b5").hide(); $("#b6").hide(); $("#b7").hide(); $("#b8").hide(); $("#b9").hide();
-          $("#b10").hide(); $("#b11").hide(); $("#b12").hide(); $("#b13").hide(); $("#b14").hide(); $("#b15").hide(); $("#b16").hide(); $("#b17").hide();
       });
       $("#madeThisHover").mouseover(function() {
           $("#aboutMe").hide();
           $("#openSourceInfo").hide();
           $("#aboutMe2").hide();
           $("#projectsList").show();
-          $("#b1").hide(); $("#b2").hide(); $("#b3").hide(); $("#b4").hide(); $("#b5").hide(); $("#b6").hide(); $("#b7").hide(); $("#b8").hide(); $("#b9").hide();
-          $("#b10").hide(); $("#b11").hide(); $("#b12").hide(); $("#b13").hide(); $("#b14").hide(); $("#b15").hide(); $("#b16").hide(); $("#b17").hide();
       });
       $("#next_about_1").mouseover(function() {
           $("#aboutMe").hide();
@@ -566,14 +525,5 @@ $(document).ready(function() {
           $("#aboutMe3").hide();
       });
 </script>
-<script>
-  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
-
-  ga('create', 'UA-39846512-6', 'auto');
-  ga('send', 'pageview');
-
-</script>
+</body>
 </html>
