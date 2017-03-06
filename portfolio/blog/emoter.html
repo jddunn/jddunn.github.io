@@ -79,6 +79,10 @@
      <br><br>
      Emote was written in Python and uses the TextBlob / NLTK, NumPy, SciPy, pandas, and scikit-learn libraries to build a probabilistic sentiment analyzer for 26 different classifications. These classifications have been divided into 13 pairs of opposites, and are designed to be grouped together to create tone clusters that can then encompass more values as well as decrease false positives. Based off these tone clusters, a further 10 additional tone classifications are derived, allowing for 36 different tones to be detected.
      </p><br><br>
+
+         <a href = "../images/Emote-Software-Architecture-Flowchart.png" target="_blank"><img class="ui center medium image" style = "display: block; margin-left: auto; margin-right: auto" src="../images/Emote-Software-Architecture-Flowchart.png"></a>
+          <p style = "font-size: .85em; text-align: center; margin: 10px; letter-spacing: 1px;">A flowchart detailing an early version of Emote's software architecture.</p>
+
           <a href = "../images/emote-demo-1.png" target="_blank"><img class="ui center medium image" style = "display: block; margin-left: auto; margin-right: auto" src="../images/emote-demo-1.png"></a>
             <p style = "font-size: .85em; text-align: center; margin: 10px; letter-spacing: 1px">Emote has a web interface built in Flask and with Bootstrap.</p>
 
@@ -90,6 +94,10 @@
              <p style = "font-size: .85em; letter-spacing: 1px; text-align: center; display: inline">Emoter is a basic but functional chatbot platform intergrated with Emote (also in Python), in order to give chatbot agents the ability to empathize with users and give back emotionally appropriate responses. Emoter agents thus can operate on a "higher level of thinking", by first categorizing messages and then choosing specific, interchangable "conversations" (lists of text responses) to respond from based on certain emotional tones. Within these conversations, Emoter looks for matching text in its database and compares it with the user input on a sliding threshold, outputting the corresponding response if the threshold is met.
                   </p><br><br>
                   
+          <a href = "../images/emoter-agent-conceptual-flowchart.png" target="_blank"><img class="ui center medium image" style = "display: block; margin-left: auto; margin-right: auto" src="../images/emoter-agent-conceptual-flowchart.png"></a>
+          <p style = "font-size: .85em; text-align: center; margin: 10px; letter-spacing: 1px;">A flowchart detailing an early version of a blank Emoter chatbot agent.</p>
+
+
                   <a href = "../images/emoter-website-screenshot.png" target="_blank"><img class="ui center medium image" style = "display: block; margin-left: auto; margin-right: auto" src="../images/emoter-website-screenshot.png"></a>
                         <p style = "font-size: .85em; text-align: center; margin: 10px; letter-spacing: 1px;">Emoter's website was created with three.js and SemanticUI. The globe displays quotes that have been classified according to Emote.</p>
                     <a href = "../images/emoter_demo_3.png" target="_blank"><img class="ui center medium image" style = "display: block; margin-left: auto; margin-right: auto" src="../images/emoter_demo_3.png"></a><br>
