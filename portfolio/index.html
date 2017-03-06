@@ -359,6 +359,24 @@
                     <div class="ui divider"></div>
                 </div>
 
+           <span class="span-item" style = "margin: 5px" id = "span-item-18"><strong>Full-Sight Jacket</strong>  -  motion detection garment</span><br>
+
+              <div class='' id='b18' style = "display: inline; display: none; margin-top: 20px; margin-bottom: 40px;"> 
+                  <div class="ui divider"></div>
+                  <p style = "text-align: center; margin-bottom: 10px; letter-spacing: 3px;"><strong>Full-Sight Jacket</strong></p>
+                    <div style = "text-align: center; margin: 10px">
+                    <a href="https://github.com/jddunn/full-sight-jacket" style = "font-size: .85em">GitHub</a><br>
+                    <a href="http://www.instructables.com/id/Full-Sight-Jacket/" style = "font-size: .85em">Instructables Guide</a><br>
+                    </div>
+                  <p style = "font-size: .85em; letter-spacing: 1px; text-align: center">A sewable / attachable (with adhesives) electrical system that allows wearers to "see" where something is moving behind them, powered by an Arduino, two PIR motion sensors, and two Neopixel LED rings. The LED rings light up corresponding to the direction of the motion sensor (in the back of the jacket). If the movement is somewhere in the middle of the two sensors (the motion sensors have 60 degrees of detection), then both LEDs will light up. After briefly glowing, the system resets.
+                  <br><br></p>
+                  <a href = "images/Full-Sight-Jacket-info.jpg" target="_blank"><img class="ui center medium image" style = "display: block; margin-left: auto; margin-right: auto" src="images/Full-Sight-Jacket-info.jpg"></a><br>
+                  <div style = "text-align: center">
+                    <iframe width="373" height="210" src="https://www.youtube.com/embed/zZs2bT8cg00" frameborder="0" allowfullscreen></iframe>      
+                  </div>
+                    <div class="ui divider"></div>
+                </div>
+
               <span class="span-item" style = "margin: 5px" id = "span-item-9"><strong>Conversation-starter garment</strong>  -  a fiber-optics interactive garment (collaborated with Alexandra Mundel) promoting social conversations by radiantly glowing</span><br>
 
               <div class='' id='b9' style = "display: inline; display: none; margin-top: 20px; margin-bottom: 40px;"> 
@@ -418,9 +436,17 @@
 
             <span class="span-item" style = "margin: 5px" id = "span-item-13"><strong>A Pipboy</strong>  -  a pipboy</span><br>
 
-                  <div class='' id='b13' style = "display: inline; display: none">
-                   abstract content 
-                  </div>
+               <div class='' id='b13' style = "display: inline; display: none; margin-top: 20px; margin-bottom: 40px;"> 
+                  <div class="ui divider"></div>
+                  <p style = "text-align: center; margin-bottom: 10px; letter-spacing: 3px;"><strong>Real-life Pipboy (based on Fallout games)</strong></p>
+
+                  <p style = "font-size: .85em; letter-spacing: 1px; text-align: center">A tool that puts tweets from a Twitter widget on display in a clear, stylized way on the web, starting with the first tweet and changing to the next every 3 seconds. After every minute (Or however long you change it to in the code), the most recent tweets reload again.
+                  <br><br>
+                  Twitter might be one of the best platforms for getting real-time data. It has a massive scale and audience that's generally tech-savvy, and it is the most immediate source of news and sharing out there. So how can we use Twitter for our benefit in research?<br><br>
+                    I developed this while trying to think of a way to gather some practical, direct research on how prevalent invasions of digital privacy, aka "hacking" is in today's connected society. I thought, what better way than to mine Twitter? Set your widget ID and put the page on display, and study what the people have to say real-time in a visually appealing, convenient manner.</p>
+                    <a href = "images/who-got-hacked-on-twitter-demo2.png" target="_blank"><img class="ui center medium image" style = "display: block; margin-left: auto; margin-right: auto" src="images/who-got-hacked-on-twitter-demo2.png"></a>
+                    <div class="ui divider"></div>
+                </div>
 
             <span class="span-item" style = "margin: 5px" id = "span-item-14"><strong>Amazon Echo alternative</strong>  -  using the jasper library in python and a CD spindel case</span></br>
 
@@ -486,7 +512,7 @@
         $("#close-icon-projects").click(function() { 
           $("#projectsList").hide();
           $("#b1").hide(); $("#b2").hide(); $("#b3").hide(); $("#b4").hide(); $("#b5").hide(); $("#b6").hide(); $("#b7").hide(); $("#b8").hide(); $("#b9").hide();
-          $("#b10").hide(); $("#b11").hide(); $("#b12").hide(); $("#b13").hide(); $("#b14").hide(); $("#b15").hide(); $("#b16").hide(); $("#b17").hide();
+          $("#b10").hide(); $("#b11").hide(); $("#b12").hide(); $("#b13").hide(); $("#b14").hide(); $("#b15").hide(); $("#b16").hide(); $("#b17").hide(); $("#b18").hide(); 
   
         });
     </script>
@@ -494,71 +520,75 @@
     <script>
       $('#span-item-1').click(function(){
           $("#b1").show(); $("#b2").hide(); $("#b3").hide(); $("#b4").hide(); $("#b5").hide(); $("#b6").hide(); $("#b7").hide(); $("#b8").hide(); $("#b9").hide();
-          $("#b10").hide(); $("#b11").hide(); $("#b12").hide(); $("#b13").hide(); $("#b14").hide(); $("#b15").hide(); $("#b16").hide(); $("#b17").hide();
+          $("#b10").hide(); $("#b11").hide(); $("#b12").hide(); $("#b13").hide(); $("#b14").hide(); $("#b15").hide(); $("#b16").hide(); $("#b17").hide(); $("#b18").hide(); 
       });
       $('#span-item-2').click(function(){
           $("#b1").hide(); $("#b2").show(); $("#b3").hide(); $("#b4").hide(); $("#b5").hide(); $("#b6").hide(); $("#b7").hide(); $("#b8").hide(); $("#b9").hide();
-          $("#b10").hide(); $("#b11").hide(); $("#b12").hide(); $("#b13").hide(); $("#b14").hide(); $("#b15").hide(); $("#b16").hide(); $("#b17").hide();
+          $("#b10").hide(); $("#b11").hide(); $("#b12").hide(); $("#b13").hide(); $("#b14").hide(); $("#b15").hide(); $("#b16").hide(); $("#b17").hide(); $("#b18").hide(); 
       });
       $('#span-item-3').click(function(){
           $("#b1").hide(); $("#b2").hide(); $("#b3").show(); $("#b4").hide(); $("#b5").hide(); $("#b6").hide(); $("#b7").hide(); $("#b8").hide(); $("#b9").hide();
-          $("#b10").hide(); $("#b11").hide(); $("#b12").hide(); $("#b13").hide(); $("#b14").hide(); $("#b15").hide(); $("#b16").hide(); $("#b17").hide();
+          $("#b10").hide(); $("#b11").hide(); $("#b12").hide(); $("#b13").hide(); $("#b14").hide(); $("#b15").hide(); $("#b16").hide(); $("#b17").hide(); $("#b18").hide(); 
       });
       $('#span-item-4').click(function(){
           $("#b1").hide(); $("#b2").hide(); $("#b3").hide(); $("#b4").show(); $("#b5").hide(); $("#b6").hide(); $("#b7").hide(); $("#b8").hide(); $("#b9").hide();
-          $("#b10").hide(); $("#b11").hide(); $("#b12").hide(); $("#b13").hide(); $("#b14").hide(); $("#b15").hide(); $("#b16").hide(); $("#b17").hide();
+          $("#b10").hide(); $("#b11").hide(); $("#b12").hide(); $("#b13").hide(); $("#b14").hide(); $("#b15").hide(); $("#b16").hide(); $("#b17").hide(); $("#b18").hide(); 
       });
       $('#span-item-5').click(function(){
           $("#b1").hide(); $("#b2").hide(); $("#b3").hide(); $("#b4").hide(); $("#b5").show(); $("#b6").hide(); $("#b7").hide(); $("#b8").hide(); $("#b9").hide();
-          $("#b10").hide(); $("#b11").hide(); $("#b12").hide(); $("#b13").hide(); $("#b14").hide(); $("#b15").hide(); $("#b16").hide(); $("#b17").hide();
+          $("#b10").hide(); $("#b11").hide(); $("#b12").hide(); $("#b13").hide(); $("#b14").hide(); $("#b15").hide(); $("#b16").hide(); $("#b17").hide(); $("#b18").hide(); 
       });
       $('#span-item-6').click(function(){
           $("#b1").hide(); $("#b2").hide(); $("#b3").hide(); $("#b4").hide(); $("#b5").hide(); $("#b6").show(); $("#b7").hide(); $("#b8").hide(); $("#b9").hide();
-          $("#b10").hide(); $("#b11").hide(); $("#b12").hide(); $("#b13").hide(); $("#b14").hide(); $("#b15").hide(); $("#b16").hide(); $("#b17").hide();
+          $("#b10").hide(); $("#b11").hide(); $("#b12").hide(); $("#b13").hide(); $("#b14").hide(); $("#b15").hide(); $("#b16").hide(); $("#b17").hide(); $("#b18").hide(); 
       });
       $('#span-item-7').click(function(){
           $("#b1").hide(); $("#b2").hide(); $("#b3").hide(); $("#b4").hide(); $("#b5").hide(); $("#b6").hide(); $("#b7").show(); $("#b8").hide(); $("#b9").hide();
-          $("#b10").hide(); $("#b11").hide(); $("#b12").hide(); $("#b13").hide(); $("#b14").hide(); $("#b15").hide(); $("#b16").hide(); $("#b17").hide();
+          $("#b10").hide(); $("#b11").hide(); $("#b12").hide(); $("#b13").hide(); $("#b14").hide(); $("#b15").hide(); $("#b16").hide(); $("#b17").hide(); $("#b18").hide(); 
       });
       $('#span-item-8').click(function(){
           $("#b1").hide(); $("#b2").hide(); $("#b3").hide(); $("#b4").hide(); $("#b5").hide(); $("#b6").hide(); $("#b7").hide(); $("#b8").show(); $("#b9").hide();
-          $("#b10").hide(); $("#b11").hide(); $("#b12").hide(); $("#b13").hide(); $("#b14").hide(); $("#b15").hide(); $("#b16").hide(); $("#b17").hide();
+          $("#b10").hide(); $("#b11").hide(); $("#b12").hide(); $("#b13").hide(); $("#b14").hide(); $("#b15").hide(); $("#b16").hide(); $("#b17").hide(); $("#b18").hide(); 
       });
       $('#span-item-9').click(function(){
           $("#b1").hide(); $("#b2").hide(); $("#b3").hide(); $("#b4").hide(); $("#b5").hide(); $("#b6").hide(); $("#b7").hide(); $("#b8").hide(); $("#b9").show();
-          $("#b10").hide(); $("#b11").hide(); $("#b12").hide(); $("#b13").hide(); $("#b14").hide(); $("#b15").hide(); $("#b16").hide(); $("#b17").hide();
+          $("#b10").hide(); $("#b11").hide(); $("#b12").hide(); $("#b13").hide(); $("#b14").hide(); $("#b15").hide(); $("#b16").hide(); $("#b17").hide(); $("#b18").hide(); 
       });
       $('#span-item-10').click(function(){
           $("#b1").hide(); $("#b2").hide(); $("#b3").hide(); $("#b4").hide(); $("#b5").hide(); $("#b6").hide(); $("#b7").hide(); $("#b8").hide(); $("#b9").hide();
-          $("#b10").show(); $("#b11").hide(); $("#b12").hide(); $("#b13").hide(); $("#b14").hide(); $("#b15").hide(); $("#b16").hide(); $("#b17").hide();
+          $("#b10").show(); $("#b11").hide(); $("#b12").hide(); $("#b13").hide(); $("#b14").hide(); $("#b15").hide(); $("#b16").hide(); $("#b17").hide(); $("#b18").hide(); 
       });
       $('#span-item-11').click(function(){
           $("#b1").hide(); $("#b2").hide(); $("#b3").hide(); $("#b4").hide(); $("#b5").hide(); $("#b6").hide(); $("#b7").hide(); $("#b8").hide(); $("#b9").hide();
-          $("#b10").hide(); $("#b11").show(); $("#b12").hide(); $("#b13").hide(); $("#b14").hide(); $("#b15").hide(); $("#b16").hide(); $("#b17").hide();
+          $("#b10").hide(); $("#b11").show(); $("#b12").hide(); $("#b13").hide(); $("#b14").hide(); $("#b15").hide(); $("#b16").hide(); $("#b17").hide(); $("#b18").hide(); 
       });
         $('#span-item-12').click(function(){
           $("#b1").hide(); $("#b2").hide(); $("#b3").hide(); $("#b4").hide(); $("#b5").hide(); $("#b6").hide(); $("#b7").hide(); $("#b8").hide(); $("#b9").hide();
-          $("#b10").hide(); $("#b11").hide(); $("#b12").show(); $("#b13").hide(); $("#b14").hide(); $("#b15").hide(); $("#b16").hide(); $("#b17").hide();
+          $("#b10").hide(); $("#b11").hide(); $("#b12").show(); $("#b13").hide(); $("#b14").hide(); $("#b15").hide(); $("#b16").hide(); $("#b17").hide(); $("#b18").hide(); 
       });
         $('#span-item-13').click(function(){
           $("#b1").hide(); $("#b2").hide(); $("#b3").hide(); $("#b4").hide(); $("#b5").hide(); $("#b6").hide(); $("#b7").hide(); $("#b8").hide(); $("#b9").hide();
-          $("#b10").hide(); $("#b11").hide(); $("#b12").hide(); $("#b13").show(); $("#b14").hide(); $("#b15").hide(); $("#b16").hide(); $("#b17").hide();
+          $("#b10").hide(); $("#b11").hide(); $("#b12").hide(); $("#b13").show(); $("#b14").hide(); $("#b15").hide(); $("#b16").hide(); $("#b17").hide(); $("#b18").hide(); 
       });
         $('#span-item-14').click(function(){
           $("#b1").hide(); $("#b2").hide(); $("#b3").hide(); $("#b4").hide(); $("#b5").hide(); $("#b6").hide(); $("#b7").hide(); $("#b8").hide(); $("#b9").hide();
-          $("#b10").hide(); $("#b11").hide(); $("#b12").hide(); $("#b13").hide(); $("#b14").show(); $("#b15").hide(); $("#b16").hide(); $("#b17").hide();
+          $("#b10").hide(); $("#b11").hide(); $("#b12").hide(); $("#b13").hide(); $("#b14").show(); $("#b15").hide(); $("#b16").hide(); $("#b17").hide(); $("#b18").hide(); 
       });
         $('#span-item-15').click(function(){
           $("#b1").hide(); $("#b2").hide(); $("#b3").hide(); $("#b4").hide(); $("#b5").hide(); $("#b6").hide(); $("#b7").hide(); $("#b8").hide(); $("#b9").hide();
-          $("#b10").hide(); $("#b11").hide(); $("#b12").hide(); $("#b13").hide(); $("#b14").hide(); $("#b15").show(); $("#b16").hide(); $("#b17").hide();
+          $("#b10").hide(); $("#b11").hide(); $("#b12").hide(); $("#b13").hide(); $("#b14").hide(); $("#b15").show(); $("#b16").hide(); $("#b17").hide(); $("#b18").hide(); 
       });
         $('#span-item-16').click(function(){
           $("#b1").hide(); $("#b2").hide(); $("#b3").hide(); $("#b4").hide(); $("#b5").hide(); $("#b6").hide(); $("#b7").hide(); $("#b8").hide(); $("#b9").hide();
-          $("#b10").hide(); $("#b11").hide(); $("#b12").hide(); $("#b13").hide(); $("#b14").hide(); $("#b15").hide(); $("#b16").show(); $("#b17").hide();
+          $("#b10").hide(); $("#b11").hide(); $("#b12").hide(); $("#b13").hide(); $("#b14").hide(); $("#b15").hide(); $("#b16").show(); $("#b17").hide(); $("#b18").hide(); 
       });
         $('#span-item-17').click(function(){
           $("#b1").hide(); $("#b2").hide(); $("#b3").hide(); $("#b4").hide(); $("#b5").hide(); $("#b6").hide(); $("#b7").hide(); $("#b8").hide(); $("#b9").hide();
-          $("#b10").hide(); $("#b11").hide(); $("#b12").hide(); $("#b13").hide(); $("#b14").hide(); $("#b15").hide(); $("#b16").hide(); $("#b17").show();
+          $("#b10").hide(); $("#b11").hide(); $("#b12").hide(); $("#b13").hide(); $("#b14").hide(); $("#b15").hide(); $("#b16").hide(); $("#b17").show(); $("#b18").hide(); 
+      });
+       $('#span-item-18').click(function(){
+          $("#b1").hide(); $("#b2").hide(); $("#b3").hide(); $("#b4").hide(); $("#b5").hide(); $("#b6").hide(); $("#b7").hide(); $("#b8").hide(); $("#b9").hide();
+          $("#b10").hide(); $("#b11").hide(); $("#b12").hide(); $("#b13").hide(); $("#b14").hide(); $("#b15").hide(); $("#b16").hide(); $("#b17").show(); $("#b18").show(); 
       });
     </script>
 
@@ -639,7 +669,7 @@ $(document).ready(function() {
           $("#aboutMe").show();
           $("#projectsList").hide();
           $("#b1").hide(); $("#b2").hide(); $("#b3").hide(); $("#b4").hide(); $("#b5").hide(); $("#b6").hide(); $("#b7").hide(); $("#b8").hide(); $("#b9").hide();
-          $("#b10").hide(); $("#b11").hide(); $("#b12").hide(); $("#b13").hide(); $("#b14").hide(); $("#b15").hide(); $("#b16").hide(); $("#b17").hide();
+          $("#b10").hide(); $("#b11").hide(); $("#b12").hide(); $("#b13").hide(); $("#b14").hide(); $("#b15").hide(); $("#b16").hide(); $("#b17").hide(); $("#b18").hide(); 
       });
       $("#openSourceInfoHover").mouseover(function() {
           $("#aboutMe").hide();
@@ -648,7 +678,7 @@ $(document).ready(function() {
           $("#openSourceInfo").show();
           $("#projectsList").hide();
           $("#b1").hide(); $("#b2").hide(); $("#b3").hide(); $("#b4").hide(); $("#b5").hide(); $("#b6").hide(); $("#b7").hide(); $("#b8").hide(); $("#b9").hide();
-          $("#b10").hide(); $("#b11").hide(); $("#b12").hide(); $("#b13").hide(); $("#b14").hide(); $("#b15").hide(); $("#b16").hide(); $("#b17").hide();
+          $("#b10").hide(); $("#b11").hide(); $("#b12").hide(); $("#b13").hide(); $("#b14").hide(); $("#b15").hide(); $("#b16").hide(); $("#b17").hide(); $("#b18").hide(); 
       });
       $("#madeThisHover").mouseover(function() {
           $("#aboutMe").hide();
@@ -656,7 +686,7 @@ $(document).ready(function() {
           $("#aboutMe2").hide();
           $("#projectsList").show();
           $("#b1").hide(); $("#b2").hide(); $("#b3").hide(); $("#b4").hide(); $("#b5").hide(); $("#b6").hide(); $("#b7").hide(); $("#b8").hide(); $("#b9").hide();
-          $("#b10").hide(); $("#b11").hide(); $("#b12").hide(); $("#b13").hide(); $("#b14").hide(); $("#b15").hide(); $("#b16").hide(); $("#b17").hide();
+          $("#b10").hide(); $("#b11").hide(); $("#b12").hide(); $("#b13").hide(); $("#b14").hide(); $("#b15").hide(); $("#b16").hide(); $("#b17").hide(); $("#b18").hide(); 
       });
       $("#next_about_1").mouseover(function() {
           $("#aboutMe").hide();
