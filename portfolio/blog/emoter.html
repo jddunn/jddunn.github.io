@@ -67,18 +67,29 @@
         color: #919191;" onMouseOver="this.style.color='#efefef'" onMouseOut="this.style.color='#919191'"></i></a>
      <div style = "text-align: center"><h3 style = "letter-spacing: 3px; display: inline;">Emote / Emoter</h3></div>
     <div class="ui divider"></div>
-     <div style = "text-align: center"><p style = "letter-spacing: 2px; display: inline; font-size: .8em;">Last updated on March 5th, 2017</p><br>
+     <div style = "text-align: center"><p style = "letter-spacing: 2px; display: inline; font-size: .8em;">Last updated on July 7th, 2017</p><br>
+
+      <a href="https://chatbotsmagazine.com/how-to-make-a-digital-personality-of-yourself-using-chatbots-facebook-and-empathy-8b0c53afa9bd
+      " target="_blank" style = "font-size: .85em">How to Make a Digital Personality of Yourself Using Chatbots, Facebook, and Empathy</a><br>
+
           <a href="https://github.com/jddunn/emoter" target="_blank" style = "font-size: .85em">GitHub</a><br>
-          <a href="http://emoter.me" target="_blank" style = "font-size: .85em">Website</a><br>
+          <!-- <a href="http://emoter.me" target="_blank" style = "font-size: .85em">Website</a><br> -->
     <div class="ui divider"></div>
       </div>
-     <div style = "text-align: center"><p style = "letter-spacing: 1px; display: inline; font-size: .85em">Emote / Emoter was created (or, is in the process of being created) as part of my undergraduate thesis at Parsons School of Design. The other part of my thesis is <a href = "eden.html">Eden</a>, an interactive fiction game I'm building around Emoter. <br><br>I had originally wanted to create a <a href = "dreamgazer.html">wearable product</a> intergrated with a talking AI, and while looking at all the existing chatbot solutions, I felt dissatisfied. I felt that chatbots should have some way to comprehend messages for some higher meaning, as an actual human mind would. Naturally, empathy seemed like a great way to answer for that higher meaning.<br><br> A chatbot with emotional intelligence could not only be able to narrow down schemas in its knowledge database to give more specific, accurate answers, but the bot could also then decipher and understand the emotional context of texts that aren't similar to anything in its training.<br><br>
+     <div style = "text-align: center"><p style = "letter-spacing: 1px; display: inline; font-size: .85em">Emote / Emoter / <a href = "eden.html">Eden </a>were all created during my undergraduate thesis at Parsons School of Design. I deployed Emoter in an anachronistic, interactive exhibit (seen below) at the Parson's 2017 BFA thesis show, with a personality that represents myself, created from parsing my archived messages on Facebook.
+
+     <br><br>
+
+    <a href = "../images/a_poor_sort_of_memory_only_backwards.jpeg" target="_blank"><img class="ui center medium image" style = "display: block; margin-left: auto; margin-right: auto" src="../images/a_poor_sort_of_memory_only_backwards.jpeg"></a>
+      <p style = "font-size: .85em; text-align: center; margin: 10px; letter-spacing: 1px;">A poor sort of memory that only works backwards (2017)</p>
+
+     <br>I had originally wanted to create a <a href = "dreamgazer.html">wearable product</a> intergrated with a talking AI, and while looking at all the existing chatbot solutions, I felt dissatisfied. I felt that chatbots should have some way to comprehend messages for some higher meaning, as an actual human mind would. Naturally, empathy seemed like a great way to answer for that higher meaning.<br><br> A chatbot with emotional intelligence could not only be able to narrow down schemas in its knowledge database to give more specific, accurate answers, but the bot could also then decipher and understand the emotional context of texts that aren't similar to anything in its training.<br><br>
      I looked to intergrate a sentiment analyzer with my bot. I tried a few solutions, and again, felt dissatisfied with them all, including Watson's Tone Analyzer (which, as the name states, is for analyzing the tone of how text comes off, not actually how the person is feeling). Again, I began creating my own, with the help of several open-source libraries. 
      <br><br>
      Both Emote and Emoter can be run offline. Emoter and Emote have both been open-sourced, and are included together in the source code.
      <br><br>
      Emote was written in Python and uses the TextBlob / NLTK, NumPy, SciPy, pandas, and scikit-learn libraries to build a probabilistic sentiment analyzer for 26 different classifications. These classifications have been divided into 13 pairs of opposites, and are designed to be grouped together to create tone clusters that can then encompass more values as well as decrease false positives. Based off these tone clusters, a further 10 additional tone classifications are derived, allowing for 36 different tones to be detected.
-     </p><br><br>
+     </p>
 
          <a href = "../images/Emote-Software-Architecture-Flowchart.png" target="_blank"><img class="ui center medium image" style = "display: block; margin-left: auto; margin-right: auto" src="../images/Emote-Software-Architecture-Flowchart.png"></a>
           <p style = "font-size: .85em; text-align: center; margin: 10px; letter-spacing: 1px;">A flowchart detailing an early version of Emote's software architecture.</p>
@@ -103,8 +114,21 @@
                     <a href = "../images/emoter_demo_3.png" target="_blank"><img class="ui center medium image" style = "display: block; margin-left: auto; margin-right: auto" src="../images/emoter_demo_3.png"></a><br>
                     <a href = "../images/emoter_demo_5.png" target="_blank"><img class="ui center medium image" style = "display: block; margin-left: auto; margin-right: auto" src="../images/emoter_demo_5.png"></a>
                                       <p style = "font-size: .85em; text-align: center; letter-spacing: 1px; margin: 10px">A demo 'Emoter agent' with a persona of a fitness coach.</p>
-                    <p style = "font-size: .85em; letter-spacing: 1px; text-align: center">
-                                    In Emoter's training data, values can be passed after the matching input-response pair, and checked for before Emoter gives out a response. In my interactive fiction game <a href = "eden.html">Eden</a>, I used this to allow for a branching narrative to continue driven by the mechanic of talking to a mysterious character in the game. The Emoter bot was able to keep track of whether or not certain things were said by the user previously, and how often each thing was said. Thus, Emoter has a basic short-term memory in store, so that the bots can carry out an intelligent, coherent conversation (as opposed to Cleverbot, which cannot carry on with the same conversation).<br><br>
+                 <p style = "font-size: .85em; letter-spacing: 1px; text-align: center">
+                                    In Emoter's training data, values can be passed into the list of lists after any input-response pair, and checked for before Emoter gives out a response. In my interactive fiction game <a href = "/blog/eden.html">Eden</a>, I used this to create a branching narrative driven by the mechanic of talking to the only other interactable character. The Emoter bot was able to keep track of whether or not certain things were said by the user previously, and how often each thing was said. Thus, Emoter bots can be written with limited short-term "memory" features, so that they can continue speaking on the same conversations.<br><br>
+
+
+
+    <a href = "../images/emoter-fb-personality-animation.gif" target="_blank"><img class="ui center medium image" style = "display: block; margin-left: auto; margin-right: auto" src="../images/emoter-fb-personality-animation.gif"></a>
+      <br>
+      
+
+      In developing Emoter, I became more fascinated with the idea of automatically generating digital personalities of individual people, specifically given their archived data on social media (inspired by Black Mirror's episode <i>Be Right Back</i>. I developed an algorithm to parse 70,000 of my Facebook messages (downloaded from their official service), to create a database Emoter could use that was specifically mined from my words. This project was deployed as an interactive exhibit in a gallery, and I wrote <a href = "https://chatbotsmagazine.com/how-to-make-a-digital-personality-of-yourself-using-chatbots-facebook-and-empathy-8b0c53afa9bd" target="_blank">this post </a>of my research and experiences in Chatbots Magazine.<br><br>
+
+
+    <a href = "../images/emoter-fb-personality-animation2.gif" target="_blank"><img class="ui center medium image" style = "display: block; margin-left: auto; margin-right: auto" src="../images/emoter-fb-personality-animation2.gif"></a>
+      <br>
+
 
     <!-- <div class="ui divider"></div> -->
     </div>
@@ -207,7 +231,7 @@
                     <img class="ui center medium image" src="images/emote-demo-4.png">
                 </div> -->
 
-              <span class="span-item" style = "margin: 5px" id = "span-item-2"><strong>Eden</strong>  -  a morality-based interactive fiction game, where you chat in a conversation to drive the narrative (in-progress, as part of my undergrad thesis)</span><br>
+              <span class="span-item" style = "margin: 5px" id = "span-item-2"><strong>Eden</strong>  -  proof of concept of a morality-based interactive fiction game, where you chat in an ongoing conversation to drive the narrative (developed at the same time as Emoter)</span><br>
                  <div class='' id='b2' style = "display: inline; display: none; margin-top: 20px; margin-bottom: 40px; text-align: center"> 
                   <div class="ui divider"></div>
                     <a href="http://try-emote.ml" target="_blank" style = "font-size: .85em">Blog Post</a><br>
