@@ -67,55 +67,76 @@
         color: #919191;" onMouseOver="this.style.color='#efefef'" onMouseOut="this.style.color='#919191'"></i></a>
      <div style = "text-align: center"><h3 style = "letter-spacing: 3px; display: inline;">Dreamgazer</h3></div>
     <div class="ui divider"></div>
-     <div style = "text-align: center"><p style = "letter-spacing: 2px; display: inline; font-size: .8em;">Last updated on March 5th, 2017</p><br>
+     <div style = "text-align: center"><p style = "letter-spacing: 2px; display: inline; font-size: .8em;">Last updated on December 10th, 2017</p><br>
         <a href="http://jddunn.github.io/rough-copies" target="_blank" style = "font-size: .85em">Research Website (No longer updated as of 2015)</a><br>
     <div class="ui divider"></div>
       </div>
 
      <div style = "text-align: center">     
 
-           <p style = "font-size: .85em; letter-spacing: 1px; text-align: center">Dreamgazer is a mostly conceptualized VR / AR, EEG, tDCS (transcranial direct current stimulation) designed to be 3D printed and then hand-assembled. Dreamgazer's software was planned to be intergrated with an AI (<a href = "emoter.html">Emoter</a>) that would train users to dream, and guide them through their dreams vocally by talking and responding to biofeedback.
-                  <br><br>
-                  I started practicing lucid dreaming back in high school. In 2011, I successfully managed to consistently have lucid dreams, and produced a research paper (for school) documenting my experiences, as well as creating a visual dream journal with dream descriptions and analysis. As later years went by, several products had been developed and released, all promising to make lucid dreams a reality easy for everyone. I felt that all those products were underutilizing the capabilities of their tech, and that none offered the feature sets at the advanced, in-depth level I was looking for.
-                  <br><br>Lucid dreaming in wearable tech is something I will continue exploring, but it may be a long time before I get around to making any more iterations of Dreamgazer. I have plans to open-source the early software, as well as the 3D printed plans.</p><br>
+
+           <p style = "font-size: 1.0em; letter-spacing: 1px; text-align: center">
+              Dreamgazer so far embodies a series of projects and research experiments I have been undertaking since my later years of high school. These works include: <ul style = "margin-left: 7.5%; width: 85%;"> <li> A several month long journey in high school to produce a illustrated dream journal containing experiment documentation and dream analyses, to show the progression of lucid dream training (2011) </li> <br> <li> A <a href = 'https://youtu.be/N_l1COTufZE' target = 'blank'> BCI prototype </a> (built by hacking apart the NeuroSky MindWave) able to successfully detect when someone fell asleep within a period of a few minutes (2015) </li> <br> <li> A 3D printable wearable device with various sensors, electrodes, and a <a href = 'https://youtu.be/rFekLHHXhHs' target='blank'> VR interface </a> meant to induce the "ultimate" lucid dreams (2017)</li> </ul>
+              -<br>
+              <br>
+              <a href = "../images/dreamgazer-prototype-front.jpg" target="_blank"><img class="ui center medium image" style = "display: block; margin-left: auto; margin-right: auto" src="../images/dreamgazer-prototype-front.jpg"></a><br>
+
+                <p style = "font-size: 1.0em; letter-spacing: 1px; text-align: center; margin: 10px">In 2015, I made a wearable prototype to induce lucid dreaming using an Arduino, a pulse sensor, the NeuroSky MindWave (EEG), and Processing (for software). I was able to detect when I fell asleep within an accuracy of just a few minutes, and was able to successfully induce lucid dreaming by playing music during detected stages of REM sleep (by measuring eye movement after sleep).</p> <br>
+
+              <a href = "../images/lucid-dream-data-visualization.png" target="_blank"><img class="ui center large image" style = "display: block; margin-left: auto; margin-right: auto" src="../images/lucid-dream-data-visualization.png"></a> <br>
+
+               <p style = "font-size: 1.0em; letter-spacing: 1px; text-align: center; margin: 10px">I used Processing to visualize my dreams and record my biometric data over the course of several different nights. The data was automatically fed into a spreadsheet for easy analysis. <br><br>You can see and use the data yourself <a href="https://docs.google.com/spreadsheets/d/1Y8HOtzMYF8cwWqB92FebTu3TLxZ9siHHUTT_H1PWqZM/edit?usp=sharing" target='blank' style = "font-size: 1.0em">here</a> (if the data does turn out to be useful for people, I'll go back and separate it into each night to organize).</p><br>
+
+                <a href = "../images/dream_spreadsheet_data.png" target="_blank"><img class="ui center large image" style = "display: block; margin-left: auto; margin-right: auto" src="../images/dream_spreadsheet_data.png"></a>
+                <br>
+
+               <p style = "font-size: 1.0em; letter-spacing: 1px; text-align: center; margin: 10px">I chose to use Processing because it already had compatible libraries with all the open-source hardware I was using, and because of Processing's simple and immediate way of writng animations. The visualization of dreams through biometric and EEG data was something I really wanted to nail. </p> <br>
+
+                <div style = "text-align: center">
+                  <iframe width="560" height="315" src="https://www.youtube.com/embed/N_l1COTufZE?start=16" frameborder="0" gesture="media" allow="encrypted-media" allowfullscreen></iframe>
+                </div>
+
+                 <p style = "font-size: 1.0em; letter-spacing: 1px; text-align: center; margin: 10px">The video above will show you a sped-up visualization of an actual dream.</p> 
+
+                 -
+
+                 <p style = "font-size: 1.0em; letter-spacing: 1px; text-align: center; margin: 10px">Below you'll see annotated graphs demonstrating the success of the device, recording biometric and EEG trends corresponding with points of interest throughout a night of dreaming.</p>
+
+              <a href = "../images/DreamGazer Early Prototype with MindWave - Success Trial Night 1 - Close Look Chart.png" target="_blank"><img class="ui center large image" style = "display: block; margin-left: auto; margin-right: auto" src="../images/DreamGazer Early Prototype with MindWave - Success Trial Night 1 - Close Look Chart.png"></a>
+              <br>
+             
+              <a href = "../images/DreamGazer Early Prototype with MindWave - Success Trial Night 2 (Full Log).png" target="_blank"><img class="ui center large image" style = "display: block; margin-left: auto; margin-right: auto" src="../images/DreamGazer Early Prototype with MindWave - Success Trial Night 2 (Full Log).png"></a><br>
+
+              <a href = "../images/DreamGazer Early Prototype with MindWave - Success Trial Night 3 - Close Look.png" target="_blank"><img class="ui center large image" style = "display: block; margin-left: auto; margin-right: auto" src="../images/DreamGazer Early Prototype with MindWave - Success Trial Night 3 - Close Look.png"></a><br>
+
+              - <br><br>
+
+              The name <i>Dreamgazer</i> refers specifically to a mostly conceptualized, combined VR / AR, EEG, and tDCS (transcranial direct current stimulation) device designed to be 3D printed and then hand-assembled. Dreamgazer's software was planned to be intergrated with an AI program (<a href = "emoter.html">Emoter</a>) that would train users to dream, and guide them through their dreams vocally by talking and responding to biofeedback.
+
+                    <br><br>
 
                     <a href = "../images/DreamGazer-3D-Front.png" target="_blank"><img class="ui center medium image" style = "display: block; margin-left: auto; margin-right: auto" src="../images/DreamGazer-3D-Front.png"></a>
 
-                      <p style = "font-size: .85em; letter-spacing: 1px; text-align: center; margin: 10px">The plans were made to be fully functional, with the proper materials and construction once printed.</p>
+                      <p style = "font-size: 1.0em; letter-spacing: 1px; text-align: center; margin: 10px">The plans were made to be functional, and hand-assembled with proper construction and fabric materials.</p>
 
-                    <a href = "../images/DreamGazer-Diagram.jpg" target="_blank"><img class="ui center medium image" style = "display: block; margin-left: auto; margin-right: auto" src="../images/DreamGazer-Diagram.jpg"></a><br>
+                    <a href = "../images/DreamGazer-Diagram.jpg" target="_blank"><img class="ui center large image" style = "display: block; margin-left: auto; margin-right: auto" src="../images/DreamGazer-Diagram.jpg"></a><br><br>
+
 
                     <div style = "text-align: center">
-                    <iframe width="373" height="210" src="https://www.youtube.com/embed/rFekLHHXhHs" frameborder="0" allowfullscreen></iframe>
+                    <iframe width="573" height="315" src="https://www.youtube.com/embed/rFekLHHXhHs" frameborder="0" allowfullscreen></iframe>
                     </div>
 
-                      <p style = "font-size: .85em; letter-spacing: 1px; text-align: center; margin: 10px">Dreamgazer was designed with a VR interface, in Unity.</p>
+                      <p style = "font-size: 1.0em; letter-spacing: 1px; text-align: center; margin: 10px">Dreamgazer was designed with a VR interface, in Unity.</p> <br>
 
-                      <a href = "../images/DreamGazer-Main-Flowchart.png" target="_blank"><img class="ui center medium image" style = "display: block; margin-left: auto; margin-right: auto" src="../images/DreamGazer-Main-Flowchart.png"></a>
+                      <a href = "../images/DreamGazer-Main-Flowchart.png" target="_blank"><img class="ui center large image" style = "display: block; margin-left: auto; margin-right: auto" src="../images/DreamGazer-Main-Flowchart.png"></a>
 
-                     <p style = "font-size: .85em; letter-spacing: 1px; text-align: center; margin: 10px">The full process of Dreamgazer's functionality.</p>
+                     <p style = "font-size: 1.0em; letter-spacing: 1px; text-align: center; margin: 10px">The full step-by-step process of Dreamgazer's proposed functionality.</p>
+                     -
 
-                    <a href = "../images/dreamgazer-prototype-front.jpg" target="_blank"><img class="ui center medium image" style = "display: block; margin-left: auto; margin-right: auto" src="../images/dreamgazer-prototype-front.jpg"></a>
-
-                      <p style = "font-size: .85em; letter-spacing: 1px; text-align: center; margin: 10px">In 2015, I made a wearable prototype to induce lucid dreaming using an Arduino, a pulse sensor, the NeuroSky MindWave (EEG), and Processing (for software). I was able to detect when I fell asleep within an accuracy of five minutes, and was able to successfully induce lucid dreaming by playing music when REM sleep was detected.</p>
-
-                    <a href = "../images/DreamGazer Early Prototype with MindWave - Success Trial Night 1 - Close Look Chart.png" target="_blank"><img class="ui center medium image" style = "display: block; margin-left: auto; margin-right: auto" src="../images/DreamGazer Early Prototype with MindWave - Success Trial Night 1 - Close Look Chart.png"></a>
-                    <br>
-                   
-                    <a href = "../images/DreamGazer Early Prototype with MindWave - Success Trial Night 2 (Full Log).png" target="_blank"><img class="ui center medium image" style = "display: block; margin-left: auto; margin-right: auto" src="../images/DreamGazer Early Prototype with MindWave - Success Trial Night 2 (Full Log).png"></a><br>
-
-                    <a href = "../images/DreamGazer Early Prototype with MindWave - Success Trial Night 3 - Close Look.png" target="_blank"><img class="ui center medium image" style = "display: block; margin-left: auto; margin-right: auto" src="../images/DreamGazer Early Prototype with MindWave - Success Trial Night 3 - Close Look.png"></a><br>
+                  <br><br>Lucid dreaming in wearables and biotechnology is something I will continue exploring. I have plans to further develop and refine new iterations of Dreamgazer, and would like to be able to open-source the hardware and software.</p>
 
 
-                    <a href = "../images/lucid-dream-data-visualization.png" target="_blank"><img class="ui center medium image" style = "display: block; margin-left: auto; margin-right: auto" src="../images/lucid-dream-data-visualization.png"></a>
-
-                  <p style = "font-size: .85em; letter-spacing: 1px; text-align: center; margin: 10px">I used Processing to visualize my dreams and record my biometric data over the course of several different nights. The data was automatically fed into a spreadsheet for easy analysis. <br><br>You can see and use the data yourself <a href="https://docs.google.com/spreadsheets/d/1Y8HOtzMYF8cwWqB92FebTu3TLxZ9siHHUTT_H1PWqZM/edit?usp=sharing" style = "font-size: .85em">here</a> (if the data does turn out to be useful for people, I'll go back and separate it into each night to organize).</p><br>
-
-                    <a href = "../images/dream_spreadsheet_data.png" target="_blank"><img class="ui center medium image" style = "display: block; margin-left: auto; margin-right: auto" src="../images/dream_spreadsheet_data.png"></a>
-                    <br>
-
-
-    <!-- <div class="ui divider"></div> -->
+    <div class="ui divider"></div>
     </div>
   </div>
 
