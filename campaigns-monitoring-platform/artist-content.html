@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title></title>
+
+    <script src="http://cdn.alloyui.com/3.0.1/aui/aui.js"></script>
+ 
+
+
+    <link rel="stylesheet" href="css/app.css">
+    <link href="http://cdn.alloyui.com/3.0.1/aui-css/css/bootstrap.min.css" rel="stylesheet"></link>
+    <!-- Script that populates the Main Overview tables for the artists -->
+    <script src="js/artistTables.js"></script> 
+    <script src="js/statsTables.js"></script> 
+
+    <!-- <script src = "js/navMenu"></script> -->
+    <!-- <script src="js/schedulerCalendar.js"></script>   -->
+    <link rel="stylesheet" href="bower_components/todomvc-common/base.css">
+
+
+    <link rel="stylesheet" type="text/css" media="screen" href="css/converse.css">
+    <script src="dist/converse.js"></script>
+    <style>
+    .artistTables {
+        margin-left: 1.5%;
+        margin-top: .5%;
+        display: inline-block;
+        width: 90%;
+        padding: 30px;
+    }
+    .artistTables .nav {
+        margin-bottom: 5px;
+    }
+    </style>
+
+</head>
+
+<body>
+    <h1 style = "font-weight: bold; text-align: center"><a style="color: black" href="artist-content.html" >CAMPAIGN STATS TRACKER</h1></a>
+    <h2 style = "font-weight: bold; text-align: center">ADMIN PANEL</h2>
+    <br>
+
+
+   <div id="myNavbar" class="navbar navbar-default">
+        <ul class="nav navbar-nav">
+        <li style><a href="index.html">General Calendar</a></li>
+        <li><a href="to-do.html">To-Do List</a></li>
+        <li><a href="artist-content.html">Artists / Campaigns Manager</a></li>
+        <li><a href="diagram-builder.html">Diagram / Map Buider</a></li>
+        <li><a href="sticky-notes.html">Sticky Notes</a></li>
+        <li><a href="contacts-list.html">Contacts List</a></li>
+    </ul>
+    </div>
+    
+    <br>
+
+
+    <!-- </div> -->
+    <br>
+    <br>
+
+    <h2 style = "text-align: center; margin-top: -4.0%">Artist Selection</h3>
+
+    <div class="artistTables">
+        <div id="markup">
+            <ul class="nav nav-tabs">
+                <li class = "active"><a href="#Artist1">Artist 1</a></li>
+                <li><a href="#Artist2">Artist 2</a></li>
+                <li><a href="#Artist3">Artist 3</a></li>
+            </ul>
+            <br>
+            <div class="tab-content">
+                <div id="Arist1" class="tab-pane">
+                <h4 style ="margin-left: 9%; text-align: center; text-decoration: underline;">Main Overview</h4>
+                <br>
+
+                <div id="myDataTable"></div>
+
+                                <h4 style ="margin-left: 12.5%; text-align: center; text-decoration: underline;margin-top: 3.5%">Advanced Realtime Stats</h4>
+
+               <!--      <p>foo Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sapiente officia minus nobis obcaecati neque sint fugit reiciendis dolorum quia nihil numquam sunt eum? Odio doloribus laborum quisquam enim aliquam iure.</p> -->
+                <div id = "statsDataTable">
+                </div>
+                </div>
+             
+
+                <div id="Artist2">
+                <br>
+                                <h4 style ="margin-left: 9%; text-align: center; text-decoration: underline;margin-top: 1%">Main Overview</h4>
+
+                <div id="myDataTable2">
+
+                </div>
+                <div id = "statsDataTable2">
+                <h4 style ="margin-left: 12.5%; text-align: center; text-decoration: underline;margin-top: 3.5%">Advanced Realtime Stats</h4>
+                </div>
+                    <!-- <div id="myDataTable"></div> -->
+                <!--     <p>bar Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptas non iste perspiciatis explicabo distinctio quaerat maiores ab aut quasi quod aliquid iusto possimus neque eius consequuntur deserunt inventore doloremque rerum.</p> -->
+                </div>
+                <div id="Artist3" class="tab-pane">
+                <br>
+                <div id="myDataTable3">
+                <h4 style ="margin-left: 9%; text-align: center; text-decoration: underline;margin-top: 1%">Main Overview</h4>
+                </div>
+
+                <div id = "statsDataTable3">
+                <h4 style ="margin-left: 12.5%; text-align: center; text-decoration: underline;margin-top: 3.5%">Advanced Realtime Stats</h4>
+                </div>
+                    <!-- <div id="myDataTable"></div> -->
+                 <!--    <p>baz Lorem ipsum dolor sit amet, consectetur adipisicing elit. Inventore aut officia commodi maxime ea cumque nulla quam molestias odit ipsam sapiente laudantium minima reprehenderit. Esse laboriosam fuga beatae doloremque officiis.</p> -->
+                </div>
+            </div>
+        </div>
+        </div>
+        </div>
+        </div>
+    
+    <br>
+    <br>
+
+
+<!--     
+    <script>
+        YUI({ filter: 'raw' }).use('aui-scrollspy', function(Y) {
+            var ss = new Y.Scrollspy({
+                scrollNode: '#scrollNode',
+                target: '#navbar',
+                on: {
+                    activate: function() {
+                        Y.log('Target changed.');
+                    }
+                }
+            });
+        });
+    </script> -->
+
+ <script>
+    YUI({ filter:'raw' }).use('aui-tabview', function(Y) {
+
+    console.time('How long does it take?');
+
+    new Y.TabView({
+    srcNode: '#markup'
+
+    }).render();
+
+});
+</script>
+
+</body>
+
+<script>
+require(['converse'], function (converse) {
+    converse.initialize({
+        bosh_service_url: 'https://bind.conversejs.org', // Please use this connection manager only for testing purposes
+        i18n: locales.en, // Refer to ./locale/locales.js to see which locales are supported
+        show_controlbox_by_default: true,
+        roster_groups: true
+    });
+});
+</script>
+</html>

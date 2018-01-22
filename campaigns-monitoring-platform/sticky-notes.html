@@ -1,0 +1,252 @@
+<!-- CREDIT FOR STICKY NOTES APP CODE TO TUTSPLUS -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title></title>
+
+    <script src="http://cdn.alloyui.com/3.0.1/aui/aui.js"></script>
+ 
+        
+    <link type="text/css" rel="stylesheet" href="css/styleSticky.css"/>        
+    <link href="http://fonts.googleapis.com/css?family=Chewy:regular" rel="stylesheet" type="text/css"/>
+        
+    <script type="text/javascript" src="js/jquery/jquery-1.4.4.min.js"></script>
+    <script type="text/javascript" src="js/json2.js"></script>
+    
+    <link rel="stylesheet" type="text/css" media="screen" href="css/converse.css">
+    <script src="dist/converse.js"></script>
+    
+    <script type="text/javascript">
+var notes, count = 0;
+
+// save the notes into local storage
+function saveNotes() {
+    var notesArray = [];
+
+    // for each of the notes add a bespoke note object to the array
+    notes.find("li > div").each(function (i, e) {
+        // save the class attribute of the div, as well as the text for the title and content text areas
+        var colourClass = $(e).attr("class");
+        var title = $(e).find("textarea.note-title");
+        var content = $(e).find("textarea.note-content");
+
+        notesArray.push({ Index: i, Title: title.val(), Content: content.val(), Class: colourClass });
+    });
+
+    // json encode it
+    var jsonStr = JSON.stringify(notesArray);
+
+    // and save the json string into local storage
+    localStorage.setItem("notes", jsonStr);
+}
+
+// add event handlers to a note
+function addNoteEvent(noteElement) {
+    var div = noteElement.children("div");
+    var closeImg = div.find("img");
+
+    div.focus(function () {
+        closeImg.removeClass("hide");
+    });
+
+    div.children().focus(function () {
+        closeImg.removeClass("hide");
+    });
+
+    div.hover(function () {
+        closeImg.removeClass("hide");
+    }, function () {
+        closeImg.addClass("hide");
+        saveNotes();
+    });
+
+    div.children().hover(function () {
+        closeImg.removeClass("hide");
+    }, function () {
+        closeImg.addClass("hide");
+    });
+}
+            
+//  adds a new note to the 'notes' list
+function addNewNote(className, title, content) {
+    // if class is not specified, use a random colour class
+    if (!className) {
+        className = "colour" + Math.ceil(Math.random() * 3);
+    }
+                
+    // add a new note to the end of the list
+    notes.append("<li><div class='" + className + "'>" + 
+                    "<textarea class='note-title' placeholder='Untitled' maxlength='10'/>" + 
+                    "<textarea class='note-content' placeholder='Your content here'/>" + 
+                    "<img class='hide' src='images/close.png'/>" + 
+                    "</div></li>");
+                
+    // get the new note that's just been added and attach the click event handler to its close button
+    var newNote = notes.find("li:last");
+    newNote.find("img").click(function () {
+        // remove the note and save
+        newNote.remove();
+        saveNotes();
+    });
+                
+    // hook up event handlers to show/hide close button as appropriate
+    addNoteEvent(newNote);
+                
+    // if a title is provided then set the title of the new note
+    if (title) {
+        // get the title textarea element and set its value
+        newNote.find("textarea.note-title").val(title);
+    }
+
+    // if a content is provided then set the content of the new note
+    if (content) {
+        // get the content textarea element and set its value
+        newNote.find("textarea.note-content").val(content);
+    }
+
+    // save
+    saveNotes();
+}
+
+// load the notes saved in the local storage
+function loadNotes() {
+    var storedNotes = localStorage.getItem("notes");
+    if (storedNotes) {
+        // passes the stored json back into an array of note objects
+        var notesArray = JSON.parse(storedNotes);
+        count = notesArray.length;
+
+        var i;
+        for (i = 0; i < count; i++) {
+            var storedNote = notesArray[i];
+            addNewNote(storedNote.Class, storedNote.Title, storedNote.Content);
+        }
+    }
+}
+
+$(document).ready(function () {
+    // get references to the 'notes' list
+    notes = $("#notes");
+
+    // load notes from local storage if one's available
+    loadNotes();
+
+    // clicking the 'New Note' button adds a new note to the list
+    $("#btnNew").click(function () {
+        addNewNote();
+    });
+
+    // add a note to the list if there aren't any
+    if (count === 0) {
+        $("#btnNew").click();
+    }
+});
+        </script>
+        
+        <script type="text/javascript">
+
+            var _gaq = _gaq || [];
+            _gaq.push(['_setAccount', 'UA-12216268-1']);
+            _gaq.push(['_setDomainName', '.theburningmonk.com']);
+            _gaq.push(['_trackPageview']);
+    
+            (function () {
+                var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+                ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+                var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+            })();
+
+        </script>
+    </head>
+
+    <link rel="stylesheet" href="css/app.css">
+    <link href="http://cdn.alloyui.com/3.0.1/aui-css/css/bootstrap.min.css" rel="stylesheet"></link>
+    <!-- Script that populates the Main Overview tables for the artists -->
+
+    <script src="js/stickyNotes.js"></script> 
+    <!-- <script src = "js/navMenu"></script> -->
+    <!-- <script src="js/schedulerCalendar.js"></script>   -->
+    <link rel="stylesheet" href="bower_components/todomvc-common/base.css">
+
+    <style>
+    .artistTables {
+        margin-left: 1.5%;
+        margin-top: .5%;
+        display: inline-block;
+        width: 90%;
+        padding: 30px;
+    }
+    .artistTables .nav {
+        margin-bottom: 5px;
+    }
+    </style>
+
+</head>
+
+<body>
+    <h1 style = "font-weight: bold; text-align: center"><a style="color: black" href="artist-content.html" >CAMPAIGN STATS TRACKER</h1></a>
+    <h2 style = "font-weight: bold; text-align: center">ADMIN PANEL</h2>
+    <br>
+
+
+   <div id="myNavbar" class="navbar navbar-default">
+        <ul class="nav navbar-nav">
+        <li style><a href="index.html">General Calendar</a></li>
+        <li><a href="to-do.html">To-Do List</a></li>
+        <li><a href="artist-content.html">Artists / Campaigns Manager</a></li>
+        <li><a href="diagram-builder.html">Diagram / Map Buider</a></li>
+        <li><a href="sticky-notes.html">Sticky Notes</a></li>
+        <li><a href="contacts-list.html">Contacts List</a></li>
+    </ul>
+    </div>
+    
+    <br>
+
+
+    <!-- </div> -->
+    <br>
+    <br>
+
+    <h2 style = "text-align: center; margin-top: -4.0%">Sticky Notes</h3>
+  <form>
+ 
+         
+
+    <div id="controls">
+            <img id="btnNew" src="images/newnote.png"/>
+        </div>
+        
+        <ul id="notes"/>        
+<!--     
+    <script>
+        YUI({ filter: 'raw' }).use('aui-scrollspy', function(Y) {
+            var ss = new Y.Scrollspy({
+                scrollNode: '#scrollNode',
+                target: '#navbar',
+                on: {
+                    activate: function() {
+                        Y.log('Target changed.');
+                    }
+                }
+            });
+        });
+    </script> -->
+
+
+</body>
+
+<script>
+require(['converse'], function (converse) {
+    converse.initialize({
+        bosh_service_url: 'https://bind.conversejs.org', // Please use this connection manager only for testing purposes
+        i18n: locales.en, // Refer to ./locale/locales.js to see which locales are supported
+        show_controlbox_by_default: true,
+        roster_groups: true
+    });
+});
+</script>
+
+</html>

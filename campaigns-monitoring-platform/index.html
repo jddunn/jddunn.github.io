@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title></title>
+
+    <script src="http://cdn.alloyui.com/3.0.1/aui/aui.js"></script>
+ 
+    <!-- <link rel="stylesheet" href="bower_components/todomvc-common/base.css"> -->
+
+
+    <link rel="stylesheet" href="css/app.css">
+    <link href="http://cdn.alloyui.com/3.0.1/aui-css/css/bootstrap.min.css" rel="stylesheet"></link>
+    <!-- Script that populates the Main Overview tables for the artists -->
+    <!-- <script src="js/artistTables.js"></script>  -->
+    <!-- <script src="js/backButton.js"></script>  -->
+
+    <!-- <script src = "js/navMenu"></script> -->
+    <script src="js/schedulerCalendar.js"></script>  
+
+<script src="bower_components/jquery-1.11.1.min/index.js"></script>
+<script src="bower_components/todomvc-common/base.js"></script>
+
+
+<link rel="stylesheet" type="text/css" media="screen" href="css/converse.css">
+<script src="dist/converse.js"></script>
+    <style>
+    .artistTables {
+        text-align: center;
+        display: inline-block;
+        width: 90%;
+        padding: 30px;
+    }
+    .artistTables .nav {
+        margin-bottom: 5px;
+    }
+    </style>
+
+</head>
+
+<body>
+    <h1 style = "font-weight: bold; text-align: center"><a style="color: black" href="artist-content.html" >CAMPAIGN STATS TRACKER</h1></a>
+    <h2 style = "font-weight: bold; text-align: center">ADMIN PANEL</h2>
+    <br>
+
+
+    <div id="myNavbar" class="navbar navbar-default">
+        <ul class="nav navbar-nav">
+        <li><a href="index.html">General Calendar</a></li>
+        <li><a href="to-do.html">To-Do List</a></li>
+        <li><a href="artist-content.html">Artists / Campaigns Manager</a></li>
+        <li><a href="diagram-builder.html">Diagram / Map Buider</a></li>
+        <li><a href="sticky-notes.html">Sticky Notes</a></li>
+        <li><a href="contacts-list.html">Contacts List</a></li>
+
+    </ul>
+    </div>
+
+    <div id="myScrollNode">
+
+    <!-- <div id = "myScrollNode" -->
+    <h2 style =  "text-align: center; margin-top:1.95%"> General Calendar</h2>
+
+
+    <div id="wrapper">
+    <div id="myScheduler">
+    </div>
+    </div>
+    <br>
+<!--   <button id="backToTopButton"></button>
+ -->  
+    <br>
+
+    
+    <br>
+    <br>
+
+
+ <script>
+    YUI({ filter:'raw' }).use('aui-tabview', function(Y) {
+
+    console.time('How long does it take?');
+
+    new Y.TabView({
+    srcNode: '#markup'
+
+    }).render();
+
+});
+</script>
+
+<!--  <script>
+    YUI({ filter:'raw' }).use('aui-tabview', function(Y) {
+
+    console.time('How long does it take?');
+
+    new Y.TabView({
+    srcNode: '#markup'
+
+    }).render();
+
+});
+</script>
+ -->
+</body>
+
+<script>
+require(['converse'], function (converse) {
+    converse.initialize({
+        bosh_service_url: 'https://bind.conversejs.org', // Please use this connection manager only for testing purposes
+        i18n: locales.en, // Refer to ./locale/locales.js to see which locales are supported
+        show_controlbox_by_default: true,
+        roster_groups: true
+    });
+});
+</script>
+
+</html>

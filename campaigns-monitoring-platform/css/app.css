@@ -1,0 +1,7 @@
+#clear-completed {
+	display: none;
+}
+.has-completed-tasks #clear-completed {
+	display: block;
+}
+

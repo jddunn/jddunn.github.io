@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title></title>
+
+    <script src="http://cdn.alloyui.com/3.0.1/aui/aui.js"></script>
+ 
+
+
+    <link rel="stylesheet" href="css/app.css">
+    <link rel="stylesheet" href="bower_components/todomvc-common/base.css">
+
+    <link href="http://cdn.alloyui.com/3.0.1/aui-css/css/bootstrap.min.css" rel="stylesheet"></link>
+    <!-- Script that populates the Main Overview tables for the artists -->
+    <!-- <script src = "js/navMenu"></script> -->
+
+
+
+    <script src="bower_components/jquery-1.11.1.min/index.js"></script>
+    <script src="bower_components/todomvc-common/base.js"></script>
+    <script src="js/t3-dev-build.js"></script>
+    <script src="js/app.js"></script>
+    <script src="js/services/todos-db.js"></script>
+    <script src="js/services/router.js"></script>
+    <script src="js/behaviors/todo.js"></script>
+    <script src="js/modules/header.js"></script>
+    <script src="js/modules/footer.js"></script>
+    <script src="js/modules/list.js"></script>
+    <script src="js/modules/page.js"></script>
+
+
+
+    <link rel="stylesheet" type="text/css" media="screen" href="css/converse.css">
+    <script src="dist/converse.js"></script>
+    <!-- </div> -->
+    <br>
+    <br>
+
+    <style>
+
+    </style>
+
+</head>
+
+<body>
+    <h1 style = "font-weight: bold; text-align: center; margin-top: -1.5%"><a style="color: black" href="artist-content.html" >CAMPAIGN STATS TRACKER</h1></a>
+    <h2 style = "font-weight: bold; text-align: center">ADMIN PANEL</h2>
+    <br>
+
+
+    <div id="myNavbar" class="navbar navbar-default">
+        <ul class="nav navbar-nav">
+        <li><a href="index.html">General Calendar</a></li>
+        <li><a href="to-do.html">To-Do List</a></li>
+        <li><a href="artist-content.html">Artists / Campaigns Manager</a></li>
+        <li><a href="diagram-builder.html">Diagram / Map Buider</a></li>
+        <li><a href="sticky-notes.html">Sticky Notes</a></li>
+        <li><a href="contacts-list.html">Contacts List</a></li>
+
+    </ul>
+    </div>
+
+    
+    <br>
+
+    <!-- <div id="myScrollNode"> -->
+
+    <!-- <div id = "myScrollNode" -->
+
+    <h2 style = "text-align: center; margin-top: -1.0%">To-Do List</h3>
+    <h4 style = "text-align: center; padding: 2%; margin-top: -1.5%">High-priority tasks listed here</h4>
+
+
+
+    <!-- <div id = "toDoList"> -->
+    <section style="margin-top:-.5%" id="todoapp" data-module="page">
+    <header id="header" data-module="header">
+        <!-- <h1>tasks</h1> -->
+    <form data-type="new-todo-form">
+    <input id="new-todo" data-type="new-todo-input" name="new-todo" placeholder="What needs to be done?" autofocus autocomplete="off">
+    </form>
+    </header>
+    <section id="main" data-module="list">
+    <input id="toggle-all" data-type="select-all-checkbox" type="checkbox">
+    <label for="toggle-all">Mark all as complete</label>
+    <ul id="todo-list">
+    </ul>
+    <ul class="todo-template-container" style="display: none">
+    <li>
+    <div class="view">
+        <input class="toggle" type="checkbox" data-type="mark-as-complete-checkbox">
+        <label data-type="todo-label"></label>
+        <button class="destroy" data-type="delete-btn"></button>
+    </div>
+    <input class="edit" data-type="edit-input" value="a">
+     </li>
+    </ul>
+    </section>
+
+    <footer id="footer" data-module="footer">
+        <span id="todo-count"><strong class="items-left-counter">0</strong> <span class="items-left-text">items left</span></span>
+        <ul id="filters">
+            <li>
+                <a class="selected" href="./">All</a>
+            </li>
+            <li>
+                <a href="./active">Active</a>
+            </li>
+            <li>
+                <a href="./completed">Completed</a>
+            </li>
+        </ul>
+        <button id="clear-completed" data-type="clear-btn">Clear completed (<span class="completed-count">1</span>)</button>
+    </footer>
+    </section>
+
+<br>
+<br>
+<form style="text-align:center" action="index.html">
+    <input type="submit" value="Click here to go home">
+</form>
+
+   
+<!-- 
+ <script>
+    YUI({ filter:'raw' }).use('aui-tabview', function(Y) {
+
+    console.time('How long does it take?');
+
+    new Y.TabView({
+    srcNode: '#markup'
+
+    }).render();
+
+});
+</script> -->
+    <script>
+    Application.init({
+        debug: true
+    });
+    </script>
+</body>
+
+<script>
+require(['converse'], function (converse) {
+    converse.initialize({
+        bosh_service_url: 'https://bind.conversejs.org', // Please use this connection manager only for testing purposes
+        i18n: locales.en, // Refer to ./locale/locales.js to see which locales are supported
+        show_controlbox_by_default: true,
+        roster_groups: true
+    });
+});
+</script>
+
+</html>
