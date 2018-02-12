@@ -1,0 +1,988 @@
+<!DOCTYPE html>
+<html>
+	<head>
+
+	<!-- Global site tag (gtag.js) - Google Analytics -->
+	<script async src="https://www.googletagmanager.com/gtag/js?id=UA-39846512-11"></script>
+	<script>
+	  window.dataLayer = window.dataLayer || [];
+		  function gtag(){dataLayer.push(arguments);}
+			  gtag('js', new Date());
+			  gtag('config', 'UA-39846512-11');
+	</script>
+	<title>emote(r) - empathy for human computer interactions</title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+    <meta name="description" content="Sentiment analysis library with REST API integrated into a chatbot for empathetic responses. Also offers auto-generated individual chatbot 'personalities' from Facebook messages.">
+    <meta name="author" content="Johnny Dunn">
+	  <link rel="stylesheet" type="text/css" href="components/reset.css">
+	  <link rel="stylesheet" type="text/css" href="components/site.css">
+
+	  <link rel="stylesheet" type="text/css" href="components/container.css">
+	  <link rel="stylesheet" type="text/css" href="components/grid.css">
+	  <link rel="stylesheet" type="text/css" href="components/header.css">
+	  <link rel="stylesheet" type="text/css" href="components/image.css">
+	  <link rel="stylesheet" type="text/css" href="components/menu.css">
+
+	  <link rel="stylesheet" type="text/css" href="components/divider.css">
+	  <link rel="stylesheet" type="text/css" href="components/segment.css">
+	  <link rel="stylesheet" type="text/css" href="components/form.css">
+	  <link rel="stylesheet" type="text/css" href="components/input.css">
+	  <link rel="stylesheet" type="text/css" href="components/button.css">
+	  <link rel="stylesheet" type="text/css" href="components/list.css">
+	  <link rel="stylesheet" type="text/css" href="components/message.css">
+	  <link rel="stylesheet" type="text/css" href="components/icon.css">	
+	  <link rel="stylesheet" type="text/css" href="components/table.css">	
+	  <link rel="stylesheet" href="css/lightbox.css">
+
+	  <script type='text/javascript' src='js/jquery-3.1.1.min.js'></script>
+	  <script src="js/semantic.js"></script>
+	  <script src="components/form.js"></script>
+	  <script src="components/transition.js"></script>
+	  <script src="components/table.js"></script>
+
+	  <script src="js/libs/three.js"></script>
+	  <script src="js/libs/tween.min.js"></script>
+	  <script src="js/controls/TrackballControls.js"></script>
+	  <script src="js/renderers/CSS3DRenderer.js"></script>
+	  <link rel="icon" href="../images/favicon.ico" type="image/x-icon">
+      <link rel="shortcut icon" href="../images/favicon.ico" type="image/x-icon">
+
+	  <style>
+			html, body {
+				height: 100%;
+			}
+
+			@font-face {
+	    		font-family: GeosansLight;
+	    		src: url('fonts/ttf/GeosansLight.ttf');
+			}
+
+
+			#container:hover {
+				cursor: pointer;
+			}
+			body {
+				/*background-color: #000000;*/
+				margin: 0;
+				font-family: 'GeosansLight', sans-serif;;
+				overflow: hidden;
+				overflow-y: scroll;
+				background: #EECDA3; /* fallback for old browsers */
+				background: -webkit-linear-gradient(to left, #EECDA3 , #EF629F); /* Chrome 10-25, Safari 5.1-6 */
+				background: linear-gradient(to left, #EECDA3 , #EF629F); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+			}
+
+			a {
+				color: #ffffff;
+			}
+
+			#info {
+				position: absolute;
+				width: 100%;
+				color: #ffffff;
+				padding: 5px;
+				font-family: Monospace;
+				font-size: 13px;
+				font-weight: bold;
+				text-align: center;
+				z-index: 1;
+			}
+
+			#menu {
+				position: absolute;
+				bottom: 20px;
+				width: 100%;
+				text-align: center;
+			}
+
+			.element {
+				width: 250px;
+				height: 150px;
+				/*box-shadow: 0px 0px 12px rgba(0,255,255,0.5);*/
+				/*border: 1px solid rgba(127,255,255,0.25);*/
+				text-align: center;
+				cursor: default;
+			}
+
+			.element:hover {
+				/*box-shadow: 0px 0px 12px rgba(0,255,255,0.75);*/
+				/*border: 1px solid rgba(127,255,255,0.75);*/
+			}
+
+				.element .number {
+					position: absolute;
+					top: 20px;
+					right: 20px;
+					font-size: 12px;
+					color: rgba(127,255,255,0.75);
+				}
+
+				.element .symbol {
+					position: absolute;
+					top: 40px;
+					left: 0px;
+					right: 0px;
+					font-size: 28px;
+					font-weight: bold;
+					color: rgba(255,255,255,0.75);
+					text-shadow: 0 0 10px rgba(0,255,255,0.95);
+				}
+
+				.element .details {
+					position: absolute;
+					bottom: 15px;
+					left: 0px;
+					right: 0px;
+					font-size: 12px;
+					color: rgba(127,255,255,0.75);
+				}
+
+			button {
+				color: rgba(127,255,255,0.75);
+				background: transparent;
+				outline: 1px solid rgba(127,255,255,0.75);
+				border: 0px;
+				padding: 5px 10px;
+				cursor: pointer;
+			}
+			button:hover {
+				background-color: rgba(0,255,255,0.5);
+			}
+			button:active {
+				color: #000000;
+				background-color: rgba(0,255,255,0.75);
+			}
+		</style>
+	</head>
+
+	<body>
+
+		<div id="container" style = "margin-left: 5%;"></div>
+		<!-- <div id="info"><a href="http://threejs.org" target="_blank">three.js css3d</a> - periodic table. <a href="https://plus.google.com/113862800338869870683/posts/QcFk5HrWran" target="_blank">info</a>.</div> -->
+
+		<div class="ui stackable menu" style = "margin: 0; padding: 0; bottom: 0; position: absolute; background-color: transparent; max-height: 200px; border: none; padding: 5px; width: 100%;">
+		  <div class="item">
+		    <!-- <img src="images/emoter-logo.png" style = "width: 20%"> -->
+		    <a href="#" onclick='location.reload(true); return false'><h4 style = "font-family: 'GeosansLight'; letter-spacing: 12px; color: rgba(244, 244, 244, .97); font-size: 1.6em">emote</h4></a>
+		  </div>
+		  <a class="item" style = "letter-spacing: 3px; font-family: 'GeosansLight'; color: rgba(244, 244, 244, .97); font-size: 1.2em" id = "intro-link">Intro</a>
+		  <a class="item" style = "letter-spacing: 3px; font-family: 'GeosansLight'; color: rgba(244, 244, 244, .97); font-size: 1.2em" id = "contact-link">Contact</a>
+		  <!-- <a class="item" style = "letter-spacing: 3px; font-family: 'GeosansLight'; color: rgba(244, 244, 244, .97); font-size: 1.2em" id = "gallery-link">Gallery</a> -->
+		  <a class="item" style = "letter-spacing: 3px; font-family: 'GeosansLight'; color: rgba(244, 244, 244, .97); font-size: 1.2em" id = "features-link">Features</a>
+		  <a class="item" style = "letter-spacing: 3px; font-family: 'GeosansLight'; color: rgba(244, 244, 244, .97); font-size: 1.2em" id = "plans-link">Plans</a>
+  		  <a class="item" style = "letter-spacing: 3px; font-family: 'GeosansLight'; color: rgba(244, 244, 244, .97); font-size: 1.2em" id = "web-demo-link" href="http://52.23.204.103:8080/" target="_blank">Web Demo</a>
+		  <a class="item" style = "letter-spacing: 3px; font-family: 'GeosansLight'; color: rgba(244, 244, 244, .97); font-size: 1.2em" id = "chatbot-demo-link" href="http://52.23.204.103:5000/" target="_blank">Chatbot Demo</a>
+		  <a class="item" style = "letter-spacing: 3px; font-family: 'GeosansLight'; color: rgba(244, 244, 244, .97); font-size: 1.2em" id = "api-docs-link">API Docs</a>
+		</div>
+
+
+		<!-- <div id = "messasge" class="ui purple positive message" style = "float: right; color: white; width: 35%; text-align: center; background-color: rgba(244, 244, 244, .15); box-shadow: none;  border: 1px solid #fff; -webkit-border-radius: 6px; -moz-border-radius: 6px; border-radius: 6px; -webkit-box-shadow: 0px 0px 3px rgba(244, 244, 244, .05); -moz-box-shadow: 0px 0px 3px rgba(244, 244, 244, .05); box-shadow: 0px 0px 3px rgba(244, 244, 244, .05); font-weight: lighter; display: none; color: rgba(244, 244, 244, .97);  max-height: 1000px; float: bottom; margin-right: 2.5%"> -->
+		  <!-- <i class="close icon" id = "close-icon"></i> -->
+			<!-- <div class="header" style = "font-weight: lighter"> -->
+
+			<script>
+				// $( ".message" ).fadeIn( "slow", function() {
+				// 	// console.log("Message displayed!");
+				// 	// alert("message displayed");
+				// });
+		    	// $(".message").delay(3000).fadeIn(1500);
+				// $("#myDiv").fadeIn(5000);
+				// $("#close-icon").click(function() { 
+			    // assumes element with id='button'
+			    // $("#message").toggle();
+			    // $("#message").hide();
+					// $(".message").remove();
+		        // alert("REMOVED")
+				// });
+			</script>
+
+			  <!-- <p style = "padding: 0; margin:0; font-family: 'GeosansLight'; color: rgba(255, 255, 255, 1.0); font-size: 100%;"> -->
+			    <!-- a public web demo for three different emoters is coming soon.. check back to experience an emphatic connection unique from any other chatbot you know. -->
+			    <!-- </p> -->
+			  <!-- <p style = "font-family: 'GeosansLight'; color: rgba(255, 255, 255, .99); font-size: 95%; letter-spacing: 2px">click <b> <a href = "https://docs.google.com/forms/d/e/1FAIpQLSeGypUc_ZG-W7SO5JhBhLquYAE-CgpIBgoqFyERps-hjumnWA/viewform?c=0&w=1"> here </b> </a> to sign-up to get early access to the beta. <b>double-click</b> anywhere on the background to see different quotes classified through emote.</p> -->
+			 <!-- </div> -->
+
+		<!-- </div> -->
+
+
+
+	<div id = "introContainer" style = "float: left; top: 0px; margin: 25px; position: absolute; font-weight: lighter;  color: rgba(244, 244, 244, .97); display: none; max-height: 900px">
+		<!-- <h3 class="ui center aligned header" style = "font-family: 'GeosansLight'; color: rgba(255, 255, 255, 1.0); font-size: 100%">Text Container</h3> -->
+		<div class="ui text container" style = "box-shadow: none;  border: 1px solid #fff; -webkit-border-radius: 6px; -moz-border-radius: 6px; border-radius: 6px; -webkit-box-shadow: 0px 0px 3px rgba(244, 244, 244, .05); -moz-box-shadow: 0px 0px 3px rgba(244, 244, 244, .05); box-shadow: 0px 0px 3px rgba(244, 244, 244, .05); font-family: 'GeosansLight'; color: rgba(255, 255, 255, 1.0); font-size: 100%; width: 420px; max-height: 900px">
+		  <div class="ui segments" style = "background-color: rgba(244, 244, 244, .15); border: none;">
+		    <div class="ui segment" style = "background-color: rgba(244, 244, 244, .15); border: none; text-align: center"><h4 style = "font-family: 'GeosansLight'; color: rgba(255, 255, 255, .99); font-size: 125%; letter-spacing: 4px; padding: 0; margin: 0; ">Introduction</h4><i class="close icon" id = "close-icon-intro"></i></div>
+		    <div class="ui segment" style = "background-color: rgba(244, 244, 244, .15); border: none; max-height: 900px; padding: 20px; margin: 0;"><p style = "margin-top: -20px">Emote is a sentiment analysis library written in Python capable of detecting up to a range of 26 different emotional tones, all of which you can browse through here on our site in the virtual globe (double-click to see new sentences). Emote was trained on almost 8000 quotations from film and literature dialogues. Emote comes with a basic REST API, and can be deployed on any server supporting Python 3.5.<br><br>Emoter is a chatbot library integrated with Emote, where conversational agents can be designed with specific persons / personalities, ways of thinking, and feelings. Emoter chatbots actually recognize the emotional associations of messages to give back appropriate responses, thus connecting with users on a deeper level than other chatbots. Emoter also comes with a way of auto-generating individual chatbot "personalities" based off of a user's Facebook message archive.<br><br>
+	    	Read <a href="https://chatbotsmagazine.com/how-to-make-a-digital-personality-of-yourself-using-chatbots-facebook-and-empathy-8b0c53afa9bd"><u>this article in Chatbots Magazine</u></a> to learn more about Emote / Emoter's development and research.</p></div>
+		    <!-- <div class="ui segment" style = "background-color: rgba(244, 244, 244, .15); border: none; height: 100px">Content</div> -->
+		    <!-- <div class="ui segment" style = "background-color: rgba(244, 244, 244, .15); border: none; height: 100px">Content</div> -->
+		  </div>
+		</div>
+		</div>
+			<script>
+			   $(function() {
+			       $('#intro-link').click(function() {
+			       	// alert("YES");
+		    		$("#introContainer").delay(50).fadeIn(750);
+			           return false;
+			       });        
+			   });			
+				// $("#myDiv").fadeIn(5000);
+				$("#close-icon-intro").click(function() { 
+		        	var container = $("#introContainer");
+				        container.hide();
+
+				});
+
+				$(document).mouseup(function (e)
+				{
+				    var container = $("#introContainer");
+
+				    if (!container.is(e.target) // if the target of the click isn't the container...
+				        && container.has(e.target).length === 0) // ... nor a descendant of the container
+				    {
+				        container.hide();
+
+				    }
+				});
+			</script>
+
+
+		<div id = "featuresContainer" style = "float: left; top: 0px; margin: 25px; position: absolute; font-weight: lighter;  color: rgba(244, 244, 244, .97); display: none; max-height: 900px">
+		<!-- <h3 class="ui center aligned header" style = "font-family: 'GeosansLight'; color: rgba(255, 255, 255, 1.0); font-size: 100%">Text Container</h3> -->
+			<div class="ui text container" style = "box-shadow: none;  border: 1px solid #fff; -webkit-border-radius: 6px; -moz-border-radius: 6px; border-radius: 6px; -webkit-box-shadow: 0px 0px 3px rgba(244, 244, 244, .05); -moz-box-shadow: 0px 0px 3px rgba(244, 244, 244, .05); box-shadow: 0px 0px 3px rgba(244, 244, 244, .05); font-family: 'GeosansLight'; color: rgba(255, 255, 255, 1.0); font-size: 100%; max-width: 480px;  max-height: 1200px;">
+		  		<div class="ui segments" style = "background-color: rgba(244, 244, 244, .15); border: none;">
+		    		<div class="ui segment" style = "background-color: rgba(244, 244, 244, .15); border: none; text-align: center"><h4 style = "font-family: 'GeosansLight'; color: rgba(255, 255, 255, .99); font-size: 105%; letter-spacing: 4px; padding: 0; margin: 0; "><h4 style = "font-family: 'GeosansLight'; color: rgba(255, 255, 255, .99); font-size: 115%; letter-spacing: 4px; padding: 0; margin: 0; text-align: center; margin-top: 0px; margin-bottom: 2px"><b>Emoter</b> Features</h4><i class="close icon" id = "close-icon-features"></i></div>
+		   				 <div class="ui segment" style = "background-color: rgba(244, 244, 244, .15); border: none;  max-height: 900px; padding: 0px">
+						    <ul class="ui list" style ="margin-left: 30px;">
+					  		<li style = "">Web platform for uses to develop their own emotionally intelligent conversation agents
+							    <ul>
+							      <li>Easily configure and develop unique Emoter agent personas, or choose from presets</li>
+							      <li>Analytics platform with reports and real-time tracking / monitoring (on non-private bots)</li>
+							      <li>Automated tools to train custom databases easily and quickly</li>
+							    </ul>
+							  </li>
+							  <li>Intergrated with Emote; empowered by a higher level of thinking
+							    <ul>
+							      <li>Emoter chatbots can give accurate responses to even unfamiliar messages not in the database</li>
+							      <li>Machine-learning capabilities to rapidly grow knowledge, with supervised control access for developers</li>
+							    </ul>
+							  </li>
+				 			 <li>Ability to be run offline, syncing back to cloud servers
+							  <li>Intergration with speech recognition, synthesis, and automatic translation, various voice options</li>
+							</ul>
+
+
+						    <h4 style = "font-family: 'GeosansLight'; color: rgba(255, 255, 255, .99); font-size: 115%; letter-spacing: 4px; padding: 0; margin: 0; text-align: center; margin-top: -5px" style = "margin-bottom: 2px"><b>Emote</b> Features</h4>
+
+
+							<ul class="ui list" style ="margin-left: 30px; margin-right: 30px; margin-top: 0px; ">
+					  		<li>RESTful API for developers and businesses to incorporate sentiment analysis (for up to 36 different tones) in their products and software
+							  <li>Web platform to see visual analytics and use Emote's mass analysis features, with customizable reporting
+							  </li>
+							  <li>Machine-learning capabilities, with interchangabl databases, automatically switching to fit the context of the data</li>
+							  <!-- </li> -->
+				 			 <li>Ability to be run offline, with syncing back to cloud servers
+							</ul>
+
+				  <p style = "padding: 0; margin:0; margin-top: 5px; margin-bottom: 5px; font-family: 'GeosansLight'; color: rgba(255, 255, 255, 1.0); font-size: 100%; text-align: center">
+				            <br>
+				    		<b style = "letter-spacing: 3px">Alpha Demos Screenshots</b>
+				    		<br>
+								    </p>				
+						<!-- <a href="images/emote-demo-1.png" data-`="emote-demo-1">Image #2</a> -->
+<!-- 				<a href="images/emote-demo-1.png" data-lightbox="emote-demo-1">Image #2</a>
+				<a href="images/image-3.jpg" data-lightbox="roadtrip">Image #3</a>
+				<a href="images/image-4.jpg" data-lightbox="roadtrip">Image #4</a> -->
+							<div class="ui tiny images" style = "text-align: center">
+						<!-- <a href="images/image-3.jpg" data-lightbox="roadtrip">Image #3</a> -->
+						<!-- <a href="images/image-4.jpg" data-lightbox="roadtrip">Image #4</a> -->
+							
+							      <a class="example-image-link" href="images/emote-demo-1.png" data-lightbox="example-set" data-title="Sentiment analysis demo with Emote"><img class="example-image" src="images/emote-demo-1.png"" alt="Sentiment analysis demo with Emote"/></a>
+							      <a class="example-image-link" href="images/emote-demo-2.png" data-lightbox="example-set" data-title="An early version of Emote's UI with mass analysis."><img class="example-image" src="images/emote-demo-2.png" alt="Emote's UI with mass analysis feature."/></a>
+							      <a class="example-image-link" href="images/emote-demo-3.png" data-lightbox="example-set" data-title="Emote's mass analysis takes in a CSV file and appends data to a downloadable copy of the file."><img class="example-image" src="images/emote-demo-3.png" alt="Emote's mass analysis takes in a CSV file and appends data to a downloadable copy of the file."/></a>
+							      <a class="example-image-link" href="images/emoter_demo_3.png" data-lightbox="example-set" data-title="Screenshot of the back end processing system of an Emoter agent working." alt="Screenshot of the back end processing system of an Emoter agent working." alt="Screenshot of the back end processing system of an Emoter agent working."><img class="example-image" src="images/emoter_demo_3.png" alt="Screenshot of the back end processing system of an Emoter agent working." alt="Screenshot of the back end processing system of an Emoter agent working."/></a>
+							      <a class="example-image-link" href="images/emoter_demo_5.png" data-lightbox="example-set" data-title="Screenshot of the back end processing system of an Emoter agent working." alt="Screenshot of the back end processing system of an Emoter agent working." alt="Screenshot of the back end processing system of an Emoter agent working."><img class="example-image" src="images/emoter_demo_5.png" alt="Screenshot of the back end processing system of an Emoter agent working." alt="Screenshot of the back end processing system of an Emoter agent working."/></a>
+							</div>
+
+
+
+
+
+		    </div>
+		    <!-- <div class="ui segment" style = "background-color: rgba(244, 244, 244, .15); border: none; height: 100px">Content</div> -->
+		    <!-- <div class="ui segment" style = "background-color: rgba(244, 244, 244, .15); border: none; height: 100px">Content</div> -->
+		  </div>
+		</div>
+		</div>
+			<script>
+			   $(function() {
+			       $('#features-link').click(function() {
+		    		   $("#featuresContainer").delay(50).fadeIn(750);
+			           return false;
+			       });        
+			   });			
+				$("#close-icon-features").click(function() { 
+		        	var container = $("#featuresContainer");
+				        container.hide();
+
+				});
+
+				$(document).mouseup(function (e)
+				{
+				    var container = $("#featuresContainer");
+
+				    if (!container.is(e.target) // if the target of the click isn't the container...
+				        && container.has(e.target).length === 0) // ... nor a descendant of the container
+				    {
+				        container.hide();
+
+				    }
+				});
+			</script>	<div id = "introContainer" style = "float: left; top: 0px; margin: 25px; position: absolute; font-weight: lighter;  color: rgba(244, 244, 244, .97); display: none;  max-height: 900px">
+		<!-- <h3 class="ui center aligned header" style = "font-family: 'GeosansLight'; color: rgba(255, 255, 255, 1.0); font-size: 100%">Text Container</h3> -->
+		<div class="ui text container" style = "box-shadow: none;  border: 1px solid #fff; -webkit-border-radius: 6px; -moz-border-radius: 6px; border-radius: 6px; -webkit-box-shadow: 0px 0px 3px rgba(244, 244, 244, .05); -moz-box-shadow: 0px 0px 3px rgba(244, 244, 244, .05); box-shadow: 0px 0px 3px rgba(244, 244, 244, .05); font-family: 'GeosansLight'; color: rgba(255, 255, 255, 1.0); font-size: 100%; width: 420px;  max-height: 900px;">
+		  <div class="ui segments" style = "background-color: rgba(244, 244, 244, .15); border: none;">
+		    <div class="ui segment" style = "background-color: rgba(244, 244, 244, .15); border: none; text-align: center"><h4 style = "font-family: 'GeosansLight'; color: rgba(255, 255, 255, .99); font-size: 125%; letter-spacing: 4px; padding: 0; margin: 0; ">Introduction</h4><i class="close icon" id = "close-icon-intro"></i></div>
+		    <div class="ui segment" style = "background-color: rgba(244, 244, 244, .15); border: none; max-height: 1200px; padding: 20px; margin: 0;"><p style = "margin-top: -20px">What does it mean to feel something? Is it just a chemical action, or can feelings be quantified, classified, and programmed? We don't have any good philosophical answers for that, but the need for emphatic understanding in human-computer interaction is now clearly greater than ever. <br><br>We think conversational interfaces are (or, at least, they could be!) one of the most natural and convenient methods of communicating with a wide variety of software and products in today's dynamic market. Our dream? To be able to walk into any store, or office, and be able to ask a coffee machine or printer to help troubleshoot itself.<br><br>Emote is our machine-learning emotional analysis platform capable of detecting up to a range of 36 different tones, all of which you can browse through here on our site in the virtual globe.<br><br>Emoter is our chatbot platform built off Emote, where conversational agents can be designed with specific persons, ways of thinking, and feelings. Emoters can be run offline, trained for any type of service and context, and actually recognize the emotions of user messages, and then give back appropriate responses, thus connecting with users a deeper level than other chatbots on the market. </p></div>
+		    <!-- <div class="ui segment" style = "background-color: rgba(244, 244, 244, .15); border: none; height: 100px">Content</div> -->
+		    <!-- <div class="ui segment" style = "background-color: rgba(244, 244, 244, .15); border: none; height: 100px">Content</div> -->
+		  </div>
+		</div>
+		</div>
+			<script>
+			   $(function() {
+			       $('#intro-link').click(function() {
+			       	// alert("YES");
+		    		$("#introContainer").delay(50).fadeIn(750);
+			           return false;
+			       });        
+			   });			
+				// $("#myDiv").fadeIn(5000);
+				$("#close-icon-intro").click(function() { 
+		        	var container = $("#introContainer");
+				        container.hide();
+
+				});
+
+				$(document).mouseup(function (e)
+				{
+				    var container = $("#introContainer");
+
+				    if (!container.is(e.target) // if the target of the click isn't the container...
+				        && container.has(e.target).length === 0) // ... nor a descendant of the container
+				    {
+				        container.hide();
+
+				    }
+				});
+			</script>
+
+
+	<div id = "contactContainer" style = "float: left; top: 100px; margin: 45px; position: absolute; font-weight: lighter;  color: rgba(244, 244, 244, .97); display: none;  max-height: 400px">
+		<!-- <h3 class="ui center aligned header" style = "font-family: 'GeosansLight'; color: rgba(255, 255, 255, 1.0); font-size: 100%">Text Container</h3> -->
+		<div class="ui text container" style = "box-shadow: none;  border: 1px solid #fff; -webkit-border-radius: 6px; -moz-border-radius: 6px; border-radius: 6px; -webkit-box-shadow: 0px 0px 3px rgba(244, 244, 244, .05); -moz-box-shadow: 0px 0px 3px rgba(244, 244, 244, .05); box-shadow: 0px 0px 3px rgba(244, 244, 244, .05); font-family: 'GeosansLight'; color: rgba(255, 255, 255, 1.0); font-size: 100%; width: 420px; max-height: 400px">
+		  <div class="ui segments" style = "background-color: rgba(244, 244, 244, .15); border: none;">
+		    <div class="ui segment" style = "background-color: rgba(244, 244, 244, .15); border: none; text-align: center"><h4 style = "font-family: 'GeosansLight'; color: rgba(255, 255, 255, .99); font-size: 125%; letter-spacing: 4px; padding: 0; margin: 0; ">Contact Us</h4><i class="close icon" id = "close-icon-contact"></i></div>
+		    <div class="ui segment" style = "background-color: rgba(244, 244, 244, .15); border: none; max-height: 400px; padding: 20px; margin: 0;"><p style = "margin-top: -20px">We're still a an early stage startup, and we've got some way to go before turning our beta prototypes into refined, quality services. But feel free to reach out with your questions, or if you have any answers you think you can give us for ours! </p>
+		    <a href = mailto:team@emoter.life>team@emoter.life</a></div>
+		    <!-- <div class="ui segment" style = "background-color: rgba(244, 244, 244, .15); border: none; height: 100px">Content</div> -->
+		  </div>
+		</div>
+		</div>
+			<script>
+			   $(function() {
+			       $('#contact-link').click(function() {
+			       	// alert("YES");
+		    		$("#contactContainer").delay(50).fadeIn(750);
+			           return false;
+			       });        
+			   });			
+				// $("#myDiv").fadeIn(5000);
+				$("#close-icon-contact").click(function() { 
+		        	var container = $("#contactContainer");
+				        container.hide();
+
+				});
+
+				$(document).mouseup(function (e)
+				{
+				    var container = $("#contactContainer");
+
+				    if (!container.is(e.target) // if the target of the click isn't the container...
+				        && container.has(e.target).length === 0) // ... nor a descendant of the container
+				    {
+				        container.hide();
+
+				    }
+				});
+			</script>
+
+
+	<div id = "plansContainer" style = "float: left; top: 20px; margin: 25px; position: absolute; font-weight: lighter;  color: rgba(244, 244, 244, .97); display: none; margin-top: 5px; max-height: 900px; max-width: 800px">
+		<!-- <h3 class="ui center aligned header" style = "font-family: 'GeosansLight'; color: rgba(255, 255, 255, 1.0); font-size: 100%">Text Container</h3> -->
+		<div class="ui text container" style = "box-shadow: none;  border: 1px solid #fff; -webkit-border-radius: 6px; -moz-border-radius: 6px; border-radius: 6px; -webkit-box-shadow: 0px 0px 3px rgba(244, 244, 244, .05); -moz-box-shadow: 0px 0px 3px rgba(244, 244, 244, .05); box-shadow: 0px 0px 3px rgba(244, 244, 244, .05); font-family: 'GeosansLight'; color: rgba(255, 255, 255, 1.0); font-size: 95%; max-width: 800px; max-height: 1200px;">
+		  <div class="ui segments" style = "background-color: rgba(244, 244, 244, .15); border: none;">
+		    <div class="ui segment" style = "background-color: rgba(244, 244, 244, .15); border: none; text-align: center; margin-top:"><h4 style = "font-family: 'GeosansLight'; color: rgba(255, 255, 255, .99); font-size: 115%; letter-spacing: 4px; padding: 0; margin: 0; margin-top: 5px">Plans / Services</h4><i class="close icon" id = "close-icon-intro"></i></div>
+		    <div class="ui segment" style = "background-color: rgba(244, 244, 244, .15); border: none; max-height: 900px; padding: 20px; margin: 0; font-size: 95%">
+
+
+		    <!-- <p style = "margin-top: -20px">What does it mean to feel something? Is it just a chemical action, or can feelings be quantified, classified, and programmed? We don't have any good philosophical answers for that, but the need for emphatic understanding in human-computer interaction is clearly now greater than ever. <br><br>We think conversational interfaces are (or, at least, they could be!) one of the most natural and convenient methods of communicating with a wide variety of software and products in today's dynamic market. Our dream? To be able to walk into any store, or o </p> -->
+
+		    <table class="ui inverted celled structured table" style = "background-color: transparent; color: white; border-color: white; border: none; margin-top: -10px; font-size: 95%">
+			  <thead style = "background-color: transparent;""
+			    <tr style = "">
+			      <th rowspan="2" style = "background-color: transparent">For</th>
+			      <th rowspan="2" style = "background-color: transparent">Purpose</th>
+			      <th rowspan="2" style = "background-color: transparent">Speed / Storage</th>
+			      <th colspan="5" style = "background-color: transparent">Supported Platforms</th>
+			      <th rowspan="2" style = "background-color: transparent">Cost</th>
+			    </tr>
+			    <tr>
+			      <th style = "background-color: transparent">Emote+r</th>
+			      <th style = "background-color: transparent">Web App</th>
+			      <th style = "background-color: transparent">Full API Access</th>
+			      <th style = "background-color: transparent">Unity SDK</th>
+			      <th style = "background-color: transparent">Offine Capability</th>
+			      <!-- <th style = "background-color: transparent">Python</th> -->
+			    </tr>
+			  </thead>
+			  <tbody>
+			    <tr>
+			      <td>Hobbyists & <br> Open-Source</td>
+			      <td>Just for fun; or any open-source projects</td>
+			      <td class="right aligned">Limited Flexibility</td>
+			      <td class="center aligned">
+			        <i class="large green checkmark icon"></i>
+			      </td>
+			      <td class="center aligned">
+				  <i class="large green checkmark icon"></i>
+			      </td>
+			      <td class = "center aligned"></td>
+			      <td class = "center aligned"><i class="large green checkmark icon"></td>
+			      <td class = "center aligned"></td>
+			      <td class = "center aligned">Free</td>
+			    </tr>
+
+			    <tr>
+			      <td rowspan="1">Small Businesses</td>
+			      <td>Analytics and customer support on a small scale</td>
+			      <td class="right aligned">Mid-tier</td>
+			      <td class="center aligned">
+			        <i class="large green checkmark icon"></i>
+			      </td>
+			      <td><i class="large green checkmark icon"></i></td>
+			      <td class = "center aligned"></td>
+			      <td class = "center aligned"></td>
+				  <td class = "center aligned"></td>
+			      <td class = "center aligned">Scales</td>
+
+			    </tr>
+
+
+			    <tr>
+			      <td rowspan="1">Scaling And Corporate</td>
+			      <td>Larger companies with engineering teams</td>
+			      <td class="right aligned">Highest priority</td>
+			      <td class="center aligned">
+			        <i class="large green checkmark icon"></i>
+			      </td>
+			      <td class = "center aligned"><i class="large green checkmark icon"></i></td>
+			      <td class = "center aligned"><i class="large green checkmark icon"></i></td>
+			      <td class = "center aligned"><i class="large green checkmark icon"></i></td>
+			      <td class = "center aligned"><i class="large green checkmark icon"></i></td>
+			      <td>Scales</td>
+			    </tr>
+
+			    </tr>
+
+		    <tr>
+			      <td rowspan="1">Other Professional Devs</td>
+			      <td>Commercial and professional devs / teams</td>
+			      <td class="right aligned">Scales</td>
+			      <td class="center aligned">
+			        <i class="large green checkmark icon"></i>
+			      </td>
+					      <td class="center aligned">
+			        <i class="large green checkmark icon"></i>
+			      </td>
+			      <td class = "center aligned"><i class="large green checkmark icon"></i></td>
+			      <td class = "center aligned"><i class="large green checkmark icon"></i></td>
+			      <td class = "center aligned"><i class="large green checkmark icon"></i></td>
+			      <td class = "center aligned">Trial</td>
+			    </tr>
+
+			    </tr>
+
+			  </tbody>
+			</table>
+
+		    <!-- <div class="ui section divider" style = "color:"></div> -->
+
+
+		    </div>
+		    <!-- <div class="ui segment" style = "background-color: rgba(244, 244, 244, .15); border: none; height: 100px">Content</div> -->
+		  </div>
+		</div>
+		</div>
+
+
+
+		    <!-- <div class="ui segment" style = "background-color: rgba(244, 244, 244, .15); border: none; height: 100px">Content</div> -->
+		  <!-- </div> -->
+		<!-- </div> -->
+		<!-- </div> -->
+
+		<script>
+		   $(function() {
+		       $('#plans-link').click(function() {
+	    		   $("#plansContainer").delay(50).fadeIn(750);
+		           // $('#featuresContainer').show();
+		           return false;
+		       });        
+		   });			
+			// $("#myDiv").fadeIn(5000);
+			$("#close-icon-plans").click(function() { 
+	        	var container = $("#plansContainer");
+			        container.hide();
+
+			});
+
+			$(document).mouseup(function (e)
+			{
+			    var container = $("#plansContainer");
+
+			    if (!container.is(e.target) // if the target of the click isn't the container...
+			        && container.has(e.target).length === 0) // ... nor a descendant of the container
+			    {
+			        container.hide();
+
+			    }
+			});
+		</script>
+
+
+	<div id = "personasContainer" style = "float: left; top: 140px; margin: 65px; position: absolute; font-weight: lighter;  color: rgba(244, 244, 244, .97); display: none; max-height: 400px">
+		<!-- <h3 class="ui center aligned header" style = "font-family: 'GeosansLight'; color: rgba(255, 255, 255, 1.0); font-size: 100%">Text Container</h3> -->
+		<div class="ui text container" style = "box-shadow: none;  border: 1px solid #fff; -webkit-border-radius: 6px; -moz-border-radius: 6px; border-radius: 6px; -webkit-box-shadow: 0px 0px 3px rgba(244, 244, 244, .05); -moz-box-shadow: 0px 0px 3px rgba(244, 244, 244, .05); box-shadow: 0px 0px 3px rgba(244, 244, 244, .05); font-family: 'GeosansLight'; color: rgba(255, 255, 255, 1.0); font-size: 100%; width: 360px; max-height: 400px">
+		  <div class="ui segments" style = "background-color: rgba(244, 244, 244, .15); border: none;">
+		    <div class="ui segment" style = "background-color: rgba(244, 244, 244, .15); border: none; text-align: center"><h4 style = "font-family: 'GeosansLight'; color: rgba(255, 255, 255, .99); font-size: 125%; letter-spacing: 4px; padding: 0; margin: 0; ">Patience please! Web demos are coming soon.</h4><i class="close icon" id = "close-icon-api"></i></div>
+		    <div class="ui segment" style = "background-color: rgba(244, 244, 244, .15); border: none; max-height: 400px; padding: 20px; margin: 0;"><p style = "margin: 20px; text-align: center">Sign up <a href = "https://docs.google.com/forms/d/e/1FAIpQLSeGypUc_ZG-W7SO5JhBhLquYAE-CgpIBgoqFyERps-hjumnWA/viewform?c=0&w=1"> here </a> to be the first to know.</p>
+		    <!-- <a href = mailto:team@emoter.life>team@emoter.life</a></div> -->
+		    <!-- <div class="ui segment" style = "background-color: rgba(244, 244, 244, .15); border: none; height: 100px">Content</div> -->
+		  </div>
+		</div>
+		</div>
+			<script>
+			   $(function() {
+			       $('#personas-link').click(function() {
+			       	// alert("YES");
+		    		$("#personasContainer").delay(50).fadeIn(750);
+			           return false;
+			       });        
+			   });			
+				// $("#myDiv").fadeIn(5000);
+				$("#close-icon-personas").click(function() { 
+		        	var container = $("#personasContainer");
+				        container.hide();
+
+				});
+
+				$(document).mouseup(function (e)
+				{
+				    var container = $("#personasContainer");
+
+				    if (!container.is(e.target) // if the target of the click isn't the container...
+				        && container.has(e.target).length === 0) // ... nor a descendant of the container
+				    {
+				        container.hide();
+
+				    }
+				});
+			</script>
+	</div>
+
+
+
+	<div id = "apiContainer" style = "float: left; top: 140px; margin: 65px; position: absolute; font-weight: lighter;  color: rgba(244, 244, 244, .97); display: none; max-height: 400px">
+		<!-- <h3 class="ui center aligned header" style = "font-family: 'GeosansLight'; color: rgba(255, 255, 255, 1.0); font-size: 100%">Text Container</h3> -->
+		<div class="ui text container" style = "box-shadow: none;  border: 1px solid #fff; -webkit-border-radius: 6px; -moz-border-radius: 6px; border-radius: 6px; -webkit-box-shadow: 0px 0px 3px rgba(244, 244, 244, .05); -moz-box-shadow: 0px 0px 3px rgba(244, 244, 244, .05); box-shadow: 0px 0px 3px rgba(244, 244, 244, .05); font-family: 'GeosansLight'; color: rgba(255, 255, 255, 1.0); font-size: 100%; width: 360px; max-height: 400px">
+		  <div class="ui segments" style = "background-color: rgba(244, 244, 244, .15); border: none;">
+		    <div class="ui segment" style = "background-color: rgba(244, 244, 244, .15); border: none; text-align: center"><h4 style = "font-family: 'GeosansLight'; color: rgba(255, 255, 255, .99); font-size: 125%; letter-spacing: 4px; padding: 0; margin: 0; ">Patience please! Our API will be public soon.</h4><i class="close icon" id = "close-icon-api"></i></div>
+		    <div class="ui segment" style = "background-color: rgba(244, 244, 244, .15); border: none; max-height: 400px; padding: 20px; margin: 0;"><p style = "margin: 20px; text-align: center">Sign up <a href = "https://docs.google.com/forms/d/e/1FAIpQLSeGypUc_ZG-W7SO5JhBhLquYAE-CgpIBgoqFyERps-hjumnWA/viewform?c=0&w=1"> here </a> to be the first to know.</p>
+		    <!-- <a href = mailto:team@emoter.life>team@emoter.life</a></div> -->
+		    <!-- <div class="ui segment" style = "background-color: rgba(244, 244, 244, .15); border: none; height: 100px">Content</div> -->
+		  </div>
+		</div>
+		</div>
+			<script>
+			   $(function() {
+			       $('#api-link').click(function() {
+			       	// alert("YES");
+		    		$("#apiContainer").delay(50).fadeIn(750);
+			           return false;
+			       });        
+			   });			
+				// $("#myDiv").fadeIn(5000);
+				$("#close-icon-api").click(function() { 
+		        	var container = $("#apiContainer");
+				        container.hide();
+
+				});
+
+				$(document).mouseup(function (e)
+				{
+				    var container = $("#apiContainer");
+
+				    if (!container.is(e.target) // if the target of the click isn't the container...
+				        && container.has(e.target).length === 0) // ... nor a descendant of the container
+				    {
+				        container.hide();
+
+				    }
+				});
+			</script>
+		</div>
+
+
+		<script>
+
+			var table = [
+				"positive", "", "We're not bad people. We just come from a bad place.", "How cheerfully he seems to grin, how neatly spread his claws, and welcome little fishes in with gently smiling jaws!", "You're entirely bonkers. But I'll tell you a secret: All the best people are.",
+
+				"negative", "It's never that easy though, is it?", "You know why guys like you knock everything?", "I don't care if Monday's blue; Tuesday's gray and Wednesday too.", "He makes less and less sense as the days go by.",
+
+				"love", "All I know is, I'd give up my private line to go out with a guy like Joey.", "I love you. I'll wait for you. Come back. Come back to me.", "Just in case this is a suicide or they capture us and we never see each other again anymore, I just want to say: Thank you for marrying me. I'm glad I got to know you, Suzy.", "I'll never part with it. It reminded her of me; it will remind me of her, always.",
+
+				"hate", "I've seen things you people wouldn't believe.", "This is ridiculous. If I’m going to die, I want to die in Manhattan.", "What’s the point of being an outlaw when you got responsibilities?", "You are not the guy. You’re not capable of being the guy. I had a guy, but now I don’t. You are not the guy.",
+
+				"joy", "Everything was beautiful and nothing hurt.", "I must say, I find that girl utterly delightful.", "It's quite a thing, winning the loyalty of a woman like that for nineteen consecutive seasons.", "Blond, smooth skin as white as that milk, of impeccable provenance. One of the last in private hands, and unquestionably the best. It's a masterpiece.",
+
+				"anger", "I don't know the meaning of half those long words, and I don't believe you do either!", "Well that was the silliest tea party I ever went to! I am never going back there again!", "Shut up about that! I survived on hand soap and toilet water for three days. The memory haunts me.", "Why would a reviewer make the point of saying someone's not a genius? Do you especially think I'm not a genius?",
+
+				"certainty", "All I'm saying is that if I ever start referring to these as the best years of my life.. remind me to kill myself.", "Screws fall out all the time, the world is an imperfect place.", "It is a truth universally acknowledged, that a single man in possession of a good fortune, must be in want of a wife.", "Everything in life is just for a while.",
+
+				"confusion", "Honestly I can't remember all my teenage feelings. And the meanings, they seemed too see-through to be true.", "Would you tell me, please, which way I ought to go from here?", "How puzzling all these changes are! I'm never sure what I'm going to be, from one minute to another.", "Dee, you scared the crap out of me. What are you doing?",
+
+				"amusement", "You sure know a lot about a fella’s pecker for someone who’s been avoiding them her whole life.", "Everyone sounds like Meryl Streep with a gun to their head.", "Your life is way more glamorous than what I was picturing.", "Well, I've never been accused of that before, but I appreciate the sentiment.",
+
+				"boredom", "There’s no point in going through all my wrongs. Besides, God’s already seen them.", "Addiction a disease? I’ve never heard of anything so absurd.", "I think we're just gonna to have to be secretly in love with each other and leave it at that, Richie.", "Oh, that's right, we've got another body buried here, haven't we?",
+
+				"intensity", "We got no food, we got no jobs, our pets heads are falling off!", "Let the wild rumpus start!", "You're just like an angel; your skin makes me cry.", "When reason fails, the devil helps!",
+
+				"regret", "If I could have it back, all the time that we wasted, I'd only waste it again.", "Man has it all in his hands, and it all slips through his fingers from sheer cowardice.", "I don't know Lenny. You see, friendship is more than one person constantly doing favors for another.", "We're really sorry Charlie, but it was dark, we didn't know it was you... and you were robbing the register.",
+
+				"agreeable", "I'm afraid I can't explain myself, sir. Because I am not myself, you see?", "Please let me do the talking. Please.", "Thank God for novelists. Thank God there are people willing to write everything down. Otherwise, so much would be forgotten.", "It's okay. We're not actually related anyway.",
+
+				"challenging", "Do you know how popular I am? I am so popular.", "No, it’s the future. You think it’s here too early and I think it’s here too late.", "Evelyn, I'm sorry. I just, uh... you're not terribly important to me.", "It’s no use going back to yesterday, because I was a different person then.",
+
+				"desire", "I'll do anything sexual. I don't need a million dollars to do it either.", "But I pulled you and I called you here. And I caught you and I brought you here.", "I like to feel his eyes on me when I look away.", "Sometimes I wish I knew how to go crazy. I forget how.",
+
+				"calm", "In the middle of the journey of our life I came to myself within a dark wood where the straight way was lost.", "Please let me do the talking. Please.", "Yeah, you might want to start driving because she called the cops on us.", "I think we have everything under control. And they need their privacy.",
+
+				"emphatic", "You met me at a very strange time in my life.", "Funny how just when you think life can’t possibly get any worse it suddenly does.", "Isn't it strange, to create something that hates you?", "Is it better for a man to have chosen evil than to have good imposed upon him?",
+
+				"sarcastic", "He studies too much for words of four syllables.", "But it has been the study of my life to avoid those weaknesses which often expose a strong understanding to ridicule.", "Unfortunately, the number of bagels that disappear without being paid for has also gone up.", "I don't imagine that you would teach your children to cheat, so why do it yourselves?",
+
+				"instructive", "If you don’t like what is being said, then change the conversation.", "There is an art, it says, or rather, a knack to flying. The knack lies in learning how to throw yourself at the ground and miss.", "The worst mistake that you can make is to think you're alive when really you're asleep in life's waiting room.", "Stop, stop, stop. All right not bad, good rhythm, love the enthusiasm.",
+
+				"accusative", "I can't believe you did it. I was teasing. I loved you. Course, I was coming up here to kill ya..", "You're a pistol, you're really funny. You're really funny.", "You have everything. And so much of it.", "What have I become, my sweetest friend? Everyone I know goes away, in the end.",
+
+				"admiration", "You looked beautiful last night, you know.", "This is where we perform all of our surgeries. I think it’s a special place. You wouldn’t believe what happens here.", "It’s had a few mechanical difficulties, I’ll admit, but we’re talking about a very sophisticated invention.", "How complicated and unpredictable the machinery of life really is.",
+
+				"inquisitive", "Isn't everything we do in life a way to be loved a little more?", "Do you like Huey Lewis and The News?", "Why is a raven like a writing desk?", "Do you know what nemesis means?",
+
+				"modest", "Yes, we're completely under-dressed. It's embarrassing.", "I never thought I'd ever say this in my life, but it's weird sleeping without a cat in my bed.", "Well, my house is so boring looking...so I just wanted to make it look more party-like.", "Maybe I’ve changed. Perhaps I’m not as reckless and fast as you remember.",
+
+				"pride", "I am very proud, revengeful, ambitious, with more offences at my beck than I have thoughts to put them in, imagination to give them shape, or time to act them in.", "Every man has his talents. Finding gold in the river, that’s mine.", "Well, yeah, of course I'm the looks, but I always thought of myself as the brains and the looks.", "I can absolutely keep a hummingbird as a pet, bro. It's no different than having a parrot or a parakeet.",
+
+				"ambivalence", "Well, I never heard it before, but it sounds uncommon nonsense.", "If it had grown up, it would have made a dreadfully ugly child; but it makes rather a handsome pig, I think.", "I was not proud of what I had learned but I never doubted that it was worth knowing.", "If you knew Time as well as I do, you wouldn’t talk about wasting it. It’s him.",
+
+				"vulgarity", "Well, fuck me gently with a chainsaw. Do I look like Mother Teresa?", "So, you are obviously the big dick. The men on the side of ya are your balls.", "I just saved your fucking life, Mom. . . . You could at least offer me an Oreo.", "Everyone's a whore, grace. We just sell different parts of ourselves.",
+
+				"obedience", "I guess you'd prefer we listen to that punk rock music I've been reading about.", "I'll just regress, because I feel I've made myself perfectly redundant.", "Please don't make fun of me. I just wanted to flirt with you.", "I'm sorry, I can't hear you. Hold on, I'm gonna put the phone on my bionic ear.",
+
+				"assertiveness", "Stop making the eyes at me, I'll stop making my eyes at you.", "We can't stop here, this is bat country!", "Stars, hide your fires. Let not light see my black and deep desires.", "You clearly don’t know who you’re talking to, so let me clue you in.",
+
+				"attraction", "I haven’t been myself lately, but I love you. Nothing about that has changed, and nothing ever will.", " I need the speed of this place. Of you.", "We're in love. We just want to be together. What's wrong with that?", "Look, let's face it, you're probably a much more intelligent person than I am. In fact, I guarantee it.",
+
+				"disgust", "People who don't think shouldn't talk.", "(284)", "You're thirty-three years old, you're supposed to be sexually active!", "I do not even understand the smell coming from your body, dude.",
+
+				"informative", "Consider your origin. You were not formed to live like brutes but to follow virtue and knowledge.", "When you think about it, it won’t bring her back. She’s in the water. With father.", "They say as soon you have to cut down on your drinking, you have a drinking problem.", "A gunner’s knot is difficult to tie but impossible to undo.",
+
+				"malevolent", "It will have blood they say - blood will have blood.", "The games are always, repeat always, being played. But nobody plays the games like me.", "That's just the point: an honest and sensitive man opens his heart, and the man of business goes on eating - and then he eats you up.", "All right look at this, sometimes you've got to crack a few eggs to make an omelet.",
+
+				"anxiety", "Okay... then how about we try out some French cuisine.  Saturday?  Night?", "We could get into a lot of trouble for this.", "Well, I hope not. He's the reason we have extra security. He threatened to burn down the building.", "That's a bad idea, whenever you get involved, someone gets hurt.",
+
+				"excitement", "Oh. That woman is amazing! She is amazing! You just met her; she's already got you running errands for her. She's good. She is good!", "(294)", "Hold on, hang on! You did not get that point down there! That was my point!", "Guys guys guys we don't need to use guns!",
+
+				"hopeful", "I think it's really great that you and Nick are going out. I mean it.", "I'd like to think this isn't weakness or... evasion... but a final act of kindness. I gave them their happiness.", "50 years I spent like that; finding myself awake at three in the morning. But you know what? Ever since my diagnosis, I sleep just fine.",  "And no one will tell you this, but you can’t be a man. Don’t even try. Be a woman. Powerful business when done correctly.",
+
+				"horror", "You shouldn't look at people, it makes them feel bad!", "How may I live without my name? I have given you my soul; leave me my name!", "You are pulling down heaven and raising up a whore.", "I can't believe you guys! I could have been killed!"
+			];
+
+
+			var camera, scene, renderer;
+			var controls;
+
+			var objects = [];
+			var targets = { table: [], sphere: [], helix: [], grid: [] };
+			var n = 0;
+
+			init();
+			animate();
+			var phi = 0;
+			var theta = 0;
+
+			// alert(n)
+
+			// setInterval(changeDialogRandomly, 5000);
+
+			function init() {
+				camera = new THREE.PerspectiveCamera( 40, window.innerWidth / window.innerHeight, 1, 10000 );
+				camera.position.z = 3000;
+
+				scene = new THREE.Scene();
+				n = Math.floor((Math.random() * 4) + 1);
+				console.log(n);
+				// table
+				for ( var i = 0; i < table.length; i += 5 ) {
+
+					var element = document.createElement( 'div' );
+					element.className = 'element';
+					// element.style.backgroundColor = 'rgba(0,127,127,' + ( Math.random() * 0.5 + 0.25 ) + ')';
+					element.style.background = '#ee9ca7; /* fallback for old browsers */';
+					element.style.background = '-webkit-linear-gradient(to left, #ee9ca7 , #ffdde1); /* Chrome 10-25, Safari 5.1-6 */';
+					element.style.background = 'background: linear-gradient(to left, #ee9ca7 , #ffdde1); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */';
+
+					var number = document.createElement( 'div' );
+					number.className = 'number';
+					// number.textContent = (i/5) + 1;
+					element.appendChild( number );
+
+					var symbol = document.createElement( 'div' );
+					symbol.className = 'symbol';
+					symbol.textContent = table[ i];
+					element.appendChild( symbol );
+
+					var details = document.createElement( 'div' );
+					details.className = 'details';
+					new_i = i + n
+					if (new_i < 1) {
+						new_i == 1;
+					}
+					details.innerHTML = table[new_i];
+					// '<br>' + table[ i + 2 ];
+					element.appendChild( details );
+
+					var object = new THREE.CSS3DObject( element );
+					object.position.x = Math.random() * 4000 - 2000;
+					object.position.y = Math.random() * 4000 - 2000;
+					object.position.z = Math.random() * 4000 - 2000;
+					scene.add( object );
+
+					objects.push( object );
+
+					//
+
+					var object = new THREE.Object3D();
+					// object.position.x = ( table[ i + 3 ] * 140 ) - 1330;
+					// object.position.y = - ( table[ i + 4 ] * 180 ) + 990;
+
+					targets.table.push( object );
+
+				}
+					// alert(new_i)
+
+				// sphere
+
+				var vector = new THREE.Vector3();
+				var spherical = new THREE.Spherical();
+
+				for ( var i = 0, l = objects.length; i < l; i ++ ) {
+
+				    phi = Math.acos( -1 + ( 2 * i ) / l );
+					theta = Math.sqrt( l * Math.PI ) * phi;
+
+					var object = new THREE.Object3D();
+
+					spherical.set( 800, phi, theta );
+
+					object.position.setFromSpherical( spherical );
+
+					vector.copy( object.position ).multiplyScalar( 2 );
+
+					object.lookAt( vector );
+
+					targets.sphere.push( object );
+
+				}
+
+				// helix
+
+				var vector = new THREE.Vector3();
+				var cylindrical = new THREE.Cylindrical();
+
+				for ( var i = 0, l = objects.length; i < l; i ++ ) {
+
+					theta = i * 0.175 + Math.PI;
+					var y = - ( i * 8 ) + 450;
+
+					var object = new THREE.Object3D();
+
+					cylindrical.set( 900, theta, y );
+
+					object.position.setFromCylindrical( cylindrical );
+
+					vector.x = object.position.x * 2;
+					vector.y = object.position.y;
+					vector.z = object.position.z * 2;
+
+					object.lookAt( vector );
+
+					targets.helix.push( object );
+
+				}
+
+				// grid
+
+				for ( var i = 0; i < objects.length; i ++ ) {
+
+					var object = new THREE.Object3D();
+
+					object.position.x = ( ( i % 5 ) * 400 ) - 800;
+					object.position.y = ( - ( Math.floor( i / 5 ) % 5 ) * 400 ) + 800;
+					object.position.z = ( Math.floor( i / 25 ) ) * 1000 - 2000;
+
+					targets.grid.push( object );
+
+				}
+
+				//
+
+				renderer = new THREE.CSS3DRenderer();
+				renderer.setSize( window.innerWidth, window.innerHeight );
+				renderer.domElement.style.position = 'absolute';
+				document.getElementById( 'container' ).appendChild( renderer.domElement );
+
+				//
+
+				controls = new THREE.TrackballControls( camera, renderer.domElement );
+				controls.rotateSpeed = 0.5;
+				controls.minDistance = 500;
+				controls.maxDistance = 6000;
+				controls.addEventListener( 'change', render );
+
+				// var button = document.getElementById( 'table' );
+				// button.addEventListener( 'click', function ( event ) {
+
+				// 	transform( targets.table, 2000 );
+
+				// }, false );
+
+				// var button = document.getElementById( 'sphere' );
+				// button.addEventListener( 'click', function ( event ) {
+
+					transform( targets.sphere, 2000 );
+
+				// }, false );
+
+				// var button = document.getElementById( 'helix' );
+				// button.addEventListener( 'click', function ( event ) {
+
+				// 	transform( targets.helix, 2000 );
+
+				// }, false );
+
+				// var button = document.getElementById( 'grid' );
+				// button.addEventListener( 'click', function ( event ) {
+
+				// 	transform( targets.grid, 2000 );
+
+				// }, false );
+
+				// transform( targets.table, 2000 );
+
+				
+
+				window.addEventListener( 'resize', onWindowResize, false );
+
+			}
+
+
+			function transform( targets, duration ) {
+
+				TWEEN.removeAll();
+
+				for ( var i = 0; i < objects.length; i ++ ) {
+
+					var object = objects[ i ];
+					var target = targets[ i ];
+
+					new TWEEN.Tween( object.position )
+						.to( { x: target.position.x, y: target.position.y, z: target.position.z }, Math.random() * duration + duration )
+						.easing( TWEEN.Easing.Exponential.InOut )
+						.start();
+
+					new TWEEN.Tween( object.rotation )
+						.to( { x: target.rotation.x, y: target.rotation.y, z: target.rotation.z }, Math.random() * duration + duration )
+						.easing( TWEEN.Easing.Exponential.InOut )
+						.start();
+
+				}
+
+				new TWEEN.Tween( this )
+					.to( {}, duration * 2 )
+					.onUpdate( render )
+					.start();
+
+			}
+
+
+
+			function onWindowResize() {
+
+				camera.aspect = window.innerWidth / window.innerHeight;
+				camera.updateProjectionMatrix();
+
+				renderer.setSize( window.innerWidth, window.innerHeight );
+
+				render();
+
+			}
+
+			function animate() {
+
+				requestAnimationFrame( animate );
+
+				TWEEN.update();
+
+				controls.update();
+			}
+
+			function render() {
+
+				renderer.render( scene, camera );
+
+			}
+			// setTimeout(function(){ 		transform( targets.sphere, 200000000 ); console.log('ready'); }, 3000);
+
+
+		</script>
+
+
+
+
+	</body>
+	<script>
+	$('#container').dblclick(function(){
+    	$("#container").fadeIn(3000);
+  		$( "#container" ).empty();
+ 		animate();
+ 		objects = []
+  		init();
+	});
+	</script>
+	<script src="js/lightbox-plus-jquery.js"></script>
+
+</html>
