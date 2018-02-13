@@ -259,7 +259,7 @@
 
 
 
-	<div id = "introContainer" style = "float: left; top: 0px; margin: 25px; font-weight: lighter;  color: rgba(244, 244, 244, .97); display: none; overflow-y: auto; max-height: 500px; max-width: 80%; overflow-x: hidden">
+	<div id = "introContainer" style = "float: left; top: 0px; margin: 25px; font-weight: lighter;  color: rgba(244, 244, 244, .97); display: none; max-height: 500px; max-width: 420px; overflow-y: auto; overflow-x: hidden">
 		<!--  box-shadow: none;  border: 1px solid #fff; -webkit-border-radius: 6px; -moz-border-radius: 6px; border-radius: 6px; -webkit-box-shadow: 0px 0px 3px rgba(244, 244, 244, .05); -moz-box-shadow: 0px 0px 3px rgba(244, 244, 244, .05); box-shadow: 0px 0px 3px rgba(244, 244, 244, .05); max-width: 600px -->
 
 		<div class="ui text container" style = "font-family: 'GeosansLight'; color: rgba(255, 255, 255, 1.0); font-size: 100%; max-width: 420px; max-height: 1500px;">
@@ -318,7 +318,7 @@
 			</script>
 
 
-		<div id = "featuresContainer" style = "float: left; top: 50px; margin: 35px; font-weight: lighter;  color: rgba(244, 244, 244, .97); display: none; overflow-y: auto; max-height: 500px; max-width: 80%; overflow-x: hidden">
+		<div id = "featuresContainer" style = "float: left; top: 50px; margin: 35px; font-weight: lighter;  color: rgba(244, 244, 244, .97); display: none; overflow-y: auto; max-height: 500px; max-width: 520px; overflow-x: hidden">
 
 			<!-- box-shadow: none;  border: 1px solid #fff; -webkit-border-radius: 6px; -moz-border-radius: 6px; border-radius: 6px; -webkit-box-shadow: 0px 0px 3px rgba(144, 244, 244, .02); -moz-box-shadow: 0px 0px 3px rgba(154, 154, 44, .02); box-shadow: 0px 0px 3px rgba(244, 244, 244, .02); -->
 			<div class="ui text container" style = "font-family: 'GeosansLight'; color: rgba(255, 255, 255, 1.0); font-size: 100%; max-height: 2400px; max-width: 520px">
@@ -448,47 +448,9 @@
 				});
 			</script>	
 
-		<div id = "introContainer" style = "float: left; top: 0px; margin: 25px; font-weight: lighter;  color: rgba(244, 244, 244, .97); display: none;  max-height: 500px;  max-width: 80%;">
-			<!--  box-shadow: none;  border: 1px solid #fff; -webkit-border-radius: 6px; -moz-border-radius: 6px; border-radius: 6px; -webkit-box-shadow: 0px 0px 3px rgba(144, 244, 244, .02); -moz-box-shadow: 0px 0px 3px rgba(154, 154, 44, .02); box-shadow: 0px 0px 3px rgba(244, 244, 244, .02); -->
-		<div class="ui text container" style = "font-family: 'GeosansLight'; color: rgba(255, 255, 255, 1.0); font-size: 100%; max-height: 900px; max-width: 420px;">
-		  <div class="ui segments" style = "background-color: rgba(244, 244, 244, .15); border: none;">
-		    <div class="ui segment" style = "background-color: rgba(244, 244, 244, .15); border: none; text-align: center"><h4 style = "font-family: 'GeosansLight'; color: rgba(255, 255, 255, .99); font-size: 125%; letter-spacing: 4px; padding: 0; margin: 0; ">Introduction</h4><i class="close icon" id = "close-icon-intro"></i></div>
-		    <div class="ui segment" style = "background-color: rgba(244, 244, 244, .15); border: none; max-height: 1200px; padding: 20px; margin: 0; max-width: 420px;"><p style = "margin-top: -20px">What does it mean to feel something? Is it just a chemical action, or can feelings be quantified, classified, and programmed? We don't have any good philosophical answers for that, but the need for emphatic understanding in human-computer interaction is now clearly greater than ever. <br><br>We think conversational interfaces are (or, at least, they could be!) one of the most natural and convenient methods of communicating with a wide variety of software and products in today's dynamic market. Our dream? To be able to walk into any store, or office, and be able to ask a coffee machine or printer to help troubleshoot itself.<br><br>Emote is our machine-learning emotional analysis platform capable of detecting up to a range of 36 different tones, all of which you can browse through here on our site in the virtual globe.<br><br>Emoter is our chatbot platform built off Emote, where conversational agents can be designed with specific persons, ways of thinking, and feelings. Emoters can be run offline, trained for any type of service and context, and actually recognize the emotions of user messages, and then give back appropriate responses, thus connecting with users a deeper level than other chatbots on the market. </p></div>
-		    <!-- <div class="ui segment" style = "background-color: rgba(244, 244, 244, .15); border: none; height: 100px">Content</div> -->
-		    <!-- <div class="ui segment" style = "background-color: rgba(244, 244, 244, .15); border: none; height: 100px">Content</div> -->
-		  </div>
-		</div>
-		</div>
-			<script>
-			   $(function() {
-			       $('#intro-link').click(function() {
-			       	// alert("YES");
-		    		$("#introContainer").delay(50).fadeIn(750);
-			           return false;
-			       });        
-			   });			
-				// $("#myDiv").fadeIn(5000);
-				$("#close-icon-intro").click(function() { 
-		        	var container = $("#introContainer");
-				        container.hide();
-
-				});
-
-				$(document).mouseup(function (e)
-				{
-				    var container = $("#introContainer");
-
-				    if (!container.is(e.target) // if the target of the click isn't the container...
-				        && container.has(e.target).length === 0) // ... nor a descendant of the container
-				    {
-				        container.hide();
-
-				    }
-				});
-			</script>
 
 
-	<div id = "contactContainer" style = "float: left; top: 100px; margin: 45px; font-weight: lighter;  color: rgba(244, 244, 244, .97); max-height: 500px; max-width: 80%; display: none;  overflow-y: auto;">
+	<div id = "contactContainer" style = "float: left; top: 100px; margin: 45px; font-weight: lighter;  color: rgba(244, 244, 244, .97); max-height: 500px; max-width: 420px; display: none;  overflow-y: auto; overflow-x: hidden">
 		<!-- box-shadow: none;  border: 1px solid #fff; -webkit-border-radius: 6px; -moz-border-radius: 6px; border-radius: 6px; -webkit-box-shadow: 0px 0px 3px rgba(244, 244, 244, .05); -moz-box-shadow: 0px 0px 3px rgba(244, 244, 244, .05); box-shadow: 0px 0px 3px rgba(244, 244, 244, .05); -->
 		<div class="ui text container" style = "font-family: 'GeosansLight'; color: rgba(255, 255, 255, 1.0); font-size: 100%; max-width: 420px; max-height: 500px; ">
 		  <div class="ui segments" style = "background-color: rgba(244, 244, 244, .15); border: none; max-width: 420px; max-height: 500px">
@@ -528,7 +490,7 @@
 			</script>
 
 
-	<div id = "plansContainer" style = "float: left; top: 80px; margin: 35px; font-weight: lighter;  color: rgba(244, 244, 244, .97); display: none;   max-height: 500px;  max-width: 80%; overflow-y: auto; overflow-x: scroll; ">
+	<div id = "plansContainer" style = "float: left; top: 80px; margin: 35px; font-weight: lighter;  color: rgba(244, 244, 244, .97); display: none;   max-height: 500px;  max-width: 550px; overflow-y: auto; overflow-x: scroll; ">
 
 		<!-- box-shadow: none;  border: 1px solid #fff; -webkit-border-radius: 6px; -moz-border-radius: 6px; border-radius: 6px; -webkit-box-shadow: 0px 0px 3px rgba(144, 244, 244, .02); -moz-box-shadow: 0px 0px 3px rgba(154, 154, 44, .02); box-shadow: 0px 0px 3px rgba(244, 244, 244, .02); -->
 
@@ -676,7 +638,7 @@
 
 
 
-	<div id = "apiContainer" style = "float: left; top: 140px; margin: 65px; font-weight: lighter;  color: rgba(244, 244, 244, .97); max-height: 600px; max-width: 80%; overflow-y: hidden; overflow-x: hidden; display: none;">
+	<div id = "apiContainer" style = "float: left; top: 100px; margin: 65px; font-weight: lighter;  color: rgba(244, 244, 244, .97); max-height: 500px; max-width: 520px; overflow-y: hidden; overflow-x: auto; display: none; max-width: 80%">
 		<div class="ui text container" style = "max-height: 2400px; max-width: 520px">
 			<!-- box-shadow: none;  border: 1px solid #fff; -webkit-border-radius: 6px; -moz-border-radius: 6px; border-radius: 6px; -webkit-box-shadow: 0px 0px 3px rgba(244, 244, 244, .05); -moz-box-shadow: 0px 0px 3px rgba(244, 244, 244, .05); box-shadow: 0px 0px 3px rgba(244, 244, 244, .05); font-family: 'GeosansLight'; color: rgba(255, 255, 255, 1.0); font-size: 100%; width: 360px; max-height: 400px -->
 		  <div class="ui segments" style = "background-color: rgba(244, 244, 244, .15); border: none; max-height: 2400px; max-width: 520px">
