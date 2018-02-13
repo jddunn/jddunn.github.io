@@ -212,7 +212,7 @@
 		<div id="container" style = "margin-left: 5%;"></div>
 		<!-- <div id="info"><a href="http://threejs.org" target="_blank">three.js css3d</a> - periodic table. <a href="https://plus.google.com/113862800338869870683/posts/QcFk5HrWran" target="_blank">info</a>.</div> -->
 
-		<div class="ui stackable menu" style = "margin: 0; padding: 0; bottom: 0; position: absolute; background-color: transparent; max-height: 200px; border: none; padding: 5px; width: 100%;">
+		<div class="ui stackable menu" id="menu" style = "margin: 0; padding: 0; bottom: 0; position: absolute; background-color: transparent; max-height: 200px; border: none; padding: 5px; width: 100%;">
 		  <div class="item">
 		    <!-- <img src="images/emoter-logo.png" style = "width: 20%"> -->
 		    <a href="#" onclick='location.reload(true); return false'><h4 style = "font-family: 'GeosansLight'; letter-spacing: 12px; color: rgba(244, 244, 244, .97); font-size: 1.6em">emote</h4></a>
@@ -293,6 +293,9 @@
 			   $(function() {
 			       $('#intro-link').click(function() {
 			       	// alert("YES");
+					if (/Android|webOS|iPhone|iPad|BlackBerry|Windows Phone|Opera Mini|IEMobile|Mobile/i.test(navigator.userAgent)) {
+	   					$("#menu").fadeOut(500);
+   					}
 		    		$("#introContainer").delay(50).fadeIn(750);
 			           return false;
 			       });        
@@ -301,12 +304,20 @@
 				$("#close-icon-intro").click(function() { 
 		        	var container = $("#introContainer");
 				        container.hide();
+					if (/Android|webOS|iPhone|iPad|BlackBerry|Windows Phone|Opera Mini|IEMobile|Mobile/i.test(navigator.userAgent)) {
+	   					$("#menu").fadeIn(500);
+	   				}
 
 				});
 
 				$(document).mouseup(function (e)
 				{
 				    var container = $("#introContainer");
+
+					if (/Android|webOS|iPhone|iPad|BlackBerry|Windows Phone|Opera Mini|IEMobile|Mobile/i.test(navigator.userAgent)) {
+	   					$("#menu").fadeIn(500);
+	   				}
+
 
 				    if (!container.is(e.target) // if the target of the click isn't the container...
 				        && container.has(e.target).length === 0) // ... nor a descendant of the container
@@ -425,11 +436,17 @@
 			<script>
 			   $(function() {
 			       $('#features-link').click(function() {
+		       		if (/Android|webOS|iPhone|iPad|BlackBerry|Windows Phone|Opera Mini|IEMobile|Mobile/i.test(navigator.userAgent)) {
+	   					$("#menu").fadeOut(500);
+   					}
 		    		   $("#featuresContainer").delay(50).fadeIn(750);
 			           return false;
 			       });        
 			   });			
-				$("#close-icon-features").click(function() { 
+				$("#close-icon-features").click(function() {
+					if (/Android|webOS|iPhone|iPad|BlackBerry|Windows Phone|Opera Mini|IEMobile|Mobile/i.test(navigator.userAgent)) {
+	   					$("#menu").fadeIn(500);
+   					} 
 		        	var container = $("#featuresContainer");
 				        container.hide();
 
@@ -438,7 +455,9 @@
 				$(document).mouseup(function (e)
 				{
 				    var container = $("#featuresContainer");
-
+					if (/Android|webOS|iPhone|iPad|BlackBerry|Windows Phone|Opera Mini|IEMobile|Mobile/i.test(navigator.userAgent)) {
+	   					$("#menu").fadeIn(500);
+   					}
 				    if (!container.is(e.target) // if the target of the click isn't the container...
 				        && container.has(e.target).length === 0) // ... nor a descendant of the container
 				    {
@@ -465,12 +484,18 @@
 			   $(function() {
 			       $('#contact-link').click(function() {
 			       	// alert("YES");
+		       		if (/Android|webOS|iPhone|iPad|BlackBerry|Windows Phone|Opera Mini|IEMobile|Mobile/i.test(navigator.userAgent)) {
+	   					$("#menu").fadeOut(500);
+   					}
 		    		$("#contactContainer").delay(50).fadeIn(750);
 			           return false;
 			       });        
 			   });			
 				// $("#myDiv").fadeIn(5000);
 				$("#close-icon-contact").click(function() { 
+				if (/Android|webOS|iPhone|iPad|BlackBerry|Windows Phone|Opera Mini|IEMobile|Mobile/i.test(navigator.userAgent)) {
+	   					$("#menu").fadeIn(500);
+				}
 		        	var container = $("#contactContainer");
 				        container.hide();
 
@@ -479,7 +504,9 @@
 				$(document).mouseup(function (e)
 				{
 				    var container = $("#contactContainer");
-
+					if (/Android|webOS|iPhone|iPad|BlackBerry|Windows Phone|Opera Mini|IEMobile|Mobile/i.test(navigator.userAgent)) {
+	   					$("#menu").fadeIn(500);
+   					}
 				    if (!container.is(e.target) // if the target of the click isn't the container...
 				        && container.has(e.target).length === 0) // ... nor a descendant of the container
 				    {
@@ -613,11 +640,17 @@
 		       $('#plans-link').click(function() {
 	    		   $("#plansContainer").delay(50).fadeIn(750);
 		           // $('#featuresContainer').show();
+		           	if (/Android|webOS|iPhone|iPad|BlackBerry|Windows Phone|Opera Mini|IEMobile|Mobile/i.test(navigator.userAgent)) {
+	   					$("#menu").fadeOut(500);
+   					}
 		           return false;
 		       });        
 		   });			
 			// $("#myDiv").fadeIn(5000);
 			$("#close-icon-plans").click(function() { 
+				if (/Android|webOS|iPhone|iPad|BlackBerry|Windows Phone|Opera Mini|IEMobile|Mobile/i.test(navigator.userAgent)) {
+   					$("#menu").fadeIn(500);
+				}
 	        	var container = $("#plansContainer");
 			        container.hide();
 
@@ -626,7 +659,9 @@
 			$(document).mouseup(function (e)
 			{
 			    var container = $("#plansContainer");
-
+				if (/Android|webOS|iPhone|iPad|BlackBerry|Windows Phone|Opera Mini|IEMobile|Mobile/i.test(navigator.userAgent)) {
+   					$("#menu").fadeIn(500);
+				}
 			    if (!container.is(e.target) // if the target of the click isn't the container...
 			        && container.has(e.target).length === 0) // ... nor a descendant of the container
 			    {
@@ -723,17 +758,9 @@
 						<pre><code class=" hljs avrasm">new_brain_path = "different_virtual_assistant"</span>
 						<span class="hljs-preprocessor" style="float: left">emtBot.trainDatabase(new_brain_path)</span>
 						<span class="hljs-string" style="float: left">emtBot.getMsg("hello new emoter")</span>
-<!-- 						</code></pre><p>To call Emote's functions through Emoter:</p>
-						<pre><code class=" hljs coffeescript"><span class="hljs-reserved">import emoter</span>
-						<span class="hljs-string" style="float: left">emt = emoter.Emoter()</span>
-						<span class="hljs-string" style="float: left">message = "Enter your own message here to be analyzed."</span>
-						<span class="hljs-string" style="float: left">emt.em.runAnalysis(message)</span>
-						[(<span class="hljs-string">'instructive'</span>, <span class="hljs-number">100.0</span>), (<span class="hljs-string">'desire'</span>, <span class="hljs-number">77.10000000000001</span>), (<span class="hljs-string">'agreeable'</span>, <span class="hljs-number">16.6</span>), (<span class="hljs-string">'calm'</span>, <span class="hljs-number">5.4</span>), (<span class="hljs-string">'certainty'</span>, <span class="hljs-number">5.2</span>), (<span class="hljs-string">'challenging'</span>, <span class="hljs-number">4.2</span>), (<span class="hljs-string">'emphatic'</span>, <span class="hljs-number">3.5000000000000004</span>), (<span class="hljs-string">'intensity'</span>, <span class="hljs-number">1.3</span>), (<span class="hljs-string">'inquisitive'</span>, <span class="hljs-number">0.8</span>), (<span class="hljs-string">'accusative'</span>, <span class="hljs-number">0.8</span>), (<span class="hljs-string">'anger'</span>, <span class="hljs-number">0.6</span>), (<span class="hljs-string">'confusion'</span>, <span class="hljs-number">0.4</span>), (<span class="hljs-string">'vulgarity'</span>, -<span class="hljs-number">0.0</span>), (<span class="hljs-string">'amusement'</span>, -<span class="hljs-number">0.0</span>), (<span class="hljs-string">'admiration'</span>, -<span class="hljs-number">0.0</span>), (<span class="hljs-string">'regret'</span>, -<span class="hljs-number">0.0</span>), (<span class="hljs-string">'positive'</span>, -<span class="hljs-number">0.0</span>), (<span class="hljs-string">'love'</span>, -<span class="hljs-number">0.0</span>), (<span class="hljs-string">'sarcastic'</span>, -<span class="hljs-number">0.0</span>), (<span class="hljs-string">'pride'</span>, -<span class="hljs-number">0.0</span>), (<span class="hljs-string">'hate'</span>, <span class="hljs-number">0.0</span>), (<span class="hljs-string">'modest'</span>, -<span class="hljs-number">0.0</span>), (<span class="hljs-string">'boredom'</span>, -<span class="hljs-number">0.0</span>), (<span class="hljs-string">'negative'</span>, -<span class="hljs-number">0.0</span>), (<span class="hljs-string">'joy'</span>, -<span class="hljs-number">0.0</span>), (<span class="hljs-string">'ambivalence'</span>, -<span class="hljs-number">0.0</span>)]
-						</code></pre>
- -->			</div>
 
-		    <!-- <a href = mailto:team@emoter.life>team@emoter.life</a></div> -->
-		    <!-- <div class="ui segment" style = "background-color: rgba(244, 244, 244, .15); border: none; height: 100px">Content</div> -->
+     		</div>
+
 		  </div>
 		</div>
 		</div>
@@ -741,12 +768,18 @@
 			   $(function() {
 			       $('#api-docs-link').click(function() {
 			       	// alert("YES");
+   					if (/Android|webOS|iPhone|iPad|BlackBerry|Windows Phone|Opera Mini|IEMobile|Mobile/i.test(navigator.userAgent)) {
+	   					$("#menu").fadeOut(500);
+					}
 		    		$("#apiContainer").delay(50).fadeIn(750);
 			           return false;
 			       });        
 			   });			
 				// $("#myDiv").fadeIn(5000);
 				$("#close-icon-api").click(function() { 
+				if (/Android|webOS|iPhone|iPad|BlackBerry|Windows Phone|Opera Mini|IEMobile|Mobile/i.test(navigator.userAgent)) {
+   					$("#menu").fadeIn(500);
+				}
 		        	var container = $("#apiContainer");
 				        container.hide();
 
@@ -755,6 +788,10 @@
 				$(document).mouseup(function (e)
 				{
 				    var container = $("#apiContainer");
+
+    				if (/Android|webOS|iPhone|iPad|BlackBerry|Windows Phone|Opera Mini|IEMobile|Mobile/i.test(navigator.userAgent)) {
+	   					$("#menu").fadeIn(500);
+					}
 
 				    if (!container.is(e.target) // if the target of the click isn't the container...
 				        && container.has(e.target).length === 0) // ... nor a descendant of the container
