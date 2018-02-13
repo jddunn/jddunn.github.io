@@ -34,6 +34,7 @@
 	  <link rel="stylesheet" type="text/css" href="components/icon.css">	
 	  <link rel="stylesheet" type="text/css" href="components/table.css">	
 	  <link rel="stylesheet" href="css/lightbox.css">
+	  <link rel="stylesheet" href="css/github-markdown.css">
 
 	  <script type='text/javascript' src='js/jquery-3.1.1.min.js'></script>
 	  <script src="js/semantic.js"></script>
@@ -66,11 +67,10 @@
 				/*background-color: #000000;*/
 				margin: 0;
 				font-family: 'GeosansLight', sans-serif;;
-				overflow: hidden;
-				overflow-y: scroll;
 				background: #EECDA3; /* fallback for old browsers */
 				background: -webkit-linear-gradient(to left, #EECDA3 , #EF629F); /* Chrome 10-25, Safari 5.1-6 */
 				background: linear-gradient(to left, #EECDA3 , #EF629F); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+				overflow-x: hidden;
 			}
 
 			a {
@@ -153,6 +153,57 @@
 				color: #000000;
 				background-color: rgba(0,255,255,0.75);
 			}
+
+
+			::-webkit-scrollbar {
+			    width: 6px;
+			    height: 6px;
+			  }
+			::-webkit-scrollbar-track {
+			    border-radius: 5px;
+			    background: rgba(0,0,0,0.1);
+			  }
+			::-webkit-scrollbar-thumb{
+			    border-radius: 10px;
+			    background: rgba(0,0,0,0.2);
+			  }
+			::-webkit-scrollbar-thumb:hover{
+			  	background: rgba(0,0,0,0.4);
+			  }
+			::-webkit-scrollbar-thumb:active{
+			  	background: rgba(0,0,0,.9);
+			  }
+
+			img {
+			    border: 1px solid #ddd;
+			    border-radius: 4px;
+			    padding: 5px;
+			    /*width: 150px;*/
+			}
+
+			img:hover {
+			    box-shadow: 0 0 2px 1px rgba(0, 140, 186, 0.5);
+			}
+
+			-webkit-backface-visibility: hidden;
+			-moz-backface-visibility: hidden;
+			-webkit-transform: translate3d(0, 0, 0);
+			-moz-transform: translate3d(0, 0, 0);
+
+			.markdown-body {
+				box-sizing: border-box;
+				min-width: 200px;
+				max-width: 980px;
+				margin: 0 auto;
+				padding: 45px;
+			}
+
+			@media (max-width: 767px) {
+				.markdown-body {
+					padding: 15px;
+				}
+			}
+
 		</style>
 	</head>
 
@@ -170,10 +221,11 @@
 		  <a class="item" style = "letter-spacing: 3px; font-family: 'GeosansLight'; color: rgba(244, 244, 244, .97); font-size: 1.2em" id = "contact-link">Contact</a>
 		  <!-- <a class="item" style = "letter-spacing: 3px; font-family: 'GeosansLight'; color: rgba(244, 244, 244, .97); font-size: 1.2em" id = "gallery-link">Gallery</a> -->
 		  <a class="item" style = "letter-spacing: 3px; font-family: 'GeosansLight'; color: rgba(244, 244, 244, .97); font-size: 1.2em" id = "features-link">Features</a>
-		  <a class="item" style = "letter-spacing: 3px; font-family: 'GeosansLight'; color: rgba(244, 244, 244, .97); font-size: 1.2em" id = "plans-link">Plans</a>
+		  <a class="item" style = "letter-spacing: 3px; font-family: 'GeosansLight'; color: rgba(244, 244, 244, .97); font-size: 1.2em" id = "plans-link">Future Plans</a>
   		  <a class="item" style = "letter-spacing: 3px; font-family: 'GeosansLight'; color: rgba(244, 244, 244, .97); font-size: 1.2em" id = "web-demo-link" href="http://52.23.204.103:8080/" target="_blank">Web Demo</a>
 		  <a class="item" style = "letter-spacing: 3px; font-family: 'GeosansLight'; color: rgba(244, 244, 244, .97); font-size: 1.2em" id = "chatbot-demo-link" href="http://52.23.204.103:5000/" target="_blank">Chatbot Demo</a>
 		  <a class="item" style = "letter-spacing: 3px; font-family: 'GeosansLight'; color: rgba(244, 244, 244, .97); font-size: 1.2em" id = "api-docs-link">API Docs</a>
+  		  <a class="item" style = "letter-spacing: 3px; font-family: 'GeosansLight'; color: rgba(244, 244, 244, .97); font-size: 1.2em" id = "github-link" href="https://github.com/jddunn/emoter" target="_blank">GitHub</a>
 		</div>
 
 
@@ -207,12 +259,30 @@
 
 
 
-	<div id = "introContainer" style = "float: left; top: 0px; margin: 25px; position: absolute; font-weight: lighter;  color: rgba(244, 244, 244, .97); display: none; max-height: 900px">
-		<!-- <h3 class="ui center aligned header" style = "font-family: 'GeosansLight'; color: rgba(255, 255, 255, 1.0); font-size: 100%">Text Container</h3> -->
-		<div class="ui text container" style = "box-shadow: none;  border: 1px solid #fff; -webkit-border-radius: 6px; -moz-border-radius: 6px; border-radius: 6px; -webkit-box-shadow: 0px 0px 3px rgba(244, 244, 244, .05); -moz-box-shadow: 0px 0px 3px rgba(244, 244, 244, .05); box-shadow: 0px 0px 3px rgba(244, 244, 244, .05); font-family: 'GeosansLight'; color: rgba(255, 255, 255, 1.0); font-size: 100%; width: 420px; max-height: 900px">
-		  <div class="ui segments" style = "background-color: rgba(244, 244, 244, .15); border: none;">
-		    <div class="ui segment" style = "background-color: rgba(244, 244, 244, .15); border: none; text-align: center"><h4 style = "font-family: 'GeosansLight'; color: rgba(255, 255, 255, .99); font-size: 125%; letter-spacing: 4px; padding: 0; margin: 0; ">Introduction</h4><i class="close icon" id = "close-icon-intro"></i></div>
-		    <div class="ui segment" style = "background-color: rgba(244, 244, 244, .15); border: none; max-height: 900px; padding: 20px; margin: 0;"><p style = "margin-top: -20px">Emote is a sentiment analysis library written in Python capable of detecting up to a range of 26 different emotional tones, all of which you can browse through here on our site in the virtual globe (double-click to see new sentences). Emote was trained on almost 8000 quotations from film and literature dialogues. Emote comes with a basic REST API, and can be deployed on any server supporting Python 3.5.<br><br>Emoter is a chatbot library integrated with Emote, where conversational agents can be designed with specific persons / personalities, ways of thinking, and feelings. Emoter chatbots actually recognize the emotional associations of messages to give back appropriate responses, thus connecting with users on a deeper level than other chatbots. Emoter also comes with a way of auto-generating individual chatbot "personalities" based off of a user's Facebook message archive.<br><br>
+	<div id = "introContainer" style = "float: left; top: 0px; margin: 25px; font-weight: lighter;  color: rgba(244, 244, 244, .97); display: none; max-height: 1200px; overflow-y: auto; max-height: 500px; max-width: 420px; overflow-x: hidden">
+		<!--  box-shadow: none;  border: 1px solid #fff; -webkit-border-radius: 6px; -moz-border-radius: 6px; border-radius: 6px; -webkit-box-shadow: 0px 0px 3px rgba(244, 244, 244, .05); -moz-box-shadow: 0px 0px 3px rgba(244, 244, 244, .05); box-shadow: 0px 0px 3px rgba(244, 244, 244, .05); max-width: 600px -->
+
+		<div class="ui text container" style = "font-family: 'GeosansLight'; color: rgba(255, 255, 255, 1.0); font-size: 100%; max-width: 420px; max-height: 1500px;">
+		  <div class="ui segments" style = "background-color: rgba(244, 244, 244, .15); border: none; max-height: 1500px; max-width: 420px">
+		    <div class="ui segment" style = "background-color: rgba(244, 244, 244, .15); border: none; margin-left: auto; margin-right: auto; max-height: 1500px; max-width: 420px"><h4 style = "font-family: 'GeosansLight'; color: rgba(255, 255, 255, .99); font-size: 125%; letter-spacing: 4px; padding: 0; margin: 0; ">Introduction</h4><i class="close icon" id = "close-icon-intro"></i></div>
+		    <div class="ui segment" style = "background-color: rgba(244, 244, 244, .15); border: none; max-height: 1500px; padding: 20px; margin: 0; max-width: 420px;"><p style = "margin-top: -20px;"><b>Emote</b> is a sentiment analysis library written in Python with a focus on speed, and is capable of detecting up to a range of 26 different emotional tones, all of which you can browse through here on our site in the virtual globe (double-click to see new sentences). Emote was trained on almost 8000 quotations from film and literature dialogues. Emote comes with a basic REST API, and can be deployed on any server supporting Python 3.5.<br><br><b>Emoter</b> is a chatbot library integrated with Emote, where conversational agents can be designed with specific persons / personalities, ways of thinking, and feelings. Emoter chatbots actually recognize the emotional associations of messages to give back appropriate responses, thus connecting with users on a deeper level than other chatbots. Emoter also comes with a way of auto-generating individual chatbot "personalities" based off of a user's Facebook message archive.<br><br>
+
+
+			<a href="images/emoter-empathy-diagram.png" target="_blank">
+				<p style="float: right; margin-top: 80px; max-width: 120px; margin-right: auto; margin-left: auto; display: block; overflow-x: hidden">Click to view Emote's full Empathy diagram</p>
+			  <img src="images/emoter-empathy-diagram.png" style="max-width: 200px; overflow-x: hidden" alt="Emoter Empathy Diagram">
+			</a>
+
+			<br>
+			<br>
+
+			Emote is built on top of TextBlob / NLTK, NumPy, pandas, scikit-learn. 
+
+			<br><br>
+
+	    	Download the source code on <a href="https://github.com/jddunn/emoter"><u>GitHub</u>.</a><br><br>
+
+
 	    	Read <a href="https://chatbotsmagazine.com/how-to-make-a-digital-personality-of-yourself-using-chatbots-facebook-and-empathy-8b0c53afa9bd"><u>this article in Chatbots Magazine</u></a> to learn more about Emote / Emoter's development and research.</p></div>
 		    <!-- <div class="ui segment" style = "background-color: rgba(244, 244, 244, .15); border: none; height: 100px">Content</div> -->
 		    <!-- <div class="ui segment" style = "background-color: rgba(244, 244, 244, .15); border: none; height: 100px">Content</div> -->
@@ -248,64 +318,92 @@
 			</script>
 
 
-		<div id = "featuresContainer" style = "float: left; top: 0px; margin: 25px; position: absolute; font-weight: lighter;  color: rgba(244, 244, 244, .97); display: none; max-height: 900px">
-		<!-- <h3 class="ui center aligned header" style = "font-family: 'GeosansLight'; color: rgba(255, 255, 255, 1.0); font-size: 100%">Text Container</h3> -->
-			<div class="ui text container" style = "box-shadow: none;  border: 1px solid #fff; -webkit-border-radius: 6px; -moz-border-radius: 6px; border-radius: 6px; -webkit-box-shadow: 0px 0px 3px rgba(244, 244, 244, .05); -moz-box-shadow: 0px 0px 3px rgba(244, 244, 244, .05); box-shadow: 0px 0px 3px rgba(244, 244, 244, .05); font-family: 'GeosansLight'; color: rgba(255, 255, 255, 1.0); font-size: 100%; max-width: 480px;  max-height: 1200px;">
-		  		<div class="ui segments" style = "background-color: rgba(244, 244, 244, .15); border: none;">
-		    		<div class="ui segment" style = "background-color: rgba(244, 244, 244, .15); border: none; text-align: center"><h4 style = "font-family: 'GeosansLight'; color: rgba(255, 255, 255, .99); font-size: 105%; letter-spacing: 4px; padding: 0; margin: 0; "><h4 style = "font-family: 'GeosansLight'; color: rgba(255, 255, 255, .99); font-size: 115%; letter-spacing: 4px; padding: 0; margin: 0; text-align: center; margin-top: 0px; margin-bottom: 2px"><b>Emoter</b> Features</h4><i class="close icon" id = "close-icon-features"></i></div>
-		   				 <div class="ui segment" style = "background-color: rgba(244, 244, 244, .15); border: none;  max-height: 900px; padding: 0px">
-						    <ul class="ui list" style ="margin-left: 30px;">
-					  		<li style = "">Web platform for uses to develop their own emotionally intelligent conversation agents
+		<div id = "featuresContainer" style = "float: left; top: 50px; margin: 35px; font-weight: lighter;  color: rgba(244, 244, 244, .97); display: none;  max-height: 500px; overflow-y: auto; overflow-x: hidden; max-width: 500px">
+
+			<!-- box-shadow: none;  border: 1px solid #fff; -webkit-border-radius: 6px; -moz-border-radius: 6px; border-radius: 6px; -webkit-box-shadow: 0px 0px 3px rgba(144, 244, 244, .02); -moz-box-shadow: 0px 0px 3px rgba(154, 154, 44, .02); box-shadow: 0px 0px 3px rgba(244, 244, 244, .02); -->
+			<div class="ui text container" style = "font-family: 'GeosansLight'; color: rgba(255, 255, 255, 1.0); font-size: 100%; max-height: 2400px; max-width: 500px">
+		  		<div class="ui segments" style = "background-color: rgba(244, 244, 244, .15); border: none; max-width: 500px">
+		    		<div class="ui segment" style = "background-color: rgba(244, 244, 244, .15); border: none; text-align: center; max-width: 500px">
+					    <h4 style = "font-family: 'GeosansLight'; color: rgba(255, 255, 255, .99); font-size: 115%; letter-spacing: 4px; padding: 0; margin: 0; margin-top: 5px" style = "margin-bottom: 0px"><b>Emote</b> Features</h4><i class="close icon" id = "close-icon-features"></i></div>
+		   				 <div class="ui segment" style = "background-color: rgba(244, 244, 244, .15); border: none;  max-height: 2400px; padding: 0px; margin: 0; max-width: 500px">
+							<ul class="ui list" style ="margin-left: 30px; margin-right: 30px; margin-top: 0px; max-width: 500px">
+					  		<!-- <li style = ""> -->
 							    <ul>
-							      <li>Easily configure and develop unique Emoter agent personas, or choose from presets</li>
-							      <li>Analytics platform with reports and real-time tracking / monitoring (on non-private bots)</li>
-							      <li>Automated tools to train custom databases easily and quickly</li>
+							      <li>Sentiment analysis library in Python with REST API</li>
+							      <li>Classifies a range of 3-6 values from 26 different emotional tones</li>
+							      <li>Trained on ~8000 quotations from literature and film dialogues</li>
+							      <li>Ability to train custom models with different data sets (e.g. social media)</li>
+							      <li>Batch analysis feature for text and CSV data</li>
+  							      <li>Full offline capabilities</li>
 							    </ul>
-							  </li>
-							  <li>Intergrated with Emote; empowered by a higher level of thinking
-							    <ul>
-							      <li>Emoter chatbots can give accurate responses to even unfamiliar messages not in the database</li>
-							      <li>Machine-learning capabilities to rapidly grow knowledge, with supervised control access for developers</li>
-							    </ul>
-							  </li>
-				 			 <li>Ability to be run offline, syncing back to cloud servers
-							  <li>Intergration with speech recognition, synthesis, and automatic translation, various voice options</li>
-							</ul>
-
-
-						    <h4 style = "font-family: 'GeosansLight'; color: rgba(255, 255, 255, .99); font-size: 115%; letter-spacing: 4px; padding: 0; margin: 0; text-align: center; margin-top: -5px" style = "margin-bottom: 2px"><b>Emote</b> Features</h4>
-
-
-							<ul class="ui list" style ="margin-left: 30px; margin-right: 30px; margin-top: 0px; ">
-					  		<li>RESTful API for developers and businesses to incorporate sentiment analysis (for up to 36 different tones) in their products and software
-							  <li>Web platform to see visual analytics and use Emote's mass analysis features, with customizable reporting
-							  </li>
-							  <li>Machine-learning capabilities, with interchangabl databases, automatically switching to fit the context of the data</li>
 							  <!-- </li> -->
-				 			 <li>Ability to be run offline, with syncing back to cloud servers
+							  <!-- <li>Intergrated with Emote; empowered by a higher level of thinking -->
+							    <!-- <ul> -->
+							      <!-- <li>Emoter chatbots can give accurate responses to even unfamiliar messages not in the database</li> -->
+							      <!-- <li>Machine-learning capabilities to rapidly grow knowledge, with supervised control access for developers</li> -->
+							    <!-- </ul> -->
+							  <!-- </li> -->
+				 			 <!-- <li>Ability to be run offline, syncing back to cloud servers -->
+							  <!-- <li>Intergration with speech recognition, synthesis, and automatic translation, various voice options</li> -->
+							<!-- </ul> -->
+
+
+							 <p style = "padding: 0; margin:0; margin-top: 0px; margin-bottom: 15px; font-family: 'GeosansLight'; color: rgba(255, 255, 255, 1.0); font-size: 98%; text-align: center">
+				            <br>
+				    		<b style = "letter-spacing: 3px;">Demo Screenshots</b>
+				    		<br>
+						    </p>				
+
+
+						<a href="images/emote-demo-1.png" target="_blank">
+							<!-- <p style="float: right; margin-top: 50px; max-width: 150px">Click</p> -->
+			    			  <img src="images/emote-demo-1.png" style="max-width: 250px; margin-left: auto; margin-right: auto; display: block" alt="Emote Web App Demo">
+						</a>
+
+						<br>
+
+						<a href="images/emote-demo-alice-in-wonderland-txt.png" target="_blank">
+							<!-- <p style="float: right; margin-top: 50px; max-width: 150px">Click</p> -->
+			    			  <img src="images/emote-demo-alice-in-wonderland-txt.png" style="max-width: 450px; margin-left: auto; margin-right: auto; display: block" alt="Emoter CLI Interface Analyzing Alice in Wonderland Full Text">
+						</a>
+
+
+						<a href="images/emote-demo-alice-in-wonderland-csv.png" target="_blank">
+							<!-- <p style="float: right; margin-top: 50px; max-width: 150px">Click</p> -->
+			    			  <img src="images/emote-demo-alice-in-wonderland-csv.png" style="max-width: 450px; margin-left: auto; margin-right: auto; display: block" alt="Emoter Bulk Analysis for CSVs Feature">
+						</a>
+
+							<br>
+							  <div class="ui inverted divider"></div>
+						    <h4 style = "font-family: 'GeosansLight'; color: rgba(255, 255, 255, .99); font-size: 115%; letter-spacing: 4px; padding: 0; margin: 0; text-align: center; margin-top: 15px" style = "margin-bottom: 0px"><b>Emoter</b> Features</h4>
+
+							<ul class="ui list" style ="margin-right: 30px; margin-top: 10px; ">
+					  		<li>Chatbot libray written in Python that allows you to load interchangable corpora for "brains"</li>
+						    <li>Integrated with Emote's sentiment analysis, allowing the chatbot to analyze messages and determine emotionally appropriate responses to choose from</li>
+						    <li>Can auto-generate text corpora from an individual's Facebook messages archive, to create a "digital personality" in a chatbot</li>
+							  <!-- </li> -->
+					        <li>Full offline capabilities</li>
 							</ul>
 
-				  <p style = "padding: 0; margin:0; margin-top: 5px; margin-bottom: 5px; font-family: 'GeosansLight'; color: rgba(255, 255, 255, 1.0); font-size: 100%; text-align: center">
+							 <p style = "padding: 0; margin:0; margin-top: 0px; margin-bottom: 15px; font-family: 'GeosansLight'; color: rgba(255, 255, 255, 1.0); font-size: 98%; text-align: center">
 				            <br>
-				    		<b style = "letter-spacing: 3px">Alpha Demos Screenshots</b>
+				    		<b style = "letter-spacing: 3px;">Demo Screenshots</b>
 				    		<br>
-								    </p>				
-						<!-- <a href="images/emote-demo-1.png" data-`="emote-demo-1">Image #2</a> -->
-<!-- 				<a href="images/emote-demo-1.png" data-lightbox="emote-demo-1">Image #2</a>
-				<a href="images/image-3.jpg" data-lightbox="roadtrip">Image #3</a>
-				<a href="images/image-4.jpg" data-lightbox="roadtrip">Image #4</a> -->
-							<div class="ui tiny images" style = "text-align: center">
-						<!-- <a href="images/image-3.jpg" data-lightbox="roadtrip">Image #3</a> -->
-						<!-- <a href="images/image-4.jpg" data-lightbox="roadtrip">Image #4</a> -->
-							
-							      <a class="example-image-link" href="images/emote-demo-1.png" data-lightbox="example-set" data-title="Sentiment analysis demo with Emote"><img class="example-image" src="images/emote-demo-1.png"" alt="Sentiment analysis demo with Emote"/></a>
-							      <a class="example-image-link" href="images/emote-demo-2.png" data-lightbox="example-set" data-title="An early version of Emote's UI with mass analysis."><img class="example-image" src="images/emote-demo-2.png" alt="Emote's UI with mass analysis feature."/></a>
-							      <a class="example-image-link" href="images/emote-demo-3.png" data-lightbox="example-set" data-title="Emote's mass analysis takes in a CSV file and appends data to a downloadable copy of the file."><img class="example-image" src="images/emote-demo-3.png" alt="Emote's mass analysis takes in a CSV file and appends data to a downloadable copy of the file."/></a>
-							      <a class="example-image-link" href="images/emoter_demo_3.png" data-lightbox="example-set" data-title="Screenshot of the back end processing system of an Emoter agent working." alt="Screenshot of the back end processing system of an Emoter agent working." alt="Screenshot of the back end processing system of an Emoter agent working."><img class="example-image" src="images/emoter_demo_3.png" alt="Screenshot of the back end processing system of an Emoter agent working." alt="Screenshot of the back end processing system of an Emoter agent working."/></a>
-							      <a class="example-image-link" href="images/emoter_demo_5.png" data-lightbox="example-set" data-title="Screenshot of the back end processing system of an Emoter agent working." alt="Screenshot of the back end processing system of an Emoter agent working." alt="Screenshot of the back end processing system of an Emoter agent working."><img class="example-image" src="images/emoter_demo_5.png" alt="Screenshot of the back end processing system of an Emoter agent working." alt="Screenshot of the back end processing system of an Emoter agent working."/></a>
-							</div>
+						    </p>				
 
 
+						<a href="images/emoter_demo_3.png" target="_blank">
+							<!-- <p style="float: right; margin-top: 50px; max-width: 150px">Click</p> -->
+			    			  <img src="images/emoter_demo_5.png" style="max-width: 450px; margin-left: auto; margin-right: auto; display: block" alt="Emoter Fitness Coach Persona Demo 1">
+						</a>
+
+						<br>
+
+						<a href="images/emoter_demo_5.png" target="_blank">
+							<!-- <p style="float: right; margin-top: 50px; max-width: 150px">Click</p> -->
+			    			  <img src="images/emoter_demo_5.png" style="max-width: 450px; margin-left: auto; margin-right: auto; display: block" alt="Emoter Fitness Coach Persona Demo 2">
+						</a>
+			<br>
 
 
 
@@ -339,12 +437,14 @@
 
 				    }
 				});
-			</script>	<div id = "introContainer" style = "float: left; top: 0px; margin: 25px; position: absolute; font-weight: lighter;  color: rgba(244, 244, 244, .97); display: none;  max-height: 900px">
-		<!-- <h3 class="ui center aligned header" style = "font-family: 'GeosansLight'; color: rgba(255, 255, 255, 1.0); font-size: 100%">Text Container</h3> -->
-		<div class="ui text container" style = "box-shadow: none;  border: 1px solid #fff; -webkit-border-radius: 6px; -moz-border-radius: 6px; border-radius: 6px; -webkit-box-shadow: 0px 0px 3px rgba(244, 244, 244, .05); -moz-box-shadow: 0px 0px 3px rgba(244, 244, 244, .05); box-shadow: 0px 0px 3px rgba(244, 244, 244, .05); font-family: 'GeosansLight'; color: rgba(255, 255, 255, 1.0); font-size: 100%; width: 420px;  max-height: 900px;">
+			</script>	
+
+		<div id = "introContainer" style = "float: left; top: 0px; margin: 25px; font-weight: lighter;  color: rgba(244, 244, 244, .97); display: none;  max-height: 500px;  max-width: 420px;">
+			<!--  box-shadow: none;  border: 1px solid #fff; -webkit-border-radius: 6px; -moz-border-radius: 6px; border-radius: 6px; -webkit-box-shadow: 0px 0px 3px rgba(144, 244, 244, .02); -moz-box-shadow: 0px 0px 3px rgba(154, 154, 44, .02); box-shadow: 0px 0px 3px rgba(244, 244, 244, .02); -->
+		<div class="ui text container" style = "font-family: 'GeosansLight'; color: rgba(255, 255, 255, 1.0); font-size: 100%; max-height: 900px; max-width: 420px;">
 		  <div class="ui segments" style = "background-color: rgba(244, 244, 244, .15); border: none;">
 		    <div class="ui segment" style = "background-color: rgba(244, 244, 244, .15); border: none; text-align: center"><h4 style = "font-family: 'GeosansLight'; color: rgba(255, 255, 255, .99); font-size: 125%; letter-spacing: 4px; padding: 0; margin: 0; ">Introduction</h4><i class="close icon" id = "close-icon-intro"></i></div>
-		    <div class="ui segment" style = "background-color: rgba(244, 244, 244, .15); border: none; max-height: 1200px; padding: 20px; margin: 0;"><p style = "margin-top: -20px">What does it mean to feel something? Is it just a chemical action, or can feelings be quantified, classified, and programmed? We don't have any good philosophical answers for that, but the need for emphatic understanding in human-computer interaction is now clearly greater than ever. <br><br>We think conversational interfaces are (or, at least, they could be!) one of the most natural and convenient methods of communicating with a wide variety of software and products in today's dynamic market. Our dream? To be able to walk into any store, or office, and be able to ask a coffee machine or printer to help troubleshoot itself.<br><br>Emote is our machine-learning emotional analysis platform capable of detecting up to a range of 36 different tones, all of which you can browse through here on our site in the virtual globe.<br><br>Emoter is our chatbot platform built off Emote, where conversational agents can be designed with specific persons, ways of thinking, and feelings. Emoters can be run offline, trained for any type of service and context, and actually recognize the emotions of user messages, and then give back appropriate responses, thus connecting with users a deeper level than other chatbots on the market. </p></div>
+		    <div class="ui segment" style = "background-color: rgba(244, 244, 244, .15); border: none; max-height: 1200px; padding: 20px; margin: 0; max-width: 420px;"><p style = "margin-top: -20px">What does it mean to feel something? Is it just a chemical action, or can feelings be quantified, classified, and programmed? We don't have any good philosophical answers for that, but the need for emphatic understanding in human-computer interaction is now clearly greater than ever. <br><br>We think conversational interfaces are (or, at least, they could be!) one of the most natural and convenient methods of communicating with a wide variety of software and products in today's dynamic market. Our dream? To be able to walk into any store, or office, and be able to ask a coffee machine or printer to help troubleshoot itself.<br><br>Emote is our machine-learning emotional analysis platform capable of detecting up to a range of 36 different tones, all of which you can browse through here on our site in the virtual globe.<br><br>Emoter is our chatbot platform built off Emote, where conversational agents can be designed with specific persons, ways of thinking, and feelings. Emoters can be run offline, trained for any type of service and context, and actually recognize the emotions of user messages, and then give back appropriate responses, thus connecting with users a deeper level than other chatbots on the market. </p></div>
 		    <!-- <div class="ui segment" style = "background-color: rgba(244, 244, 244, .15); border: none; height: 100px">Content</div> -->
 		    <!-- <div class="ui segment" style = "background-color: rgba(244, 244, 244, .15); border: none; height: 100px">Content</div> -->
 		  </div>
@@ -379,14 +479,14 @@
 			</script>
 
 
-	<div id = "contactContainer" style = "float: left; top: 100px; margin: 45px; position: absolute; font-weight: lighter;  color: rgba(244, 244, 244, .97); display: none;  max-height: 400px">
-		<!-- <h3 class="ui center aligned header" style = "font-family: 'GeosansLight'; color: rgba(255, 255, 255, 1.0); font-size: 100%">Text Container</h3> -->
-		<div class="ui text container" style = "box-shadow: none;  border: 1px solid #fff; -webkit-border-radius: 6px; -moz-border-radius: 6px; border-radius: 6px; -webkit-box-shadow: 0px 0px 3px rgba(244, 244, 244, .05); -moz-box-shadow: 0px 0px 3px rgba(244, 244, 244, .05); box-shadow: 0px 0px 3px rgba(244, 244, 244, .05); font-family: 'GeosansLight'; color: rgba(255, 255, 255, 1.0); font-size: 100%; width: 420px; max-height: 400px">
-		  <div class="ui segments" style = "background-color: rgba(244, 244, 244, .15); border: none;">
-		    <div class="ui segment" style = "background-color: rgba(244, 244, 244, .15); border: none; text-align: center"><h4 style = "font-family: 'GeosansLight'; color: rgba(255, 255, 255, .99); font-size: 125%; letter-spacing: 4px; padding: 0; margin: 0; ">Contact Us</h4><i class="close icon" id = "close-icon-contact"></i></div>
-		    <div class="ui segment" style = "background-color: rgba(244, 244, 244, .15); border: none; max-height: 400px; padding: 20px; margin: 0;"><p style = "margin-top: -20px">We're still a an early stage startup, and we've got some way to go before turning our beta prototypes into refined, quality services. But feel free to reach out with your questions, or if you have any answers you think you can give us for ours! </p>
-		    <a href = mailto:team@emoter.life>team@emoter.life</a></div>
-		    <!-- <div class="ui segment" style = "background-color: rgba(244, 244, 244, .15); border: none; height: 100px">Content</div> -->
+	<div id = "contactContainer" style = "float: left; top: 100px; margin: 45px; font-weight: lighter;  color: rgba(244, 244, 244, .97); max-height: 500px; max-width: 420px; display: none">
+		<!-- box-shadow: none;  border: 1px solid #fff; -webkit-border-radius: 6px; -moz-border-radius: 6px; border-radius: 6px; -webkit-box-shadow: 0px 0px 3px rgba(244, 244, 244, .05); -moz-box-shadow: 0px 0px 3px rgba(244, 244, 244, .05); box-shadow: 0px 0px 3px rgba(244, 244, 244, .05); -->
+		<div class="ui text container" style = "font-family: 'GeosansLight'; color: rgba(255, 255, 255, 1.0); font-size: 100%; max-width: 420px; max-height: 500px; ">
+		  <div class="ui segments" style = "background-color: rgba(244, 244, 244, .15); border: none; max-width: 420px; max-height: 500px">
+		    <div class="ui segment" style = "background-color: rgba(244, 244, 244, .15); border: none; margin-left: auto; margin-right: auto"><h4 style = "font-family: 'GeosansLight'; color: rgba(255, 255, 255, .99); font-size: 125%; letter-spacing: 4px; padding: 0; margin: 0; max-width: 420px">Contact</h4><i class="close icon" id = "close-icon-contact"></i></div>
+		    <div class="ui segment" style = "background-color: rgba(244, 244, 244, .15); border: none; max-height: 500px; max-width: 420px; padding: 20px; margin: 0;"><p style = "margin-top: -20px">Requests, questions, criticisms, and other comments are welcome. Emoter is currently a one man project.</p>
+		    <br>Interested in keeping up with Emote's updates? Sign up <a href = "https://docs.google.com/forms/d/e/1FAIpQLSeGypUc_ZG-W7SO5JhBhLquYAE-CgpIBgoqFyERps-hjumnWA/viewform?c=0&w=1"> <u> here</u> </a>.<br><br><br>
+		    <a href = mailto:johnnyddunn@gmail.com><u>johnnyddunn@gmail.com</u></a></div>
 		  </div>
 		</div>
 		</div>
@@ -419,28 +519,30 @@
 			</script>
 
 
-	<div id = "plansContainer" style = "float: left; top: 20px; margin: 25px; position: absolute; font-weight: lighter;  color: rgba(244, 244, 244, .97); display: none; margin-top: 5px; max-height: 900px; max-width: 800px">
-		<!-- <h3 class="ui center aligned header" style = "font-family: 'GeosansLight'; color: rgba(255, 255, 255, 1.0); font-size: 100%">Text Container</h3> -->
-		<div class="ui text container" style = "box-shadow: none;  border: 1px solid #fff; -webkit-border-radius: 6px; -moz-border-radius: 6px; border-radius: 6px; -webkit-box-shadow: 0px 0px 3px rgba(244, 244, 244, .05); -moz-box-shadow: 0px 0px 3px rgba(244, 244, 244, .05); box-shadow: 0px 0px 3px rgba(244, 244, 244, .05); font-family: 'GeosansLight'; color: rgba(255, 255, 255, 1.0); font-size: 95%; max-width: 800px; max-height: 1200px;">
-		  <div class="ui segments" style = "background-color: rgba(244, 244, 244, .15); border: none;">
-		    <div class="ui segment" style = "background-color: rgba(244, 244, 244, .15); border: none; text-align: center; margin-top:"><h4 style = "font-family: 'GeosansLight'; color: rgba(255, 255, 255, .99); font-size: 115%; letter-spacing: 4px; padding: 0; margin: 0; margin-top: 5px">Plans / Services</h4><i class="close icon" id = "close-icon-intro"></i></div>
-		    <div class="ui segment" style = "background-color: rgba(244, 244, 244, .15); border: none; max-height: 900px; padding: 20px; margin: 0; font-size: 95%">
+	<div id = "plansContainer" style = "float: left; top: 80px; margin: 35px; font-weight: lighter;  color: rgba(244, 244, 244, .97); display: none;   max-height: 500px;  max-width: 550px; overflow-y: auto; overflow-x: scroll; ">
+
+		<!-- box-shadow: none;  border: 1px solid #fff; -webkit-border-radius: 6px; -moz-border-radius: 6px; border-radius: 6px; -webkit-box-shadow: 0px 0px 3px rgba(144, 244, 244, .02); -moz-box-shadow: 0px 0px 3px rgba(154, 154, 44, .02); box-shadow: 0px 0px 3px rgba(244, 244, 244, .02); -->
 
 
-		    <!-- <p style = "margin-top: -20px">What does it mean to feel something? Is it just a chemical action, or can feelings be quantified, classified, and programmed? We don't have any good philosophical answers for that, but the need for emphatic understanding in human-computer interaction is clearly now greater than ever. <br><br>We think conversational interfaces are (or, at least, they could be!) one of the most natural and convenient methods of communicating with a wide variety of software and products in today's dynamic market. Our dream? To be able to walk into any store, or o </p> -->
+		<div class="ui text container" style = "font-family: 'GeosansLight'; color: rgba(255, 255, 255, 1.0); font-size: 95%; max-width: 800px; max-height: 1500px; max-width: 550px">
+		  <div class="ui segments" style = "background-color: rgba(244, 244, 244, .15); border: none;  max-height: 1500px;  max-width: 550px;">
+		    <div class="ui segment" style = "background-color: rgba(244, 244, 244, .15); border: none; margin-top:"><h4 style = "font-family: 'GeosansLight'; color: rgba(255, 255, 255, .99); font-size: 115%; letter-spacing: 4px; padding: 0; margin: 0; margin-bottom: 0;  max-height: 500px;  max-width: 520px;">Future Plans</h4><i class="close icon" id = "close-icon-intro"></i></div>
+		    <div class="ui segment" style = "background-color: rgba(244, 244, 244, .15); max-height: 1500px; max-width: 550px; padding: 20px; margin: 0; padding-top: 0; font-size: 95%; border-top: none">
+				<p>Emote and Emoter's base system and base corpus are all open-sourced under the MIT License.<br><br>There are further, more advanced features planned, including automatic loading of interchangable classifier models for different contexts of text, a GUI / API to easily mass train your own corpora, short-term and long-term memory for Emoter chatbots (conversation threading / the ability to remember conversations), and a full Unity3D SDK.<br><br>The base systems of Emote and Emoter will continue to be supported and updated on GitHub, and remain open-source and free. Eventually, you may be able to purchase different levels of functionality access through various payment plans, and have access to the full API endpoints on dedicated servers.<br><br> However, none of this is set in stone, and it's possible that none of these services will be able to be developed (given that this is only a passion project from one developer). If you are interested in offering payment for these future features, please sign up <a href = "https://docs.google.com/forms/d/e/1FAIpQLSeGypUc_ZG-W7SO5JhBhLquYAE-CgpIBgoqFyERps-hjumnWA/viewform?c=0&w=1"> <u> here</u> </a>.</p>
 
-		    <table class="ui inverted celled structured table" style = "background-color: transparent; color: white; border-color: white; border: none; margin-top: -10px; font-size: 95%">
+		    <br>
+		    <table class="ui inverted celled structured table" style = "background-color: rgba(244, 244, 244, .25);  border: 1px; -webkit-border-radius: 6px; -moz-border-radius: 6px; border-radius: 6px; -webkit-box-shadow: 0px 0px 3px rgba(244, 244, 244, .05); -moz-box-shadow: 0px 0px 3px rgba(244, 244, 244, .05); box-shadow: 0px 0px 3px rgba(244, 244, 244, .05); margin-top: -10px; font-size: 95%; max-height: 1500px; max-width: 550px; overflow: auto">
 			  <thead style = "background-color: transparent;""
 			    <tr style = "">
 			      <th rowspan="2" style = "background-color: transparent">For</th>
 			      <th rowspan="2" style = "background-color: transparent">Purpose</th>
-			      <th rowspan="2" style = "background-color: transparent">Speed / Storage</th>
-			      <th colspan="5" style = "background-color: transparent">Supported Platforms</th>
+			      <th rowspan="2" style = "background-color: transparent">Support</th>
+			      <th colspan="5" style = "background-color: transparent">Features</th>
 			      <th rowspan="2" style = "background-color: transparent">Cost</th>
 			    </tr>
 			    <tr>
 			      <th style = "background-color: transparent">Emote+r</th>
-			      <th style = "background-color: transparent">Web App</th>
+			      <th style = "background-color: transparent">Web App & Limited API</th>
 			      <th style = "background-color: transparent">Full API Access</th>
 			      <th style = "background-color: transparent">Unity SDK</th>
 			      <th style = "background-color: transparent">Offine Capability</th>
@@ -451,7 +553,7 @@
 			    <tr>
 			      <td>Hobbyists & <br> Open-Source</td>
 			      <td>Just for fun; or any open-source projects</td>
-			      <td class="right aligned">Limited Flexibility</td>
+			      <td class="right aligned"></td>
 			      <td class="center aligned">
 			        <i class="large green checkmark icon"></i>
 			      </td>
@@ -459,38 +561,38 @@
 				  <i class="large green checkmark icon"></i>
 			      </td>
 			      <td class = "center aligned"></td>
-			      <td class = "center aligned"><i class="large green checkmark icon"></td>
 			      <td class = "center aligned"></td>
+			      <td class = "center aligned"><i class="large green checkmark icon"></td>
 			      <td class = "center aligned">Free</td>
 			    </tr>
 
 			    <tr>
 			      <td rowspan="1">Small Businesses</td>
 			      <td>Analytics and customer support on a small scale</td>
-			      <td class="right aligned">Mid-tier</td>
+			      <td class="right aligned"><i class="large green checkmark icon"></i></td>
 			      <td class="center aligned">
 			        <i class="large green checkmark icon"></i>
 			      </td>
 			      <td><i class="large green checkmark icon"></i></td>
 			      <td class = "center aligned"></td>
 			      <td class = "center aligned"></td>
-				  <td class = "center aligned"></td>
+			      <td class = "center aligned"><i class="large green checkmark icon"></td>
 			      <td class = "center aligned">Scales</td>
 
 			    </tr>
 
 
 			    <tr>
-			      <td rowspan="1">Scaling And Corporate</td>
+			      <td rowspan="1">Enterprise / Corporate</td>
 			      <td>Larger companies with engineering teams</td>
-			      <td class="right aligned">Highest priority</td>
+			      <td class="right aligned"><i class="large green checkmark icon"></i></td>
 			      <td class="center aligned">
 			        <i class="large green checkmark icon"></i>
 			      </td>
 			      <td class = "center aligned"><i class="large green checkmark icon"></i></td>
 			      <td class = "center aligned"><i class="large green checkmark icon"></i></td>
 			      <td class = "center aligned"><i class="large green checkmark icon"></i></td>
-			      <td class = "center aligned"><i class="large green checkmark icon"></i></td>
+			      <td class = "center aligned"><i class="large green checkmark icon"></td>
 			      <td>Scales</td>
 			    </tr>
 
@@ -499,7 +601,7 @@
 		    <tr>
 			      <td rowspan="1">Other Professional Devs</td>
 			      <td>Commercial and professional devs / teams</td>
-			      <td class="right aligned">Scales</td>
+			      <td class="right aligned"><i class="large green checkmark icon"></i></td>
 			      <td class="center aligned">
 			        <i class="large green checkmark icon"></i>
 			      </td>
@@ -508,8 +610,8 @@
 			      </td>
 			      <td class = "center aligned"><i class="large green checkmark icon"></i></td>
 			      <td class = "center aligned"><i class="large green checkmark icon"></i></td>
-			      <td class = "center aligned"><i class="large green checkmark icon"></i></td>
-			      <td class = "center aligned">Trial</td>
+			      <td class = "center aligned"><i class="large green checkmark icon"></td>
+			      <td class = "center aligned">Scales with Free Trial</td>
 			    </tr>
 
 			    </tr>
@@ -562,12 +664,101 @@
 		</script>
 
 
-	<div id = "personasContainer" style = "float: left; top: 140px; margin: 65px; position: absolute; font-weight: lighter;  color: rgba(244, 244, 244, .97); display: none; max-height: 400px">
-		<!-- <h3 class="ui center aligned header" style = "font-family: 'GeosansLight'; color: rgba(255, 255, 255, 1.0); font-size: 100%">Text Container</h3> -->
-		<div class="ui text container" style = "box-shadow: none;  border: 1px solid #fff; -webkit-border-radius: 6px; -moz-border-radius: 6px; border-radius: 6px; -webkit-box-shadow: 0px 0px 3px rgba(244, 244, 244, .05); -moz-box-shadow: 0px 0px 3px rgba(244, 244, 244, .05); box-shadow: 0px 0px 3px rgba(244, 244, 244, .05); font-family: 'GeosansLight'; color: rgba(255, 255, 255, 1.0); font-size: 100%; width: 360px; max-height: 400px">
-		  <div class="ui segments" style = "background-color: rgba(244, 244, 244, .15); border: none;">
-		    <div class="ui segment" style = "background-color: rgba(244, 244, 244, .15); border: none; text-align: center"><h4 style = "font-family: 'GeosansLight'; color: rgba(255, 255, 255, .99); font-size: 125%; letter-spacing: 4px; padding: 0; margin: 0; ">Patience please! Web demos are coming soon.</h4><i class="close icon" id = "close-icon-api"></i></div>
-		    <div class="ui segment" style = "background-color: rgba(244, 244, 244, .15); border: none; max-height: 400px; padding: 20px; margin: 0;"><p style = "margin: 20px; text-align: center">Sign up <a href = "https://docs.google.com/forms/d/e/1FAIpQLSeGypUc_ZG-W7SO5JhBhLquYAE-CgpIBgoqFyERps-hjumnWA/viewform?c=0&w=1"> here </a> to be the first to know.</p>
+
+	<div id = "apiContainer" style = "float: left; top: 140px; margin: 65px; font-weight: lighter;  color: rgba(244, 244, 244, .97); max-height: 2400px; max-width: 520px; display: none;">
+		<div class="ui text container" style = "max-height: 2400px; max-width: 520px"">
+			<!-- box-shadow: none;  border: 1px solid #fff; -webkit-border-radius: 6px; -moz-border-radius: 6px; border-radius: 6px; -webkit-box-shadow: 0px 0px 3px rgba(244, 244, 244, .05); -moz-box-shadow: 0px 0px 3px rgba(244, 244, 244, .05); box-shadow: 0px 0px 3px rgba(244, 244, 244, .05); font-family: 'GeosansLight'; color: rgba(255, 255, 255, 1.0); font-size: 100%; width: 360px; max-height: 400px -->
+		  <div class="ui segments" style = "background-color: rgba(244, 244, 244, .15); border: none; max-height: 2400px; max-width: 520px">
+		    <div class="ui segment" style = "background-color: rgba(244, 244, 244, .15); border: none; max-height: 2400px; max-width: 520px"><h4 style = "font-family: 'GeosansLight'; color: rgba(255, 255, 255, .99); font-size: 125%; letter-spacing: 4px; padding: 0; margin: 0; ">API Docs</h4><i class="close icon" id = "close-icon-api"></i></div>
+		    <div class="ui segment" style = "background-color: rgba(244, 244, 244, .15); border: none; max-height: 400px; padding: 20px; margin: 0; max-height: 2400px; max-width: 520px"><p style = "margin: 20px; max-height: 2400px; max-width: 520px">
+		    	<p style ="font-family: 'GeosansLight'; color: rgba(255, 255, 255, 1.0); margin-top: -20px">
+		    	See the source code and full documentation on <a href="https://github.com/jddunn/emoter"><u>GitHub</u>.</a><br><br></p>
+			  <div class="ui inverted divider"></div>
+			 <div style = "background-color: transparent; border: none; max-height: 400px; padding: 20px; margin: 0; overflow: auto; max-width: 520px; font-family: 'GeosansLight'; color: rgba(255, 255, 255, 1.0);">
+					<h3 id="rest-api-usage">Emote REST API Usage</h3>
+					<p>Run_emote.py starts the app by default on port 8080. Deployed locally, you can use the API as follows:</p>
+					<h4 id="sentiment-analysis-for-single-sentences-">Sentiment analysis for single sentences:</h4>
+					<pre><code class=" hljs xml">api/sentiment/<span class="hljs-tag">&lt;<span class="hljs-title">text</span>&gt;</span>
+					</code></pre><p>returns JSON list of 26 base emotional tones and their percentage levels.</p>
+					<h4 id="sentiment-analysis-for-26-tones-for-multiple-sentences-paragraphs-">Sentiment analysis for 26 tones for multiple sentences / paragraphs:</h4>
+					<pre><code class=" hljs xml">api/sentiment/sentences/<span class="hljs-tag">&lt;<span class="hljs-title">text</span>&gt;</span>
+					</code></pre><p>returns JSON dictionary with keys being each sentence found in the text, and values containing lists of the corresponding classified sentiments.</p>
+					<h4 id="example-">Example:</h4>
+					<pre><code class=" hljs vhdl">http://localhost:<span class="hljs-number">8080</span>/api/sentiment/My cherries <span class="hljs-keyword">and</span> wine, rosemary <span class="hljs-keyword">and</span> thyme <span class="hljs-keyword">And</span> <span class="hljs-keyword">all</span> <span class="hljs-keyword">of</span> my peaches are ruined
+					</code></pre><p>returns:</p>
+					<pre><code class=" hljs json">{ "<span class="hljs-attribute">result</span>": <span class="hljs-value">[ [ <span class="hljs-string">"intensity"</span>, <span class="hljs-number">100.0</span> ], [ <span class="hljs-string">"agreeable"</span>, <span class="hljs-number">44.800000000000004</span> ], [ <span class="hljs-string">"inquisitive"</span>, <span class="hljs-number">24.099999999999998</span> ], [ <span class="hljs-string">"emphatic"</span>, <span class="hljs-number">24.0</span> ], [ <span class="hljs-string">"anger"</span>, <span class="hljs-number">19.1</span> ], [ <span class="hljs-string">"certainty"</span>, <span class="hljs-number">14.7</span> ], [ <span class="hljs-string">"challenging"</span>, <span class="hljs-number">11.200000000000001</span> ], [ <span class="hljs-string">"instructive"</span>, <span class="hljs-number">6.0</span> ], [ <span class="hljs-string">"hate"</span>, <span class="hljs-number">4.6</span> ], [ <span class="hljs-string">"accusative"</span>, <span class="hljs-number">4.6</span> ], [ <span class="hljs-string">"desire"</span>, <span class="hljs-number">3.1</span> ], [ <span class="hljs-string">"positive"</span>, <span class="hljs-number">1.7000000000000002</span> ], [ <span class="hljs-string">"confusion"</span>, <span class="hljs-number">1.6</span> ], [ <span class="hljs-string">"negative"</span>, <span class="hljs-number">0.4</span> ], [ <span class="hljs-string">"calm"</span>, <span class="hljs-number">0.4</span> ], [ <span class="hljs-string">"vulgarity"</span>, <span class="hljs-number">0.4</span> ], [ <span class="hljs-string">"joy"</span>, <span class="hljs-number">0.0</span> ], [ <span class="hljs-string">"love"</span>, <span class="hljs-number">0.0</span> ], [ <span class="hljs-string">"amusement"</span>, <span class="hljs-number">0.0</span> ], [ <span class="hljs-string">"boredom"</span>, <span class="hljs-number">0.0</span> ], [ <span class="hljs-string">"regret"</span>, <span class="hljs-number">0.0</span> ], [ <span class="hljs-string">"sarcastic"</span>, <span class="hljs-number">0.0</span> ], [ <span class="hljs-string">"admiration"</span>, <span class="hljs-number">0.0</span> ], [ <span class="hljs-string">"modest"</span>, <span class="hljs-number">0.0</span> ], [ <span class="hljs-string">"pride"</span>, <span class="hljs-number">0.0</span> ], [ <span class="hljs-string">"ambivalence"</span>, <span class="hljs-number">0.0</span> ] ] </span>}
+
+					</code></pre><p>and</p>
+
+					<pre><code class=" hljs coffeescript"><span class="hljs-attribute">http</span>:<span class="hljs-regexp">//</span><span class="hljs-attribute">localhost</span>:<span class="hljs-number">8080</span>/api<span class="hljs-regexp">/sentiment/sentiment/sentences/</span>â€œCherryâ€ <span class="hljs-keyword">is</span> featured <span class="hljs-literal">on</span> Lanaâ€™s fifth studio album. Alluding to the relationship <span class="hljs-reserved">with</span> a man that takes risks <span class="hljs-keyword">and</span> turns them into the relation where Lana feels like breaking apart; she knows that â€œreal loveâ€ has difficult moments <span class="hljs-keyword">and</span> thatâ€™s why she still loves him. It has a melancholic stripped-back feel <span class="hljs-reserved">with</span> heavy strings <span class="hljs-keyword">and</span> trap drums serving as background across the song specially <span class="hljs-literal">on</span> the chorus.
+					</code></pre><p>returns:</p>
+					<pre><code class=" hljs json">{ "<span class="hljs-attribute">results</span>": <span class="hljs-value">{ "<span class="hljs-attribute">Alluding to the relationship with a man that takes risks and turns them into the relation where Lana feels like breaking apart; she knows that \u201creal love\u201d has difficult moments and that\u2019s why she still loves him.</span>": <span class="hljs-value">[ [ <span class="hljs-string">"instructive"</span>, <span class="hljs-number">100.0</span> ], [ <span class="hljs-string">"desire"</span>, <span class="hljs-number">36.7</span> ], [ <span class="hljs-string">"emphatic"</span>, <span class="hljs-number">23.599999999999998</span> ], [ <span class="hljs-string">"inquisitive"</span>, <span class="hljs-number">3.1</span> ], [ <span class="hljs-string">"calm"</span>, <span class="hljs-number">3.0</span> ], [ <span class="hljs-string">"certainty"</span>, <span class="hljs-number">2.1999999999999997</span> ], [ <span class="hljs-string">"accusative"</span>, <span class="hljs-number">1.6</span> ], [ <span class="hljs-string">"agreeable"</span>, <span class="hljs-number">0.8999999999999999</span> ], [ <span class="hljs-string">"confusion"</span>, <span class="hljs-number">0.8</span> ], [ <span class="hljs-string">"challenging"</span>, <span class="hljs-number">0.3</span> ], [ <span class="hljs-string">"anger"</span>, <span class="hljs-number">0.1</span> ], [ <span class="hljs-string">"positive"</span>, <span class="hljs-number">0.0</span> ], [ <span class="hljs-string">"negative"</span>, <span class="hljs-number">0.0</span> ], [ <span class="hljs-string">"joy"</span>, <span class="hljs-number">0.0</span> ], [ <span class="hljs-string">"love"</span>, <span class="hljs-number">0.0</span> ], [ <span class="hljs-string">"hate"</span>, <span class="hljs-number">0.0</span> ], [ <span class="hljs-string">"amusement"</span>, <span class="hljs-number">0.0</span> ], [ <span class="hljs-string">"boredom"</span>, <span class="hljs-number">0.0</span> ], [ <span class="hljs-string">"intensity"</span>, <span class="hljs-number">0.0</span> ], [ <span class="hljs-string">"regret"</span>, <span class="hljs-number">0.0</span> ], [ <span class="hljs-string">"sarcastic"</span>, <span class="hljs-number">0.0</span> ], [ <span class="hljs-string">"admiration"</span>, <span class="hljs-number">0.0</span> ], [ <span class="hljs-string">"modest"</span>, <span class="hljs-number">0.0</span> ], [ <span class="hljs-string">"pride"</span>, <span class="hljs-number">0.0</span> ], [ <span class="hljs-string">"ambivalence"</span>, <span class="hljs-number">0.0</span> ], [ <span class="hljs-string">"vulgarity"</span>, <span class="hljs-number">0.0</span> ] ]</span>, "<span class="hljs-attribute">It has a melancholic stripped-back feel with heavy strings and trap drums serving as background across the song specially on the chorus.</span>": <span class="hljs-value">[ [ <span class="hljs-string">"intensity"</span>, <span class="hljs-number">100.0</span> ], [ <span class="hljs-string">"positive"</span>, <span class="hljs-number">93.60000000000001</span> ], [ <span class="hljs-string">"emphatic"</span>, <span class="hljs-number">58.3</span> ], [ <span class="hljs-string">"instructive"</span>, <span class="hljs-number">11.0</span> ], [ <span class="hljs-string">"negative"</span>, <span class="hljs-number">10.100000000000001</span> ], [ <span class="hljs-string">"anger"</span>, <span class="hljs-number">9.1</span> ], [ <span class="hljs-string">"challenging"</span>, <span class="hljs-number">5.800000000000001</span> ], [ <span class="hljs-string">"calm"</span>, <span class="hljs-number">5.5</span> ], [ <span class="hljs-string">"vulgarity"</span>, <span class="hljs-number">4.5</span> ], [ <span class="hljs-string">"certainty"</span>, <span class="hljs-number">4.3999999999999995</span> ], [ <span class="hljs-string">"agreeable"</span>, <span class="hljs-number">4.3999999999999995</span> ], [ <span class="hljs-string">"inquisitive"</span>, <span class="hljs-number">4.3999999999999995</span> ], [ <span class="hljs-string">"accusative"</span>, <span class="hljs-number">2.8000000000000003</span> ], [ <span class="hljs-string">"hate"</span>, <span class="hljs-number">1.0999999999999999</span> ], [ <span class="hljs-string">"desire"</span>, <span class="hljs-number">1.0</span> ], [ <span class="hljs-string">"confusion"</span>, <span class="hljs-number">0.5</span> ], [ <span class="hljs-string">"ambivalence"</span>, <span class="hljs-number">0.1</span> ], [ <span class="hljs-string">"joy"</span>, <span class="hljs-number">0.0</span> ], [ <span class="hljs-string">"love"</span>, <span class="hljs-number">0.0</span> ], [ <span class="hljs-string">"amusement"</span>, <span class="hljs-number">0.0</span> ], [ <span class="hljs-string">"boredom"</span>, <span class="hljs-number">0.0</span> ], [ <span class="hljs-string">"regret"</span>, <span class="hljs-number">0.0</span> ], [ <span class="hljs-string">"sarcastic"</span>, <span class="hljs-number">0.0</span> ], [ <span class="hljs-string">"admiration"</span>, <span class="hljs-number">0.0</span> ], [ <span class="hljs-string">"modest"</span>, <span class="hljs-number">0.0</span> ], [ <span class="hljs-string">"pride"</span>, <span class="hljs-number">0.0</span> ] ]</span>, "<span class="hljs-attribute">\u201cCherry\u201d is featured on Lana\u2019s fifth studio album.</span>": <span class="hljs-value">[ [ <span class="hljs-string">"emphatic"</span>, <span class="hljs-number">100.0</span> ], [ <span class="hljs-string">"certainty"</span>, <span class="hljs-number">55.2</span> ], [ <span class="hljs-string">"calm"</span>, <span class="hljs-number">21.2</span> ], [ <span class="hljs-string">"instructive"</span>, <span class="hljs-number">12.6</span> ], [ <span class="hljs-string">"agreeable"</span>, <span class="hljs-number">1.6</span> ], [ <span class="hljs-string">"inquisitive"</span>, <span class="hljs-number">0.6</span> ], [ <span class="hljs-string">"confusion"</span>, <span class="hljs-number">0.4</span> ], [ <span class="hljs-string">"desire"</span>, <span class="hljs-number">0.2</span> ], [ <span class="hljs-string">"anger"</span>, <span class="hljs-number">0.1</span> ], [ <span class="hljs-string">"hate"</span>, <span class="hljs-number">0.1</span> ], [ <span class="hljs-string">"intensity"</span>, <span class="hljs-number">0.1</span> ], [ <span class="hljs-string">"admiration"</span>, <span class="hljs-number">0.1</span> ], [ <span class="hljs-string">"positive"</span>, <span class="hljs-number">0.0</span> ], [ <span class="hljs-string">"negative"</span>, <span class="hljs-number">0.0</span> ], [ <span class="hljs-string">"joy"</span>, <span class="hljs-number">0.0</span> ], [ <span class="hljs-string">"love"</span>, <span class="hljs-number">0.0</span> ], [ <span class="hljs-string">"amusement"</span>, <span class="hljs-number">0.0</span> ], [ <span class="hljs-string">"boredom"</span>, <span class="hljs-number">0.0</span> ], [ <span class="hljs-string">"regret"</span>, <span class="hljs-number">0.0</span> ], [ <span class="hljs-string">"challenging"</span>, <span class="hljs-number">0.0</span> ], [ <span class="hljs-string">"sarcastic"</span>, <span class="hljs-number">0.0</span> ], [ <span class="hljs-string">"accusative"</span>, <span class="hljs-number">0.0</span> ], [ <span class="hljs-string">"modest"</span>, <span class="hljs-number">0.0</span> ], [ <span class="hljs-string">"pride"</span>, <span class="hljs-number">0.0</span> ], [ <span class="hljs-string">"ambivalence"</span>, <span class="hljs-number">0.0</span> ], [ <span class="hljs-string">"vulgarity"</span>, <span class="hljs-number">0.0</span> ] ] </span>} </span>}
+					</code></pre>
+
+				  <div class="ui inverted divider"></div> 
+					</code></pre><h3 id="library-usage">Emote Library Usage</h3>
+					<p>Start by importing emote.</p>
+					<pre><code class=" hljs python"><span class="hljs-keyword">import</span> emote <span class="hljs-keyword">as</span> emote
+					</code></pre><p>Send text message to be analyzed.</p>
+					<pre><code class=" hljs ini"><span class="hljs-setting">em = emote.Emote()</span>
+					<span class="hljs-setting" style="float: left">message = "Duct tape. I need it for... taping something."</span>
+					<span class="hljs-setting" style = "float: left">result = em.runAnalysis(message)</span>
+					<span class="hljs-setting" style = "float: left">print(result)</span>
+					</code></pre><p>You will get a list of tuples of all the emotional tone values in descending order as a result:</p>
+					<pre><code class=" hljs json">[('desire', <span class="hljs-number">100.0</span>), ('emphatic', <span class="hljs-number">14.7</span>), ('certainty', <span class="hljs-number">9.6</span>), ('challenging', <span class="hljs-number">5.0</span>), ('agreeable', <span class="hljs-number">3.1</span>), ('instructive', <span class="hljs-number">2.4</span>), ('intensity', <span class="hljs-number">2.3</span>), ('accusative', <span class="hljs-number">2.0</span>), ('anger', <span class="hljs-number">1.4000000000000001</span>), ('inquisitive', <span class="hljs-number">0.7000000000000001</span>), ('confusion', <span class="hljs-number">0.4</span>), ('hate', <span class="hljs-number">0.1</span>), ('negative', <span class="hljs-number">0.0</span>), ('calm', -<span class="hljs-number">0.0</span>), ('regret', -<span class="hljs-number">0.0</span>), ('modest', -<span class="hljs-number">0.1</span>), ('vulgarity', -<span class="hljs-number">0.1</span>), ('pride', -<span class="hljs-number">0.1</span>), ('love', -<span class="hljs-number">0.1</span>), ('positive', -<span class="hljs-number">0.1</span>), ('amusement', -<span class="hljs-number">0.1</span>), ('joy', -<span class="hljs-number">0.1</span>), ('admiration', -<span class="hljs-number">0.1</span>), ('sarcastic', -<span class="hljs-number">0.1</span>), ('boredom', -<span class="hljs-number">0.1</span>), ('ambivalence', -<span class="hljs-number">0.1</span>)]
+					</code></pre><p>You can get values from the result like this:</p>
+					<pre><code class=" hljs markdown">result[<span class="hljs-link_label">0</span>
+					</code></pre><p>returns the strongest tone classification-value pair:</p>
+					<pre><code class=" hljs clojure"><span class="hljs-list">(<span class="hljs-title">'desire'</span>,<span class="hljs-number"> 100.0</span>)</span>
+					</code></pre><p>and</p>
+					<pre><code class=" hljs markdown">result[<span class="hljs-link_label">0</span>][<span class="hljs-link_reference">0</span>]
+					</code></pre><p>returns the strongest tone classification:</p>
+					<pre><code class=" hljs scilab"><span class="hljs-string">'desire'</span>
+					</code></pre><p>while</p>
+					<pre><code class=" hljs markdown">result[<span class="hljs-link_label">0</span>][<span class="hljs-link_label">1</span>]
+					</code></pre><p>returns the strongest tone value:</p>
+					<pre><code class=" hljs ">100.0
+					</code></pre><p>And so</p>
+					<pre><code class=" hljs markdown">result[<span class="hljs-link_reference">1</span>]
+					</code></pre><p>returns the 2nd strongest tone classification-value pair:</p>
+					<pre><code class=" hljs clojure"><span class="hljs-list">(<span class="hljs-title">'emphatic'</span>,<span class="hljs-number"> 14.7</span>)</span>
+					</code></pre><p>and so on for all 26 base tones, in descending order of value. Eventually, the API will be expanded to return more data like a descriptive psychological analysis, hence why the result is returned as a list.</p>
+				  <div class="ui inverted divider"></div>
+
+				  <h2 id="emoter-library-usage">Emoter Library Usage</h2>
+					<p>Start by importing emoter.</p>
+					<pre><code class=" hljs python"><span class="hljs-keyword">import emoter as emt </span>
+					</code></pre><p>Send a message for the bot to analyze and respond to..</p>
+					<pre><code class=" hljs ini"><span class="hljs-setting">emtBot = emt.Emoter()</span>
+					<span class="hljs-setting" style="float: left">message = "Hey there, how are you?"</span>
+					<span class="hljs-setting" style="float: left">result = emtBot.getMsg(message)</span>
+					<span class="hljs-keyword" style="float: left">print(result)</span>
+					</code></pre><p>You will get a string returned with Emoter's matching response statement to your message.</p>
+					<pre><code class=" hljs python"><span class="hljs-keyword">Hello, how can I help you?</span> 
+
+				  <div class="ui inverted divider"></div>
+
+				  <h3 id="emoter-library-usage" style="margin-top: -35px">Loading Different Emoter Corpora</h3>
+					</code></pre><p style = "margin-top: -30px">To load a different, stored corpus in the same Emoter instance, you must have all the necessary text files to build the corpus, in a folder within /data. Pass the exact name of the folder name as the single parameter for Emoter(brain_path).</p>
+
+						<pre><code class=" hljs python"><span class="hljs-keyword">import emoter as emt</span>
+						<span class="hljs-string" style="float: left">brain_path = "custom_bot_name"</span>
+						<span class="hljs-string" style="float: left">emtBot = emt.Emoter(brain_path)</span>
+						<span class="hljs-string" style="float: left">emtBot.getMsg("hello emoter")</span>
+
+						</code></pre><p>To train an existing Emoter with a new brain (must be located within /data:</p>
+						<pre><code class=" hljs avrasm">new_brain_path = "different_virtual_assistant"</span>
+						<span class="hljs-preprocessor" style="float: left">emtBot.trainDatabase(new_brain_path)</span>
+						<span class="hljs-string" style="float: left">emtBot.getMsg("hello new emoter")</span>
+<!-- 						</code></pre><p>To call Emote's functions through Emoter:</p>
+						<pre><code class=" hljs coffeescript"><span class="hljs-reserved">import emoter</span>
+						<span class="hljs-string" style="float: left">emt = emoter.Emoter()</span>
+						<span class="hljs-string" style="float: left">message = "Enter your own message here to be analyzed."</span>
+						<span class="hljs-string" style="float: left">emt.em.runAnalysis(message)</span>
+						[(<span class="hljs-string">'instructive'</span>, <span class="hljs-number">100.0</span>), (<span class="hljs-string">'desire'</span>, <span class="hljs-number">77.10000000000001</span>), (<span class="hljs-string">'agreeable'</span>, <span class="hljs-number">16.6</span>), (<span class="hljs-string">'calm'</span>, <span class="hljs-number">5.4</span>), (<span class="hljs-string">'certainty'</span>, <span class="hljs-number">5.2</span>), (<span class="hljs-string">'challenging'</span>, <span class="hljs-number">4.2</span>), (<span class="hljs-string">'emphatic'</span>, <span class="hljs-number">3.5000000000000004</span>), (<span class="hljs-string">'intensity'</span>, <span class="hljs-number">1.3</span>), (<span class="hljs-string">'inquisitive'</span>, <span class="hljs-number">0.8</span>), (<span class="hljs-string">'accusative'</span>, <span class="hljs-number">0.8</span>), (<span class="hljs-string">'anger'</span>, <span class="hljs-number">0.6</span>), (<span class="hljs-string">'confusion'</span>, <span class="hljs-number">0.4</span>), (<span class="hljs-string">'vulgarity'</span>, -<span class="hljs-number">0.0</span>), (<span class="hljs-string">'amusement'</span>, -<span class="hljs-number">0.0</span>), (<span class="hljs-string">'admiration'</span>, -<span class="hljs-number">0.0</span>), (<span class="hljs-string">'regret'</span>, -<span class="hljs-number">0.0</span>), (<span class="hljs-string">'positive'</span>, -<span class="hljs-number">0.0</span>), (<span class="hljs-string">'love'</span>, -<span class="hljs-number">0.0</span>), (<span class="hljs-string">'sarcastic'</span>, -<span class="hljs-number">0.0</span>), (<span class="hljs-string">'pride'</span>, -<span class="hljs-number">0.0</span>), (<span class="hljs-string">'hate'</span>, <span class="hljs-number">0.0</span>), (<span class="hljs-string">'modest'</span>, -<span class="hljs-number">0.0</span>), (<span class="hljs-string">'boredom'</span>, -<span class="hljs-number">0.0</span>), (<span class="hljs-string">'negative'</span>, -<span class="hljs-number">0.0</span>), (<span class="hljs-string">'joy'</span>, -<span class="hljs-number">0.0</span>), (<span class="hljs-string">'ambivalence'</span>, -<span class="hljs-number">0.0</span>)]
+						</code></pre>
+ -->			</div>
+
 		    <!-- <a href = mailto:team@emoter.life>team@emoter.life</a></div> -->
 		    <!-- <div class="ui segment" style = "background-color: rgba(244, 244, 244, .15); border: none; height: 100px">Content</div> -->
 		  </div>
@@ -575,49 +766,7 @@
 		</div>
 			<script>
 			   $(function() {
-			       $('#personas-link').click(function() {
-			       	// alert("YES");
-		    		$("#personasContainer").delay(50).fadeIn(750);
-			           return false;
-			       });        
-			   });			
-				// $("#myDiv").fadeIn(5000);
-				$("#close-icon-personas").click(function() { 
-		        	var container = $("#personasContainer");
-				        container.hide();
-
-				});
-
-				$(document).mouseup(function (e)
-				{
-				    var container = $("#personasContainer");
-
-				    if (!container.is(e.target) // if the target of the click isn't the container...
-				        && container.has(e.target).length === 0) // ... nor a descendant of the container
-				    {
-				        container.hide();
-
-				    }
-				});
-			</script>
-	</div>
-
-
-
-	<div id = "apiContainer" style = "float: left; top: 140px; margin: 65px; position: absolute; font-weight: lighter;  color: rgba(244, 244, 244, .97); display: none; max-height: 400px">
-		<!-- <h3 class="ui center aligned header" style = "font-family: 'GeosansLight'; color: rgba(255, 255, 255, 1.0); font-size: 100%">Text Container</h3> -->
-		<div class="ui text container" style = "box-shadow: none;  border: 1px solid #fff; -webkit-border-radius: 6px; -moz-border-radius: 6px; border-radius: 6px; -webkit-box-shadow: 0px 0px 3px rgba(244, 244, 244, .05); -moz-box-shadow: 0px 0px 3px rgba(244, 244, 244, .05); box-shadow: 0px 0px 3px rgba(244, 244, 244, .05); font-family: 'GeosansLight'; color: rgba(255, 255, 255, 1.0); font-size: 100%; width: 360px; max-height: 400px">
-		  <div class="ui segments" style = "background-color: rgba(244, 244, 244, .15); border: none;">
-		    <div class="ui segment" style = "background-color: rgba(244, 244, 244, .15); border: none; text-align: center"><h4 style = "font-family: 'GeosansLight'; color: rgba(255, 255, 255, .99); font-size: 125%; letter-spacing: 4px; padding: 0; margin: 0; ">Patience please! Our API will be public soon.</h4><i class="close icon" id = "close-icon-api"></i></div>
-		    <div class="ui segment" style = "background-color: rgba(244, 244, 244, .15); border: none; max-height: 400px; padding: 20px; margin: 0;"><p style = "margin: 20px; text-align: center">Sign up <a href = "https://docs.google.com/forms/d/e/1FAIpQLSeGypUc_ZG-W7SO5JhBhLquYAE-CgpIBgoqFyERps-hjumnWA/viewform?c=0&w=1"> here </a> to be the first to know.</p>
-		    <!-- <a href = mailto:team@emoter.life>team@emoter.life</a></div> -->
-		    <!-- <div class="ui segment" style = "background-color: rgba(244, 244, 244, .15); border: none; height: 100px">Content</div> -->
-		  </div>
-		</div>
-		</div>
-			<script>
-			   $(function() {
-			       $('#api-link').click(function() {
+			       $('#api-docs-link').click(function() {
 			       	// alert("YES");
 		    		$("#apiContainer").delay(50).fadeIn(750);
 			           return false;
