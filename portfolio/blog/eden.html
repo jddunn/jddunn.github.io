@@ -40,52 +40,76 @@
 </head>
 <body>
 
+<div id="main" style="z-index: 100000; position: relative">
+    <div id="title">
+      <h2 class="ui center aligned header" style="letter-spacing: 3px; padding-top: 0px; margin-top: 40px; margin-bottom:0; padding-bottom: 0">johnny</h2>
+    </div>
+    <p class="ui center aligned header" id="subtitle1" style="letter-spacing: 3px; padding-top: 0px; margin-top: 20px">for you</p>
+    <p class="ui center aligned header" id="subtitle2" style="letter-spacing: 3px">about me.</p><br>
 
-<div id = "main">
-  <!-- <h1 class="ui center aligned header">Johnny Dunn</h1> -->
-  <div id = "title"><h2 class="ui center aligned header" style = "letter-spacing: 3px; padding-top: 0px; margin-top: 40px; margin-bottom:0; padding-bottom: 0">is it all i am all it is</h2></div>
-  <p class="ui center aligned header" style = "letter-spacing: 3px; padding-top: 0px; margin-top: 40px">a one-sided conversation about me</p>
-  <p class="ui center aligned header" style = "letter-spacing: 3px">to you.</p>
-  <br>
-
-  <div class="ui raised very padded text container segment" style = "margin: 0; padding: 25px; display: none" id = "titleInfo">
-      <p style = "letter-spacing: 2px; display: inline">does it bother you that the title isn't a palindrome? email with your feedback</p>
-  </div>
-
-  <script>
-      $("#title").mouseover(function() { 
-        $("#titleInfo").show();
-      });
-      $("#title").mouseout(function() { 
-        $("#titleInfo").hide();
-      });
-  </script>
-
-
+    <div class="ui raised very padded text container segment" id="titleInfo" style="margin: 0; padding: 25px; display: none">
+      <p style="letter-spacing: 2px; display: inline"><i>not a personal website<br>
+        not a portfolio<br>
+        not a blog</i>
+      </p>
+    </div>
+    <script>
+        $("#title").mouseover(function() { 
+          $("#titleInfo").fadeIn(200);
+        });
+        $("#title").mouseout(function() { 
+          $("#titleInfo").fadeOut(50);
+        });
+    </script>
+    <div class="ui raised very padded text container segment" id="subtitle1Info" style="margin: 0; padding: 25px; display: none">
+      <p style="letter-spacing: 9px; display: inline">from me
+      </p>
+    </div>
+    <script>
+        $("#subtitle1").mouseover(function() { 
+          $("#subtitle1Info").fadeIn(200);
+        });
+        $("#subtitle1").mouseout(function() { 
+          $("#subtitle1Info").fadeOut(50);
+        });
+    </script>
+    <div class="ui raised very padded text container segment" id="subtitle2Info" style="margin: 0; padding: 25px; display: none">
+      <p style="letter-spacing: 9px; display: inline">to you
+      </p>
+    </div>
+    <script>
+        $("#subtitle2").mouseover(function() { 
+          $("#subtitle2Info").fadeIn(200);
+        });
+        $("#subtitle2").mouseout(function() { 
+          $("#subtitle2Info").fadeOut(50);
+        });
+    </script>
+    
   <div class="ui raised very padded text container segment" style = "margin: 0; padding: 25px" id = "main">
         <a href = "../index.html"><i class="close icon" id = "close-icon-about" style = "float: right; float: top; margin-top: -15px; margin-right: -10px; cursor: pointer;
         color: #919191;" onMouseOver="this.style.color='#efefef'" onMouseOut="this.style.color='#919191'"></i></a>
      <div style = "text-align: center"><h3 style = "letter-spacing: 3px; display: inline;">Eden</h3></div>
     <div class="ui divider"></div>
      <div style = "text-align: center"><p style = "letter-spacing: 2px; display: inline; font-size: .8em;">Last updated on July 5th, 2017</p><br>
-          <!-- <a href="http://try-emote.ml" target="_blank" style = "font-size: .85em">GitHub</a><br> -->
-          <!-- <a href="http://emoter.me" target="_blank" style = "font-size: .85em">Website</a><br> -->
+          <!-- <a href="http://try-emote.ml" target="_blank" style = "font-size: .95em">GitHub</a><br> -->
+          <!-- <a href="http://emoter.me" target="_blank" style = "font-size: .95em">Website</a><br> -->
     <div class="ui divider"></div>
       </div>
-     <div style = "text-align: center">  <p style = "font-size: .85em; letter-spacing: 1px; text-align: center">Eden is a proof of concept developed as an interactive fiction demo with a morality-based storyline, incorporated with the <a href = "emoter.html">Emoter</a> chatbot to use conversations as the player interaction to drive the branching narrative. Currently the game is built entirely in Python, and played through a command line interface. Emote / Emoter / Eden were all created during my undergraduate thesis at Parsons School of Design. I currently have no plans to continue the development of Eden, but am open to anything really about it.<br><br>
+     <div style = "text-align: center">  <p style = "font-size: .95em; letter-spacing: 1px; text-align: center">Eden is a proof of concept developed as an interactive fiction demo with a morality-based storyline, incorporated with the <a href = "emoter.html">Emoter</a> chatbot to use conversations as the player interaction to drive the branching narrative. Currently the game is built entirely in Python, and played through a command line interface. Emote / Emoter / Eden were all created during my undergraduate thesis at Parsons School of Design. I currently have no plans to continue the development of Eden, but am open to anything really about it.<br><br>
                   The game begins with a someone named Charles waking you, and asking you what you were thinking about. The only player interaction is what you say to Charles. As your conversation develops, the story unfolds and character actions are done and described automatically. This is meant to be a story driven by the visual imagery of the writing, as well as the dialog.</p>
                     <a href = "../images/eden_demo_1.png" target="_blank"><img class="ui center medium image" style = "display: block; margin-left: auto; margin-right: auto" src="../images/eden_demo_1.png"></a>
 
-                    <p style = "font-size: .85em; letter-spacing: 1px; text-align: center; margin: 10px">You can choose to continue questioning why you're here and what you're doing, or you can just follow along with what Charles says to a game end. You can also refuse to go with Charles. There are four paths to four possible endings.</p>
+                    <p style = "font-size: .95em; letter-spacing: 1px; text-align: center; margin: 10px">You can choose to continue questioning why you're here and what you're doing, or you can just follow along with what Charles says to a game end. You can also refuse to go with Charles. There are four paths to four possible endings.</p>
                     <a href = "../images/eden_demo_2.png" target="_blank"><img class="ui center medium image" style = "display: block; margin-left: auto; margin-right: auto" src="../images/eden_demo_2.png"></a>
 
 
-                      <p style = "font-size: .85em; letter-spacing: 1px; text-align: center; margin: 10px">Eden keeps track of things you said in the game as items, and thus is able to be a branching narrative with different paths, because the Charles technically does have some basic memory of the conversation.</p>
+                      <p style = "font-size: .95em; letter-spacing: 1px; text-align: center; margin: 10px">Eden keeps track of things you said in the game as items, and thus is able to be a branching narrative with different paths, because the Charles technically does have some basic memory of the conversation.</p>
 
-                      <!-- <p style = "font-size: .85em; letter-spacing: 1px; text-align: center; margin: 10px">Emote has a mass analysis feature for analyzing CSV data.</p> -->
+                      <!-- <p style = "font-size: .95em; letter-spacing: 1px; text-align: center; margin: 10px">Emote has a mass analysis feature for analyzing CSV data.</p> -->
                     <a href = "../images/eden_demo_3.png" target="_blank"><img class="ui center medium image" style = "display: block; margin-left: auto; margin-right: auto" src="../images/eden_demo_3.png"></a>
 
-                      <p style = "font-size: .85em; letter-spacing: 1px; text-align: center; margin: 10px">Some of the game's themes, characters, and writing is inspired by John Steinbeck's <i>East of Eden</i>.</p>
+                      <p style = "font-size: .95em; letter-spacing: 1px; text-align: center; margin: 10px">Some of the game's themes, characters, and writing is inspired by John Steinbeck's <i>East of Eden</i>.</p>
 
 
                     <br>
@@ -155,9 +179,9 @@
               <span class="span-item" style = "margin: 5px;" id = "span-item-1"><strong>Emote / Emoter</strong>  -  a customizable chatbot incorporated with a custom sentiment analyzer library in Python, to give empathy and emotional intelligence (created for my undergrad thesis)</span><br>
                 <div class='' id='b1' style = "display: inline; display: none; margin-top: 20px; margin-bottom: 40px; text-align: center"> 
                   <div class="ui divider"></div>
-                    <a href="http://try-emote.ml" target="_blank" style = "font-size: .85em">Blog Post</a><br>
-                    <a href="http://try-emote.ml" target="_blank" style = "font-size: .85em">GitHub</a><br>
-                    <a href="http://try-emote.ml" target="_blank" style = "font-size: .85em">Online Demo</a><br><br>
+                    <a href="http://try-emote.ml" target="_blank" style = "font-size: .95em">Blog Post</a><br>
+                    <a href="http://try-emote.ml" target="_blank" style = "font-size: .95em">GitHub</a><br>
+                    <a href="http://try-emote.ml" target="_blank" style = "font-size: .95em">Online Demo</a><br><br>
                     <div>
                     <img class="ui center medium image" style = "display: block; margin-left: auto; margin-right: auto" src="images/emote-demo-1.png">
                     <img class="ui center medium image" style = "display: block; margin-left: auto; margin-right: auto" src="images/emote-demo-2.png">
@@ -171,8 +195,8 @@
                   <div class="ui divider"></div>
                   <p style = "text-align: center; margin-bottom: 10px"><strong>Emote</strong></p>
                     <div style = "text-align: center; margin: 10px">
-                    <a href="http://try-emote.ml" target="_blank" style = "font-size: .85em">Online Demo</a><br>
-                    <a href="http://try-emote.ml" target="_blank" style = "font-size: .85em">GitHub</a><br>
+                    <a href="http://try-emote.ml" target="_blank" style = "font-size: .95em">Online Demo</a><br>
+                    <a href="http://try-emote.ml" target="_blank" style = "font-size: .95em">GitHub</a><br>
                     </div>
                   <p style = "font-size: .9em">Emote uses the TextBlob / NLTK, NumPy, SciPy, pandas, and scikit-learn libraries to build a probabilistic sentiment analyzer for 26 different classifications. These classifications have been divided into 13 pairs of opposites, and are designed to be grouped together to create tone clusters that can then encompass more values as well as decrease false positives. Based off these tone clusters, a further 10 additional tone classifications are derived, allowing for 36 different tones to be detected.</p>
                   <p style = "font-size: .9em; text-align: center">Emote has a web interface built in Flask and Bootstrap.</p>
@@ -195,9 +219,9 @@
               <span class="span-item" style = "margin: 5px" id = "span-item-2"><strong>Eden</strong>  -  proof of concept of a morality-based interactive fiction game, where you chat in an ongoing conversation to drive the narrative (developed at the same time as Emoter)</span><br>
                  <div class='' id='b2' style = "display: inline; display: none; margin-top: 20px; margin-bottom: 40px; text-align: center"> 
                   <div class="ui divider"></div>
-                    <a href="http://try-emote.ml" target="_blank" style = "font-size: .85em">Blog Post</a><br>
-                    <a href="http://try-emote.ml" target="_blank" style = "font-size: .85em">GitHub</a><br>
-                    <a href="http://try-emote.ml" target="_blank" style = "font-size: .85em">Online Demo</a><br>
+                    <a href="http://try-emote.ml" target="_blank" style = "font-size: .95em">Blog Post</a><br>
+                    <a href="http://try-emote.ml" target="_blank" style = "font-size: .95em">GitHub</a><br>
+                    <a href="http://try-emote.ml" target="_blank" style = "font-size: .95em">Online Demo</a><br>
                   <div class="ui divider"></div>
                   </div>
 
@@ -209,9 +233,9 @@
 
              <div class='' id='b3' style = "display: inline; display: none; margin-top: 20px; margin-bottom: 40px; text-align: center"> 
                   <div class="ui divider"></div>
-                    <a href="http://try-emote.ml" target="_blank" style = "font-size: .85em">Blog Post</a><br>
-                    <a href="http://try-emote.ml" target="_blank" style = "font-size: .85em">GitHub</a><br>
-                    <a href="http://try-emote.ml" target="_blank" style = "font-size: .85em">Online Demo</a><br>
+                    <a href="http://try-emote.ml" target="_blank" style = "font-size: .95em">Blog Post</a><br>
+                    <a href="http://try-emote.ml" target="_blank" style = "font-size: .95em">GitHub</a><br>
+                    <a href="http://try-emote.ml" target="_blank" style = "font-size: .95em">Online Demo</a><br>
                   <div class="ui divider"></div>
                 </div>
 
@@ -219,9 +243,9 @@
 
                <div class='' id='b3' style = "display: inline; display: none; margin-top: 20px; margin-bottom: 40px; text-align: center"> 
                     <div class="ui divider"></div>
-                      <a href="http://try-emote.ml" target="_blank" style = "font-size: .85em">Blog Post</a><br>
-                      <a href="http://try-emote.ml" target="_blank" style = "font-size: .85em">GitHub</a><br>
-                      <a href="http://try-emote.ml" target="_blank" style = "font-size: .85em">Online Demo</a><br>
+                      <a href="http://try-emote.ml" target="_blank" style = "font-size: .95em">Blog Post</a><br>
+                      <a href="http://try-emote.ml" target="_blank" style = "font-size: .95em">GitHub</a><br>
+                      <a href="http://try-emote.ml" target="_blank" style = "font-size: .95em">Online Demo</a><br>
                     <div class="ui divider"></div>
                   </div>
 
