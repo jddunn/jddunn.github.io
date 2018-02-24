@@ -188,7 +188,7 @@
             <div id = 'div-year-2018'>
 
               <span class="span-item" id="span-item-19" style="font-size: 1.0em; letter-spacing: 3px; display: inline;">&#8212; <strong>Dementia progression analysis</strong>
-              <p style="display: inline; letter-spacing: 1px"><span class="span-item" id="span-item-19" style="font-size: 1.0em; letter-spacing: 3px; display: inline;">- convolutional neural network from transfer learning to detect varying levls of dementia in MRI scans</p>
+               <p style="letter-spacing: 1px; display: inline; margin: 0;">- convolutional neural network from transfer learning to detect varying levls of dementia in MRI scans</p>
               </span><br>
               
                 <div id="b19" style="display: inline; display: none; margin-top: 20px; margin-bottom: 40px;">
@@ -213,7 +213,7 @@
             <div id = 'div-year-2017'>
 
             <span class="span-item" id="span-item-1" style="font-size: 1.0em; letter-spacing: 3px; display: inline">&#8212; <strong>Emote / Emoter</strong>
-            <p style="letter-spacing: 1px; display: inline; margin: 0"><span class="span-item" id="span-item-1" style="font-size: 1.0em; letter-spacing: 3px; display: inline">- chatbot that understands intentions through emotions, with sentiment analysis REST API; also created digital personality of myself by parsing 70,000 Facebook messages</p></span><br>
+            <span class="span-item" id="span-item-1" style="font-size: 1.0em; letter-spacing: 3px; display: inline"> <p style="letter-spacing: 1px; display: inline; margin: 0;">- chatbot that understands intentions through emotions, with sentiment analysis REST API; also created digital personality of myself by parsing 70,000 Facebook messages</p></span><br>
             <div id="b1" style="display: inline; display: none; margin-top: 20px; margin-bottom: 40px;">
               <div class="ui divider"></div>
               <p style="text-align: center; margin-bottom: 10px; letter-spacing: 3px; font-size: 1.05em"><strong>Emote</strong></p>
@@ -360,7 +360,7 @@
             </div><br>
 
             <span class="span-item" id="span-item-6" style="font-size: 1.0em; letter-spacing: 3px; display: inline-block">&#8212; <strong>Freewriter</strong>
-            <p style="letter-spacing: 1px; display: inline"><span class="span-item" id="span-item-6" style="font-size: 1.0em; letter-spacing: 3px; display: inline-block">- an anti-surveilance web text editor</p></span><br>
+            <span class="span-item" id="span-item-6" style="font-size: 1.0em; letter-spacing: 3px; display: inline-block"> <p style="letter-spacing: 1px; display: inline; margin: 0;">- an anti-surveilance web text editor</p></span><br>
             <div class='' id='b6' style="display: inline; display: none; margin-top: 20px; margin-bottom: 40px;">
               <div class="ui divider"></div>
               <p style="text-align: center; margin-bottom: 10px; letter-spacing: 3px;"><strong>Freewriter</strong></p>
@@ -618,48 +618,50 @@
             if ( ($("#div-year-2014").css('display') != 'none') && ($("#div-year-2015").css('display') != 'none')
                 && ($("#div-year-2016").css('display') != 'none') && ($("#div-year-2017").css('display') != 'none')
                 && ($("#div-year-2018").css('display') != 'none')) {
-                $("#div-year-2014").fadeOut(200);
-                $("#div-year-2015").fadeOut(200);
-                $("#div-year-2016").fadeOut(200);
-                $("#div-year-2017").fadeOut(200);
-                $("#div-year-2018").fadeOut(200);
+                    $("#div-year-2018").fadeOut(450);
+                    $("#div-year-2017").fadeOut(650);
+                    $("#div-year-2016").fadeOut(750);
+                    $("#div-year-2015").fadeOut(800);
+                    $("#div-year-2014").fadeOut(830);
             } else {
-                $("#div-year-2014").fadeIn(150);
-                $("#div-year-2015").fadeIn(150);
-                $("#div-year-2016").fadeIn(150);
-                $("#div-year-2017").fadeIn(150);
-                $("#div-year-2018").fadeIn(150);
+
+                $("#div-year-2018").fadeIn(350);
+                $("#div-year-2017").fadeIn(650);
+                $("#div-year-2016").fadeIn(1250);
+                $("#div-year-2015").fadeIn(1650);
+                $("#div-year-2014").fadeIn(2050);
+
             }
           } else {
            if (div == 'span-year-2014') {
             if ($("#div-year-2014").css('display') == 'none' )
               $("#div-year-2014").fadeIn(150);
             } else {
-              $("#div-year-2014").fadeOut(200);
+              $("#div-year-2014").fadeOut(100);
             }
           if (div == 'span-year-2015') {
             if ($("#div-year-2015").css('display') == 'none' )
               $("#div-year-2015").fadeIn(150);
             } else {
-              $("#div-year-2015").fadeOut(200);
+              $("#div-year-2015").fadeOut(100);
             }
           if (div == 'span-year-2016') {
             if ($("#div-year-2016").css('display') == 'none' )
               $("#div-year-2016").fadeIn(150);
             } else {
-              $("#div-year-2016").fadeOut(200);
+              $("#div-year-2016").fadeOut(100);
             }
           if (div == 'span-year-2017') {
             if ($("#div-year-2017").css('display') == 'none' )
               $("#div-year-2017").fadeIn(150);
             } else {
-              $("#div-year-2017").fadeOut(200);
+              $("#div-year-2017").fadeOut(100);
             }
           if (div == 'span-year-2018') {
             if ($("#div-year-2018").css('display') == 'none' )
               $("#div-year-2018").fadeIn(150);
             } else {
-              $("#div-year-2018").fadeOut(200);
+              $("#div-year-2018").fadeOut(100);
             }
           }
     };
