@@ -113,11 +113,11 @@
           <!-- <a href="http://emoter.me" target="_blank" style = "font-size: .95em">Website</a><br> -->
     <div class="ui divider"></div>
       </div>
-     <div style = ""><p style = "letter-spacing: 1px; display: inline; font-size: .95em">Emote / Emoter / <a href = "eden.html">Eden </a>were all created during my undergraduate thesis at Parsons School of Design. I deployed Emoter in an anachronistic, interactive exhibit (seen below) at the Parson's 2017 BFA thesis show, with a personality that represents myself, created from parsing my archived messages on Facebook.
+     <div style = ""><p style = "letter-spacing: 1px; display: inline; font-size: .95em"><a href="http://52.23.204.103:8080/">Emote</a> / <a href="http://52.23.204.103:5000/">Emoter</a> / <a href = "eden.html">Eden </a>were all created during my undergraduate thesis at Parsons School of Design. I deployed Emoter in an anachronistic, interactive exhibit (seen below) at the Parson's 2017 BFA thesis show, with a personality that represents myself, created from parsing my archived messages on Facebook.
 
      <br><br>
 
-    <a href = "../images/a_poor_sort_of_memory_only_backwards.jpeg" target="_blank"><img class="ui center medium image" style = "display: block; margin-left: auto; margin-right: auto" src="../images/a_poor_sort_of_memory_only_backwards.jpeg"></a>
+    <a href = "../images/a_poor_sort_of_memory_only_backwards.jpeg" target="_blank"><img class="ui center medium image" style = "display: block; margin-left: auto; margin-right: auto; width: 550px" src="../images/a_poor_sort_of_memory_only_backwards.jpeg"></a>
       <p style = "font-size: .95em; text-align: center; margin: 10px; letter-spacing: 1px;">A poor sort of memory that only works backwards (2017)</p>
      <br>I had originally wanted to create a <a href = "dreamgazer.html">wearable product</a> intergrated with a talking AI, and while looking at all the existing chatbot solutions, I felt dissatisfied. I felt that chatbots should have some way to comprehend messages for some higher meaning, as an actual human mind would. Naturally, empathy seemed like a great way to answer for that higher meaning.<br><br> A chatbot with emotional intelligence could not only be able to narrow down schemas in its knowledge database to give more specific, accurate answers, but the bot could also then decipher and understand the emotional context of texts that aren't similar to anything in its training.<br><br>
      I looked to intergrate a sentiment analyzer with my bot. I tried a few solutions, and again, felt dissatisfied with them all, including Watson's Tone Analyzer (which, as the name states, is for analyzing the tone of how text comes off, not actually how the person is feeling). Again, I began creating my own, with the help of several open-source libraries. 
@@ -127,7 +127,7 @@
      Emote was written in Python and uses the TextBlob / NLTK, NumPy, SciPy, pandas, and scikit-learn libraries to build a probabilistic sentiment analyzer for 26 different classifications. These classifications have been divided into 13 pairs of opposites, and are designed to be grouped together to create tone clusters that can then encompass more values as well as decrease false positives. Based off these tone clusters, a further 10 additional tone classifications are derived, allowing for 36 different tones to be detected.
      </p>
 
-         <a href = "../images/Emote-Software-Architecture-Flowchart.png" target="_blank"><img class="ui center medium image" style = "display: block; margin-left: auto; margin-right: auto" src="../images/Emote-Software-Architecture-Flowchart.png"></a>
+         <a href = "../images/Emote-Software-Architecture-Flowchart.png" target="_blank"><img class="ui center medium image" style = " width: 500px; display: block; margin-left: auto; margin-right: auto" src="../images/Emote-Software-Architecture-Flowchart.png"></a>
           <p style = "font-size: .95em; text-align: center; margin: 10px; letter-spacing: 1px;">A flowchart detailing an early version of Emote's software architecture.</p><br>
 
           <a href = "../images/emote-demo-1.png" target="_blank"><img class="ui center medium image" style = "display: block; margin-left: auto; margin-right: auto" src="../images/emote-demo-1.png"></a>
@@ -136,34 +136,38 @@
           <a href = "../images/emote-demo-2.png" target="_blank"><img class="ui center medium image" style = "display: block; margin-left: auto; margin-right: auto" src="../images/emote-demo-2.png"></a>
 
             <p style = "font-size: .95em; text-align: center; margin: 10px; letter-spacing: 1px">Emote has a mass analysis feature for analyzing CSV data.</p><br>
-          <a href = "../images/emote-demo-4.png" target="_blank"><img class="ui center medium image" style = "display: block; margin-left: auto; margin-right: auto" src="../images/emote-demo-4.png"></a>
+          <a href = "../images/emote-demo-4.png" target="_blank"><img class="ui center medium image" style = "display: block; margin-left: auto; margin-right: auto; width: 500px" src="../images/emote-demo-4.png"></a>
           <br>
              <p style = "font-size: .95em; letter-spacing: 1px; text-align: center; display: inline">Emoter is a basic but functional chatbot platform intergrated with Emote (also in Python), in order to give chatbot agents the ability to empathize with users and give back emotionally appropriate responses. Emoter agents thus can operate on a "higher level of thinking", by first categorizing messages and then choosing specific, interchangable "conversations" (lists of text responses) to respond from based on certain emotional tones. Within these conversations, Emoter looks for matching text in its database and compares it with the user input on a sliding threshold, outputting the corresponding response if the threshold is met.
                   </p><br><br>
                   
-          <a href = "../images/emoter-agent-conceptual-flowchart.png" target="_blank"><img class="ui center medium image" style = "display: block; margin-left: auto; margin-right: auto" src="../images/emoter-agent-conceptual-flowchart.png"></a>
+          <a href = "../images/emoter-agent-conceptual-flowchart.png" target="_blank"><img class="ui center medium image" style = "display: block; margin-left: auto; margin-right: auto; width: 450px" src="../images/emoter-agent-conceptual-flowchart.png"></a>
           <p style = "font-size: .95em; text-align: center; margin: 10px; letter-spacing: 1px;">A flowchart detailing an early version of a blank Emoter chatbot agent.</p><br>
 
 
-                  <a href = "../images/emoter-website-screenshot.png" target="_blank"><img class="ui center medium image" style = "display: block; margin-left: auto; margin-right: auto" src="../images/emoter-website-screenshot.png"></a>
-                        <p style = "font-size: .95em; text-align: center; margin: 10px; letter-spacing: 1px;">Emoter's website was created with three.js and SemanticUI. The globe displays quotes that have been classified according to Emote.</p><br>
-                    <a href = "../images/emoter_demo_3.png" target="_blank"><img class="ui center medium image" style = "display: block; margin-left: auto; margin-right: auto" src="../images/emoter_demo_3.png"></a><br>
-                    <a href = "../images/emoter_demo_5.png" target="_blank"><img class="ui center medium image" style = "display: block; margin-left: auto; margin-right: auto" src="../images/emoter_demo_5.png"></a>
-                                      <p style = "font-size: .95em; text-align: center; letter-spacing: 1px; margin: 10px">A demo 'Emoter agent' with a persona of a fitness coach.</p><br>
-                 <p style = "font-size: .95em; letter-spacing: 1px;r">
+              <a href="../images/emoter-website-intro.png" target="_blank"><img class="ui center medium image" src="../images/emoter-website-intro.png" style="display: block; margin-left: auto; margin-right: auto; width: 500px"></a>
+              <a href="../images/emoter-website-screenshot.png" target="_blank"><img class="ui center medium image" src="../images/emoter-website-screenshot.png" style="display: block; margin-left: auto; margin-right: auto; width: 500px"></a>
+
+              <p style="font-size: .95em; text-align: center; margin: 10px; letter-spacing: 1px;">Emoter's website was created with three.js and SemanticUI. The globe displays quotes that have been classified according to Emote.</p><!-- <a href = "images/emoter_demo_3.png" target="_blank"><img class="ui center medium image" style = "display: block; margin-left: auto; margin-right: auto" src="images/emoter_demo_3.png"></a> -->
+              <br>
+
+                    <a href = "../images/emoter_demo_3.png" target="_blank"><img class="ui center medium image" style = "width: 500px; display: block; margin-left: auto; margin-right: auto" src="../images/emoter_demo_3.png"></a>
+                    <a href = "../images/emoter_demo_5.png" target="_blank"><img class="ui center medium image" style = "width: 500px; display: block; margin-left: auto; margin-right: auto" src="../images/emoter_demo_5.png"></a>
+                                      <p style = "font-size: .95em; text-align: center; letter-spacing: 1px; margin: 10px;">A demo 'Emoter agent' with a persona of a fitness coach.</p><br>
+                 <p style = "font-size: .95em; letter-spacing: 1px;">
                                     In Emoter's training data, values can be passed into data matrix after any input-response pair, and checked for before Emoter gives out a response. In my interactive fiction game prototype <a href = "/blog/eden.html">Eden</a>, I used this to create a branching narrative driven by the mechanic of talking to the only other interactable character. The Emoter bot was able to keep track of whether or not certain things were said by the user previously, and how often each thing was said. Thus, Emoter bots can be written with limited short-term "memory" features, so that they can continue speaking on the same conversations.<br><br>
 
 
 
 
 
-      Finally, while developing Emoter, I became more fascinated with the idea of automatically generating digital personalities of individual people, specifically given their archived data on social media (inspired by Black Mirror's episode <i>Be Right Back</i>. I developed an algorithm to parse 70,000 of my Facebook messages (downloaded from their official service), to create a database Emoter could use that was specifically mined from my words. This project was deployed as an interactive exhibit in a gallery, and I wrote <a href = "https://chatbotsmagazine.com/how-to-make-a-digital-personality-of-yourself-using-chatbots-facebook-and-empathy-8b0c53afa9bd" target="_blank">this post </a>of my research and experiences in Chatbots Magazine.<br>
+      Finally, while developing Emoter, I became more fascinated with the idea of automatically generating digital personalities of individual people, specifically given their archived data on social media (inspired by Black Mirror's episode <i>Be Right Back</i>. I developed an algorithm to parse 70,000 of my Facebook messages (downloaded from their official service), to create a database Emoter could use that was specifically mined from my words. This project was deployed as an interactive exhibit in a gallery, and I wrote <a href = "https://chatbotsmagazine.com/how-to-make-a-digital-personality-of-yourself-using-chatbots-facebook-and-empathy-8b0c53afa9bd" target="_blank">this post </a>of my research and experiences in Chatbots Magazine.<br></p>
       
-    <a href = "../images/emoter-fb-personality-animation.gif" target="_blank"><img class="ui center medium image" style = "display: block; margin-left: auto; margin-right: auto" src="../images/emoter-fb-personality-animation.gif"></a>
+    <a href = "../images/emoter-fb-personality-animation.gif" target="_blank"><img class="ui center medium image" style = "display: block; margin-left: auto; margin-right: auto; width: 500px" src="../images/emoter-fb-personality-animation.gif"></a>
       <br>
       
 
-    <a href = "../images/emoter-fb-personality-animation2.gif" target="_blank"><img class="ui center medium image" style = "display: block; margin-left: auto; margin-right: auto" src="../images/emoter-fb-personality-animation2.gif"></a>
+    <a href = "../images/emoter-fb-personality-animation2.gif" target="_blank"><img class="ui center medium image" style = "display: block; margin-left: auto; margin-right: auto; width: 500px" src="../images/emoter-fb-personality-animation2.gif"></a>
       <br>
 
 
