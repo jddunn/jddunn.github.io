@@ -210,10 +210,17 @@
                   <p style="text-align: center; margin-bottom: 10px; letter-spacing: 3px;"><strong>Dementia Classifier CNN Built With Transfer Learning</strong></p>
                   <p style="font-size: .95em; letter-spacing: 2px; text-align: center"><a href="https://github.com/jddunn/dementia-progression-analysis" style="" target="_blank">Full Docs / Post</a><br>
                   <a href="https://github.com/jddunn/dementia-progression-analysis" style="" target="_blank">GitHub Link</a><br></p>
-                  <div class="ui divider" style="width:80%; text-align: center; margin-left: auto; margin-right: auto;"></div><br>
-                  <p style="font-size: .95em; letter-spacing: 1px;">I used <a href="http://www.oasis-brains.org/app/template/Tools.vm#services" target="_blank">OASIS's public archive of cross-sectional MRI data</a> to build a convolutional nueral network in Keras using a pre-trained model (transfer learning with VGG-16) that could detect signs of dementia with either a multi-class or binary classification model. The binary classifier had a ~60% accuracy rate (consistent with different variations of training / test data) with a 13% false positive rate.<br><br> Because I was working with a usable data set of only a few hundred images (most of which biased to nondemented classification), I used transfer learning to build the models. Given the limited data available, and the fact that 50-75% of dementia sufferers are never diagnosed, 60% becomes a relatively imposing figure. With more training data (and a standardized form of testing and scannig MRIs), utilizing transfer learning seems likely to be very useful in the diagnosis of Alzhemier's / Dementia. 
-                  </p><a href="images/potential_dementia_FSL_SEG_test_results.png" target="_blank"><img class="ui center large image" src="images/potential_dementia_FSL_SEG_test_results.png" style="display: block; margin-left: auto; margin-right: auto; width: 600px"></a>
-                  <p style="font-size: .95em; letter-spacing: 1px; text-align: center; margin: 10px">There's a command line interface to train and test models.<a href="images/OAS1_0278_MR1_mpr-4_anon_sag_66.png" target="_blank"><img class="ui center medium image" src="images/OAS1_0278_MR1_mpr-4_anon_sag_66.png" style="display: block; margin-left: auto; margin-right: auto;"></a></p>
+                  <div class="ui divider" style="width:80%; text-align: center; margin-left: auto; margin-right: auto;"></div>
+                  <p style="font-size: .95em; letter-spacing: 1px;">I used <a href="http://www.oasis-brains.org/app/template/Tools.vm#services" target="_blank">OASIS's public archive of cross-sectional MRI data</a> to build a convolutional nueral network in Keras using a pre-trained model (transfer learning with VGG-16) that could detect signs of dementia with either a multi-class or binary classification model. The binary classifier had a ~60% accuracy rate (consistent with different variations of training / test data) with a 13% false positive rate.<br><br> Because I was working with a usable data set of only a few hundred images (mostly biased to nondemented classification), I used transfer learning to build the models, so they wouldn't require as much data as building a CNN from scratch. Given the limited data available, and the fact that 50-75% of dementia sufferers are never diagnosed, a 60% machine success rate becomes a relatively imposing figure. With more training data (and a standardized form of testing and scannig MRIs), utilizing transfer learning seems likely to be very useful in facilitating the diagnosis of Alzhemier's / Dementia.
+
+               </p><a href="images/potential_dementia_FSL_SEG_test_results.png" target="_blank"><img class="ui center large image" src="images/potential_dementia_FSL_SEG_test_results.png" style="display: block; margin-left: auto; margin-right: auto; width: 600px"></a>
+                  <p style="font-size: .95em; letter-spacing: 1px; text-align: center; margin: 10px">There's a command line interface to train and test multi-class or binary classification models.</p>
+               As the scripts I wrote can also train a multi-level classifer of dementia, it is possible to expand on the analysis and algorithimically determine patterns in dementia progression over time. It may be then possible to reverse-engineer these patterns in simulations for patients' MRIs, potentially leading to a systematic way of detecting signs of dementia very early on. With the integration of tracking user data in individual patient profiles, the software can be used to aid in the treatment, not just the diagnosis, of these disorders.<br></p>
+
+            <a href="images/OAS1_0278_MR1_mpr-4_anon_sag_66.png" target="_blank"><img class="ui center medium image" src="images/OAS1_0278_MR1_mpr-4_anon_sag_66.png" style="display: block; margin-left: auto; margin-right: auto;"></a>
+
+            <br>
+
                   <a href="images/OAS1_0018_MR1_mpr_n4_anon_111_t88_masked_gfc_fseg_tra_90.png" target="_blank"><img class="ui center medium image" src="images/OAS1_0018_MR1_mpr_n4_anon_111_t88_masked_gfc_fseg_tra_90.png" style="display: block; margin-left: auto; margin-right: auto;"></a>
                   <div class="ui divider"></div>
                 </div>
@@ -253,7 +260,7 @@
               Within these conversations, Emoter looks for matching text in its database and compares it with the user input on a sliding threshold, outputting the corresponding response if the threshold is met.</p><a href="images/emoter-website-screenshot.png" target="_blank"><img class="ui center medium image" src="images/emoter-website-screenshot.png" style="display: block; margin-left: auto; margin-right: auto"></a>
               <p style="font-size: .95em; text-align: center; margin: 10px; letter-spacing: 1px;">Emoter's website was created with three.js and SemanticUI. The globe displays quotes that have been classified according to Emote.</p><!-- <a href = "images/emoter_demo_3.png" target="_blank"><img class="ui center medium image" style = "display: block; margin-left: auto; margin-right: auto" src="images/emoter_demo_3.png"></a> -->
               <a href="images/emoter_demo_5.png" target="_blank"><img class="ui center medium image" src="images/emoter_demo_5.png" style="display: block; margin-left: auto; margin-right: auto"></a>
-              <p style="font-size: .95em; text-align: center; letter-spacing: 1px; margin: 10px">A demo 'Emoter agent' with a persona of a fitness coach.</p><br>
+              <p style="font-size: .95em; text-align: center; letter-spacing: 1px; margin: 10px">A demo 'Emoter agent' with a persona of a fitness coach.</p>
               <div class="ui divider" style="width:80%; text-align: center; margin-left: auto; margin-right: auto;"></div>
               <p style="font-size: .95em; letter-spacing: 1px;">In Emoter's training data, values can be passed into the list of lists (2D array) after any input-response pair, and checked for before Emoter gives out a response. In my interactive fiction game <a href="/blog/eden.html">Eden</a>, I used this to create a branching narrative driven by the mechanic of talking to the only other interactable character.<br>
               <br>
@@ -261,14 +268,14 @@
               <br>
               <a href="images/a_poor_sort_of_memory_only_backwards.jpeg" target="_blank"><img class="ui center medium image" src="images/a_poor_sort_of_memory_only_backwards.jpeg" style="display: block; margin-left: auto; margin-right: auto"></a>
               </p>
-              <p style="font-size: .95em; text-align: center; letter-spacing: 1px;">A poor sort of memory that only works backwards (2017)</p><br>
+              <p style="font-size: .95em; text-align: center; letter-spacing: 1px;">A poor sort of memory that only works backwards (2017)</p>
               In developing Emoter, I became more fascinated with the idea of automatically generating digital personalities of individual people, specifically given their archived data on social media (inspired by Black Mirror's episode <i>Be Right Back</i>.<br>
               <br>
               I developed an algorithm to parse 70,000 of my Facebook messages (downloaded from their official service), to create a database Emoter could use that was specifically mined from my words. This project was deployed as an interactive exhibit in a gallery, and I wrote <a href="https://chatbotsmagazine.com/how-to-make-a-digital-personality-of-yourself-using-chatbots-facebook-and-empathy-8b0c53afa9bd" target="_blank">this post</a> of my research and experiences in Chatbots Magazine.<br>
               <br>
               <a href="images/emoter-fb-personality-animation.gif" target="_blank"><img class="ui center medium image" src="images/emoter-fb-personality-animation.gif" style="display: block; margin-left: auto; margin-right: auto"></a>
               </p>
-              <p style="font-size: .95em; text-align: center; margin: 10px; letter-spacing: 1px;">Web interface to chat with my digital personality created by mining my Facebook messages</p><br>
+              <p style="font-size: .95em; text-align: center; margin: 10px; letter-spacing: 1px;">Web interface to chat with my digital personality created by mining my Facebook messages</p>
               Both Emote and Emoter can be run offline. Emoter has also been open-sourced, and is included with Emote's source code.
               </p>
               <div class="ui divider"></div>
@@ -321,10 +328,21 @@
               <br>
               <a href="images/dreamgazer-prototype-front.jpg" target="_blank"><img class="ui center medium image" src="images/dreamgazer-prototype-front.jpg" style="display: block; margin-left: auto; margin-right: auto"></a><br>
               <br>
+
+              <a href="images/lucid-dream-data-visualization.png" target="_blank"><img class="ui center medium image" src="images/lucid-dream-data-visualization.png" style="display: block; margin-left: auto; margin-right: auto"></a>
+               <p style="font-size: .95em; letter-spacing: 1px; text-align: center; margin: 10px">Image still from an abstract visual recording of a dream by tracking biometric patterns (eye movement, heart rate, and EEG waves)</p>
+
+              <div style="text-align: center">
+                <iframe frameborder="0" height="210" src="https://www.youtube.com/embed/N_l1COTufZE" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+              </div>
+               <p style="font-size: .95em; letter-spacing: 1px; text-align: center; margin: 10px">Video demonstration of wearable prototype recording dreams and playing musical triggers during REM cycles</p>
+              <br>
+
               I was able to detect when I fell asleep within an accuracy of five minutes, and was able to successfully induce lucid dreaming by playing music when REM sleep was detected.</p><a href="images/DreamGazer%20Early%20Prototype%20with%20MindWave%20-%20Success%20Trial%20Night%201%20-%20Close%20Look%20Chart.png" target="_blank"><img class="ui center medium image" src="images/DreamGazer%20Early%20Prototype%20with%20MindWave%20-%20Success%20Trial%20Night%201%20-%20Close%20Look%20Chart.png" style="display: block; margin-left: auto; margin-right: auto"></a><br>
               <a href="images/DreamGazer%20Early%20Prototype%20with%20MindWave%20-%20Success%20Trial%20Night%202%20(Full%20Log).png" target="_blank"><img class="ui center medium image" src="images/DreamGazer%20Early%20Prototype%20with%20MindWave%20-%20Success%20Trial%20Night%202%20(Full%20Log).png" style="display: block; margin-left: auto; margin-right: auto"></a><br>
               <a href="images/DreamGazer%20Early%20Prototype%20with%20MindWave%20-%20Success%20Trial%20Night%203%20-%20Close%20Look.png" target="_blank"><img class="ui center medium image" src="images/DreamGazer%20Early%20Prototype%20with%20MindWave%20-%20Success%20Trial%20Night%202%20(Full%20Log).png" style="display: block; margin-left: auto; margin-right: auto"></a><br>
-              <a href="images/lucid-dream-data-visualization.png" target="_blank"><img class="ui center medium image" src="images/lucid-dream-data-visualization.png" style="display: block; margin-left: auto; margin-right: auto"></a>
+
+
               <div class="ui divider"></div>
             </div><br>
 

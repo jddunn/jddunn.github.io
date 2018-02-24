@@ -32,7 +32,18 @@
   <link rel="stylesheet" type="text/css" href="../components/message.css">
   <link rel="stylesheet" type="text/css" href="../components/icon.css">  
   <link rel="stylesheet" type="text/css" href="../components/table.css"> 
-
+  <style>
+     a:hover { color: #89cff0;}
+     img {
+           border: 1px solid #ddd;
+           border-radius: 4px;
+           padding: 5px;
+           /*width: 150px;*/
+     }
+     img:hover {
+                 box-shadow: 0 0 2px 1px rgba(0, 140, 186, 0.5);
+     }
+  </style>
   <script src="../assets/library/jquery.min.js"></script>
   <script src="../../dist/semantic.js"></script>
   <script src="https://use.fontawesome.com/f986fb3504.js"></script>
@@ -96,242 +107,25 @@
           <!-- <a href="http://emoter.me" target="_blank" style = "font-size: .95em">Website</a><br> -->
     <div class="ui divider"></div>
       </div>
-     <div style = "text-align: center">  <p style = "font-size: .95em; letter-spacing: 1px; text-align: center">Eden is a proof of concept developed as an interactive fiction demo with a morality-based storyline, incorporated with the <a href = "emoter.html">Emoter</a> chatbot to use conversations as the player interaction to drive the branching narrative. Currently the game is built entirely in Python, and played through a command line interface. Emote / Emoter / Eden were all created during my undergraduate thesis at Parsons School of Design. I currently have no plans to continue the development of Eden, but am open to anything really about it.<br><br>
+     <div style = "">  <p style = "font-size: .95em; letter-spacing: 1px;">Eden is a proof of concept developed as an interactive fiction demo with a morality-based storyline, incorporated with the <a href = "emoter.html">Emoter</a> chatbot to use conversations as the player interaction to drive the branching narrative. Currently the game is built entirely in Python, and played through a command line interface. Emote / Emoter / Eden were all created during my undergraduate thesis at Parsons School of Design. I currently have no plans to continue the development of Eden, but am open to anything really about it.<br><br>
                   The game begins with a someone named Charles waking you, and asking you what you were thinking about. The only player interaction is what you say to Charles. As your conversation develops, the story unfolds and character actions are done and described automatically. This is meant to be a story driven by the visual imagery of the writing, as well as the dialog.</p>
                     <a href = "../images/eden_demo_1.png" target="_blank"><img class="ui center medium image" style = "display: block; margin-left: auto; margin-right: auto" src="../images/eden_demo_1.png"></a>
-
-                    <p style = "font-size: .95em; letter-spacing: 1px; text-align: center; margin: 10px">You can choose to continue questioning why you're here and what you're doing, or you can just follow along with what Charles says to a game end. You can also refuse to go with Charles. There are four paths to four possible endings.</p>
+                    <br>
+                    <p style = "font-size: .95em; letter-spacing: 1px; margin: 10px">You can choose to continue questioning why you're here and what you're doing, or you can just follow along with what Charles says to a game end. You can also refuse to go with Charles. There are four paths to four possible endings.</p>
                     <a href = "../images/eden_demo_2.png" target="_blank"><img class="ui center medium image" style = "display: block; margin-left: auto; margin-right: auto" src="../images/eden_demo_2.png"></a>
+                    <br>
 
-
-                      <p style = "font-size: .95em; letter-spacing: 1px; text-align: center; margin: 10px">Eden keeps track of things you said in the game as items, and thus is able to be a branching narrative with different paths, because the Charles technically does have some basic memory of the conversation.</p>
+                      <p style = "font-size: .95em; letter-spacing: 1px; margin: 10px">Eden keeps track of things you said in the game as items (saving progress in a SQLite database), and thus is able to be a branching narrative with different paths, because the Charles technically does have some basic memory of the conversation.</p>
 
                       <!-- <p style = "font-size: .95em; letter-spacing: 1px; text-align: center; margin: 10px">Emote has a mass analysis feature for analyzing CSV data.</p> -->
                     <a href = "../images/eden_demo_3.png" target="_blank"><img class="ui center medium image" style = "display: block; margin-left: auto; margin-right: auto" src="../images/eden_demo_3.png"></a>
-
-                      <p style = "font-size: .95em; letter-spacing: 1px; text-align: center; margin: 10px">Some of the game's themes, characters, and writing is inspired by John Steinbeck's <i>East of Eden</i>.</p>
+                    <br>
+                      <p style = "font-size: .95em; letter-spacing: 1px; margin: 10px">Some of the game's themes, characters, and writing is inspired by John Steinbeck's <i>East of Eden</i>.</p>
 
 
                     <br>
 
-    <!-- <div class="ui divider"></div> -->
-    </div>
-  </div>
 
-  <div class="ui raised very padded text container segment" style = "margin: 0; padding: 25px; display: none" id = "aboutMe">
-        <i class="close icon" id = "close-icon-about" style = "float: right; float: top; margin-top: -15px; margin-right: -10px; cursor: pointer;
-        color: #919191;" onMouseOver="this.style.color='#efefef'" onMouseOut="this.style.color='#919191'"></i>     <p style = "letter-spacing: 2px; display: inline">i studied design & technology at parsons school of design, and will be graduating in the spring of 2017. i live in brooklyn, new york. i'm 24. i like making things that are electric. i really like to code. you can see my resume <a href = "http://jddunn-photography.com/wp-content/uploads/2017/03/Johnny-Dunn-Resume-March-2017.pdf" style = "display: inline">here</a>.<br><br>
-        you can email me at <a href = "mailto:johnnyddunn@gmail.com.">johnnyddunn@gmail.com</a>.</p>
-        <div id = "next_about_1" style = "display: inline; letter-spacing: 2px"> <a href="#" style = "float: right; margin: 0; margin-top: 2.5%; padding: 0">next </a> </div></p>
-  </div>
-
-
-  <div class="ui raised very padded text container segment" style = "margin: 0; padding: 25px; display: none" id = "aboutMe2">
-        <i class="close icon" id = "close-icon-about2" style = "float: right; float: top; margin-top: -15px; margin-right: -10px; cursor: pointer;
-        color: #919191;" onMouseOver="this.style.color='#efefef'" onMouseOut="this.style.color='#919191'"></i>     <p style = "letter-spacing: 2px; display: inline">i mostly do full stack development, and am interested in working in areas like AI (machine learning, natural language processing), data visualization, virtual / augmented reality, game design, information security, penetration testing, social media, digital privacy, UI / UX, and wearable technology.<br><br>
-        i also like journalism, photography, film, design, writing, and creating and playing music.
-        <br><br>
-
-        <a href = "http://jddunn-photography.com">Photo work (and some design)</a>
-        <!-- <div id = "next_about_2" style = "display: inline; letter-spacing: 2px"> <a href="#" style = "float: right; float: bottom; margin: 0; margin-top: 20px; padding: 0">next </a> </div> -->
-        <div id = "back_about_2" style = "display: inline; letter-spacing: 2px"> <a href="#" style = "float: right;  margin: 0;  padding: 0; margin-top: 2.5%; margin-right: 60px;">back </a> </div></p>
-  </div>
-
-
-<!--   <div class="ui raised very padded text container segment" style = "margin: 0; padding: 25px; display: none" id = "aboutMe3">
-        <i class="close icon" id = "close-icon-about2" style = "float: right; float: top; margin-top: -15px; margin-right: -10px; cursor: pointer;
-        color: #919191;" onMouseOver="this.style.color='#efefef'" onMouseOut="this.style.color='#919191'"></i>     <p style = "letter-spacing: 2px; display: inline">and then i've got iasdf asdfasdfasdfsadfwasedf also  i've got iasdf asdfasdfasdfsadfwasedf also  i've got iasdf asdfasdfasdfsadfwasedf also  i've got iasdf asdfasdfasdfsadfwasedf
-        <!-- <div id = "next_about_3" style = "display: inline; letter-spacing: 2px"> <a href="#" style = "float: right; float: bottom; margin: 0; margin-top: 20px; padding: 0">next </a> </div> -->
-        <!-- <div id = "back_about_3" style = "display: inline; letter-spacing: 2px"> <a href="#" style = "float: right; float: bottom; margin: 0; margin-top: 20px; padding: 0; margin-right: 20px">back </a> </div></p> -->
-        <!-- </div>  -->
-
-    <script>
-        $("#close-icon-about").click(function() { 
-          $("#aboutMe").hide();
-        });
-        $("#close-icon-about2").click(function() { 
-          $("#aboutMe2").hide();
-        });
-    </script>
-
-  <div class="ui raised very padded text container segment" style = "margin: 0; padding: 25px; display: none" id = "openSourceInfo">
-        <i class="close icon" id = "close-icon-openSource" style = "float: right; float: top; margin-top: -15px; margin-right: -10px; cursor: pointer;
-        color: #919191;" onMouseOver="this.style.color='#efefef'" onMouseOut="this.style.color='#919191'"></i>
-     <p style = "letter-spacing: 2px; display: inline">most of my personal projects are open-source, and on  <a href = "https://github.com/jddunn" target="_blank" style = "display: inline"> github with docs</a> (or not).
-     </p>
-  </div>
-
-
-    <script>
-        $("#close-icon-openSource").click(function() { 
-          $("#openSourceInfo").hide();
-        });
-    </script>
-
-  <div class="ui raised very padded text container segment" style = "margin: 0; padding: 25px; display: none" id = "projectsList">
-        <i class="close icon" id = "close-icon-projects" style = "float: right; float: top; margin-top: -15px; margin-right: -10px; cursor: pointer;
-        color: #919191;" onMouseOver="this.style.color='#efefef'" onMouseOut="this.style.color='#919191'"></i>     <p style = "letter-spacing: 2px; display: inline">i also made:
-
-        <div class="ui link list" style = "letter-spacing: 1px">
-
-          <div><p style = "font-size: .8em; margin-bottom: 5px; letter-spacing: 2px">year 2017 (and some of 2016)</p></div>
-
-              <span class="span-item" style = "margin: 5px;" id = "span-item-1"><strong>Emote / Emoter</strong>  -  a customizable chatbot incorporated with a custom sentiment analyzer library in Python, to give empathy and emotional intelligence (created for my undergrad thesis)</span><br>
-                <div class='' id='b1' style = "display: inline; display: none; margin-top: 20px; margin-bottom: 40px; text-align: center"> 
-                  <div class="ui divider"></div>
-                    <a href="http://try-emote.ml" target="_blank" style = "font-size: .95em">Blog Post</a><br>
-                    <a href="http://try-emote.ml" target="_blank" style = "font-size: .95em">GitHub</a><br>
-                    <a href="http://try-emote.ml" target="_blank" style = "font-size: .95em">Online Demo</a><br><br>
-                    <div>
-                    <img class="ui center medium image" style = "display: block; margin-left: auto; margin-right: auto" src="images/emote-demo-1.png">
-                    <img class="ui center medium image" style = "display: block; margin-left: auto; margin-right: auto" src="images/emote-demo-2.png">
-                    </div>
-                  <div class="ui divider"></div>
-                </div>
-
-
-
-<!--                 <div class='' id='b1' style = "display: inline; display: none; margin-top: 20px; margin-bottom: 40px;"> 
-                  <div class="ui divider"></div>
-                  <p style = "text-align: center; margin-bottom: 10px"><strong>Emote</strong></p>
-                    <div style = "text-align: center; margin: 10px">
-                    <a href="http://try-emote.ml" target="_blank" style = "font-size: .95em">Online Demo</a><br>
-                    <a href="http://try-emote.ml" target="_blank" style = "font-size: .95em">GitHub</a><br>
-                    </div>
-                  <p style = "font-size: .9em">Emote uses the TextBlob / NLTK, NumPy, SciPy, pandas, and scikit-learn libraries to build a probabilistic sentiment analyzer for 26 different classifications. These classifications have been divided into 13 pairs of opposites, and are designed to be grouped together to create tone clusters that can then encompass more values as well as decrease false positives. Based off these tone clusters, a further 10 additional tone classifications are derived, allowing for 36 different tones to be detected.</p>
-                  <p style = "font-size: .9em; text-align: center">Emote has a web interface built in Flask and Bootstrap.</p>
-                    <img class="ui center medium image" src="images/emote-demo-1.png">
-                    <img class="ui center medium image" src="images/emote-demo-2.png">
-                  <p style = "font-size: .9em; text-align: center">Emote has a mass analysis feature for analyzing CSV data.</p>
-                    <img class="ui center medium image" src="images/emote-demo-3.png">
-                    <img class="ui center medium image" src="images/emote-demo-4.png">
-                    <br>
-                  <p style = "text-align: center;"><strong> Emoter</strong> </p>
-                  <p style = "font-size: .9em">Emote uses the TextBlob / NLTK, NumPy, SciPy, pandas, and scikit-learn libraries to build a probabilistic sentiment analyzer for 26 different classifications. These classifications have been divided into 13 pairs of opposites, and are designed to be grouped together to create tone clusters that can then encompass more values as well as decrease false positives. Based off these tone clusters, a further 10 additional tone classifications are derived, allowing for 36 different tones to be detected.</p>
-                  <p style = "font-size: .9em; text-align: center">Emote has a web interface built in Flask and Bootstrap.</p>
-                    <img class="ui center medium image" src="images/emote-demo-1.png">
-                    <img class="ui center medium image" src="images/emote-demo-2.png">
-                  <p style = "font-size: .9em; text-align: center">Emote has a mass analysis feature for analyzing CSV data.</p>
-                    <img class="ui center medium image" src="images/emote-demo-3.png">
-                    <img class="ui center medium image" src="images/emote-demo-4.png">
-                </div> -->
-
-              <span class="span-item" style = "margin: 5px" id = "span-item-2"><strong>Eden</strong>  -  proof of concept of a morality-based interactive fiction game, where you chat in an ongoing conversation to drive the narrative (developed at the same time as Emoter)</span><br>
-                 <div class='' id='b2' style = "display: inline; display: none; margin-top: 20px; margin-bottom: 40px; text-align: center"> 
-                  <div class="ui divider"></div>
-                    <a href="http://try-emote.ml" target="_blank" style = "font-size: .95em">Blog Post</a><br>
-                    <a href="http://try-emote.ml" target="_blank" style = "font-size: .95em">GitHub</a><br>
-                    <a href="http://try-emote.ml" target="_blank" style = "font-size: .95em">Online Demo</a><br>
-                  <div class="ui divider"></div>
-                  </div>
-
-                <!-- <div class='' id='b2' style = "display: inline; display: none">  -->
-                <!-- abstract content  -->
-                <!-- </div> -->
-
-              <span class="span-item" style = "margin: 5px" id = "span-item-3"><strong>Dreamgazer</strong>  -  a lucid dreaming machine and brain computer interface made with an Arduino and an EEG sensor</span><br>
-
-             <div class='' id='b3' style = "display: inline; display: none; margin-top: 20px; margin-bottom: 40px; text-align: center"> 
-                  <div class="ui divider"></div>
-                    <a href="http://try-emote.ml" target="_blank" style = "font-size: .95em">Blog Post</a><br>
-                    <a href="http://try-emote.ml" target="_blank" style = "font-size: .95em">GitHub</a><br>
-                    <a href="http://try-emote.ml" target="_blank" style = "font-size: .95em">Online Demo</a><br>
-                  <div class="ui divider"></div>
-                </div>
-
-              <span class="span-item" style = "margin: 5px" id = "span-item-4"><strong>Some data visualizations</strong>  -  one web-based, one in VR</span><br>
-
-               <div class='' id='b3' style = "display: inline; display: none; margin-top: 20px; margin-bottom: 40px; text-align: center"> 
-                    <div class="ui divider"></div>
-                      <a href="http://try-emote.ml" target="_blank" style = "font-size: .95em">Blog Post</a><br>
-                      <a href="http://try-emote.ml" target="_blank" style = "font-size: .95em">GitHub</a><br>
-                      <a href="http://try-emote.ml" target="_blank" style = "font-size: .95em">Online Demo</a><br>
-                    <div class="ui divider"></div>
-                  </div>
-
-          <div><p style = "font-size: .8em; margin-bottom: 5px; letter-spacing: 2px"><br>year 2016</p></div>
-
-              <span class="span-item" style = "margin: 5px" id = "span-item-5"><strong>Stopwatch</strong>  -  a web app that automatically curates YouTube content based on detected emotions (through computer vision)</span><br>
-
-                  <div class='' id='b5' style = "display: inline; display: none"> 
-                  abstract content 
-                  </div>
-
-              <span class="span-item" style = "margin: 5px" id = "span-item-6"><strong>Freewriter</strong>  -  an anti-surveilance web text editor</span><br>
-
-                  <div class='' id='b6' style = "display: inline; display: none"> 
-                  abstract content 
-                  </div>
-
-              <span class="span-item" style = "margin: 5px" id = "span-item-7"><strong>Who got hacked on Twitter?</strong>  -  a site showing real-time tweets from users confessing to getting hacked</span><br>
-
-                <div class='' id='b7' style = "display: inline; display: none"> 
-                abstract content
-                 </div>
-
-              <span class="span-item" style = "margin: 5px" id = "span-item-8"><strong>The Web</strong>  -  a documentary sample for a larger proposed film about hacking, the internet, online relationships, and social media</span><br>
-
-                <div class='' id='b8' style = "display: inline; display: none"> 
-                abstract content
-                 </div>
-
-              <span class="span-item" style = "margin: 5px" id = "span-item-9"><strong>Conversation-starter dress</strong>  -  a fiber-optics interactive garment (collaborated with Alexandra Mundel) promoting social conversations by radiantly glowing</span><br>
-
-                <div class='' id='b9' style = "display: inline; display: none">
-                 abstract content 
-                 </div>
-
-              <span class="span-item" style = "margin: 5px" id = "span-item-10"><strong>Gleasons VR</strong>  -  a short 360 documentary following the relationship between a young boxer and his trainer in NYC a week before a demo match</span><br>
-
-                  <div class='' id='b10' style = "display: inline; display: none"> 
-                  abstract content 
-                  </div>
-
-          <div><p style = "font-size: .8em; margin-bottom: 5px; letter-spacing: 2px"><br>year 2015</p></div>
-
-            <span class="span-item" style = "margin: 5px" id = "span-item-11"><strong>Sonance</strong>  -  virtual noise cancellation through ASMR-based soundscapes (Unity)</span><br>
-
-                  <div class='' id='b11' style = "display: inline; display: none"> 
-                  abstract content
-                   </div>
-
-            <span class="span-item" style = "margin: 5px" id = "span-item-12"><strong>Solitary</strong>  -  an audio-visual experience abstractifying solitary confinement (Unity)</span><br>
-
-                  <div class='' id='b12' style = "display: inline; display: none"> 
-                  abstract content
-                   </div>
-
-            <span class="span-item" style = "margin: 5px" id = "span-item-13"><strong>A Pipboy</strong>  -  a pipboy</span><br>
-
-                  <div class='' id='b13' style = "display: inline; display: none">
-                   abstract content 
-                  </div>
-
-            <span class="span-item" style = "margin: 5px" id = "span-item-14"><strong>Amazon Echo alternative</strong>  -  using the jasper library in python and a CD spindel case</span></br>
-
-                  <div class='' id='b14' style = "display: inline; display: none">
-                   abstract content
-                   </div>
-
-            <span class="span-item" style = "margin: 5px" id = "span-item-15"><strong>Dreams data visualization</strong>  -  visualization of biometric data while falling asleep, and during normal and lucid dreams</span>
-
-                  <div class='' id='b15' style = "display: inline; display: none"> 
-                  abstract content 
-                  </div>
-
-          <div><p style = "font-size: .8em; margin-bottom: 5px; letter-spacing: 2px"><br>year 2014</p></div>
-
-            <span class="span-item" style = "margin: 5px" id = "span-item-16"><strong>A blindness simulation game</strong>  -  set on a spaceship; navigate with an audio-based sonar system and environmental cues. unfinished (Unity)</span><br>
-
-                  <div class='' id='b16' style = "display: inline; display: none"> 
-                  abstract content 
-                  </div>
-
-            <span class="span-item" style = "margin: 5px" id = "span-item-17"><strong>Bomb Squad</strong>  -  a fast-paced, dice and card game with game board</span><br>
-
-                  <div class='' id='b17' style = "display: inline; display: none"> 
-                  abstract content
-                   </div>
 
         </div>
   </div>
