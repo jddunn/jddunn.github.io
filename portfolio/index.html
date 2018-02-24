@@ -616,55 +616,60 @@
         //   }   
         // }
         if (div == 'span-year-all') {
-            if ( ($("#div-year-2014").css('display') != 'none') && ($("#div-year-2015").css('display') != 'none')
-                && ($("#div-year-2016").css('display') != 'none') && ($("#div-year-2017").css('display') != 'none')
-                && ($("#div-year-2018").css('display') != 'none')) {
+            if ( ($("#div-year-2014").css('display') != 'none') && ($("#div-year-2015").css('display') != 'none') && 
+                ($("#div-year-2016").css('display') != 'none') && ($("#div-year-2017").css('display') != 'none') && 
+                ($("#div-year-2018").css('display') != 'none')) {
                     $("#div-year-2018").fadeOut(450);
                     $("#div-year-2017").fadeOut(650);
                     $("#div-year-2016").fadeOut(750);
                     $("#div-year-2015").fadeOut(800);
                     $("#div-year-2014").fadeOut(830);
             } else {
-
                 $("#div-year-2018").fadeIn(350);
                 $("#div-year-2017").fadeIn(650);
                 $("#div-year-2016").fadeIn(1250);
                 $("#div-year-2015").fadeIn(1650);
                 $("#div-year-2014").fadeIn(2050);
-
             }
-          } else {
-           if (div == 'span-year-2014') {
-            if ($("#div-year-2014").css('display') == 'none' )
+        } 
+        if (div != 'span-year-all') {
+          if (div == 'span-year-2014') {
+            if ($("#div-year-2014").css('display') == 'none' ) {
               $("#div-year-2014").fadeIn(550);
             } else {
               $("#div-year-2014").fadeOut(150);
             }
+          }
           if (div == 'span-year-2015') {
-            if ($("#div-year-2015").css('display') == 'none' )
+            if ($("#div-year-2015").css('display') == 'none' ) {
               $("#div-year-2015").fadeIn(550);
             } else {
               $("#div-year-2015").fadeOut(150);
             }
+          }
           if (div == 'span-year-2016') {
-            if ($("#div-year-2016").css('display') == 'none' )
+            if ($("#div-year-2016").css('display') == 'none' ) {
               $("#div-year-2016").fadeIn(550);
             } else {
               $("#div-year-2016").fadeOut(150);
             }
+          }
           if (div == 'span-year-2017') {
-            if ($("#div-year-2017").css('display') == 'none' )
+            if ($("#div-year-2017").css('display') == 'none' ) {
               $("#div-year-2017").fadeIn(550);
             } else {
               $("#div-year-2017").fadeOut(150);
             }
+          }
           if (div == 'span-year-2018') {
-            if ($("#div-year-2018").css('display') == 'none' )
+            if ($("#div-year-2018").css('display') == 'none' ) {
               $("#div-year-2018").fadeIn(550);
             } else {
               $("#div-year-2018").fadeOut(150);
             }
           }
+        }
+        // }
     };
 
     // Need to wrap code below into functions later
