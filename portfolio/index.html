@@ -615,11 +615,21 @@
         //   }   
         // }
         if (div == 'span-year-all') {
-            $("#div-year-2014").fadeIn(150);
-            $("#div-year-2015").fadeIn(150);
-            $("#div-year-2016").fadeIn(150);
-            $("#div-year-2017").fadeIn(150);
-            $("#div-year-2018").fadeIn(150);
+            if ( ($("#div-year-2014").css('display') != 'none') && ($("#div-year-2015").css('display') != 'none')
+                && ($("#div-year-2016").css('display') != 'none') && ($("#div-year-2017").css('display') != 'none')
+                && ($("#div-year-2018").css('display') != 'none')) {
+                $("#div-year-2014").fadeOut(200);
+                $("#div-year-2015").fadeOut(200);
+                $("#div-year-2016").fadeOut(200);
+                $("#div-year-2017").fadeOut(200);
+                $("#div-year-2018").fadeOut(200);
+            } else {
+                $("#div-year-2014").fadeIn(150);
+                $("#div-year-2015").fadeIn(150);
+                $("#div-year-2016").fadeIn(150);
+                $("#div-year-2017").fadeIn(150);
+                $("#div-year-2018").fadeIn(150);
+            }
           } else {
            if (div == 'span-year-2014') {
             if ($("#div-year-2014").css('display') == 'none' )
