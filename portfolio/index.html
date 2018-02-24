@@ -159,6 +159,20 @@
               $("#quotesList").fadeOut(50);
             });
     </script>
+
+  <div class="ui raised very padded text container segment" id="quotes-toggle" style="margin: 0; padding: 25px; display: none">
+      <i class="close icon" id="close-icon-quotes" onmouseout="this.style.color='#919191'" onmouseover="this.style.color='#efefef'" style="float: right; float: top; margin-top: -15px; margin-right: -10px; cursor: pointer; color: #919191;"></i>
+      <p style="letter-spacing: 2px; display: inline; font-size: 1.05em">this one is a button.</p>
+    </div>
+    <script>
+            $("#quotes-toggle-icon").click(function() { 
+              $("#quotes-toggle").fadeOut(50);
+            });
+            $("#quotes-toggle-icon").click(function() { 
+              $("#quotes-toggle").fadeOut(50);
+            });
+    </script>
+
     <div class="ui raised very padded text container segment" id="openSourceInfo" style="margin: 0; padding: 25px; display: none">
       <i class="close icon" id="close-icon-openSource" onmouseout="this.style.color='#919191'" onmouseover="this.style.color='#efefef'" style="float: right; float: top; margin-top: -15px; margin-right: -10px; cursor: pointer; color: #919191;"></i>
       <p style="letter-spacing: 2px; display: inline; font-size: 1.05em">most of my personal projects are open-source on <a href="https://github.com/jddunn" style="display: inline" target="_blank">github</a>, and some of them even have documentation!</p>
@@ -174,7 +188,7 @@
      <!-- End main page body -->
 
      <!-- Timeline of projects -->
-    <div class="ui raised very padded text container segment" id="projectsList" style="margin: 0; padding: 25px; display: none">
+    <div class="ui raised very padded text container segment" id="projectsList" style="margin: 0; padding: 25px; display: none; z-index:1000;">
       <i class="close icon" id="close-icon-projects" onmouseout="this.style.color='#919191'" onmouseover="this.style.color='#efefef'" style="float: right; float: top; margin-top: -15px; margin-right: -10px; cursor: pointer; color: #919191;"></i>
 
       <!-- <div class="ui link list" style="letter-spacing: 1px"> -->
@@ -900,7 +914,7 @@
    });
   </script> 
   <script>
-
+        var quotesToggled = false
         $("#name").mouseover(function() {
             $("#openSourceInfo").fadeOut(50);
             $("#projectsList").fadeOut(50);
@@ -908,6 +922,7 @@
             $("#aboutMe2").fadeOut(50);
             $("#aboutMe").fadeIn(200);
             $("#projectsList").fadeOut(50);
+            $("#quotes-toggle").fadeOut(50);
             $("#b1").fadeOut(50); $("#b2").fadeOut(50); $("#b3").fadeOut(50); $("#b4").fadeOut(50); $("#b5").fadeOut(50); $("#b6").fadeOut(50); $("#b7").fadeOut(50); $("#b8").fadeOut(50); $("#b9").fadeOut(50);
             $("#b10").fadeOut(50); $("#b11").fadeOut(50); $("#b12").fadeOut(50); $("#b13").fadeOut(50); $("#b14").fadeOut(50); $("#b15").fadeOut(50); $("#b16").fadeOut(50); $("#b17").fadeOut(50); $("#b18").fadeOut(50); 
              $("#b19").fadeOut(50); $("#b20").fadeOut(50);
@@ -919,6 +934,7 @@
             $("#aboutMe2").fadeOut(50);
             $("#openSourceInfo").fadeIn(200);
             $("#projectsList").fadeOut(50);
+            $("#quotes-toggle").fadeOut(50);
             $("#b1").fadeOut(50); $("#b2").fadeOut(50); $("#b3").fadeOut(50); $("#b4").fadeOut(50); $("#b5").fadeOut(50); $("#b6").fadeOut(50); $("#b7").fadeOut(50); $("#b8").fadeOut(50); $("#b9").fadeOut(50);
             $("#b10").fadeOut(50); $("#b11").fadeOut(50); $("#b12").fadeOut(50); $("#b13").fadeOut(50); $("#b14").fadeOut(50); $("#b15").fadeOut(50); $("#b16").fadeOut(50); $("#b17").fadeOut(50); $("#b18").fadeOut(50); 
              $("#b19").fadeOut(50); $("#b20").fadeOut(50);
@@ -929,6 +945,7 @@
             $("#aboutMe2").fadeOut(50);
             $("#quotesList").fadeOut(50);
             $("#projectsList").fadeIn(200);
+            $("#quotes-toggle").fadeOut(50);
             $("#b1").fadeOut(50); $("#b2").fadeOut(50); $("#b3").fadeOut(50); $("#b4").fadeOut(50); $("#b5").fadeOut(50); $("#b6").fadeOut(50); $("#b7").fadeOut(50); $("#b8").fadeOut(50); $("#b9").fadeOut(50);
             $("#b10").fadeOut(50); $("#b11").fadeOut(50); $("#b12").fadeOut(50); $("#b13").fadeOut(50); $("#b14").fadeOut(50); $("#b15").fadeOut(50); $("#b16").fadeOut(50); $("#b17").fadeOut(50); $("#b18").fadeOut(50); 
               $("#b19").fadeOut(50); $("#b20").fadeOut(50);
@@ -940,13 +957,34 @@
             $("#openSourceInfo").fadeOut(50);
             $("#aboutMe2").fadeOut(50);
             $("#projectsList").fadeOut(50);
+            $("#quotes-toggle").fadeOut(50);
             $("#b1").fadeOut(50); $("#b2").fadeOut(50); $("#b3").fadeOut(50); $("#b4").fadeOut(50); $("#b5").fadeOut(50); $("#b6").fadeOut(50); $("#b7").fadeOut(50); $("#b8").fadeOut(50); $("#b9").fadeOut(50);
             $("#b10").fadeOut(50); $("#b11").fadeOut(50); $("#b12").fadeOut(50); $("#b13").fadeOut(50); $("#b14").fadeOut(50); $("#b15").fadeOut(50); $("#b16").fadeOut(50); $("#b17").fadeOut(50); $("#b18").fadeOut(50); 
-              $("#b19").fadeOut(50); $("#b20").fadeOut(50);
+              $("#b19").fadeOut(50); $("#b20").fadeOut(50); 
         });
 
 
+        // $("#ratherQuotesBg").onclick = 
+        function fillQuotes() {
+          // if ($("#quotesBg").css('display') == 'none' ) {
+            if (quotesToggled == false) {
+                quotesToggled = true;
+            } else {
+              quotesToggled = false;
+            }
+            if (quotesToggled == true) {
+              $("#quotesBg").fadeIn(2000);
+            } else {
+              $("#quotesBg").fadeOut(2500);
+            }
+          };
+
+        document.getElementById("ratherQuotesBg").addEventListener("click", fillQuotes);
+
+
         $("#ratherQuotesBg").mouseover(function() {
+          $("#quotes-toggle").fadeIn(200);
+          if (quotesToggled != true) {
             $("#quotesList").fadeOut(50);
             $("#quotesBg").fadeIn(20);
             $("#aboutMe").fadeOut(50);
@@ -956,12 +994,24 @@
             $("#b1").fadeOut(50); $("#b2").fadeOut(50); $("#b3").fadeOut(50); $("#b4").fadeOut(50); $("#b5").fadeOut(50); $("#b6").fadeOut(50); $("#b7").fadeOut(50); $("#b8").fadeOut(50); $("#b9").fadeOut(50);
             $("#b10").fadeOut(50); $("#b11").fadeOut(50); $("#b12").fadeOut(50); $("#b13").fadeOut(50); $("#b14").fadeOut(50); $("#b15").fadeOut(50); $("#b16").fadeOut(50); $("#b17").fadeOut(50); $("#b18").fadeOut(50);
              $("#b19").fadeOut(50); $("#b20").fadeOut(50);
+           }
         });
+
 
         $("#ratherQuotesBg").mouseout(function() {
-            $("#quotesBg").fadeOut(20);
+          $("#quotes-toggle").fadeOut(50);
+          if (quotesToggled != true) {
+            $("#quotesList").fadeOut(50);
+            $("#quotesBg").fadeOut(50);
+            $("#aboutMe").fadeOut(50);
+            $("#openSourceInfo").fadeOut(50);
+            $("#aboutMe2").fadeOut(50);
+            // $("#projectsList").fadeOut(50);
+            $("#b1").fadeOut(50); $("#b2").fadeOut(50); $("#b3").fadeOut(50); $("#b4").fadeOut(50); $("#b5").fadeOut(50); $("#b6").fadeOut(50); $("#b7").fadeOut(50); $("#b8").fadeOut(50); $("#b9").fadeOut(50);
+            $("#b10").fadeOut(50); $("#b11").fadeOut(50); $("#b12").fadeOut(50); $("#b13").fadeOut(50); $("#b14").fadeOut(50); $("#b15").fadeOut(50); $("#b16").fadeOut(50); $("#b17").fadeOut(50); $("#b18").fadeOut(50);
+             $("#b19").fadeOut(50); $("#b20").fadeOut(50);
+           }
         });
-
         $("#next_about_1").mouseover(function() {
             $("#aboutMe").fadeOut(50);
             $("#aboutMe2").fadeIn(200);
