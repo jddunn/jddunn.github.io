@@ -135,6 +135,10 @@ const startRoom = game.addRoom('Beginning', 'This is the beginning room');
 
 const endRoom = game.addRoom('SecondRoom', 'You did it! You won!');
 
+// Or we could do this..
+// game.startRoom = 'Beginning'; // Set beginning room programatically
+// game.endRoom = 'SecondRoom'; // Set end room programatically
+
 // Add required item to room
 endRoom.requirements.push('accessKey');
 
