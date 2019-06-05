@@ -200,6 +200,99 @@
 
             <div class="ui divider"></div>
             
+            <span class="span-item" onclick='hideOrShowChildDivs(this.id); return false;' id='span-year-2019' style="font-size: 1.10em; margin-bottom: 5px; letter-spacing: 10px"><strong>year 2019</strong></span>
+
+            <div class="ui divider"></div>
+            <div id = 'div-year-2019'>
+
+
+              <span class="span-item" id="span-item-22" style="font-size: 1.0em; letter-spacing: 3px; display: inline;">&#8212; <strong>AI Photobooth</strong>
+                <p style="letter-spacing: 1px; display: inline; margin: 0;">- a project created for Edelman as part of their AI initiative, where users can take selfies and transform them into various styles from film / television, using a convolutional neural network (CNN)</p>
+               </span><br>
+               
+                 <div id="b22" style="display: inline; display: none; margin-top: 20px; margin-bottom: 40px;">
+                   <div class="ui divider"></div>
+
+                   <p style="text-align: center; margin-bottom: 10px; letter-spacing: 3px;"><strong>AI Photobooth</strong></p>
+
+
+                   <div style="text-align: center; margin: 10px">
+                    <!-- <a href="blog/frame.html" style="font-size: .95em">Full Post</a><br> -->
+
+                    <!-- <a href="https://chatbotsmagazine.com/how-to-make-a-digital-personality-of-yourself-using-chatbots-facebook-and-empathy-8b0c53afa9bd" style="font-size: .95em" target="_blank">Article published in Chatbots Magazine</a><br> -->
+                  </div>
+
+
+                   <div class="ui divider" style="width:80%; text-align: center; margin-left: auto; margin-right: auto;"></div>
+                   <p style="font-size: .95em; letter-spacing: 1px;">
+                    
+                    I was contracted by Edelman to create an interactive exhibit for their AI month - one that would utilize <a href="https://en.wikipedia.org/wiki/Neural_Style_Transfer" target="_blank">neural style transfer</a>
+                    to provide a fun experience for visitors to their NYC headquarters. I went with the direction of film and pop culture, and thought it would be interesting for 
+                    people to see themselves transformed into styles from popular media references. I trained 5 different models, 3 of which were chosen for show: Spirited Away,
+                    Sin City, Game of Thrones, Blade Runner, and Alice in Wonderland.
+                    <br><br>
+
+                    <a href="images/ai-photobooth-demo.gif" target="_blank"><img class="ui center large image" src="images/ai-photobooth-demo.gif" style="display: block; margin-left: auto; margin-right: auto; width: 600px"></a>
+                    <p style="font-size: .95em; letter-spacing: 1px; text-align: center; margin: 10px">AI Photobooth Demo sped up by 1.25x</p>
+
+                    A Python server with a REST API powers the backend and performs the image transformations. After trying the experience, users can enter in their emails and have the photos sent to them via Sendgrid's API.
+                    Images can be taken with a web camera or with a mobile / tablet camera (when accessing the website on a mobile device).
+                    <br><br> 
+                    I used code samples and research from ywng's <a href="https://github.com/ywng/multi-style-transfer" target="_blank"> multi-style-transfer</a>, which
+                    was a modified implementation of <a href="https://github.com/pytorch/examples/tree/master/fast_neural_style" target="_blank">fast-neural-style</a> to allow for 
+                    multiple images to be used as a reference for style transfer. Although the original purpose of their design was to allow for different types of 
+                    styles to be transferred, I found that this algorithm also greatly improved results for just a single style transfer (with multiple images of the same style used as reference).
+                    <br><br>
+                    
+                    Essentially, I would capture various frames from the sources of media I had, all somewhat cohesive in aesthetic but different in the image content,
+                    and trained models those groups of images for a style instead of just a singular one. This made the results of image transformations a lot more consistent
+                    across a wider spectrum input images, as it was able to create a "average" sense of details to transform from the data. I had also incorporated <a href="http://vis-www.cs.umass.edu/lfw/" target="_blank">Labeled Faces in the Wild</a> dataset
+                    within the base training data, to give greater accuracy for portraits and selfie transformations.
+
+                   <div class="ui divider"></div>
+                 </div>
+                 <br>
+
+              <span class="span-item" id="span-item-21" style="font-size: 1.0em; letter-spacing: 3px; display: inline;">&#8212; <strong>Text RPG Engine</strong>
+               <p style="letter-spacing: 1px; display: inline; margin: 0;">- a library written in JavaScript to create text adventures / interactive fiction games with flexible custom player interactions</p>
+              </span><br>
+              
+                <div id="b21" style="display: inline; display: none; margin-top: 20px; margin-bottom: 40px;">
+                  <div class="ui divider"></div>
+                  <p style="text-align: center; margin-bottom: 10px; letter-spacing: 3px;"><strong>Text RPG Engine</strong></p>
+                  <p style="font-size: .95em; letter-spacing: 2px; text-align: center">
+                    <a href="https://github.com/jddunn/text-rpg-engine" style="" target="_blank">GitHub Link</a><br>
+                    <a href="https://jddunn.github.io/text-rpg-engine" style="" target="_blank">Library Website / Docs</a><br>
+                    <a href="https://clubhouse.io/developer-how-to/writing-object-oriented-javascript-es6-modules-with-text-rpgs" style="" target="_blank">Tutorial Article Written for Clubhouse</a><br>
+                    <a href="https://www.npmjs.com/package/text-rpg-engine" style="" target="_blank">NPM Package Website</a><br>
+                  </p>
+                  <div class="ui divider" style="width:80%; text-align: center; margin-left: auto; margin-right: auto;"></div>
+                  <p style="font-size: .95em; letter-spacing: 1px;">
+                  text-rpg-engine is a JavaScript ES6 library that can be compiled and run without a server to create works of <a href="https://en.wikipedia.org/wiki/Interactive_fiction" target="_blank">interactive 
+                  fiction</a>, or text adventures, with completely arbitrary player interactions. As in, experiences built with text-rpg-engine
+                  can contain player interactions of any kind, which allows for endless possibilities in terms of puzzles and crafting unique
+                  gameplay mechanics.
+                  <br>
+                  <br>
+               <a href="images/text-rpg-demo-full.gif" target="_blank"><img class="ui center large image" src="images/text-rpg-demo-full.gif" style="display: block; margin-left: auto; margin-right: auto; width: 600px"></a>
+                  <p style="font-size: .95em; letter-spacing: 1px; text-align: center; margin: 10px">
+                  In this example, a unique puzzle in the room is having to turn over the statue to find the note on the bottom.
+                  </p>
+
+                  You can create games programmatically via the library's API, or you can define the data in a JSON file and have it be dynamically loaded by the library. A future feature
+                  would be to have a GUI editor that can easily create and add onto existing games. I am also planning on creating an
+                  interactive fiction game with horror themes using this engine, to be submitted to <a href="https://ifcomp.org/">IFComp 2019</a>.
+                  <br>
+
+                </p>
+
+                  <div class="ui divider"></div>
+                </div>
+                <br>
+
+            </div>
+
+
             <span class="span-item" onclick='hideOrShowChildDivs(this.id); return false;' id='span-year-2018' style="font-size: 1.10em; margin-bottom: 5px; letter-spacing: 10px"><strong>year 2018</strong></span>
 
             <div class="ui divider"></div>
@@ -207,7 +300,7 @@
 
 
               <span class="span-item" id="span-item-20" style="font-size: 1.0em; letter-spacing: 3px; display: inline;">&#8212; <strong>Frame</strong>
-                <p style="letter-spacing: 1px; display: inline; margin: 0;">- journaling web / desktop application that summarizes and extracts important data, and can answer questions asked in natural language</p>
+                <p style="letter-spacing: 1px; display: inline; margin: 0;">- journaling application in electron (web / desktop) that summarizes and extracts important data with nautral language processing, and can answer questions asked to it</p>
                </span><br>
                
                  <div id="b20" style="display: inline; display: none; margin-top: 20px; margin-bottom: 40px;">
@@ -219,9 +312,7 @@
                    <div style="text-align: center; margin: 10px">
                     <!-- <a href="blog/frame.html" style="font-size: .95em">Full Post</a><br> -->
                     <a href="https://github.com/jddunn/frame" style="" target="_blank">GitHub Link</a><br>
-                    <a href="https://framed.fwd.wf/" style="" target="_blank">Link / Full Demo (Temporary host)</a><br></p>
-
-                    <!-- <a href="https://chatbotsmagazine.com/how-to-make-a-digital-personality-of-yourself-using-chatbots-facebook-and-empathy-8b0c53afa9bd" style="font-size: .95em" target="_blank">Article published in Chatbots Magazine</a><br> -->
+                    <a href="https://github.com/jddunn/frame/releases" style="" target="_blank">Download Link (Windows)</a><br></p>
                   </div>
 
 
@@ -257,7 +348,7 @@
 
 
               <span class="span-item" id="span-item-19" style="font-size: 1.0em; letter-spacing: 3px; display: inline;">&#8212; <strong>Dementia progression analysis</strong>
-               <p style="letter-spacing: 1px; display: inline; margin: 0;">- convolutional neural network from transfer learning to detect varying levls of dementia in MRI scans</p>
+               <p style="letter-spacing: 1px; display: inline; margin: 0;">- convolutional neural network (CNN) from transfer learning to detect varying levls of dementia in MRI scans</p>
               </span><br>
               
                 <div id="b19" style="display: inline; display: none; margin-top: 20px; margin-bottom: 40px;">
@@ -290,7 +381,7 @@
             <div id = 'div-year-2017'>
 
             <span class="span-item" id="span-item-1" style="font-size: 1.0em; letter-spacing: 3px; display: inline">&#8212; <strong>Emote / Emoter</strong>
-            <p style="letter-spacing: 1px; display: inline; margin: 0;">- chatbot that understands intentions through emotions, with sentiment analysis REST API; also created digital personality of myself by parsing 70,000 Facebook messages</p></span><br>
+            <p style="letter-spacing: 1px; display: inline; margin: 0;">- chatbot that understands intentions through emotions, with machine learning-powered sentiment analysis REST API; also created digital personality of myself by parsing 70,000 Facebook messages</p></span><br>
             <div id="b1" style="display: inline; display: none; margin-top: 20px; margin-bottom: 40px;">
               <div class="ui divider"></div>
               <p style="text-align: center; margin-bottom: 10px; letter-spacing: 3px; font-size: 1.05em"><strong>Emote</strong></p>
@@ -753,12 +844,14 @@
             if ( ($("#div-year-2014").css('display') != 'none') && ($("#div-year-2015").css('display') != 'none') && 
                 ($("#div-year-2016").css('display') != 'none') && ($("#div-year-2017").css('display') != 'none') && 
                 ($("#div-year-2018").css('display') != 'none')) {
+                    $("#div-year-2019").fadeOut(350);
                     $("#div-year-2018").fadeOut(450);
                     $("#div-year-2017").fadeOut(650);
                     $("#div-year-2016").fadeOut(750);
                     $("#div-year-2015").fadeOut(800);
                     $("#div-year-2014").fadeOut(830);
             } else {
+                $("#div-year-2019").fadeIn(250);
                 $("#div-year-2018").fadeIn(350);
                 $("#div-year-2017").fadeIn(650);
                 $("#div-year-2016").fadeIn(1250);
@@ -802,6 +895,13 @@
               $("#div-year-2018").fadeOut(150);
             }
           }
+           if (div == 'span-year-2019') {
+            if ($("#div-year-2019").css('display') == 'none' ) {
+              $("#div-year-2019").fadeIn(550);
+            } else {
+              $("#div-year-2019").fadeOut(150);
+            }
+          }
         }
         // }
     };
@@ -813,7 +913,7 @@
            } else {
              $("#b1").fadeOut(150);
            };
-           $("#b2").fadeOut(50); $("#b3").fadeOut(50); $("#b4").fadeOut(50); $("#b5").fadeOut(50); $("#b6").fadeOut(50); $("#b7").fadeOut(50); $("#b8").fadeOut(50); $("#b9").fadeOut(50); $("#b10").fadeOut(50); $("#b11").fadeOut(50); $("#b12").fadeOut(50); $("#b13").fadeOut(50); $("#b14").fadeOut(50); $("#b15").fadeOut(50); $("#b16").fadeOut(50); $("#b17").fadeOut(50); $("#b18").fadeOut(50); $("#b19").fadeOut(50); $("#b20").fadeOut(50);
+           $("#b2").fadeOut(50); $("#b3").fadeOut(50); $("#b4").fadeOut(50); $("#b5").fadeOut(50); $("#b6").fadeOut(50); $("#b7").fadeOut(50); $("#b8").fadeOut(50); $("#b9").fadeOut(50); $("#b10").fadeOut(50); $("#b11").fadeOut(50); $("#b12").fadeOut(50); $("#b13").fadeOut(50); $("#b14").fadeOut(50); $("#b15").fadeOut(50); $("#b16").fadeOut(50); $("#b17").fadeOut(50); $("#b18").fadeOut(50); $("#b19").fadeOut(50); $("#b20").fadeOut(50); $("#b21").fadeOut(50); $("#b22").fadeOut(50);
         });
         $('#span-item-2').click(function(){
           if ($("#b2").css('display') == 'none' ){ 
@@ -821,7 +921,7 @@
            } else {
              $("#b2").fadeOut(150);
            };
-            $("#b1").fadeOut(50); $("#b3").fadeOut(50); $("#b4").fadeOut(50); $("#b5").fadeOut(50); $("#b6").fadeOut(50); $("#b7").fadeOut(50); $("#b8").fadeOut(50); $("#b9").fadeOut(50); $("#b10").fadeOut(50); $("#b11").fadeOut(50); $("#b12").fadeOut(50); $("#b13").fadeOut(50); $("#b14").fadeOut(50); $("#b15").fadeOut(50); $("#b16").fadeOut(50); $("#b17").fadeOut(50); $("#b18").fadeOut(50); $("#b19").fadeOut(50); $("#b20").fadeOut(50);
+            $("#b1").fadeOut(50); $("#b3").fadeOut(50); $("#b4").fadeOut(50); $("#b5").fadeOut(50); $("#b6").fadeOut(50); $("#b7").fadeOut(50); $("#b8").fadeOut(50); $("#b9").fadeOut(50); $("#b10").fadeOut(50); $("#b11").fadeOut(50); $("#b12").fadeOut(50); $("#b13").fadeOut(50); $("#b14").fadeOut(50); $("#b15").fadeOut(50); $("#b16").fadeOut(50); $("#b17").fadeOut(50); $("#b18").fadeOut(50); $("#b19").fadeOut(50); $("#b20").fadeOut(50); $("#b21").fadeOut(50); $("#b22").fadeOut(50);
         });
         $('#span-item-3').click(function(){
           if ($("#b3").css('display') == 'none' ){ 
@@ -829,7 +929,7 @@
            } else {
              $("#b3").fadeOut(150);
            };          
-            $("#b1").fadeOut(50); $("#b2").fadeOut(50); $("#b4").fadeOut(50); $("#b5").fadeOut(50); $("#b6").fadeOut(50); $("#b7").fadeOut(50); $("#b8").fadeOut(50); $("#b9").fadeOut(50); $("#b10").fadeOut(50); $("#b11").fadeOut(50); $("#b12").fadeOut(50); $("#b13").fadeOut(50); $("#b14").fadeOut(50); $("#b15").fadeOut(50); $("#b16").fadeOut(50); $("#b17").fadeOut(50); $("#b18").fadeOut(50); $("#b19").fadeOut(50); $("#b20").fadeOut(50);
+            $("#b1").fadeOut(50); $("#b2").fadeOut(50); $("#b4").fadeOut(50); $("#b5").fadeOut(50); $("#b6").fadeOut(50); $("#b7").fadeOut(50); $("#b8").fadeOut(50); $("#b9").fadeOut(50); $("#b10").fadeOut(50); $("#b11").fadeOut(50); $("#b12").fadeOut(50); $("#b13").fadeOut(50); $("#b14").fadeOut(50); $("#b15").fadeOut(50); $("#b16").fadeOut(50); $("#b17").fadeOut(50); $("#b18").fadeOut(50); $("#b19").fadeOut(50); $("#b20").fadeOut(50); $("#b21").fadeOut(50); $("#b22").fadeOut(50);
         });
         $('#span-item-4').click(function(){
           if ($("#b4").css('display') == 'none' ){ 
@@ -837,7 +937,7 @@
            } else {
              $("#b4").fadeOut(150);
            };          
-            $("#b1").fadeOut(50); $("#b2").fadeOut(50); $("#b3").fadeOut(50); $("#b5").fadeOut(50); $("#b6").fadeOut(50); $("#b7").fadeOut(50); $("#b8").fadeOut(50); $("#b9").fadeOut(50); $("#b10").fadeOut(50); $("#b11").fadeOut(50); $("#b12").fadeOut(50); $("#b13").fadeOut(50); $("#b14").fadeOut(50); $("#b15").fadeOut(50); $("#b16").fadeOut(50); $("#b17").fadeOut(50); $("#b18").fadeOut(50); $("#b19").fadeOut(50); $("#b20").fadeOut(50);
+            $("#b1").fadeOut(50); $("#b2").fadeOut(50); $("#b3").fadeOut(50); $("#b5").fadeOut(50); $("#b6").fadeOut(50); $("#b7").fadeOut(50); $("#b8").fadeOut(50); $("#b9").fadeOut(50); $("#b10").fadeOut(50); $("#b11").fadeOut(50); $("#b12").fadeOut(50); $("#b13").fadeOut(50); $("#b14").fadeOut(50); $("#b15").fadeOut(50); $("#b16").fadeOut(50); $("#b17").fadeOut(50); $("#b18").fadeOut(50); $("#b19").fadeOut(50); $("#b20").fadeOut(50); $("#b21").fadeOut(50); $("#b22").fadeOut(50);
         });
         $('#span-item-5').click(function(){
           if ($("#b5").css('display') == 'none' ){ 
@@ -845,7 +945,7 @@
            } else {
              $("#b5").fadeOut(150);
            };                    
-            $("#b1").fadeOut(50); $("#b2").fadeOut(50); $("#b3").fadeOut(50); $("#b4").fadeOut(50); $("#b6").fadeOut(50); $("#b7").fadeOut(50); $("#b8").fadeOut(50); $("#b9").fadeOut(50); $("#b10").fadeOut(50); $("#b11").fadeOut(50); $("#b12").fadeOut(50); $("#b13").fadeOut(50); $("#b14").fadeOut(50); $("#b15").fadeOut(50); $("#b16").fadeOut(50); $("#b17").fadeOut(50); $("#b18").fadeOut(50); $("#b19").fadeOut(50); $("#b20").fadeOut(50);
+            $("#b1").fadeOut(50); $("#b2").fadeOut(50); $("#b3").fadeOut(50); $("#b4").fadeOut(50); $("#b6").fadeOut(50); $("#b7").fadeOut(50); $("#b8").fadeOut(50); $("#b9").fadeOut(50); $("#b10").fadeOut(50); $("#b11").fadeOut(50); $("#b12").fadeOut(50); $("#b13").fadeOut(50); $("#b14").fadeOut(50); $("#b15").fadeOut(50); $("#b16").fadeOut(50); $("#b17").fadeOut(50); $("#b18").fadeOut(50); $("#b19").fadeOut(50); $("#b20").fadeOut(50); $("#b21").fadeOut(50); $("#b22").fadeOut(50);
         });
         $('#span-item-6').click(function(){
           if ($("#b6").css('display') == 'none' ){ 
@@ -853,7 +953,7 @@
            } else {
              $("#b6").fadeOut(150);
            };          
-            $("#b1").fadeOut(50); $("#b2").fadeOut(50); $("#b3").fadeOut(50); $("#b4").fadeOut(50); $("#b5").fadeOut(50); $("#b7").fadeOut(50); $("#b8").fadeOut(50); $("#b9").fadeOut(50); $("#b10").fadeOut(50); $("#b11").fadeOut(50); $("#b12").fadeOut(50); $("#b13").fadeOut(50); $("#b14").fadeOut(50); $("#b15").fadeOut(50); $("#b16").fadeOut(50); $("#b17").fadeOut(50); $("#b18").fadeOut(50); $("#b19").fadeOut(50); $("#b20").fadeOut(50);
+            $("#b1").fadeOut(50); $("#b2").fadeOut(50); $("#b3").fadeOut(50); $("#b4").fadeOut(50); $("#b5").fadeOut(50); $("#b7").fadeOut(50); $("#b8").fadeOut(50); $("#b9").fadeOut(50); $("#b10").fadeOut(50); $("#b11").fadeOut(50); $("#b12").fadeOut(50); $("#b13").fadeOut(50); $("#b14").fadeOut(50); $("#b15").fadeOut(50); $("#b16").fadeOut(50); $("#b17").fadeOut(50); $("#b18").fadeOut(50); $("#b19").fadeOut(50); $("#b20").fadeOut(50); $("#b21").fadeOut(50); $("#b22").fadeOut(50);
         });
         $('#span-item-7').click(function(){
           if ($("#b7").css('display') == 'none' ){ 
@@ -861,7 +961,7 @@
            } else {
              $("#b7").fadeOut(150);
            };          
-            $("#b1").fadeOut(50); $("#b2").fadeOut(50); $("#b3").fadeOut(50); $("#b4").fadeOut(50); $("#b5").fadeOut(50); $("#b6").fadeOut(50); $("#b8").fadeOut(50); $("#b9").fadeOut(50); $("#b10").fadeOut(50); $("#b11").fadeOut(50); $("#b12").fadeOut(50); $("#b13").fadeOut(50); $("#b14").fadeOut(50); $("#b15").fadeOut(50); $("#b16").fadeOut(50); $("#b17").fadeOut(50); $("#b18").fadeOut(50); $("#b19").fadeOut(50); $("#b20").fadeOut(50);
+            $("#b1").fadeOut(50); $("#b2").fadeOut(50); $("#b3").fadeOut(50); $("#b4").fadeOut(50); $("#b5").fadeOut(50); $("#b6").fadeOut(50); $("#b8").fadeOut(50); $("#b9").fadeOut(50); $("#b10").fadeOut(50); $("#b11").fadeOut(50); $("#b12").fadeOut(50); $("#b13").fadeOut(50); $("#b14").fadeOut(50); $("#b15").fadeOut(50); $("#b16").fadeOut(50); $("#b17").fadeOut(50); $("#b18").fadeOut(50); $("#b19").fadeOut(50); $("#b20").fadeOut(50); $("#b21").fadeOut(50); $("#b22").fadeOut(50);
         });
         $('#span-item-8').click(function(){
           if ($("#b8").css('display') == 'none' ){ 
@@ -869,7 +969,7 @@
            } else {
              $("#b8").fadeOut(150);
            };          
-            $("#b1").fadeOut(50); $("#b2").fadeOut(50); $("#b3").fadeOut(50); $("#b4").fadeOut(50); $("#b5").fadeOut(50); $("#b6").fadeOut(50); $("#b7").fadeOut(50); $("#b9").fadeOut(50); $("#b10").fadeOut(50); $("#b11").fadeOut(50); $("#b12").fadeOut(50); $("#b13").fadeOut(50); $("#b14").fadeOut(50); $("#b15").fadeOut(50); $("#b16").fadeOut(50); $("#b17").fadeOut(50); $("#b18").fadeOut(50); $("#b19").fadeOut(50); $("#b20").fadeOut(50);
+            $("#b1").fadeOut(50); $("#b2").fadeOut(50); $("#b3").fadeOut(50); $("#b4").fadeOut(50); $("#b5").fadeOut(50); $("#b6").fadeOut(50); $("#b7").fadeOut(50); $("#b9").fadeOut(50); $("#b10").fadeOut(50); $("#b11").fadeOut(50); $("#b12").fadeOut(50); $("#b13").fadeOut(50); $("#b14").fadeOut(50); $("#b15").fadeOut(50); $("#b16").fadeOut(50); $("#b17").fadeOut(50); $("#b18").fadeOut(50); $("#b19").fadeOut(50); $("#b20").fadeOut(50); $("#b21").fadeOut(50); $("#b22").fadeOut(50);
         });
         $('#span-item-9').click(function(){
           if ($("#b9").css('display') == 'none' ){ 
@@ -877,7 +977,7 @@
            } else {
              $("#b9").fadeOut(150);
            };          
-            $("#b1").fadeOut(50); $("#b2").fadeOut(50); $("#b3").fadeOut(50); $("#b4").fadeOut(50); $("#b5").fadeOut(50); $("#b6").fadeOut(50); $("#b7").fadeOut(50); $("#b8").fadeOut(50); $("#b10").fadeOut(50); $("#b11").fadeOut(50); $("#b12").fadeOut(50); $("#b13").fadeOut(50); $("#b14").fadeOut(50); $("#b15").fadeOut(50); $("#b16").fadeOut(50); $("#b17").fadeOut(50); $("#b18").fadeOut(50); $("#b19").fadeOut(50); $("#b20").fadeOut(50);
+            $("#b1").fadeOut(50); $("#b2").fadeOut(50); $("#b3").fadeOut(50); $("#b4").fadeOut(50); $("#b5").fadeOut(50); $("#b6").fadeOut(50); $("#b7").fadeOut(50); $("#b8").fadeOut(50); $("#b10").fadeOut(50); $("#b11").fadeOut(50); $("#b12").fadeOut(50); $("#b13").fadeOut(50); $("#b14").fadeOut(50); $("#b15").fadeOut(50); $("#b16").fadeOut(50); $("#b17").fadeOut(50); $("#b18").fadeOut(50); $("#b19").fadeOut(50); $("#b20").fadeOut(50); $("#b21").fadeOut(50); $("#b22").fadeOut(50);
         });
         $('#span-item-10').click(function(){
           if ($("#b10").css('display') == 'none' ){ 
@@ -885,7 +985,7 @@
            } else {
              $("#b10").fadeOut(150);
            };          
-            $("#b1").fadeOut(50); $("#b2").fadeOut(50); $("#b3").fadeOut(50); $("#b4").fadeOut(50); $("#b5").fadeOut(50); $("#b6").fadeOut(50); $("#b7").fadeOut(50); $("#b8").fadeOut(50); $("#b9").fadeOut(50); $("#b11").fadeOut(50); $("#b12").fadeOut(50); $("#b13").fadeOut(50); $("#b14").fadeOut(50); $("#b15").fadeOut(50); $("#b16").fadeOut(50); $("#b17").fadeOut(50); $("#b18").fadeOut(50); $("#b19").fadeOut(50); $("#b20").fadeOut(50);
+            $("#b1").fadeOut(50); $("#b2").fadeOut(50); $("#b3").fadeOut(50); $("#b4").fadeOut(50); $("#b5").fadeOut(50); $("#b6").fadeOut(50); $("#b7").fadeOut(50); $("#b8").fadeOut(50); $("#b9").fadeOut(50); $("#b11").fadeOut(50); $("#b12").fadeOut(50); $("#b13").fadeOut(50); $("#b14").fadeOut(50); $("#b15").fadeOut(50); $("#b16").fadeOut(50); $("#b17").fadeOut(50); $("#b18").fadeOut(50); $("#b19").fadeOut(50); $("#b20").fadeOut(50); $("#b21").fadeOut(50); $("#b22").fadeOut(50);
         });
         $('#span-item-11').click(function(){
           if ($("#b11").css('display') == 'none' ){ 
@@ -893,7 +993,7 @@
            } else {
              $("#b11").fadeOut(150);
            };          
-            $("#b1").fadeOut(50); $("#b2").fadeOut(50); $("#b3").fadeOut(50); $("#b4").fadeOut(50); $("#b5").fadeOut(50); $("#b6").fadeOut(50); $("#b7").fadeOut(50); $("#b8").fadeOut(50); $("#b9").fadeOut(50); $("#b10").fadeOut(50); $("#b12").fadeOut(50); $("#b13").fadeOut(50); $("#b14").fadeOut(50); $("#b15").fadeOut(50); $("#b16").fadeOut(50); $("#b17").fadeOut(50); $("#b18").fadeOut(50); $("#b19").fadeOut(50); $("#b20").fadeOut(50);
+            $("#b1").fadeOut(50); $("#b2").fadeOut(50); $("#b3").fadeOut(50); $("#b4").fadeOut(50); $("#b5").fadeOut(50); $("#b6").fadeOut(50); $("#b7").fadeOut(50); $("#b8").fadeOut(50); $("#b9").fadeOut(50); $("#b10").fadeOut(50); $("#b12").fadeOut(50); $("#b13").fadeOut(50); $("#b14").fadeOut(50); $("#b15").fadeOut(50); $("#b16").fadeOut(50); $("#b17").fadeOut(50); $("#b18").fadeOut(50); $("#b19").fadeOut(50); $("#b20").fadeOut(50); $("#b21").fadeOut(50); $("#b22").fadeOut(50);
         });
           $('#span-item-12').click(function(){
           if ($("#b12").css('display') == 'none' ){ 
@@ -901,7 +1001,7 @@
            } else {
              $("#b12").fadeOut(150);
            };          
-            $("#b1").fadeOut(50); $("#b2").fadeOut(50); $("#b3").fadeOut(50); $("#b4").fadeOut(50); $("#b5").fadeOut(50); $("#b6").fadeOut(50); $("#b7").fadeOut(50); $("#b8").fadeOut(50); $("#b9").fadeOut(50); $("#b10").fadeOut(50); $("#b11").fadeOut(50); $("#b13").fadeOut(50); $("#b14").fadeOut(50); $("#b15").fadeOut(50); $("#b16").fadeOut(50); $("#b17").fadeOut(50); $("#b18").fadeOut(50); $("#b19").fadeOut(50); $("#b20").fadeOut(50);
+            $("#b1").fadeOut(50); $("#b2").fadeOut(50); $("#b3").fadeOut(50); $("#b4").fadeOut(50); $("#b5").fadeOut(50); $("#b6").fadeOut(50); $("#b7").fadeOut(50); $("#b8").fadeOut(50); $("#b9").fadeOut(50); $("#b10").fadeOut(50); $("#b11").fadeOut(50); $("#b13").fadeOut(50); $("#b14").fadeOut(50); $("#b15").fadeOut(50); $("#b16").fadeOut(50); $("#b17").fadeOut(50); $("#b18").fadeOut(50); $("#b19").fadeOut(50); $("#b20").fadeOut(50); $("#b21").fadeOut(50); $("#b22").fadeOut(50);
         });
           $('#span-item-13').click(function(){
           if ($("#b13").css('display') == 'none' ){ 
@@ -909,7 +1009,7 @@
            } else {
              $("#b13").fadeOut(150);
            };                      
-            $("#b1").fadeOut(50); $("#b2").fadeOut(50); $("#b3").fadeOut(50); $("#b4").fadeOut(50); $("#b5").fadeOut(50); $("#b6").fadeOut(50); $("#b7").fadeOut(50); $("#b8").fadeOut(50); $("#b9").fadeOut(50); $("#b10").fadeOut(50); $("#b11").fadeOut(50); $("#b12").fadeOut(50); $("#b14").fadeOut(50); $("#b15").fadeOut(50); $("#b16").fadeOut(50); $("#b17").fadeOut(50); $("#b18").fadeOut(50); $("#b19").fadeOut(50); $("#b20").fadeOut(50);
+            $("#b1").fadeOut(50); $("#b2").fadeOut(50); $("#b3").fadeOut(50); $("#b4").fadeOut(50); $("#b5").fadeOut(50); $("#b6").fadeOut(50); $("#b7").fadeOut(50); $("#b8").fadeOut(50); $("#b9").fadeOut(50); $("#b10").fadeOut(50); $("#b11").fadeOut(50); $("#b12").fadeOut(50); $("#b14").fadeOut(50); $("#b15").fadeOut(50); $("#b16").fadeOut(50); $("#b17").fadeOut(50); $("#b18").fadeOut(50); $("#b19").fadeOut(50); $("#b20").fadeOut(50); $("#b21").fadeOut(50); $("#b22").fadeOut(50);
         });
           $('#span-item-14').click(function(){
           if ($("#b14").css('display') == 'none' ){ 
@@ -917,7 +1017,7 @@
            } else {
              $("#b14").fadeOut(150);
            };          
-            $("#b1").fadeOut(50); $("#b2").fadeOut(50); $("#b3").fadeOut(50); $("#b4").fadeOut(50); $("#b5").fadeOut(50); $("#b6").fadeOut(50); $("#b7").fadeOut(50); $("#b8").fadeOut(50); $("#b9").fadeOut(50); $("#b10").fadeOut(50); $("#b11").fadeOut(50); $("#b12").fadeOut(50); $("#b13").fadeOut(50); $("#b15").fadeOut(50); $("#b16").fadeOut(50); $("#b17").fadeOut(50); $("#b18").fadeOut(50); $("#b19").fadeOut(50); $("#b20").fadeOut(50);
+            $("#b1").fadeOut(50); $("#b2").fadeOut(50); $("#b3").fadeOut(50); $("#b4").fadeOut(50); $("#b5").fadeOut(50); $("#b6").fadeOut(50); $("#b7").fadeOut(50); $("#b8").fadeOut(50); $("#b9").fadeOut(50); $("#b10").fadeOut(50); $("#b11").fadeOut(50); $("#b12").fadeOut(50); $("#b13").fadeOut(50); $("#b15").fadeOut(50); $("#b16").fadeOut(50); $("#b17").fadeOut(50); $("#b18").fadeOut(50); $("#b19").fadeOut(50); $("#b20").fadeOut(50); $("#b21").fadeOut(50); $("#b22").fadeOut(50);
         });
           $('#span-item-15').click(function(){
           if ($("#b15").css('display') == 'none' ){ 
@@ -925,7 +1025,7 @@
            } else {
              $("#b15").fadeOut(150);
            };          
-            $("#b1").fadeOut(50); $("#b2").fadeOut(50); $("#b3").fadeOut(50); $("#b4").fadeOut(50); $("#b5").fadeOut(50); $("#b6").fadeOut(50); $("#b7").fadeOut(50); $("#b8").fadeOut(50); $("#b9").fadeOut(50); $("#b10").fadeOut(50); $("#b11").fadeOut(50); $("#b12").fadeOut(50); $("#b13").fadeOut(50); $("#b14").fadeOut(50); $("#b16").fadeOut(50); $("#b17").fadeOut(50); $("#b18").fadeOut(50); $("#b19").fadeOut(50); $("#b20").fadeOut(50);
+            $("#b1").fadeOut(50); $("#b2").fadeOut(50); $("#b3").fadeOut(50); $("#b4").fadeOut(50); $("#b5").fadeOut(50); $("#b6").fadeOut(50); $("#b7").fadeOut(50); $("#b8").fadeOut(50); $("#b9").fadeOut(50); $("#b10").fadeOut(50); $("#b11").fadeOut(50); $("#b12").fadeOut(50); $("#b13").fadeOut(50); $("#b14").fadeOut(50); $("#b16").fadeOut(50); $("#b17").fadeOut(50); $("#b18").fadeOut(50); $("#b19").fadeOut(50); $("#b20").fadeOut(50); $("#b21").fadeOut(50); $("#b22").fadeOut(50);
         });
           $('#span-item-16').click(function(){
           if ($("#b16").css('display') == 'none' ){ 
@@ -933,7 +1033,7 @@
            } else {
              $("#b16").fadeOut(150);
            };          
-            $("#b1").fadeOut(50); $("#b2").fadeOut(50); $("#b3").fadeOut(50); $("#b4").fadeOut(50); $("#b5").fadeOut(50); $("#b6").fadeOut(50); $("#b7").fadeOut(50); $("#b8").fadeOut(50); $("#b9").fadeOut(50); $("#b10").fadeOut(50); $("#b11").fadeOut(50); $("#b12").fadeOut(50); $("#b13").fadeOut(50); $("#b14").fadeOut(50); $("#b15").fadeOut(50); $("#b17").fadeOut(50); $("#b18").fadeOut(50); $("#b19").fadeOut(50); $("#b20").fadeOut(50);
+            $("#b1").fadeOut(50); $("#b2").fadeOut(50); $("#b3").fadeOut(50); $("#b4").fadeOut(50); $("#b5").fadeOut(50); $("#b6").fadeOut(50); $("#b7").fadeOut(50); $("#b8").fadeOut(50); $("#b9").fadeOut(50); $("#b10").fadeOut(50); $("#b11").fadeOut(50); $("#b12").fadeOut(50); $("#b13").fadeOut(50); $("#b14").fadeOut(50); $("#b15").fadeOut(50); $("#b17").fadeOut(50); $("#b18").fadeOut(50); $("#b19").fadeOut(50); $("#b20").fadeOut(50); $("#b21").fadeOut(50); $("#b22").fadeOut(50);
         });
           $('#span-item-17').click(function(){
           if ($("#b17").css('display') == 'none' ){ 
@@ -941,7 +1041,7 @@
            } else {
              $("#b17").fadeOut(150);
            };          
-            $("#b1").fadeOut(50); $("#b2").fadeOut(50); $("#b3").fadeOut(50); $("#b4").fadeOut(50); $("#b5").fadeOut(50); $("#b6").fadeOut(50); $("#b7").fadeOut(50); $("#b8").fadeOut(50); $("#b9").fadeOut(50); $("#b10").fadeOut(50); $("#b11").fadeOut(50); $("#b12").fadeOut(50); $("#b13").fadeOut(50); $("#b14").fadeOut(50); $("#b15").fadeOut(50); $("#b16").fadeOut(50); $("#b18").fadeOut(50); $("#b19").fadeOut(50); $("#b20").fadeOut(50);
+            $("#b1").fadeOut(50); $("#b2").fadeOut(50); $("#b3").fadeOut(50); $("#b4").fadeOut(50); $("#b5").fadeOut(50); $("#b6").fadeOut(50); $("#b7").fadeOut(50); $("#b8").fadeOut(50); $("#b9").fadeOut(50); $("#b10").fadeOut(50); $("#b11").fadeOut(50); $("#b12").fadeOut(50); $("#b13").fadeOut(50); $("#b14").fadeOut(50); $("#b15").fadeOut(50); $("#b16").fadeOut(50); $("#b18").fadeOut(50); $("#b19").fadeOut(50); $("#b20").fadeOut(50); $("#b21").fadeOut(50); $("#b22").fadeOut(50);
         });
          $('#span-item-18').click(function(){
           if ($("#b18").css('display') == 'none' ){ 
@@ -949,7 +1049,7 @@
            } else {
              $("#b18").fadeOut(150);
            };          
-            $("#b1").fadeOut(50); $("#b2").fadeOut(50); $("#b3").fadeOut(50); $("#b4").fadeOut(50); $("#b5").fadeOut(50); $("#b6").fadeOut(50); $("#b7").fadeOut(50); $("#b8").fadeOut(50); $("#b9").fadeOut(50); $("#b10").fadeOut(50); $("#b11").fadeOut(50); $("#b12").fadeOut(50); $("#b13").fadeOut(50); $("#b14").fadeOut(50); $("#b15").fadeOut(50); $("#b16").fadeOut(50); $("#b17").fadeIn(50);  $("#b19").fadeOut(50); $("#b20").fadeOut(50);
+            $("#b1").fadeOut(50); $("#b2").fadeOut(50); $("#b3").fadeOut(50); $("#b4").fadeOut(50); $("#b5").fadeOut(50); $("#b6").fadeOut(50); $("#b7").fadeOut(50); $("#b8").fadeOut(50); $("#b9").fadeOut(50); $("#b10").fadeOut(50); $("#b11").fadeOut(50); $("#b12").fadeOut(50); $("#b13").fadeOut(50); $("#b14").fadeOut(50); $("#b15").fadeOut(50); $("#b16").fadeOut(50); $("#b17").fadeIn(50);  $("#b19").fadeOut(50); $("#b20").fadeOut(50); $("#b21").fadeOut(50); $("#b22").fadeOut(50);
         });
          $('#span-item-19').click(function(){
           if ($("#b19").css('display') == 'none' ){ 
@@ -958,7 +1058,7 @@
              $("#b19").fadeOut(150);
            };
            // $("b19").fadeIn(200);
-            $("#b1").fadeOut(50); $("#b2").fadeOut(50); $("#b3").fadeOut(50); $("#b4").fadeOut(50); $("#b5").fadeOut(50); $("#b6").fadeOut(50); $("#b7").fadeOut(50); $("#b8").fadeOut(50); $("#b9").fadeOut(50); $("#b10").fadeOut(50); $("#b11").fadeOut(50); $("#b12").fadeOut(50); $("#b13").fadeOut(50); $("#b14").fadeOut(50); $("#b15").fadeOut(50); $("#b16").fadeOut(50); $("#b17").fadeOut(50); $("#b18").fadeOut(50); $("#b20").fadeOut(50);
+            $("#b1").fadeOut(50); $("#b2").fadeOut(50); $("#b3").fadeOut(50); $("#b4").fadeOut(50); $("#b5").fadeOut(50); $("#b6").fadeOut(50); $("#b7").fadeOut(50); $("#b8").fadeOut(50); $("#b9").fadeOut(50); $("#b10").fadeOut(50); $("#b11").fadeOut(50); $("#b12").fadeOut(50); $("#b13").fadeOut(50); $("#b14").fadeOut(50); $("#b15").fadeOut(50); $("#b16").fadeOut(50); $("#b17").fadeOut(50); $("#b18").fadeOut(50); $("#b20").fadeOut(50); $("#b21").fadeOut(50); $("#b22").fadeOut(50);
         });
            $('#span-item-20').click(function(){
           if ($("#b20").css('display') == 'none' ){ 
@@ -966,7 +1066,23 @@
            } else {
              $("#b20").fadeOut(150);
            };          
-            $("#b1").fadeOut(50); $("#b2").fadeOut(50); $("#b3").fadeOut(50); $("#b4").fadeOut(50); $("#b5").fadeOut(50); $("#b6").fadeOut(50); $("#b7").fadeOut(50); $("#b8").fadeOut(50); $("#b9").fadeOut(50); $("#b10").fadeOut(50); $("#b11").fadeOut(50); $("#b12").fadeOut(50); $("#b13").fadeOut(50); $("#b14").fadeOut(50); $("#b15").fadeOut(50); $("#b16").fadeOut(50); $("#b17").fadeOut(50); $("#b18").fadeOut(50); $("#b19").fadeOut(50); 
+            $("#b1").fadeOut(50); $("#b2").fadeOut(50); $("#b3").fadeOut(50); $("#b4").fadeOut(50); $("#b5").fadeOut(50); $("#b6").fadeOut(50); $("#b7").fadeOut(50); $("#b8").fadeOut(50); $("#b9").fadeOut(50); $("#b10").fadeOut(50); $("#b11").fadeOut(50); $("#b12").fadeOut(50); $("#b13").fadeOut(50); $("#b14").fadeOut(50); $("#b15").fadeOut(50); $("#b16").fadeOut(50); $("#b17").fadeOut(50); $("#b18").fadeOut(50); $("#b19").fadeOut(50); $("#b21").fadeOut(50); $("#b22").fadeOut(50);
+        });
+        $('#span-item-21').click(function(){
+          if ($("#b21").css('display') == 'none' ){ 
+             $("#b21").fadeIn(200);
+           } else {
+             $("#b21").fadeOut(150);
+           };          
+            $("#b1").fadeOut(50); $("#b2").fadeOut(50); $("#b3").fadeOut(50); $("#b4").fadeOut(50); $("#b5").fadeOut(50); $("#b6").fadeOut(50); $("#b7").fadeOut(50); $("#b8").fadeOut(50); $("#b9").fadeOut(50); $("#b10").fadeOut(50); $("#b11").fadeOut(50); $("#b12").fadeOut(50); $("#b13").fadeOut(50); $("#b14").fadeOut(50); $("#b15").fadeOut(50); $("#b16").fadeOut(50); $("#b17").fadeOut(50); $("#b18").fadeOut(50); $("#b19").fadeOut(50); $("#b20").fadeOut(50); $("#b22").fadeOut(50);
+        });
+        $('#span-item-22').click(function(){
+          if ($("#b22").css('display') == 'none' ){ 
+             $("#b22").fadeIn(200);
+           } else {
+             $("#b22").fadeOut(150);
+           };          
+            $("#b1").fadeOut(50); $("#b2").fadeOut(50); $("#b3").fadeOut(50); $("#b4").fadeOut(50); $("#b5").fadeOut(50); $("#b6").fadeOut(50); $("#b7").fadeOut(50); $("#b8").fadeOut(50); $("#b9").fadeOut(50); $("#b10").fadeOut(50); $("#b11").fadeOut(50); $("#b12").fadeOut(50); $("#b13").fadeOut(50); $("#b14").fadeOut(50); $("#b15").fadeOut(50); $("#b16").fadeOut(50); $("#b17").fadeOut(50); $("#b18").fadeOut(50); $("#b19").fadeOut(50); $("#b20").fadeOut(50); $("#b21").fadeOut(50);
         });
   </script> <!-- Content JS HERE !-->
   <style>
