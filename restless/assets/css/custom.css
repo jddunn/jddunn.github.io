@@ -40,7 +40,6 @@
 }
 
 .list-body {
-    margin: 40px;
     z-index: 1000;
     position: relative;
     font-size: 1.2em;
@@ -65,3 +64,31 @@ a:hover {
     color: grey;
 }
 
+.scrollable {
+    overflow: auto;
+}
+
+
+.no-decorate::before {
+    background-color: transparent;
+}
+
+.no-decorate::after {
+    background-color: transparent;
+}
+
+.pushed-down {
+    margin-top: 200px;
+}
+
+.li-done:after {
+    content:'\20\20\20\✓';
+}
+
+.li-done {
+    list-style-type: disc;
+}
+
+li {
+   list-style-type: circle;
+}

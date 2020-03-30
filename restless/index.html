@@ -47,7 +47,7 @@
           <ul class="side-nav">
             <li class="is-active"><span>Home</span></li>
             <li><span>About</span></li>
-            <li><span>Features</span></li>
+            <li><span>Features / Screenshots</span></li>
             <li><span>Documentation</span></li>
             <li><span>Download</span></li>
           </ul>
@@ -130,33 +130,43 @@
           <li class="l-section section">
             <div class="intro">
               <div class="intro--banner intro-text">
-              <h2 class="features-title">Features</h2>
+              <h2 class="features-title">Features / Screenshots</h2>
+                <div class="wrapped scrollable">
                 <!-- <img src="assets/img/introduction-visual.png" alt="Welcome"> -->
-	         <div class="list-body scrollable">
-                <button class="accordion">Library features</button>
+	        <div class="list-body scrollable">
+                <button class="accordion">Main features</button>
                 <div class="panel">
-                 <p>Signature detection, the traditional method of antiviruses which creates the need to connect to online databases for incesstant updating, cannot keep up with the emergence of new malware, or even of known malware that's able to change itself, and while heuirstics-based approaches can combat polymorphic viruses while offering further degre$
-                    <br><br>
-                    The incorporation of machine learning (usually, natural langauge processing techniques although computer vision algorithms can also be applied) in antivirus software empowers them with a level of pattern recognition that previous approaches do not have.</p>
+		  <ul>
+                   <li class="li-done">Malware / benign file classifier using extracted PE metadata (accuracy ~85%)</li>
+                   <li class="li-done">Full system / recursive file scanning</li>
+                   <li>Malware / benign file classifier using extracted strings (including obfuscated) from file contents</li>
+                   <li>Constant watcher over system files (toggleable)</li>
+                   <li>File disinfecter / remover</li>
+                   <li>Configurable scheduler to run scans for folders</li>
+                  </ul>
                 </div>
 
-                <button class="accordion">What algorithms does Restless use?</button>
+                <button class="accordion">Library features</button>
+                    <p>See the library docs <a href="./docs/index.html">here</a>. Eventually, a high-level list of features
+                       will be put here.</p>
                 <div class="panel">
-                <p>Restless's classifications are implemented through a <a href="https://www.cs.cmu.edu/~./hovy/papers/16HLT-hierarchical-attention-networks.pdf" target="_blank">
-                hierarchical attention network</a>, a type of recurrent neural network with an attention layer that can find the most important words and sentences in a document,
-                as it is able to read the data in a bidirectional way to learn context.
-                and make use of the attention layer so it understands which features have more contextual importance than others.
                 </div>
-                <button class="accordion">How well does Restless work?</button>
+                <button class="accordion">Command line interface features</button>
+                   <li class="li-done">Basic interface to run recursive file scans with logging</li>
+                   <li>Advanced terminal interface for full configuration / capabilities, with ASCII visualizations</li>
                 <div class="panel">
                 <p>
-                Originally, Restless's classifier was going to extract strings (including obfuscated strings) from file contents of known malicious and benign files,
-                and then build document representations from that dataset using the hierarchical attention neural network. However, collecting a dataset
-                of executables (from trustworthy sources) is proving to be very time-consuming.
-                extremely promising.
                 </p>
                 </div>
-               </div>
+
+                <button class="accordion">Web app features</button>
+                <div class="panel">
+                 <p>TBA</p>
+                <p>
+                </p>
+                </div>
+
+	      </div>
             </div>
           </li>
           <li class="l-section section">
@@ -194,7 +204,7 @@
   <ul class="outer-nav">
     <li class="is-active">Home</li>
     <li>About</li>
-    <li>Features</li>
+    <li>Features / Screenshots</li>
     <li>Documentation</li>
     <li>Download</li>
   </ul>
