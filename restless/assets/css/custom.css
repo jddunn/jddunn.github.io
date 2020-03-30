@@ -1,5 +1,6 @@
 .logo {
     margin: 20px;
+    margin-top: 35px;
     max-width: 400px;
 }
 
@@ -10,15 +11,11 @@
 }
 
 .features-title {
-    margin-top: 80px;
-    margin-left: 120px;
-    margin-bottom: 80px;
-    text-align: left;
+    margin-top: -80px;
 }
 
 # Accordion
 .accordion {
-  background-color: rgba(76, 175, 80, 0.3);
   color: #444;
   cursor: pointer;
   padding: 18px;
@@ -26,8 +23,8 @@
   border: none;
   text-align: left;
   outline: none;
-  font-size: 15px;
   transition: 0.4s;
+  overflow: scroll;
 }
 
 .active, .accordion:hover {
@@ -35,18 +32,20 @@
 }
 
 .panel {
-  background-color: white;
-  background-color: rgba(76, 175, 80, 0.3);
+  background-color: none;
   max-height: 0;
-  overflow: hidden;
   transition: max-height 0.2s ease-out;
+  font-size: .9em;
+  overflow: hidden;
 }
 
 .list-body {
     margin: 40px;
-    margin-left: 120px;
     z-index: 1000;
     position: relative;
+    font-size: 1.4em;
+    overflow: scroll;
+    max-height: 300px;
 }
 
 .footer-text {
@@ -65,3 +64,6 @@ a, a:visited {
 a:hover {
     color: grey;
 }
+
+
+# Overrides
