@@ -4,7 +4,6 @@ var i;
 for (i = 0; i < acc.length; i++) {
   if (i == 0) {
     // Make first panel active by default
-    alert(acc[i].classList);
     acc[i].classList.toggle("active");
     var panel = acc[i].nextElementSibling;
     if (panel.style.maxHeight) {
