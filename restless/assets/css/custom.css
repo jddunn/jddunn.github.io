@@ -56,3 +56,13 @@
     position: relative;
 }
 
+
+
+.footer-text {
+    position: fixed;
+    color: white;
+    z-index: 100;
+    bottom: 0 !important;
+    right: 0 !important;
+    margin: 5px;
+}
