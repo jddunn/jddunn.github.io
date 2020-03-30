@@ -1,6 +1,6 @@
 .logo {
     margin: 20px;
-    max-width: 350px;
+    max-width: 400px;
 }
 
 .intro-text {
@@ -15,13 +15,6 @@
     margin-bottom: 80px;
     text-align: left;
 }
-
-.features {
-}
-
-.section--is-active {
-}
-
 
 # Accordion
 .accordion {
@@ -56,8 +49,6 @@
     position: relative;
 }
 
-
-
 .footer-text {
     position: fixed;
     color: white;
@@ -67,3 +58,10 @@
     margin: 5px;
 }
 
+a, a:visited {
+    color: inherit;
+}
+
+a:hover {
+    color: grey;
+}
