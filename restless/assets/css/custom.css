@@ -35,7 +35,7 @@
   background-color: none;
   max-height: 0;
   transition: max-height 0.2s ease-out;
-  font-size: .9em;
+  font-size: .80em;
   overflow: hidden;
 }
 
@@ -43,7 +43,7 @@
     margin: 40px;
     z-index: 1000;
     position: relative;
-    font-size: 1.4em;
+    font-size: 1.2em;
     overflow: auto;
     max-height: 300px;
 }
@@ -65,5 +65,3 @@ a:hover {
     color: grey;
 }
 
-
-# Overrides
