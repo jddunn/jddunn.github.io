@@ -1,6 +1,8 @@
 var acc = document.getElementsByClassName("accordion");
 var i;
 
+var ignoreScroll = false;
+
 for (i = 0; i < acc.length; i++) {
   if (i == 0) {
     // Make first panel active by default
@@ -22,3 +24,16 @@ for (i = 0; i < acc.length; i++) {
     }
   });
 }
+
+
+// Scroll for accordion
+$('.scrollable').on('mouseover', function(event) {
+   //  event.preventDefault();
+    ignoreScroll = true;
+    // event.stopPropagation();
+});
+
+$('.scrollable').on('mouseleave', function(event) {
+    ignoreScroll = false;
+});
+

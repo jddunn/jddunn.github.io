@@ -24,7 +24,7 @@
   text-align: left;
   outline: none;
   transition: 0.4s;
-  overflow: scroll;
+  overflow: auto;
 }
 
 .active, .accordion:hover {
@@ -44,7 +44,7 @@
     z-index: 1000;
     position: relative;
     font-size: 1.4em;
-    overflow: scroll;
+    overflow: auto;
     max-height: 300px;
 }
 

@@ -13,6 +13,8 @@ $( document ).ready(function() {
 
       var delta = (e.originalEvent.wheelDelta) ? -e.originalEvent.wheelDelta : e.originalEvent.detail * 20;
 
+      if (ignoreScroll) { return };
+
       if (delta > 50 && canScroll) {
         canScroll = false;
         clearTimeout(scrollController);
