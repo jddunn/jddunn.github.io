@@ -96,6 +96,7 @@
                 </div>
 
                 <button class="accordion">What algorithms does Restless use?</button>
+                <div class="panel">
                 <p>Restless's classifications are implemented through a <a href="https://www.cs.cmu.edu/~./hovy/papers/16HLT-hierarchical-attention-networks.pdf" target="_blank">
                 hierarchical attention network</a>, a type of recurrent neural network with an attention layer that can find the most important words and sentences in a document,
                 as it is able to read the data in a bidirectional way to learn context.
@@ -107,9 +108,7 @@
                 a document that corresponds to the metadata of our file. By extracting PE features like CheckSum, AddressOfEntryPoint, e_minalloc, e_maxalloc, and more, 
                 and considering each feature as a sentence, we can create a HAN classifier that reads executable files and their metadata like documents,
                 and make use of the attention layer so it understands which features have more contextual importance than others.
-                <div class="panel">
                 </div>
-
                 <button class="accordion">How well does Restless work?</button>
                 <div class="panel">
                 <p>
