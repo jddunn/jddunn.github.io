@@ -130,23 +130,33 @@
           <li class="l-section section">
             <div class="intro">
               <div class="intro--banner intro-text">
-                <h2>Always-defending anti-malware software powered by machine learning</h2>
+              <h2 class="features-title">Features</h2>
                 <!-- <img src="assets/img/introduction-visual.png" alt="Welcome"> -->
-              </div>
-              <div class="intro--options">
-                <a href="#0">
-                  <h3>Detects malware based on pattern recognition</h3>
-                  <p>Restless can learn from malicious patterns in metadata and file contents to detect new or changing malware, unlike traditional antiviruses.</p>
-                </a>
-                <a href="#1">
-                  <h3>Always on, always guarding</h3>
-                  <p>Restless works with Watchgod to constantly monitor your system for any file changes and scan for any potential bad agents.</p>
-                </a>
-                <a href="#2">
-                  <h3>Open-source, offline, and scalable</h3>
-                  <p>Restless is open-source and fully-functional offline, and also works with Ray for distributed processing..</p>
-                </a>
-              </div>
+	         <div class="list-body scrollable">
+                <button class="accordion">Library features</button>
+                <div class="panel">
+                 <p>Signature detection, the traditional method of antiviruses which creates the need to connect to online databases for incesstant updating, cannot keep up with the emergence of new malware, or even of known malware that's able to change itself, and while heuirstics-based approaches can combat polymorphic viruses while offering further degre$
+                    <br><br>
+                    The incorporation of machine learning (usually, natural langauge processing techniques although computer vision algorithms can also be applied) in antivirus software empowers them with a level of pattern recognition that previous approaches do not have.</p>
+                </div>
+
+                <button class="accordion">What algorithms does Restless use?</button>
+                <div class="panel">
+                <p>Restless's classifications are implemented through a <a href="https://www.cs.cmu.edu/~./hovy/papers/16HLT-hierarchical-attention-networks.pdf" target="_blank">
+                hierarchical attention network</a>, a type of recurrent neural network with an attention layer that can find the most important words and sentences in a document,
+                as it is able to read the data in a bidirectional way to learn context.
+                and make use of the attention layer so it understands which features have more contextual importance than others.
+                </div>
+                <button class="accordion">How well does Restless work?</button>
+                <div class="panel">
+                <p>
+                Originally, Restless's classifier was going to extract strings (including obfuscated strings) from file contents of known malicious and benign files,
+                and then build document representations from that dataset using the hierarchical attention neural network. However, collecting a dataset
+                of executables (from trustworthy sources) is proving to be very time-consuming.
+                extremely promising.
+                </p>
+                </div>
+               </div>
             </div>
           </li>
           <li class="l-section section">
