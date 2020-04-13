@@ -4,6 +4,12 @@
     max-width: 400px;
 }
 
+body {
+ background-image: url("../img/background-869578.png");
+ background-color: #cccccc;
+}
+
+
 .intro-text {
     max-height: 400px;
     max-width: 800px;

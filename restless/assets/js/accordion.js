@@ -41,7 +41,7 @@ $('.scrollable').scroll(function() {
     console.log($('.scrollable').prop('scrollHeight'));
     console.log($('.scrollable').scrollTop());
     console.log(Math.ceil($('.scrollable').height()));
-    var threshold = 10;
+    var threshold = 15;
 	if ($('.scrollable').scrollTop() <= Math.ceil($('.scrollable').height() - threshold)) {
 		ignoreScroll = false;
     } else {
