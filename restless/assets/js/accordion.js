@@ -28,12 +28,24 @@ for (i = 0; i < acc.length; i++) {
 
 // Scroll for accordion
 $('.scrollable').on('mouseover', function(event) {
-   //  event.preventDefault();
+    event.preventDefault();
     ignoreScroll = true;
-    // event.stopPropagation();
+    event.stopPropagation();
 });
 
 $('.scrollable').on('mouseleave', function(event) {
     ignoreScroll = false;
+});
+
+$('.scrollable').scroll(function() {
+    console.log($('.scrollable').prop('scrollHeight'));
+    console.log($('.scrollable').scrollTop());
+    console.log(Math.ceil($('.scrollable').height()));
+    var threshold = 10;
+	if ($('.scrollable').scrollTop() <= Math.ceil($('.scrollable').height() - threshold)) {
+		ignoreScroll = false;
+    } else {
+		ignoreScroll = true;
+    }
 });
 

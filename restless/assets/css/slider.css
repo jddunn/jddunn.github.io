@@ -1,0 +1,86 @@
+*{padding: 0;margin: 0;}
+a{text-decoration: none;}
+
+#wrapper{
+    position: relative;
+    width: 600px;
+    height: 400px;
+    margin: 50px auto 0;
+    overflow: hidden;
+}
+
+
+/* 阴影 */
+.corlorlayer{
+    position: absolute;
+    z-index: 2;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    box-shadow:
+    3px 0 8px rgba(0,0,0,.1) inset,
+    -3px 0 8px rgba(0,0,0,.1) inset;
+}
+
+
+/* 图片 */
+#list{
+    position: absolute;
+    z-index: 1;
+    width: 4200px;
+    height: 100%;
+}
+#list img{
+    width:600px;
+    float: left;
+}
+
+
+/* 圆点 */
+#button{
+    cursor: default;
+    position: absolute;
+    z-index: 2;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+}
+#button span{
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    background-color: rgba(255,255,255,.9);
+    border-radius: 50%;
+    margin: 0 1px;
+    cursor: pointer;   
+}
+/* 焦点位于圆点时，圆点为红色 */
+#button .on{background: orangered;}
+
+
+/* 箭头 */
+.arrow{
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 2;
+    width: 40px;
+    height: 40px;
+    background: rgba(0,0,0,.4);
+    color: white;
+    font-size: 35px;
+    text-align: center;
+    line-height: 35px;
+    cursor: pointer;
+    transition: .2s;
+    /* 默认两个箭头隐藏 */
+    display:none;
+}
+/* 鼠标滑动箭头上时，背景色加深 */
+.arrow:hover{background: rgba(0,0,0,.7);}
+/* 鼠标滑动到轮播区域时，两个箭头显示 */
+#wrapper:hover .arrow{display: block;}
+/* 设置两个箭头位置 */
+#prev{left: 30px;}
+#next{right: 30px;}
