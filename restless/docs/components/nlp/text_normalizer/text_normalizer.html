@@ -52,16 +52,28 @@ class TextNormalizer:
             &#34;R&#34;: wordnet.ADV,
         }
 
-    def tokenize_text(self, text: str) -&gt; list:
+    def tokenize_text(self, text: str, token_level=&#34;word&#34;) -&gt; list:
         &#34;&#34;&#34;
-        Tokenizes text.
+        Tokenizes text into a list of sequences. By default
+        does word level tokenization.
 
         Args:
           text (str): Text to tokenize.
+          token_level (str, optional): Level of tokenization. Defaults
+            word tokens.
         Returns:
           list: List of tokens.
         &#34;&#34;&#34;
-        return [w for s in sent_tokenize(text) for w in word_tokenize(s)]
+        if token_level is &#34;sent&#34;:
+            return [s for s in sent_tokenize(text)]
+        elif token_level is &#34;word&#34;:
+            return [w for s in sent_tokenize(text) for w in word_tokenize(s)]
+        elif token_level is &#34;char&#34;:
+            return [
+                c for c in [w for s in sent_tokenize(text) for w in word_tokenize(s)]
+            ]
+        else:
+            return [w for s in sent_tokenize(text) for w in word_tokenize(s)]
 
     def lemmatize_text(self, text: str, lemmatizer: object = default_lemmatizer) -&gt; str:
         &#34;&#34;&#34;
@@ -150,6 +162,26 @@ class TextNormalizer:
         tag = nltk.pos_tag([word])[0][1][0].upper()
         return wordnet_tags.get(tag, wordnet.NOUN)  # noun by default
 
+    def normalize_text_defaults(self, text: str) -&gt; str:
+        &#34;&#34;&#34;
+        Does simple normalization on text (lowercasing, stripping puncuation
+        and trailing whitespaces).
+
+        Args:
+           text (str): Text to normalize.
+        Returns:
+           str: Lowercased text with no punctuation and trailing whitespaces.
+        &#34;&#34;&#34;
+        normalized_text = self.normalize_text(
+            text,
+            lowercase=True,
+            strip_punct=True,
+            # remove_stopwords=True,
+            lemmatize_text=True,
+            # stem_text=True
+        )
+        return normalized_text
+
     def normalize_text(
         self,
         text: str,
@@ -167,7 +199,7 @@ class TextNormalizer:
           text (str): Text to normalize.
           lowercase (bool): Lowercase text (Defaults to False).
           strip_punct (bool): Strip punctuation (Defaults to False).
-          strip_whitespace (bool): Strip whitespace (Defaults to False).
+          strip_whitespace (bool): Strips trailing whitespaces (Defaults to False).
           remove_stopworsd (bool): Remove stopwords (Defaults to False).
           lemmatize_text (bool): Lemmatize text (Defaults to False).
           stem_text (bool): Stem text (Defaults to False).
@@ -224,16 +256,28 @@ class TextNormalizer:
             &#34;R&#34;: wordnet.ADV,
         }
 
-    def tokenize_text(self, text: str) -&gt; list:
+    def tokenize_text(self, text: str, token_level=&#34;word&#34;) -&gt; list:
         &#34;&#34;&#34;
-        Tokenizes text.
+        Tokenizes text into a list of sequences. By default
+        does word level tokenization.
 
         Args:
           text (str): Text to tokenize.
+          token_level (str, optional): Level of tokenization. Defaults
+            word tokens.
         Returns:
           list: List of tokens.
         &#34;&#34;&#34;
-        return [w for s in sent_tokenize(text) for w in word_tokenize(s)]
+        if token_level is &#34;sent&#34;:
+            return [s for s in sent_tokenize(text)]
+        elif token_level is &#34;word&#34;:
+            return [w for s in sent_tokenize(text) for w in word_tokenize(s)]
+        elif token_level is &#34;char&#34;:
+            return [
+                c for c in [w for s in sent_tokenize(text) for w in word_tokenize(s)]
+            ]
+        else:
+            return [w for s in sent_tokenize(text) for w in word_tokenize(s)]
 
     def lemmatize_text(self, text: str, lemmatizer: object = default_lemmatizer) -&gt; str:
         &#34;&#34;&#34;
@@ -322,6 +366,26 @@ class TextNormalizer:
         tag = nltk.pos_tag([word])[0][1][0].upper()
         return wordnet_tags.get(tag, wordnet.NOUN)  # noun by default
 
+    def normalize_text_defaults(self, text: str) -&gt; str:
+        &#34;&#34;&#34;
+        Does simple normalization on text (lowercasing, stripping puncuation
+        and trailing whitespaces).
+
+        Args:
+           text (str): Text to normalize.
+        Returns:
+           str: Lowercased text with no punctuation and trailing whitespaces.
+        &#34;&#34;&#34;
+        normalized_text = self.normalize_text(
+            text,
+            lowercase=True,
+            strip_punct=True,
+            # remove_stopwords=True,
+            lemmatize_text=True,
+            # stem_text=True
+        )
+        return normalized_text
+
     def normalize_text(
         self,
         text: str,
@@ -339,7 +403,7 @@ class TextNormalizer:
           text (str): Text to normalize.
           lowercase (bool): Lowercase text (Defaults to False).
           strip_punct (bool): Strip punctuation (Defaults to False).
-          strip_whitespace (bool): Strip whitespace (Defaults to False).
+          strip_whitespace (bool): Strips trailing whitespaces (Defaults to False).
           remove_stopworsd (bool): Remove stopwords (Defaults to False).
           lemmatize_text (bool): Lemmatize text (Defaults to False).
           stem_text (bool): Stem text (Defaults to False).
@@ -454,7 +518,7 @@ class TextNormalizer:
 <dt><strong><code>strip_punct</code></strong> :&ensp;<code>bool</code></dt>
 <dd>Strip punctuation (Defaults to False).</dd>
 <dt><strong><code>strip_whitespace</code></strong> :&ensp;<code>bool</code></dt>
-<dd>Strip whitespace (Defaults to False).</dd>
+<dd>Strips trailing whitespaces (Defaults to False).</dd>
 <dt><strong><code>remove_stopworsd</code></strong> :&ensp;<code>bool</code></dt>
 <dd>Remove stopwords (Defaults to False).</dd>
 <dt><strong><code>lemmatize_text</code></strong> :&ensp;<code>bool</code></dt>
@@ -488,7 +552,7 @@ class TextNormalizer:
       text (str): Text to normalize.
       lowercase (bool): Lowercase text (Defaults to False).
       strip_punct (bool): Strip punctuation (Defaults to False).
-      strip_whitespace (bool): Strip whitespace (Defaults to False).
+      strip_whitespace (bool): Strips trailing whitespaces (Defaults to False).
       remove_stopworsd (bool): Remove stopwords (Defaults to False).
       lemmatize_text (bool): Lemmatize text (Defaults to False).
       stem_text (bool): Stem text (Defaults to False).
@@ -511,6 +575,47 @@ class TextNormalizer:
         normalized_text = self.stem_text(normalized_text)
     if lemmatize_text:
         normalized_text = self.lemmatize_text(normalized_text)
+    return normalized_text</code></pre>
+</details>
+</dd>
+<dt id="restless.components.nlp.text_normalizer.text_normalizer.TextNormalizer.normalize_text_defaults"><code class="name flex">
+<span>def <span class="ident">normalize_text_defaults</span></span>(<span>self, text)</span>
+</code></dt>
+<dd>
+<section class="desc"><p>Does simple normalization on text (lowercasing, stripping puncuation
+and trailing whitespaces).</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>text</code></strong> :&ensp;<code>str</code></dt>
+<dd>Text to normalize.</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><strong><code>str</code></strong></dt>
+<dd>Lowercased text with no punctuation and trailing whitespaces.</dd>
+</dl></section>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def normalize_text_defaults(self, text: str) -&gt; str:
+    &#34;&#34;&#34;
+    Does simple normalization on text (lowercasing, stripping puncuation
+    and trailing whitespaces).
+
+    Args:
+       text (str): Text to normalize.
+    Returns:
+       str: Lowercased text with no punctuation and trailing whitespaces.
+    &#34;&#34;&#34;
+    normalized_text = self.normalize_text(
+        text,
+        lowercase=True,
+        strip_punct=True,
+        # remove_stopwords=True,
+        lemmatize_text=True,
+        # stem_text=True
+    )
     return normalized_text</code></pre>
 </details>
 </dd>
@@ -647,14 +752,18 @@ class TextNormalizer:
 </details>
 </dd>
 <dt id="restless.components.nlp.text_normalizer.text_normalizer.TextNormalizer.tokenize_text"><code class="name flex">
-<span>def <span class="ident">tokenize_text</span></span>(<span>self, text)</span>
+<span>def <span class="ident">tokenize_text</span></span>(<span>self, text, token_level='word')</span>
 </code></dt>
 <dd>
-<section class="desc"><p>Tokenizes text.</p>
+<section class="desc"><p>Tokenizes text into a list of sequences. By default
+does word level tokenization.</p>
 <h2 id="args">Args</h2>
 <dl>
 <dt><strong><code>text</code></strong> :&ensp;<code>str</code></dt>
 <dd>Text to tokenize.</dd>
+<dt><strong><code>token_level</code></strong> :&ensp;<code>str</code>, optional</dt>
+<dd>Level of tokenization. Defaults
+word tokens.</dd>
 </dl>
 <h2 id="returns">Returns</h2>
 <dl>
@@ -665,16 +774,28 @@ class TextNormalizer:
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def tokenize_text(self, text: str) -&gt; list:
+<pre><code class="python">def tokenize_text(self, text: str, token_level=&#34;word&#34;) -&gt; list:
     &#34;&#34;&#34;
-    Tokenizes text.
+    Tokenizes text into a list of sequences. By default
+    does word level tokenization.
 
     Args:
       text (str): Text to tokenize.
+      token_level (str, optional): Level of tokenization. Defaults
+        word tokens.
     Returns:
       list: List of tokens.
     &#34;&#34;&#34;
-    return [w for s in sent_tokenize(text) for w in word_tokenize(s)]</code></pre>
+    if token_level is &#34;sent&#34;:
+        return [s for s in sent_tokenize(text)]
+    elif token_level is &#34;word&#34;:
+        return [w for s in sent_tokenize(text) for w in word_tokenize(s)]
+    elif token_level is &#34;char&#34;:
+        return [
+            c for c in [w for s in sent_tokenize(text) for w in word_tokenize(s)]
+        ]
+    else:
+        return [w for s in sent_tokenize(text) for w in word_tokenize(s)]</code></pre>
 </details>
 </dd>
 </dl>
@@ -697,10 +818,11 @@ class TextNormalizer:
 <ul>
 <li>
 <h4><code><a title="restless.components.nlp.text_normalizer.text_normalizer.TextNormalizer" href="#restless.components.nlp.text_normalizer.text_normalizer.TextNormalizer">TextNormalizer</a></code></h4>
-<ul class="two-column">
+<ul class="">
 <li><code><a title="restless.components.nlp.text_normalizer.text_normalizer.TextNormalizer.lemmatize_text" href="#restless.components.nlp.text_normalizer.text_normalizer.TextNormalizer.lemmatize_text">lemmatize_text</a></code></li>
 <li><code><a title="restless.components.nlp.text_normalizer.text_normalizer.TextNormalizer.lowercase_text" href="#restless.components.nlp.text_normalizer.text_normalizer.TextNormalizer.lowercase_text">lowercase_text</a></code></li>
 <li><code><a title="restless.components.nlp.text_normalizer.text_normalizer.TextNormalizer.normalize_text" href="#restless.components.nlp.text_normalizer.text_normalizer.TextNormalizer.normalize_text">normalize_text</a></code></li>
+<li><code><a title="restless.components.nlp.text_normalizer.text_normalizer.TextNormalizer.normalize_text_defaults" href="#restless.components.nlp.text_normalizer.text_normalizer.TextNormalizer.normalize_text_defaults">normalize_text_defaults</a></code></li>
 <li><code><a title="restless.components.nlp.text_normalizer.text_normalizer.TextNormalizer.remove_stopwords" href="#restless.components.nlp.text_normalizer.text_normalizer.TextNormalizer.remove_stopwords">remove_stopwords</a></code></li>
 <li><code><a title="restless.components.nlp.text_normalizer.text_normalizer.TextNormalizer.stem_text" href="#restless.components.nlp.text_normalizer.text_normalizer.TextNormalizer.stem_text">stem_text</a></code></li>
 <li><code><a title="restless.components.nlp.text_normalizer.text_normalizer.TextNormalizer.strip_punctuation" href="#restless.components.nlp.text_normalizer.text_normalizer.TextNormalizer.strip_punctuation">strip_punctuation</a></code></li>

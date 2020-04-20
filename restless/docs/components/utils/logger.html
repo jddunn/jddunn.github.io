@@ -25,33 +25,204 @@
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">import datetime
-import logging
+import logging as logging
+import sys
+
+# Format logs with extended metadata like functions, files, lineno
+extended_log_data = False
+
+import time
 
 
 class Logger:
     &#34;&#34;&#34;
-    Logger component. Private methods will be called by higher-level `Utils`.
+    Logging with colors.
     &#34;&#34;&#34;
 
-    def __init__(self):
-        self.logging = logging
-        self.logging.basicConfig(
-            format=&#34;%(asctime)s %(levelname)-4s %(message)s&#34;,
-            level=logging.INFO,
-            datefmt=&#34;%Y-%m-%d %H:%M:%S&#34;,
-        )
-        pass
+    level = &#34;INFO&#34;
 
-    def _print_log(self, data: dict):
-        level = data.get(&#34;level&#34;)
-        if level is None:
-            level = &#34;INFO&#34;
-        if level is &#34;INFO&#34;:
-            self.logging.info(data[&#34;message&#34;])
+    def __init__(self):
+        # Add success level
+        logging.SUCCESS = 25  # between WARNING and INFO
+        logging.addLevelName(logging.SUCCESS, &#34;SUCCESS&#34;)
+        self.logger = logging.getLogger(__name__)
+        self.logger.setLevel(self.level)
+        self.ch = logging.StreamHandler()  # console handler
+        # Adjust formatting
+        self.ch.setFormatter(CustomFormatter())
+        self.logger.addHandler(self.ch)
+        # Bind success method attribute to logger
+        setattr(
+            self.logger,
+            &#34;success&#34;,
+            lambda message, *args: self.logger._log(logging.SUCCESS, message, args),
+        )
+        self.colored = colored  # Bind method to color text
+        self.same_line = same_line
         return
 
-    def _write_log(self, fp: str, data: dict):
-        return</code></pre>
+    def flush(self, newline=False) -&gt; None:
+        CURSOR_UP_ONE = &#34;\033[K&#34;
+        ERASE_LINE = &#34;\x1b[2K&#34;
+        sys.stdout.write(CURSOR_UP_ONE)
+        sys.stdout.write(ERASE_LINE + &#34;\r&#34;)
+        if newline:
+            sys.stdout.write(ERASE_LINE + &#34;\n&#34;)
+        return
+
+    def change_logging_config(self, config: dict) -&gt; None:
+        &#34;&#34;&#34;Change logging configuration (uses Python&#39;s logging module).&#34;&#34;&#34;
+        logging.basicConfig(config)
+        return
+
+    def change_logging_level(self, level: str) -&gt; None:
+        &#34;&#34;&#34;Changes level of logger and console handler.&#34;&#34;&#34;
+        self.level = level
+        if level == &#34;debug&#34;:
+            self.logger.setLevel(logging.DEBUG)
+            self.ch.setLevel(logging.DEBUG)
+        elif level == &#34;info&#34;:
+            self.logger.setLevel(logging.INFO)
+            self.ch.setLevel(logging.INFO)
+        elif level == &#34;warning&#34;:
+            self.logger.setLevel(logging.WARNING)
+            self.ch.setLevel(logging.WARNING)
+        elif level == &#34;error&#34;:
+            self.logger.setLevel(logging.ERROR)
+            self.ch.setLevel(logging.ERROR)
+        elif level == &#34;criticial&#34;:
+            self.logger.setLevel(logging.CRITICAL)
+            self.ch.setLevel(logging.CRITICAL)
+        else:
+            raise ValueError(&#34;Invalid logging level to set!&#34;)
+
+
+class ANSIColor:
+    &#34;&#34;&#34;
+    Utility to return ansi colored text.
+    Modified from
+    https://gist.github.com/hit9/5635505
+    with full styles and multi-style functionality.
+    &#34;&#34;&#34;
+
+    colors = {
+        &#34;reset&#34;: 0,
+        &#34;bold&#34;: 1,
+        &#34;faint&#34;: 2,
+        &#34;italic&#34;: 3,
+        &#34;underline&#34;: 4,
+        &#34;framed&#34;: 51,
+        &#34;encircled&#34;: 52,
+        &#34;overlined&#34;: 53,
+        &#34;slow_blink&#34;: 5,
+        &#34;rapid_blink&#34;: 6,
+        &#34;reversed&#34;: 7,
+        &#34;conceal&#34;: 8,
+        &#34;black&#34;: 30,
+        &#34;red&#34;: 31,
+        &#34;green&#34;: 32,
+        &#34;yellow&#34;: 33,
+        &#34;blue&#34;: 34,
+        &#34;magenta&#34;: 35,
+        &#34;cyan&#34;: 36,
+        &#34;gray&#34;: 37,
+        &#34;d_gray&#34;: 90,
+        &#34;b_red&#34;: 91,
+        &#34;b_green&#34;: 92,
+        &#34;b_yellow&#34;: 93,
+        &#34;b_blue&#34;: 94,
+        &#34;b_magenta&#34;: 95,
+        &#34;b_cyan&#34;: 96,
+        &#34;white&#34;: 97,
+        &#34;bg_default&#34;: 49,
+        &#34;bg_black&#34;: 40,
+        &#34;bg_red&#34;: 41,
+        &#34;bg_green&#34;: 42,
+        &#34;bg_yellow&#34;: 43,
+        &#34;bg_blue&#34;: 44,
+        &#34;bg_magenta&#34;: 45,
+        &#34;bg_cyan&#34;: 46,
+        &#34;bg_gray&#34;: 47,
+        &#34;bg_d_gray&#34;: 100,
+        &#34;bg_l_red&#34;: 101,
+        &#34;bg_l_green&#34;: 102,
+        &#34;bg_l_yellow&#34;: 103,
+        &#34;bg_l_blue&#34;: 104,
+        &#34;bg_l_magenta&#34;: 105,
+        &#34;bg_l_cyan&#34;: 106,
+        &#34;bg_white&#34;: 107,
+    }
+
+    prefix = &#34;\033[&#34;
+    suffix = &#34;\033[0m&#34;
+
+    def same_line(self, text: str):
+        text = &#34;\033[K&#34; + &#34;\033[F&#34; + &#34;\033[K&#34; + text
+        return text
+
+    def colored(self, text: str, color=None):
+        if isinstance(color, list):
+            # Apply multiple styles
+            result = &#34;&#34;
+            for _color in color:
+                clr = self.colors[_color]
+                result += (self.prefix + &#34;%d&#34; + &#34;m&#34;) % clr
+            result += (&#34;%s&#34;) % text
+            result += self.suffix
+            return result
+        else:
+            if color not in self.colors:
+                color = &#34;white&#34;
+            clr = self.colors[color]
+            return (self.prefix + &#34;%dm%s&#34; + self.suffix) % (clr, text)
+
+
+colored = ANSIColor().colored
+same_line = ANSIColor().same_line
+
+
+class CustomFormatter(logging.Formatter):
+    &#34;&#34;&#34;
+    Logging Formatter to add colors and count warning / errors
+    https://stackoverflow.com/questions/384076/how-can-i-color-python-logging-output
+    &#34;&#34;&#34;
+
+    mapping = {
+        &#34;INFO&#34;: &#34;cyan&#34;,
+        &#34;WARNING&#34;: &#34;yellow&#34;,
+        &#34;ERROR&#34;: &#34;red&#34;,
+        &#34;CRITICAL&#34;: &#34;bg_red&#34;,
+        &#34;DEBUG&#34;: &#34;bg_gray&#34;,
+        &#34;SUCCESS&#34;: &#34;bg_green&#34;,
+    }
+
+    def format(self, record):
+        message = record.getMessage()
+        clr = self.mapping.get(record.levelname)
+        if extended_log_data == True:
+            # Format log with extended props for debugging
+            log_fmt = (
+                colored(&#34;%(asctime)-4s&#34;, &#34;gray&#34;)
+                + &#34;\t&#34;
+                + colored(&#34;(%(levelname)-4s)&#34;, clr)
+                + &#34;\t&#34;
+                + colored(&#34;%(message)-4s&#34;, &#34;white&#34;)
+                + &#34;\t&#34;
+                + colored(&#34;(%(filename)s : &#34;, &#34;d_gray&#34;)
+                + colored(&#34;line %(lineno)s in function &#34;, &#34;d_gray&#34;)
+                + colored(&#34;%(funcName)s)&#34;, &#34;d_gray&#34;)
+            )
+            formatter = logging.Formatter(log_fmt)
+        else:
+            log_fmt = (
+                colored(&#34;%(asctime)-4s&#34;, self.mapping.get(&#34;gray&#34;))
+                + &#34;\t&#34;
+                + colored(&#34;(%(levelname)-4s)&#34;, clr)
+                + &#34;\t&#34;
+                + colored(&#34;%(message)s&#34;, self.mapping.get(&#34;white&#34;))
+            )
+            formatter = logging.Formatter(log_fmt, &#34;%Y-%m-%d %H:%M:%S&#34;)
+        return formatter.format(record)</code></pre>
 </details>
 </section>
 <section>
@@ -59,44 +230,476 @@ class Logger:
 <section>
 </section>
 <section>
+<h2 class="section-title" id="header-functions">Functions</h2>
+<dl>
+<dt id="restless.components.utils.logger.colored"><code class="name flex">
+<span>def <span class="ident">colored</span></span>(<span>text, color=None)</span>
+</code></dt>
+<dd>
+<section class="desc"></section>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def colored(self, text: str, color=None):
+    if isinstance(color, list):
+        # Apply multiple styles
+        result = &#34;&#34;
+        for _color in color:
+            clr = self.colors[_color]
+            result += (self.prefix + &#34;%d&#34; + &#34;m&#34;) % clr
+        result += (&#34;%s&#34;) % text
+        result += self.suffix
+        return result
+    else:
+        if color not in self.colors:
+            color = &#34;white&#34;
+        clr = self.colors[color]
+        return (self.prefix + &#34;%dm%s&#34; + self.suffix) % (clr, text)</code></pre>
+</details>
+</dd>
+<dt id="restless.components.utils.logger.same_line"><code class="name flex">
+<span>def <span class="ident">same_line</span></span>(<span>text)</span>
+</code></dt>
+<dd>
+<section class="desc"></section>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def same_line(self, text: str):
+    text = &#34;\033[K&#34; + &#34;\033[F&#34; + &#34;\033[K&#34; + text
+    return text</code></pre>
+</details>
+</dd>
+</dl>
 </section>
 <section>
 <h2 class="section-title" id="header-classes">Classes</h2>
 <dl>
+<dt id="restless.components.utils.logger.ANSIColor"><code class="flex name class">
+<span>class <span class="ident">ANSIColor</span></span>
+</code></dt>
+<dd>
+<section class="desc"><p>Utility to return ansi colored text.
+Modified from
+<a href="https://gist.github.com/hit9/5635505">https://gist.github.com/hit9/5635505</a>
+with full styles and multi-style functionality.</p></section>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class ANSIColor:
+    &#34;&#34;&#34;
+    Utility to return ansi colored text.
+    Modified from
+    https://gist.github.com/hit9/5635505
+    with full styles and multi-style functionality.
+    &#34;&#34;&#34;
+
+    colors = {
+        &#34;reset&#34;: 0,
+        &#34;bold&#34;: 1,
+        &#34;faint&#34;: 2,
+        &#34;italic&#34;: 3,
+        &#34;underline&#34;: 4,
+        &#34;framed&#34;: 51,
+        &#34;encircled&#34;: 52,
+        &#34;overlined&#34;: 53,
+        &#34;slow_blink&#34;: 5,
+        &#34;rapid_blink&#34;: 6,
+        &#34;reversed&#34;: 7,
+        &#34;conceal&#34;: 8,
+        &#34;black&#34;: 30,
+        &#34;red&#34;: 31,
+        &#34;green&#34;: 32,
+        &#34;yellow&#34;: 33,
+        &#34;blue&#34;: 34,
+        &#34;magenta&#34;: 35,
+        &#34;cyan&#34;: 36,
+        &#34;gray&#34;: 37,
+        &#34;d_gray&#34;: 90,
+        &#34;b_red&#34;: 91,
+        &#34;b_green&#34;: 92,
+        &#34;b_yellow&#34;: 93,
+        &#34;b_blue&#34;: 94,
+        &#34;b_magenta&#34;: 95,
+        &#34;b_cyan&#34;: 96,
+        &#34;white&#34;: 97,
+        &#34;bg_default&#34;: 49,
+        &#34;bg_black&#34;: 40,
+        &#34;bg_red&#34;: 41,
+        &#34;bg_green&#34;: 42,
+        &#34;bg_yellow&#34;: 43,
+        &#34;bg_blue&#34;: 44,
+        &#34;bg_magenta&#34;: 45,
+        &#34;bg_cyan&#34;: 46,
+        &#34;bg_gray&#34;: 47,
+        &#34;bg_d_gray&#34;: 100,
+        &#34;bg_l_red&#34;: 101,
+        &#34;bg_l_green&#34;: 102,
+        &#34;bg_l_yellow&#34;: 103,
+        &#34;bg_l_blue&#34;: 104,
+        &#34;bg_l_magenta&#34;: 105,
+        &#34;bg_l_cyan&#34;: 106,
+        &#34;bg_white&#34;: 107,
+    }
+
+    prefix = &#34;\033[&#34;
+    suffix = &#34;\033[0m&#34;
+
+    def same_line(self, text: str):
+        text = &#34;\033[K&#34; + &#34;\033[F&#34; + &#34;\033[K&#34; + text
+        return text
+
+    def colored(self, text: str, color=None):
+        if isinstance(color, list):
+            # Apply multiple styles
+            result = &#34;&#34;
+            for _color in color:
+                clr = self.colors[_color]
+                result += (self.prefix + &#34;%d&#34; + &#34;m&#34;) % clr
+            result += (&#34;%s&#34;) % text
+            result += self.suffix
+            return result
+        else:
+            if color not in self.colors:
+                color = &#34;white&#34;
+            clr = self.colors[color]
+            return (self.prefix + &#34;%dm%s&#34; + self.suffix) % (clr, text)</code></pre>
+</details>
+<h3>Class variables</h3>
+<dl>
+<dt id="restless.components.utils.logger.ANSIColor.colors"><code class="name">var <span class="ident">colors</span></code></dt>
+<dd>
+<section class="desc"></section>
+</dd>
+<dt id="restless.components.utils.logger.ANSIColor.prefix"><code class="name">var <span class="ident">prefix</span></code></dt>
+<dd>
+<section class="desc"></section>
+</dd>
+<dt id="restless.components.utils.logger.ANSIColor.suffix"><code class="name">var <span class="ident">suffix</span></code></dt>
+<dd>
+<section class="desc"></section>
+</dd>
+</dl>
+<h3>Methods</h3>
+<dl>
+<dt id="restless.components.utils.logger.ANSIColor.colored"><code class="name flex">
+<span>def <span class="ident">colored</span></span>(<span>self, text, color=None)</span>
+</code></dt>
+<dd>
+<section class="desc"></section>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def colored(self, text: str, color=None):
+    if isinstance(color, list):
+        # Apply multiple styles
+        result = &#34;&#34;
+        for _color in color:
+            clr = self.colors[_color]
+            result += (self.prefix + &#34;%d&#34; + &#34;m&#34;) % clr
+        result += (&#34;%s&#34;) % text
+        result += self.suffix
+        return result
+    else:
+        if color not in self.colors:
+            color = &#34;white&#34;
+        clr = self.colors[color]
+        return (self.prefix + &#34;%dm%s&#34; + self.suffix) % (clr, text)</code></pre>
+</details>
+</dd>
+<dt id="restless.components.utils.logger.ANSIColor.same_line"><code class="name flex">
+<span>def <span class="ident">same_line</span></span>(<span>self, text)</span>
+</code></dt>
+<dd>
+<section class="desc"></section>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def same_line(self, text: str):
+    text = &#34;\033[K&#34; + &#34;\033[F&#34; + &#34;\033[K&#34; + text
+    return text</code></pre>
+</details>
+</dd>
+</dl>
+</dd>
+<dt id="restless.components.utils.logger.CustomFormatter"><code class="flex name class">
+<span>class <span class="ident">CustomFormatter</span></span>
+<span>(</span><span>fmt=None, datefmt=None, style='%')</span>
+</code></dt>
+<dd>
+<section class="desc"><p>Logging Formatter to add colors and count warning / errors
+<a href="https://stackoverflow.com/questions/384076/how-can-i-color-python-logging-output">https://stackoverflow.com/questions/384076/how-can-i-color-python-logging-output</a></p>
+<p>Initialize the formatter with specified format strings.</p>
+<p>Initialize the formatter either with the specified format string, or a
+default as described above. Allow for specialized date formatting with
+the optional datefmt argument. If datefmt is omitted, you get an
+ISO8601-like (or RFC 3339-like) format.</p>
+<p>Use a style parameter of '%', '{' or '$' to specify that you want to
+use one of %-formatting, :meth:<code>str.format</code> (<code>{}</code>) formatting or
+:class:<code>string.Template</code> formatting in your format string.</p>
+<div class="admonition versionchanged">
+<p class="admonition-title">Changed in version:&ensp;3.2</p>
+<p>Added the <code>style</code> parameter.</p>
+</div></section>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class CustomFormatter(logging.Formatter):
+    &#34;&#34;&#34;
+    Logging Formatter to add colors and count warning / errors
+    https://stackoverflow.com/questions/384076/how-can-i-color-python-logging-output
+    &#34;&#34;&#34;
+
+    mapping = {
+        &#34;INFO&#34;: &#34;cyan&#34;,
+        &#34;WARNING&#34;: &#34;yellow&#34;,
+        &#34;ERROR&#34;: &#34;red&#34;,
+        &#34;CRITICAL&#34;: &#34;bg_red&#34;,
+        &#34;DEBUG&#34;: &#34;bg_gray&#34;,
+        &#34;SUCCESS&#34;: &#34;bg_green&#34;,
+    }
+
+    def format(self, record):
+        message = record.getMessage()
+        clr = self.mapping.get(record.levelname)
+        if extended_log_data == True:
+            # Format log with extended props for debugging
+            log_fmt = (
+                colored(&#34;%(asctime)-4s&#34;, &#34;gray&#34;)
+                + &#34;\t&#34;
+                + colored(&#34;(%(levelname)-4s)&#34;, clr)
+                + &#34;\t&#34;
+                + colored(&#34;%(message)-4s&#34;, &#34;white&#34;)
+                + &#34;\t&#34;
+                + colored(&#34;(%(filename)s : &#34;, &#34;d_gray&#34;)
+                + colored(&#34;line %(lineno)s in function &#34;, &#34;d_gray&#34;)
+                + colored(&#34;%(funcName)s)&#34;, &#34;d_gray&#34;)
+            )
+            formatter = logging.Formatter(log_fmt)
+        else:
+            log_fmt = (
+                colored(&#34;%(asctime)-4s&#34;, self.mapping.get(&#34;gray&#34;))
+                + &#34;\t&#34;
+                + colored(&#34;(%(levelname)-4s)&#34;, clr)
+                + &#34;\t&#34;
+                + colored(&#34;%(message)s&#34;, self.mapping.get(&#34;white&#34;))
+            )
+            formatter = logging.Formatter(log_fmt, &#34;%Y-%m-%d %H:%M:%S&#34;)
+        return formatter.format(record)</code></pre>
+</details>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>logging.Formatter</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="restless.components.utils.logger.CustomFormatter.mapping"><code class="name">var <span class="ident">mapping</span></code></dt>
+<dd>
+<section class="desc"></section>
+</dd>
+</dl>
+<h3>Methods</h3>
+<dl>
+<dt id="restless.components.utils.logger.CustomFormatter.format"><code class="name flex">
+<span>def <span class="ident">format</span></span>(<span>self, record)</span>
+</code></dt>
+<dd>
+<section class="desc"><p>Format the specified record as text.</p>
+<p>The record's attribute dictionary is used as the operand to a
+string formatting operation which yields the returned string.
+Before formatting the dictionary, a couple of preparatory steps
+are carried out. The message attribute of the record is computed
+using LogRecord.getMessage(). If the formatting string uses the
+time (as determined by a call to usesTime(), formatTime() is
+called to format the event time. If there is exception information,
+it is formatted using formatException() and appended to the message.</p></section>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def format(self, record):
+    message = record.getMessage()
+    clr = self.mapping.get(record.levelname)
+    if extended_log_data == True:
+        # Format log with extended props for debugging
+        log_fmt = (
+            colored(&#34;%(asctime)-4s&#34;, &#34;gray&#34;)
+            + &#34;\t&#34;
+            + colored(&#34;(%(levelname)-4s)&#34;, clr)
+            + &#34;\t&#34;
+            + colored(&#34;%(message)-4s&#34;, &#34;white&#34;)
+            + &#34;\t&#34;
+            + colored(&#34;(%(filename)s : &#34;, &#34;d_gray&#34;)
+            + colored(&#34;line %(lineno)s in function &#34;, &#34;d_gray&#34;)
+            + colored(&#34;%(funcName)s)&#34;, &#34;d_gray&#34;)
+        )
+        formatter = logging.Formatter(log_fmt)
+    else:
+        log_fmt = (
+            colored(&#34;%(asctime)-4s&#34;, self.mapping.get(&#34;gray&#34;))
+            + &#34;\t&#34;
+            + colored(&#34;(%(levelname)-4s)&#34;, clr)
+            + &#34;\t&#34;
+            + colored(&#34;%(message)s&#34;, self.mapping.get(&#34;white&#34;))
+        )
+        formatter = logging.Formatter(log_fmt, &#34;%Y-%m-%d %H:%M:%S&#34;)
+    return formatter.format(record)</code></pre>
+</details>
+</dd>
+</dl>
+</dd>
 <dt id="restless.components.utils.logger.Logger"><code class="flex name class">
 <span>class <span class="ident">Logger</span></span>
 </code></dt>
 <dd>
-<section class="desc"><p>Logger component. Private methods will be called by higher-level <code>Utils</code>.</p></section>
+<section class="desc"><p>Logging with colors.</p></section>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">class Logger:
     &#34;&#34;&#34;
-    Logger component. Private methods will be called by higher-level `Utils`.
+    Logging with colors.
     &#34;&#34;&#34;
 
-    def __init__(self):
-        self.logging = logging
-        self.logging.basicConfig(
-            format=&#34;%(asctime)s %(levelname)-4s %(message)s&#34;,
-            level=logging.INFO,
-            datefmt=&#34;%Y-%m-%d %H:%M:%S&#34;,
-        )
-        pass
+    level = &#34;INFO&#34;
 
-    def _print_log(self, data: dict):
-        level = data.get(&#34;level&#34;)
-        if level is None:
-            level = &#34;INFO&#34;
-        if level is &#34;INFO&#34;:
-            self.logging.info(data[&#34;message&#34;])
+    def __init__(self):
+        # Add success level
+        logging.SUCCESS = 25  # between WARNING and INFO
+        logging.addLevelName(logging.SUCCESS, &#34;SUCCESS&#34;)
+        self.logger = logging.getLogger(__name__)
+        self.logger.setLevel(self.level)
+        self.ch = logging.StreamHandler()  # console handler
+        # Adjust formatting
+        self.ch.setFormatter(CustomFormatter())
+        self.logger.addHandler(self.ch)
+        # Bind success method attribute to logger
+        setattr(
+            self.logger,
+            &#34;success&#34;,
+            lambda message, *args: self.logger._log(logging.SUCCESS, message, args),
+        )
+        self.colored = colored  # Bind method to color text
+        self.same_line = same_line
         return
 
-    def _write_log(self, fp: str, data: dict):
-        return</code></pre>
+    def flush(self, newline=False) -&gt; None:
+        CURSOR_UP_ONE = &#34;\033[K&#34;
+        ERASE_LINE = &#34;\x1b[2K&#34;
+        sys.stdout.write(CURSOR_UP_ONE)
+        sys.stdout.write(ERASE_LINE + &#34;\r&#34;)
+        if newline:
+            sys.stdout.write(ERASE_LINE + &#34;\n&#34;)
+        return
+
+    def change_logging_config(self, config: dict) -&gt; None:
+        &#34;&#34;&#34;Change logging configuration (uses Python&#39;s logging module).&#34;&#34;&#34;
+        logging.basicConfig(config)
+        return
+
+    def change_logging_level(self, level: str) -&gt; None:
+        &#34;&#34;&#34;Changes level of logger and console handler.&#34;&#34;&#34;
+        self.level = level
+        if level == &#34;debug&#34;:
+            self.logger.setLevel(logging.DEBUG)
+            self.ch.setLevel(logging.DEBUG)
+        elif level == &#34;info&#34;:
+            self.logger.setLevel(logging.INFO)
+            self.ch.setLevel(logging.INFO)
+        elif level == &#34;warning&#34;:
+            self.logger.setLevel(logging.WARNING)
+            self.ch.setLevel(logging.WARNING)
+        elif level == &#34;error&#34;:
+            self.logger.setLevel(logging.ERROR)
+            self.ch.setLevel(logging.ERROR)
+        elif level == &#34;criticial&#34;:
+            self.logger.setLevel(logging.CRITICAL)
+            self.ch.setLevel(logging.CRITICAL)
+        else:
+            raise ValueError(&#34;Invalid logging level to set!&#34;)</code></pre>
 </details>
+<h3>Class variables</h3>
+<dl>
+<dt id="restless.components.utils.logger.Logger.level"><code class="name">var <span class="ident">level</span></code></dt>
+<dd>
+<section class="desc"></section>
+</dd>
+</dl>
+<h3>Methods</h3>
+<dl>
+<dt id="restless.components.utils.logger.Logger.change_logging_config"><code class="name flex">
+<span>def <span class="ident">change_logging_config</span></span>(<span>self, config)</span>
+</code></dt>
+<dd>
+<section class="desc"><p>Change logging configuration (uses Python's logging module).</p></section>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def change_logging_config(self, config: dict) -&gt; None:
+    &#34;&#34;&#34;Change logging configuration (uses Python&#39;s logging module).&#34;&#34;&#34;
+    logging.basicConfig(config)
+    return</code></pre>
+</details>
+</dd>
+<dt id="restless.components.utils.logger.Logger.change_logging_level"><code class="name flex">
+<span>def <span class="ident">change_logging_level</span></span>(<span>self, level)</span>
+</code></dt>
+<dd>
+<section class="desc"><p>Changes level of logger and console handler.</p></section>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def change_logging_level(self, level: str) -&gt; None:
+    &#34;&#34;&#34;Changes level of logger and console handler.&#34;&#34;&#34;
+    self.level = level
+    if level == &#34;debug&#34;:
+        self.logger.setLevel(logging.DEBUG)
+        self.ch.setLevel(logging.DEBUG)
+    elif level == &#34;info&#34;:
+        self.logger.setLevel(logging.INFO)
+        self.ch.setLevel(logging.INFO)
+    elif level == &#34;warning&#34;:
+        self.logger.setLevel(logging.WARNING)
+        self.ch.setLevel(logging.WARNING)
+    elif level == &#34;error&#34;:
+        self.logger.setLevel(logging.ERROR)
+        self.ch.setLevel(logging.ERROR)
+    elif level == &#34;criticial&#34;:
+        self.logger.setLevel(logging.CRITICAL)
+        self.ch.setLevel(logging.CRITICAL)
+    else:
+        raise ValueError(&#34;Invalid logging level to set!&#34;)</code></pre>
+</details>
+</dd>
+<dt id="restless.components.utils.logger.Logger.flush"><code class="name flex">
+<span>def <span class="ident">flush</span></span>(<span>self, newline=False)</span>
+</code></dt>
+<dd>
+<section class="desc"></section>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def flush(self, newline=False) -&gt; None:
+    CURSOR_UP_ONE = &#34;\033[K&#34;
+    ERASE_LINE = &#34;\x1b[2K&#34;
+    sys.stdout.write(CURSOR_UP_ONE)
+    sys.stdout.write(ERASE_LINE + &#34;\r&#34;)
+    if newline:
+        sys.stdout.write(ERASE_LINE + &#34;\n&#34;)
+    return</code></pre>
+</details>
+</dd>
+</dl>
 </dd>
 </dl>
 </section>
@@ -112,10 +715,39 @@ class Logger:
 <li><code><a title="restless.components.utils" href="index.html">restless.components.utils</a></code></li>
 </ul>
 </li>
+<li><h3><a href="#header-functions">Functions</a></h3>
+<ul class="">
+<li><code><a title="restless.components.utils.logger.colored" href="#restless.components.utils.logger.colored">colored</a></code></li>
+<li><code><a title="restless.components.utils.logger.same_line" href="#restless.components.utils.logger.same_line">same_line</a></code></li>
+</ul>
+</li>
 <li><h3><a href="#header-classes">Classes</a></h3>
 <ul>
 <li>
+<h4><code><a title="restless.components.utils.logger.ANSIColor" href="#restless.components.utils.logger.ANSIColor">ANSIColor</a></code></h4>
+<ul class="">
+<li><code><a title="restless.components.utils.logger.ANSIColor.colored" href="#restless.components.utils.logger.ANSIColor.colored">colored</a></code></li>
+<li><code><a title="restless.components.utils.logger.ANSIColor.colors" href="#restless.components.utils.logger.ANSIColor.colors">colors</a></code></li>
+<li><code><a title="restless.components.utils.logger.ANSIColor.prefix" href="#restless.components.utils.logger.ANSIColor.prefix">prefix</a></code></li>
+<li><code><a title="restless.components.utils.logger.ANSIColor.same_line" href="#restless.components.utils.logger.ANSIColor.same_line">same_line</a></code></li>
+<li><code><a title="restless.components.utils.logger.ANSIColor.suffix" href="#restless.components.utils.logger.ANSIColor.suffix">suffix</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="restless.components.utils.logger.CustomFormatter" href="#restless.components.utils.logger.CustomFormatter">CustomFormatter</a></code></h4>
+<ul class="">
+<li><code><a title="restless.components.utils.logger.CustomFormatter.format" href="#restless.components.utils.logger.CustomFormatter.format">format</a></code></li>
+<li><code><a title="restless.components.utils.logger.CustomFormatter.mapping" href="#restless.components.utils.logger.CustomFormatter.mapping">mapping</a></code></li>
+</ul>
+</li>
+<li>
 <h4><code><a title="restless.components.utils.logger.Logger" href="#restless.components.utils.logger.Logger">Logger</a></code></h4>
+<ul class="">
+<li><code><a title="restless.components.utils.logger.Logger.change_logging_config" href="#restless.components.utils.logger.Logger.change_logging_config">change_logging_config</a></code></li>
+<li><code><a title="restless.components.utils.logger.Logger.change_logging_level" href="#restless.components.utils.logger.Logger.change_logging_level">change_logging_level</a></code></li>
+<li><code><a title="restless.components.utils.logger.Logger.flush" href="#restless.components.utils.logger.Logger.flush">flush</a></code></li>
+<li><code><a title="restless.components.utils.logger.Logger.level" href="#restless.components.utils.logger.Logger.level">level</a></code></li>
+</ul>
 </li>
 </ul>
 </li>

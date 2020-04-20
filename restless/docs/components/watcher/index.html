@@ -24,12 +24,20 @@
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">from .watcher import Watcher</code></pre>
+<pre><code class="python">import os, sys
+
+sys.path.append(os.path.dirname(os.path.realpath(__file__)))
+
+from .watcher import Watcher</code></pre>
 </details>
 </section>
 <section>
 <h2 class="section-title" id="header-submodules">Sub-modules</h2>
 <dl>
+<dt><code class="name"><a title="restless.components.watcher.events" href="events.html">restless.components.watcher.events</a></code></dt>
+<dd>
+<section class="desc"></section>
+</dd>
 <dt><code class="name"><a title="restless.components.watcher.watcher" href="watcher.html">restless.components.watcher.watcher</a></code></dt>
 <dd>
 <section class="desc"></section>
@@ -56,6 +64,7 @@
 </li>
 <li><h3><a href="#header-submodules">Sub-modules</a></h3>
 <ul>
+<li><code><a title="restless.components.watcher.events" href="events.html">restless.components.watcher.events</a></code></li>
 <li><code><a title="restless.components.watcher.watcher" href="watcher.html">restless.components.watcher.watcher</a></code></li>
 </ul>
 </li>
