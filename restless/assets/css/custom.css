@@ -114,10 +114,9 @@ li {
 }
 
 .slider-container {
-	margin-top: 200px !important;
-	height: 40px;
-	position: absolute;
-	max-width: 900px;
+	position: relative !important;
+	margin-top: 200px;
+	max-width: 800px;
 	opacity: .75;
 	z-index: -100;
 }
@@ -132,16 +131,8 @@ li {
 	max-width: 100%;
 }
 
-.img-gallery {
-	  border: 10px solid #fff;
-  border-bottom: 45px solid #fff;
-  -webkit-box-shadow: 3px 3px 3px #777;
-     -moz-box-shadow: 3px 3px 3px #777;
-          box-shadow: 3px 3px 3px #777;
-}
-
 .mask1 {
-  -webkit-mask-image: linear-gradient(to bottom, transparent 25%, black 75%);
-  mask-image: linear-gradient(to bottom, transparent 25%, black 75%);
+  -webkit-mask-image: linear-gradient(to bottom, transparent 20%, black 80%);
+  mask-image: linear-gradient(to bottom, transparent 20%, black 89%);
 }
 
