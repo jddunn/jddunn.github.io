@@ -48,7 +48,7 @@ body {
 .list-body {
     z-index: 1000;
     position: relative;
-    font-size: 1.2em;
+    font-size: .95em;
     overflow: auto;
     max-height: 300px;
 }
@@ -117,8 +117,8 @@ li {
 	position: relative !important;
 	margin-top: 200px;
 	max-width: 800px;
-	opacity: .75;
 	z-index: -100;
+	opacity: 1;
 }
 
 .title {
@@ -132,7 +132,7 @@ li {
 }
 
 .mask1 {
-  -webkit-mask-image: linear-gradient(to bottom, transparent 20%, black 80%);
-  mask-image: linear-gradient(to bottom, transparent 20%, black 89%);
+  -webkit-mask-image: linear-gradient(to bottom, transparent 35%, black 45%);
+  mask-image: linear-gradient(to bottom, transparent 35%, black 45%);
 }
 
