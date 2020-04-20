@@ -103,3 +103,45 @@ li {
 .header--cta {
     margin-top: 5px;
 }
+
+.download-now-button {
+	float: right;
+	z-index: 100;
+	z-index: 1000;
+	right: 0;
+	top: 100px;
+	position: absolute;
+}
+
+.slider-container {
+	margin-top: 200px !important;
+	height: 40px;
+	position: absolute;
+	max-width: 900px;
+	opacity: .75;
+	z-index: -100;
+}
+
+.title {
+	position: absolute;
+	z-index: 100;
+}
+
+.intro-text {
+	max-height: 100%;
+	max-width: 100%;
+}
+
+.img-gallery {
+	  border: 10px solid #fff;
+  border-bottom: 45px solid #fff;
+  -webkit-box-shadow: 3px 3px 3px #777;
+     -moz-box-shadow: 3px 3px 3px #777;
+          box-shadow: 3px 3px 3px #777;
+}
+
+.mask1 {
+  -webkit-mask-image: linear-gradient(to bottom, transparent 25%, black 75%);
+  mask-image: linear-gradient(to bottom, transparent 25%, black 75%);
+}
+

@@ -9,22 +9,22 @@
   <meta name="keywords" content="global, template, html, sass, jquery">
   <meta name="author" content="Bucky Maler">
   <link rel="stylesheet" href="assets/css/main.css">
-  <link rel="stylesheet" href="assets/css/custom.css">
   <link rel="stylesheet" href="assets/css/slider.css">
+  <link rel="stylesheet" href="assets/css/custom.css">
   <script async defer src="https://buttons.github.io/buttons.js"></script>
 </head>
 <body>
 
 <!-- notification for small viewports and landscape oriented smartphones -->
-<div class="device-notification">
-  <a class="device-notification--logo" href="#0">
-    <div class="logo">
-      <img src="assets/img/logo.png" alt="Restless" class="logo">
-    </div>
-    <p></p>
-  </a>
-  <p class="device-notification--message">Restless has so much to offer that we must request you orient your device to portrait or find a larger screen. You won't be disappointed.</p>
-</div>
+<!--<div class="device-notification">-->
+<!--  <a class="device-notification--logo" href="#0">-->
+<!--    <div class="logo">-->
+<!--      <img src="assets/img/logo.png" alt="Restless" class="logo">-->
+<!--    </div>-->
+<!--    <p></p>-->
+<!--  </a>-->
+<!--  <p class="device-notification--message">Restless has so much to offer that we must request you orient your device to portrait or find a larger screen. You won't be disappointed.</p>-->
+<!--</div>-->
 
 <div class="perspective effect-rotate-left">
   <div class="container"><div class="outer-nav--return"></div>
@@ -57,23 +57,62 @@
           <li class="l-section section section--is-active">
             <div class="intro">
               <div class="intro--banner intro-text">
-                <h2>Always-defending anti-malware software powered by machine learning</h2>
-                <button class="cta">Download Now
-                  <span class="btn-background"></span>
-                  <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 150 118" style="enable$
-                  <g transform="translate(0.000000,118.000000) scale(0.100000,-0.100000)">
-                    <path d="M870,1167c-34-17-55-57-46-90c3-15,81-100,194-211l187-185l-565-1c-431,0-571-3-590-13c-55-28-64-94-18-137c21-20,33-20,597-20h575l-192-193C800,103,794,94$
-                  </g>
-                  </svg>
-                </button>
-                <!-- <img src="assets/img/introduction-visual.png" alt="Welcome"> -->
-              </div>
+                <h2 class="title">Always-defending anti-malware software powered by machine learning</h2>
+	
+		
+		<!-- Slideshow container -->
+		<div class="slideshow-container">
+	           <div class="download-now-button">
+                     <button class="cta">Download Now
+                       <span class="btn-background"></span>
+                     </button>
+                   </div>
+	
+
+		  <!-- Full-width images with number and caption text -->
+  		<div class="mySlides fade">
+   		 <div class="numbertext">1 / 2</div>
+		 <a href="https://raw.githubusercontent.com/jddunn/restless/master/screenshots/Restless%20-%20CLI%20Full%20Scan%20Demo.gif" target="_blank">
+   		 <img class="bordered mask1" src="https://raw.githubusercontent.com/jddunn/restless/master/screenshots/Restless%20-%20CLI%20Full%20Scan%20Demo.gif" style="width:100%">
+		 </a>
+   	 	<div class="text">Restless - CLI demo - running full system scan</div>
+  		</div>
+
+ 		 <div class="mySlides fade">
+   		 <div class="numbertext">2 / 2</div>
+		 <a href="https://github.com/jddunn/restless/blob/master/screenshots/Restless%20-%20CLI%20Constant%20Watch%20Demo.gif?raw=true" target="_blank">
+   		 <img class="bordered mask1" src="https://github.com/jddunn/restless/blob/master/screenshots/Restless%20-%20CLI%20Constant%20Watch%20Demo.gif?raw=true" style="width:100%">
+		 </a>
+  		  <div class="text">Restless - CLI demo - running constant watch over system</div>
+ 		 </div>
+
+		<!--  <div class="mySlides fade">-->
+		<!--    <div class="numbertext">3 / 3</div>-->
+		<!--    <img src="img3.jpg" style="width:100%">-->
+		<!--    <div class="text">Caption Three</div>-->
+		<!--  </div>-->
+
+	  <!-- Next and previous buttons -->
+ 	 <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
+  	<a class="next" onclick="plusSlides(1)">&#10095;</a>
+	</div>
+	<br>
+
+	<!-- The dots/circles -->
+<!--	<div style="text-align:center">-->
+<!-- 	 <span class="dot" onclick="currentSlide(1)"></span>-->
+<!-- 	 <span class="dot" onclick="currentSlide(2)"></span>-->
+<!--       	 <span class="dot" onclick="currentSlide(3)"></span>-->
+<!--	</div>-->
+
+	</div>
+
               <div class="intro--options">
-                <a href="#0">
+                <a href="#0" onclick="currentSlide(0)">
                   <h3>Detects malware based on pattern recognition</h3>
                   <p>Restless can learn from malicious patterns in metadata and file contents to detect new or changing malware, unlike traditional antiviruses.</p>
                 </a>
-                <a href="#1">
+                <a href="#1" onclick="currentSlide(1)">
                   <h3>Always on, always guarding</h3>
                   <p>Restless works with Watchgod to constantly monitor your system for any file changes and scan for any potential bad agents.</p>
                 </a>
@@ -229,5 +268,6 @@
 <script>window.jQuery || document.write('<script src="assets/js/vendor/jquery-2.2.4.min.js"><\/script>')</script>
 <script src="assets/js/functions-min.js"></script>
 <script src="assets/js/accordion.js"></script>
+<script src="assets/js/slider.js"></script>
 </body>
 </html>
