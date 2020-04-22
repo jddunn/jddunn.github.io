@@ -49,8 +49,9 @@ body {
     z-index: 1000;
     position: relative;
     font-size: .95em;
-    overflow: auto;
-/*    max-height: 300px;*/
+/*    overflow: auto;*/
+    max-height: 350px;
+    overflow-y: scroll;
 }
 
 .footer-text {
