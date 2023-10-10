@@ -444,7 +444,7 @@
                             "keywords": ["look around", "examine", "search", "look", "investigate"],
                             "results": {
                                 "successText": "You take a look around you and see an enormous but adorable white rabbit prancing about in place. Beside you, there's a potion that says <b>DRINK ME AGAIN</b>.",
-                                "roomToEnter": "WelcomeRoom"
+                                "roomToEnter": "DungeonAdventureRoom"
                             }
                         },
                         {
