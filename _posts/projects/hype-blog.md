@@ -1,0 +1,70 @@
+---
+title: 'Hype.blog'
+coverImage: '/assets/projects/hype-blog.png'
+excerpt: 'A virtual newsroom operated autonomously by AI agents with individual characteristics and personalities, with CMS dashboard for collaboration by human staff.'
+date: '2023-10-08'
+createdDate: '2023-03-01'
+tags: 'typescript,next.js,python,ai,nlp,llms,magazine'
+# author:
+#   name: Johnny Dunn
+#   picture: '/assets/blog/authors/jj.jpeg'
+ogImage:
+  url: '/assets/projects/hype-blog.png'
+---
+
+<a href="https://hype.blog" style="text-align: center" target="_blank" class="md-link">Link</a>
+
+
+<a href="https://hype.blog/en/blog/post/Introducing_Hypeblog-_The_Digital_Newsroom_of_the_Future_6524dc87b3f8626b18c4970f" style="text-align: center" target="_blank" class="md-link">Blog post on creation</a>
+
+## Intro
+
+Hype.blog scours the web for trends, making curated feeds with news, deals, media reviews, and more.
+
+A virtual newsroom is operated automatically by AI agents with individual characteristics and personalities. This newsroom contains writers, editors, reviewers / critics, deal finders, as well as designers, all of whom brainstorm and judge which content to publish and which to reject collaboratively, then creates the content with multiple revisions like a real newsroom. Eventually short and long-form video content will be created for YouTube and social channels.
+
+## Tech stack
+
+<a href="https://res.cloudinary.com/dmzlfga9b/image/upload/v1694219904/hype-tech-stack_q6ttnj.png" target="_blank"><img src="https://res.cloudinary.com/dmzlfga9b/image/upload/v1694219904/hype-tech-stack_q6ttnj.png" class="img-shadow" style="display: block; margin-left: auto; margin-right: auto;" width="450" alt="Hype.blog tech stack"></img></a>
+<span style="text-align: center; color: grey; margin-left: auto; margin-right: auto; display: block; width: 80%">Hype.blog tech stack.</span>
+
+## Admin / CMS dashboard
+
+An admin dashboard allows any human staff to easily edit or write new content. All content is passed through human journalists to revise and add more content to, but can be published automatically by AI. Staff can pitch articles via CLI / API to collaboratively write a story with an AI agent.
+
+<a href="/assets/projects/hype-blog-article-cms.png" target="_blank"><img src="/assets/projects/hype-blog-article-cms.png" class="img-shadow" style="display: block; margin-left: auto; margin-right: auto;" width="800" alt="Hype.blog article CMS"></img></a>
+<span style="text-align: center; color: grey; margin-left: auto; margin-right: auto; display: block; width: 80%">CMS dashboard using Payload CMS.</span>
+
+## API functionality examples
+
+<a href="/assets/projects/hype-blog-article-frontend.png" target="_blank"><img src="/assets/projects/hype-blog-article-frontend.png" class="img-shadow" style="display: block; margin-left: auto; margin-right: auto;" width="800" alt="Hype.blog article frontend"></img></a>
+<span style="text-align: center; color: grey; margin-left: auto; margin-right: auto; display: block; width: 80%">Post rendered on the frontend with SEO using SSR / Next.js.</span>
+
+The scraping and NLP APIs written for Hype are straightforward and abstracts away complexity.
+
+<a href="/assets/projects/hype-blog-scraper-api.png" target="_blank"><img src="/assets/projects/hype-blog-scraper-api.png" class="img-shadow" style="display: block; margin-left: auto; margin-right: auto;" width="800" alt="Hype.blog scraper API code example."></img></a>
+<span style="text-align: center; color: grey; margin-left: auto; margin-right: auto; display: block; width: 80%">Scraper API code example that utilizes multiprocessing and Selenium.</span>
+
+<a href="/assets/projects/hype-blog-nlp-api.png" target="_blank"><img src="/assets/projects/hype-blog-nlp-api.png" class="img-shadow" style="display: block; margin-left: auto; margin-right: auto;" width="800" alt="Hype.blog NLP API code example."></img></a>
+<span style="text-align: center; color: grey; margin-left: auto; margin-right: auto; display: block; width: 80%">NLP API code example.</span>
+
+The AI agents are built and customizable using JSON data.
+
+<a href="/assets/projects/hype-blog-agent-json.png" target="_blank"><img src="/assets/projects/hype-blog-agent-json.png" class="img-shadow" style="display: block; margin-left: auto; margin-right: auto;" width="800" alt="Hype.blog NLP agent JSON data example."></img></a>
+
+<a href="/assets/projects/hype-blog-deal-finder.png" target="_blank"><img src="/assets/projects/hype-blog-deal-finder.png" class="img-shadow" style="display: block; margin-left: auto; margin-right: auto;" width="800" alt="Hype.blog AI deal finder example."></img></a>
+<span style="text-align: center; color: grey; margin-left: auto; margin-right: auto; display: block; width: 80%">Deal Finder AI agent in action.</span>
+
+## Virtual newsroom operating
+
+<a href="/assets/projects/hype-blog-backend.png" target="_blank"><img src="/assets/projects/hype-blog-backend.png" class="img-shadow" style="display: block; margin-left: auto; margin-right: auto;" width="800" alt="Hype.blog backend virtual newsroom operation"></img></a>
+<span style="text-align: center; color: grey; margin-left: auto; margin-right: auto; display: block; width: 80%">Virtual newsroom operation by autonomous AI agents in collaboration.</span>
+
+Proof the AI writer reads the source content accurately (usually), and writes without hallucinating (unless it doesn’t have access to the data it’s talking about). In the dashboard, every post has the source link back to the original scraped page for verifying by human staff.
+
+<a href="/assets/projects/hype-blog-article-example.png" target="_blank"><img src="/assets/projects/hype-blog-article-example.png" class="img-shadow" style="display: block; margin-left: auto; margin-right: auto;" width="800" alt="Hype.blog article example"></img></a>
+<span style="text-align: center; color: grey; margin-left: auto; margin-right: auto; display: block; width: 80%">Example article written about Brandon Sanderson and his works, unedited from what the AI wrote, based on a trending Reddit thread discussion on literature.</span>
+
+<a href="/assets/projects/hype-blog-article-verification.png" target="_blank"><img src="/assets/projects/hype-blog-article-verification.png" class="img-shadow" style="display: block; margin-left: auto; margin-right: auto;" width="800" alt="Hype.blog article verification"></img></a>
+<span style="text-align: center; color: grey; margin-left: auto; margin-right: auto; display: block; width: 80%">Verifying the correctness of the article written by the AI from the original source context.</span>
+

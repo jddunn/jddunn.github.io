@@ -1,0 +1,18 @@
+---
+title: 'Hello friend'
+excerpt: 'They say you should build in public.'
+coverImage: '/assets/blog/preview/cover.jpg'
+date: '2023-10-06'
+createdDate: '2023-10-06'
+# author:
+  # name: Joe Haddad
+  # picture: '/assets/blog/authors/joe.jpeg'
+tags: 'blog'
+ogImage:
+  url: '/assets/blog/preview/cover.jpg'
+---
+They say you should build in public. So if I can, I'll post writings about my various projects and what I'm working on here.
+
+## How was this site built?
+
+This portfolio site was built with Next.js 13 and Tailwind CSS, and uses markdown files for the blog content and project posts, which are rendered with <a href="https://github.com/showdownjs/showdown/" style="color: rgb(176,196,222)" target="_blank">showdown</a>. The homepage also uses Three.js to render and make the 3D potion interactive, and the object is removed from the scene whenever someone browses to a different page that's not home. <br><br> The <span style="color: grey">open source </span> page pulls from the GitHub API for my GitHub profile's pinned repositories, and uses GraphQL / Apollo to query the data. Since the site uses Next's getStaticProps to fetch data, all these pages can and have been exported to static HTML, CSS, and JS files, allowing the site to be hosted on a static server like GitHub Pages. The game that you see on the homepage was created with my open-source JavaScript library <a href="https://jddunn.github.io/text-rpg-engine/" style="color: rgb(176,196,222)" target="_blank">text-rpg-engine</a>, which lets users create interactive fiction games with any type of web content displayable, and any type of verbal player interactions. <br> <br> You can see the source code for this site <a href="https://github.com/jddunn/portfolio" style="color: rgb(176,196,222)" target="_blank">here</a>, and see the JSON data that powers this game <a href="../../game.json" style="color: rgb(176,196,222)" target="_blank">here</a>.
