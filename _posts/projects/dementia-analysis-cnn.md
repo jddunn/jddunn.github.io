@@ -9,7 +9,7 @@ ogImage:
   url: '/assets/projects/OAS1_0018_MR1_mpr_n4_anon_111_t88_masked_gfc_fseg_tra_90.png'
 ---
 
-<a href="https://github.com/jddunn/dementia-progession-analysis" style="text-align: center" target="_blank" class="md-link">GitHub link</a>
+<a href="https://github.com/jddunn/dementia-progression-analysis" style="text-align: center" target="_blank" class="md-link">GitHub link</a>
 
 I used <a class="md-link" href="http://www.oasis-brains.org/app/template/Tools.vm#services" target="_blank" style="margin-left: 0; margin-right: 0; display: inline">OASIS's public archive of cross-sectional MRI data</a> to build a convolutional neural network in Keras using a pre-trained model (transfer learning with VGG-16) that could detect signs of dementia with either a multi-class or binary classification model. The binary classifier had a ~60% accuracy rate (consistent with different variations of training / test data) with a 13% false positive rate.
 
