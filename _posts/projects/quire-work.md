@@ -3,7 +3,7 @@ title: 'Quire.work'
 coverImage: '/assets/projects/quire-work-demo.gif'
 excerpt: 'A platform for academics, professionals, and businesses alike to create and manage customizable virtual assistants. Quire can transform forms and static questions into dynamic conversational experiences powered by customizable LLMs, and turns any website or product into a knowledge base accessible via a chatbot widget'
 date: '2023-10-08'
-createdDate: '2023-05-09'
+createdDate: '2023-08'
 tags: 'typescript,next.js,ai,nlp,llms'
 # author:
 #   name: Johnny Dunn

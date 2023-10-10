@@ -440,6 +440,14 @@
                     "getText": "A door is a door, unless it isn't. Sometimes it's an entrance, sometimes it's an exit. But who decides that, is it you, or is it the doormaker, you wonder? </p> <br> <p> You're probably asking this of yourself, cause what you just entered isn’t a mere room. The space warps around you and colors swirl, melding and blending like paint on an artist’s canvas. You feel as though you've been pulled through the eye of a needle, and now everything is inside out and upside down. <br> <br> The tiny door behind you now appears colossal, its wooden frame stretching up and beyond your line of sight. It has a polished bronze handle that shines with an otherworldly gleam. <br><br> Echoes of conversations past run through your mind: <i>\"The choices we make define us, but sometimes it’s the choices we don’t make that haunt us.\"</i> <br> <br> The decisions of the past weigh on your mind, and you wonder if this is a chance at redemption or another descent into madness. Suddenly, the room shudders. Whispers creep into your ears, a cacophony of voices from the past, present, and perhaps even the future. Among them, you discern one voice, clear and strong, reciting: \"<i>I can't go back to yesterday because I was a different person then.</i>\" <br><br> The sound of soft tapping distracts you. Turning your gaze, you notice a white rabbit with a pocket watch, looking at you impatiently. \"Oh dear! Oh dear! You'll be late!\" he says, wringing his tiny paws, which to you are gigantic, since you are still small. <br><br> There's another potion in this room, one that matches your size so it's much tinier now, and a different color. Maybe if you drink it you'll grow bigger again? </p> <br> <p> <i> Well, this story is definitely a familiar one, you murmur to no one in particular, and a little played out at this point, don't you think? Nonetheless, you're still glad that expiration for copyrights exists.</p>",
                     "prompts": [
                         {
+                            "name": "look around",
+                            "keywords": ["look around", "examine", "search", "look", "investigate"],
+                            "results": {
+                                "successText": "You take a look around you and see an enormous but adorable white rabbit prancing about in place. Beside you, there's a potion that says <b>DRINK ME AGAIN</b>.",
+                                "roomToEnter": "WelcomeRoom"
+                            }
+                        },
+                        {
                             "name": "late for what?",
                             "keywords": ["late?", "for what?", "for what", "what do you mean", "what", "wdym", "don't understand", "dont understand", "don't get it", "dont get it"],
                             "results":  {
