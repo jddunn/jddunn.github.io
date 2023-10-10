@@ -8,18 +8,18 @@ SEO-ready portfolio and blog page with a Alice in Wonderland-inspired interactiv
 
 # Tech Used
 
-- ![TypeScript](https://www.typescriptlang.org/)
-- ![Next.js](https://nextjs.org/)
-- ![React](https://react.dev/)
-- ![Sass](https://sass-lang.com/)
-- ![GraphQL](https://graphql.org/)
-- ![Tailwind CSS](https://tailwindcss.com/)
-- ![Next SEO](https://github.com/garmeeh/next-seo/)
-- ![next-sitemap](https://www.npmjs.com/package/next-sitemap)
-- ![Three.js](https://threejs.org/)
-- ![Framer](https://www.framer.com/motion/)
-- ![Showdown](https://github.com/showdownjs/showdown)
-- ![text-rpg-engine](https://jddunn.github.io/text-rpg-engine/)
+- [TypeScript](https://www.typescriptlang.org/)
+- [Next.js](https://nextjs.org/)
+- [React](https://react.dev/)
+- [Sass](https://sass-lang.com/)
+- [GraphQL](https://graphql.org/)
+- [Tailwind CSS](https://tailwindcss.com/)
+- [Next SEO](https://github.com/garmeeh/next-seo/)
+- [next-sitemap](https://www.npmjs.com/package/next-sitemap)
+- [Three.js](https://threejs.org/)
+- [Framer](https://www.framer.com/motion/)
+- [Showdown](https://github.com/showdownjs/showdown)
+- [text-rpg-engine](https://jddunn.github.io/text-rpg-engine/)
 
 ## Setup / build
 
