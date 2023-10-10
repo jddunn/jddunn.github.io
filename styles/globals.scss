@@ -37,6 +37,10 @@ picture {
   display: block;
 }
 
+.video-container { position: relative; padding-bottom: 56.25%; padding-top: 30px; height: 0; overflow: hidden; }
+
+.video-container iframe, .video-container object, .video-container embed { position: absolute; top: 0; left: 0; width: 100%; height: 100%; }
+
 // Give all images a shadow by default
 .img {
   box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.4);
@@ -56,6 +60,32 @@ button,
 textarea,
 select {
   font: inherit;
+}
+
+// Prevent zoom on input focus
+@media screen and (-webkit-min-device-pixel-ratio:0) { 
+  select,
+  textarea,
+  input {
+    font-size: 160px;
+  }
+}
+
+input[type="text"] {
+  /* enlarge by 16/12 = 133.33% */
+  border-radius: 6.666666667px;
+  font-size: 160px !important;
+  line-height: 26.666666667px;
+  padding: 6.666666667px;
+  width: 133.333333333%;
+
+  /* scale down by 12/16 = 75% */
+  transform: scale(0.75);
+  transform-origin: left top;
+
+  /* remove extra white space */
+  margin-bottom: -10px;
+  margin-right: -33.333333333%;
 }
 
 @keyframes disappearAnimation {
@@ -81,7 +111,10 @@ select {
 }
 
 .backButton {
-  position: fixed;
+  top: 0;
+  z-index: 100000 !important;
+  -webkit-transform: translateZ(0) !important;
+  position: fixed !important;
   font-size: 1.7em;
 }
 
@@ -143,7 +176,8 @@ select {
   margin-top: 5px;
   padding: 3px;
   padding-left: 6px;
-  font-size: .9em;
+  // font-size: .9em;
+  font-size: 16px !important;
   border-radius: 5px;
   box-shadow: 0px -5px 10px 0px rgba(0, 0, 0, 0.5);
   background-color: rgba(113, 113, 113, 0.45);
