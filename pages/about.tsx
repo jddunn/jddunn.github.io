@@ -175,9 +175,9 @@ const About = () => {
           <span><span className="disappearing">*</span><span> CV. I've also worked in blockchain-related</span></span>
           <span><span className="disappearing">*</span><span> teams developing custom smart contracts and</span></span>
           <span><span className="disappearing">*</span><span> NFTs. I've a wide breadth of skills and am a</span></span>
+          <span><span className="disappearing">*</span><span> tech generalist. I graduated in 2017 with a</span></span>
           <span><span className="disappearing">*</span><span> BFA in Design & Technology / Game Design. I</span></span>
-          <span><span className="disappearing">*</span><span> want to work on products that value tech</span></span>
-          <span><span className="disappearing">*</span><span> generalist, and graduated in 2017 with a</span></span>
+          <span><span className="disappearing">*</span><span> want to work on platforms and products that </span></span>
           <span><span className="disappearing">*</span><span> focus user experience and expression. </span></span>
           <span><span className="disappearing">*</span><span> See my resume <a href='/Johnny-Dunn-Resume-2023.pdf' style={{color: 'rgb(176,196,222)'}} target='_blank'>here</a>.</span></span>
           <span><span className="disappearing">*</span><span> </span></span>
