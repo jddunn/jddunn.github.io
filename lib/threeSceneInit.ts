@@ -45,6 +45,7 @@ export default class SceneInit {
       // Add mousedown event listener for canvas only
       canvas?.addEventListener('pointerdown', (e) => this.onPointerDown(this.camera, e));
       canvas?.addEventListener('pointermove', (e) => this.onPointerMove(this.camera, e));
+      canvas?.addEventListener('touchend', (e) => this.onTouchEnd(this.camera, e));
     }
 
     // NOTE: Specify a canvas which is already created in the HTML.
@@ -114,6 +115,77 @@ export default class SceneInit {
     const mouse_x = (( event.clientX - this.renderer.domElement.offsetLeft) / 
       this.renderer.domElement.clientWidth ) * 2 - 1;
     const mouse_y = - (( event.clientY - this.renderer.domElement.offsetTop) / 
+      this.renderer.domElement.clientHeight ) * 2 + 1;
+
+    const mouse3D = new THREE.Vector3(mouse_x, mouse_y, 0.5)
+
+    // Raycasting to determine if user clicked on potion
+    // This doesn't work properly in mobile due to our site layout;
+    // we will not worry about fixing it since they can drink the potion
+    // through a text command and are hinted to do that in the game.
+
+    const raycaster = new THREE.Raycaster()
+
+    if (camera) {
+      raycaster.setFromCamera(mouse3D, camera)
+      // Detect a collision for the potion / scene object
+      const intersects = raycaster.intersectObjects(
+        this.scene.children, true);
+      if(intersects.length > 0){
+          for (let i = 0; i < intersects.length; i++) {
+            intersects[i].object.material.color.setHex(
+               Math.random() * 0xffffff )
+          }
+          // Drink the potion and send the command to the game, 
+          // if it hasn't been done already
+
+          // The logic below is pretty complicated, because we're mapping
+          // a custom web interaction that the text-rpg-engine library doesn't
+          // support out-the-box.
+          if (this.game.Player.inventory.items.includes("drunkSmallPotion")) {
+            if (this.game.Player.currentRoom === 'DungeonAdventureRoom') {
+              // Add the big potion to the inventory
+              this.game.Player.inventory.addItems(['drunkBigPotion']);
+              this.game.Player.inventory.dropItems(['drunkSmallPotion']);
+              // Drunk the second big potion, make it bigger
+              for (let i = 0; i < this.scene.children.length; i++) {
+                console.log(this.scene.children[i].name)
+                if (this.scene.children[i].name === 'Sketchfab_Scene') {
+                  this.scene.children[i].scale.set(0.15, 0.15, 0.15);
+                }
+              }
+              this.game.refreshDisplay();
+            }
+          } else {
+            this.game.userSend("drink potion");
+            // Drunk the first small potion, make it smaller
+            if (this.game.Player.inventory.items.includes('drunkBigPotion')) {
+              if (this.game.Player.currentRoom === 'WelcomeRoom' || this.game.Player.currentRoom === 'WelcomeRoom2') {
+                this.game.Player.inventory.dropItems(['drunkBigPotion']);
+              }
+            } else {
+              if (this.game.Player.inventory.items.includes('drunkSmallPotion')) {
+                this.game.Player.inventory.dropItems(['drunkBigPotion']);
+                for (let i = 0; i < this.scene.children.length; i++) {
+                  if (this.scene.children[i].name === 'Sketchfab_Scene') {
+                    this.scene.children[i].scale.set(0.075, 0.075, 0.075);
+                  }
+                }
+              }
+            }
+          }
+      }
+    }
+  }
+
+  
+  onTouchEnd(camera, event){
+    // Detect taps after let go in the canvas object / three.js model 
+    event.preventDefault();
+
+    const mouse_x = (( event.touches[0].clientX - this.renderer.domElement.offsetLeft) / 
+      this.renderer.domElement.clientWidth ) * 2 - 1;
+    const mouse_y = - (( event.touches[0].clientY - this.renderer.domElement.offsetTop) / 
       this.renderer.domElement.clientHeight ) * 2 + 1;
 
     const mouse3D = new THREE.Vector3(mouse_x, mouse_y, 0.5)
