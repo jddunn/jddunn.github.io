@@ -16,7 +16,7 @@ export default function Home() {
 
   let counter = 0;
   const texts = [
-    "a full-stack dev specializing in web3 and machine learning projects", 
+    "a full-stack dev specializing in machine learning and web3 projects", 
     "a co-founder amongst a small team of builders and hackers", 
     'an artist formerly known as an "artist" formerly known as an artifice', 
     "a persona non grata to myself looking for forgiveness",
@@ -294,12 +294,14 @@ function updateStatuses() {
                   </div>
                     <div id="game" suppressHydrationWarning>
                       <div id="display"></div>
-                      <div id="inputContainer">
+                      <div id="inputContainer"
+                            style={{fontSize: '28px'}}
+                      >
                         <input
                             type="text"
                             value={userMessage}
                             // ref="input"
-                            id="input"
+                            id="input" 
                             onChange={handleChange}
                             placeholder="say or do something"
                           />  

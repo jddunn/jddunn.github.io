@@ -12,7 +12,7 @@ ogImage:
 
 <a href="https://jddunn.github.io/text-rpg-engine" style="text-align: center" target="_blank" class="md-link">Library Website / Docs</a>
 
-<a href="https://clubhouse.io/developer-how-to/writing-object-oriented-javascript-es6-modules-with-text-rpgs" style="text-align: center" target="_blank" class="md-link">Tutorial article written for Clubhouse</a>
+<a href="https://web.archive.org/web/20201107233844/https://clubhouse.io/developer-how-to/writing-object-oriented-javascript-es6-modules-with-text-rpgs/" style="text-align: center" target="_blank" class="md-link">Tutorial article written for Clubhouse (Archival link)</a>
 
 <a href="https://www.npmjs.com/package/text-rpg-engine" style="text-align: center" target="_blank" class="md-link">NPM package link</a>
 
@@ -22,6 +22,15 @@ In this example shown in the photo, a unique puzzle in the room is having to tur
 
 This engine was also used to create the game featured on the homepage of this site.
 
-You can create games programmatically via the library's API, or you can define the data in a JSON file and have it be dynamically loaded by the library. A future feature would be to have a GUI editor that can easily create and add onto existing games. 
+You can create games programmatically via the library's API, or you can define the data in a JSON file and have it be dynamically loaded by the library. A future feature would be to have a GUI editor that can easily create and add onto existing games.
+
+## Features
+
+- Games can be programmatically built with API or populated with data from a static JSON file
+- No server required to play games (JS files are bundled and transpiled with Browserify)
+- Player can move through rooms (rooms can have item requirements)
+- Inventory system
+- Environment and item interactions through prompts
+- Extreme flexibility; prompts can be anything and are stored in rooms, so prompts can have the same keyword triggers as long as they belong to different rooms
 
 I am planning on creating an interactive fiction game with horror themes using this engine, to be submitted to IFComp in the next year.

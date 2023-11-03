@@ -143,11 +143,16 @@ select {
   margin-top: 5px;
   padding: 3px;
   padding-left: 6px;
-  font-size: .9em;
+  // font-size: .9em;
+  font-size: 16px;
   border-radius: 5px;
   box-shadow: 0px -5px 10px 0px rgba(0, 0, 0, 0.5);
   background-color: rgba(113, 113, 113, 0.45);
   color: rgba(189, 189, 189, 0.95);
+}
+
+#sendButton {
+  font-size: 16px;
 }
 
 #player {
