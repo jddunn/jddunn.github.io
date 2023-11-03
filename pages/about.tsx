@@ -168,9 +168,9 @@ const About = () => {
           <span className={style.ml_2}> /**</span>
           <span><span className="disappearing">*</span><h1 className="font-bold tracking-tighter leading-tight md:pr-8 inline" style={{color: 'white'}}> // About me</h1></span>
           <span><span className="disappearing">*</span><span> I have 6 years of experience in full-stack,</span></span>
-          <span><span className="disappearing">*</span><span> development mainly focusing on backend work.</span></span>
-          <span><span className="disappearing">*</span><span> I've contracted with multiple projects over</span></span>
-          <span><span className="disappearing">*</span><span> the years successfully creating E2E machine</span></span>
+          <span><span className="disappearing">*</span><span> development mainly focusing on backend work,</span></span>
+          <span><span className="disappearing">*</span><span> as well as NLP / ML engineering. I have</span></span>
+          <span><span className="disappearing">*</span><span> successfully created multiple E2E machine</span></span>
           <span><span className="disappearing">*</span><span> learning applications based around NLP and</span></span>
           <span><span className="disappearing">*</span><span> CV. I've also worked in blockchain-related</span></span>
           <span><span className="disappearing">*</span><span> teams developing custom smart contracts and</span></span>
@@ -608,6 +608,10 @@ const About = () => {
                       </span>
                       <br></br>
                       <span style={{display: 'inline'}}>
+                        <BsArrowRightSquareFill style={{display: 'inline', marginRight: '5px'}}/> Geth
+                      </span>
+                      <br></br>
+                      <span style={{display: 'inline'}}>
                         <BsArrowRightSquareFill style={{display: 'inline', marginRight: '5px'}}/> Express.js
                       </span>
                       <br></br>
@@ -632,6 +636,14 @@ const About = () => {
                       </span>
                       <br></br>
                       <span style={{display: 'inline'}}>
+                        <BsArrowRightSquareFill style={{display: 'inline', marginRight: '5px'}}/> LangChain
+                      </span>
+                      <br></br>
+                      <span style={{display: 'inline'}}>
+                        <BsArrowRightSquareFill style={{display: 'inline', marginRight: '5px'}}/> Hugging Face
+                      </span>
+                      <br></br>
+                      <span style={{display: 'inline'}}>
                         <BsArrowRightSquareFill style={{display: 'inline', marginRight: '5px'}}/> Stable Diffusion
                       </span>
                       <br></br>
@@ -648,6 +660,15 @@ const About = () => {
                       </span>
                       <br></br>
                       <span style={{display: 'inline'}}>
+                        <BsArrowRightSquareFill style={{display: 'inline', marginRight: '5px'}}/> PyTorch
+                      </span>
+                      <br></br>
+                      <span style={{display: 'inline'}}>
+                        <BsArrowRightSquareFill style={{display: 'inline', marginRight: '5px'}}/> XGBoost
+                      </span>
+                      <br></br>
+                      
+                      <span style={{display: 'inline'}}>
                         <BsArrowRightSquareFill style={{display: 'inline', marginRight: '5px'}}/> TensorFlow / Keras
                       </span>
                       <br></br>
@@ -656,9 +677,14 @@ const About = () => {
                       </span>
                       <br></br>
                       <span style={{display: 'inline'}}>
-                        <BsArrowRightSquareFill style={{display: 'inline', marginRight: '5px'}}/> spaCey
+                        <BsArrowRightSquareFill style={{display: 'inline', marginRight: '5px'}}/> spaCy
                       </span>
                       <br></br>
+                      <span style={{display: 'inline'}}>
+                        <BsArrowRightSquareFill style={{display: 'inline', marginRight: '5px'}}/> Gensim
+                      </span>
+                      <br></br>
+
                       <span style={{display: 'inline'}}>
                         <BsArrowRightSquareFill style={{display: 'inline', marginRight: '5px'}}/> CoreNLP
                       </span>
@@ -667,6 +693,7 @@ const About = () => {
                         <BsArrowRightSquareFill style={{display: 'inline', marginRight: '5px'}}/> OpenCV
                       </span>
                       <br></br>
+   
                       <span style={{display: 'inline'}}>
                         <BsArrowRightSquareFill style={{display: 'inline', marginRight: '5px'}}/> Selenium
                       </span>
@@ -676,10 +703,19 @@ const About = () => {
                       </span>
                       <br></br>
                       <span style={{display: 'inline'}}>
-                        <BsArrowRightSquareFill style={{display: 'inline', marginRight: '5px'}}/> BeautifulSoup4
+                        <BsArrowRightSquareFill style={{display: 'inline', marginRight: '5px'}}/> Scrapy
+                      </span>
+                      <br></br>
+                      <span style={{display: 'inline'}}>
+                        <BsArrowRightSquareFill style={{display: 'inline', marginRight: '5px'}}/> NestJS
+                      </span>
+                      <br></br>
+                      <span style={{display: 'inline'}}>
+                        <BsArrowRightSquareFill style={{display: 'inline', marginRight: '5px'}}/> Express
                       </span>
                       <br></br>
                       
+
                     </motion.div>
                   )}
                 </AnimatePresence>

@@ -10,7 +10,7 @@ const nextConfig = {
   // publicPath: "/jddunn.github.io",
   // basePath: '/',
   // basePath: basePath,
-  assetPrefix: assetPrefix, // Uncomment out this line to deploy to GitHub Pages
+  // assetPrefix: assetPrefix, // Uncomment out this line to deploy to GitHub Pages
   trailingSlash: true,
   images: { unoptimized: true }
 }

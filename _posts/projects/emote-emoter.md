@@ -12,13 +12,15 @@ ogImage:
 
 Emote / Emoter / A Poor Sort of Memory were all created during my undergraduate thesis at Parsons School of Design. I deployed Emoter in an anachronistic, interactive exhibit (seen below) at the Parson's 2017 BFA thesis show, with a personality that represents myself, created from parsing my archived messages on Facebook.
 
+While the code and dataset was open-source while I was in school, the IP for Emote and Emoter was sold to the startup <a class="md-link" href="https://hereafterlegacy.ai" target="_blank" style="margin-left: 0; margin-right: 0; display: inline">HAL</a>, and so is no longer open-source.
+
 <a href="/assets/projects/emoter-talking-demo.gif" target="_blank"><img src="/assets/projects/emoter-talking-demo.gif" class="img-shadow" style="display: block; margin-left: auto; margin-right: auto;" width="800" alt="Emoter digital personality replica chatbot"></img></a>
 
-I had originally wanted to create a wearable product intergrated with a talking AI, and while looking at all the existing chatbot solutions, I felt dissatisfied. I felt that chatbots should have some way to comprehend messages for some higher meaning, as an actual human mind would. Naturally, empathy seemed like a great way to answer for that higher meaning.
+I had originally wanted to create a wearable product integrated with a talking AI, and while looking at all the existing chatbot solutions, I felt dissatisfied. I felt that chatbots should have some way to comprehend messages for some higher meaning, as an actual human mind would. Naturally, empathy seemed like a great way to answer for that higher meaning.
 
 A chatbot with emotional intelligence could not only be able to narrow down schemas in its knowledge database to give more specific, accurate answers, but the bot could also then decipher and understand the emotional context of texts that aren't similar to anything in its training.
 
-I looked to intergrate a sentiment analyzer with my bot. I tried a few solutions, and again, felt dissatisfied with them all, including Watson's Tone Analyzer (which, as the name states, is for analyzing the tone of how text comes off, not actually how the person is feeling). Again, I began creating my own, with the help of several open-source libraries.
+I looked to integrate a sentiment analyzer with my bot. I tried a few solutions, and again, felt dissatisfied with them all, including Watson's Tone Analyzer (which, as the name states, is for analyzing the tone of how text comes off, not actually how the person is feeling). Again, I began creating my own, with the help of several open-source libraries.
 
 ## Emote: Sentiment analysis library
 
@@ -29,9 +31,23 @@ Based off these tone clusters, a further 10 additional tone classifications are 
 <a href="/assets/projects/emoter-empathy-diagram.png" target="_blank"><img src="/assets/projects/emoter-empathy-diagram.png" class="img-shadow" style="display: block; margin-left: auto; margin-right: auto;" width="300" alt="Emote empathy classification chart"></img></a>
 <span style="text-align: center; color: grey; margin-left: auto; margin-right: auto; display: block; width: 80%">How the emotional tones were clustered and classified in Emote.</span>
 
-I developed the training data for this by classifying ~10,000 quotes of dialog and text from literature and film texts. It was fed into a NaiveBayes classifier. I also developed an algorithm to parse 70,000 of my Facebook messages, in order to "clone" a digital replica of myself that would respond with messages I have said before. It also was integrated with Emote's sentiment analysis, to judge the emotions behind a user's message and respond accordingly with appropriate emotional tones.
+I developed the training data for this by classifying ~10,000 quotes of dialog and text from literature and film texts. It was fed into a Naive Bayes classifier. I also developed an algorithm to parse 70,000 of my Facebook messages, in order to "clone" a digital replica of myself that would respond with messages I have said before. It also was integrated with Emote's sentiment analysis, to judge the emotions behind a user's message and respond accordingly with appropriate emotional tones.
 
-While the code and dataset was open-source while I was in school, the IP for Emote and Emoter was sold to the startup <a class="md-link" href="https://hereafterlegacy.ai" target="_blank" style="margin-left: 0; margin-right: 0; display: inline">HAL</a>, and so is no longer open-source.
+A Naive Bayes classifier was chosen for a few reasons, mainly because of the feature-independent probability classification. 
+
+Naive Bayes starts with an initial guess based on what it's seen before; it will guess more common classifications more often. This made sense as I had classifications like "positive", "negative", as well as "joyful", or "anger", and the more generalized tones like positive / negative had a greater frequency of labels, and thus were classified more often. 
+
+To combat the limitation of potentially only getting classified by the most frequent tones in the training set, I took the highest 3-6 emotional tone probabilities, and normalized them to become more like percentages by reducing the variance between the class values, assuming that if a tone was in the top 5-6 classes found, there was some decent percentage of that tone detected in the text. 
+
+To achieve that normalization, I first used the StandardScaler class from scikit-learn's preprocessing methods (which worked effectively despite that it's usually meant for data preprocessing, not normalizing data outputs). I **was** planning to then apply the softmax function to transform those values back into a probability distribution that added up to 1, which exponentiates the probabilities and then divides them by the sum of all exponentiated scores, which would result in even further reduced variance. However, I decided not to, as I didn't want to limit the tones to add up to a 100% percentage, but instead be able to co-exist as a 100% value alongside other tones with percentages, since my detection was meant to analyze multiple tones simultaneously. 
+
+Once I had the values from the Standard Scaler transformation, I multiplied them by 100 to achieve a percentage. The Robust Scaler transformation from the same library would be more effective for normalizing outliers, but my class imbalances were not so great that it was needed in my opinion, and by design was supposed to be somewhat imbalanced for more niche tones versus more general ones.
+
+Because I only had ~10k examples in my dataset, the feature independence of the Naive Bayes model worked well, as it simplifies the complexity and thus the amount of data needed to estimate probabilities, while still retaining a high amount of dimensions.
+
+Each n-gram is considered a separate feature in the training, so I had to choose between unigrams, bigrams, trigrams, or further n-grams. Since my dataset was limited, I went with unigrams, despite the fact that no context beyond each word was considered, as the classifier would still take into account the frequency of every word (or n-gram) in the text. For me, the tradeoff for higher accuracy in a smaller dataset was worth the classifier risking inaccuracies when analyzing phrases like "that was so not good", versus "not! that was so good", which I figured would often be fringe cases.
+
+In the future, a Naive Bayes model based on bigrams or even trigrams with a 100k examples in the training dataset would be more versatile and presumably more accurate than this model.
 
 ## Emote image gallery
 
@@ -47,7 +63,9 @@ Emoter is a basic but functional chatbot platform intergrated with Emote (also i
 
 Emoter agents thus can operate on a "higher level of thinking", by first categorizing messages and then choosing specific, interchangeable "conversations" (lists of text responses) to respond from based on certain emotional tones.
 
-Within these conversations, Emoter looks for matching text in its database and compares it with the user input on a sliding threshold, outputting the corresponding response if the threshold is met.
+Within these conversations, Emoter looks for matching text in its database and compares it with the user input on a sliding threshold, outputting the corresponding response if the threshold is met. This "message-response" pair matching algorithm was simple (by design, as the NLP for matching responses in a conversation was not the focal point of hte project): It used cosine similarity after extracting the most important text words after some tf-idf (term frequency - inverse document frequency) analysis, which measures the importance of a word by weighing how often it appears in a single document then offsetting that by the frequency of the word's appearance in the entire corpus.
+
+The combined approach of cosine similarity and tf-idf filtering worked well, as the similarity threshold required for matching an appropriate response was much lower than if it checked for the entire text without filtering, so often multiple appropriate responses were matched even with a relatively small dataset, and the response chosen was randomized from the appropriate ones found, allowing for a dynamic conversation experience.
 
 <a href="/assets/projects/emoter_demo_5.png" target="_blank"><img src="/assets/projects/emoter_demo_5.png" class="img-shadow" style="display: block; margin-left: auto; margin-right: auto;" width="800" alt="Emoter agent with the personality of a fitness coach"></img></a>
 <span style="text-align: center; color: grey; margin-left: auto; margin-right: auto; display: block; width: 80%">A demo 'Emoter agent' with a persona of a fitness coach.</span>
