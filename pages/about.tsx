@@ -179,7 +179,7 @@ const About = () => {
           <span><span className="disappearing">*</span><span> BFA in Design & Technology / Game Design. I</span></span>
           <span><span className="disappearing">*</span><span> want to work on platforms and products that </span></span>
           <span><span className="disappearing">*</span><span> focus user experience and expression. </span></span>
-          <span><span className="disappearing">*</span><span> See my resume <a href='/Johnny_Dunn_Resume_2023.pdf' style={{color: 'rgb(176,196,222)'}} target='_blank'>here</a>.</span></span>
+          <span><span className="disappearing">*</span><span> See my resume <a href='/Johnny_Dunn_Resume_2024.pdf' style={{color: 'rgb(176,196,222)'}} target='_blank'>here</a>.</span></span>
           <span><span className="disappearing">*</span><span> </span></span>
           <span><span className="disappearing">*</span><span> Email me at <a href='mailto:johnnyfived@protonmail.com' style={{color: 'rgb(176,196,222)'}} target='_blank'>johnnyfived@protonmail.com</a></span></span>
           <span><span className="disappearing">*</span><span> for inquiries and work.</span></span>
