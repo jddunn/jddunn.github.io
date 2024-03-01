@@ -26,15 +26,17 @@ Google Analytics functionality is included. Modify the `./lib/constants.ts` file
 ## Setup / build
 
 ```bash
-
 # Install dependencies
 $ npm install
 
 # Serve at port 3000
 $ npm run dev
 
-# Build / export, exported files outputted to /out dir
+# Build
 $ npm run build
+
+# Build / export, exported files outputted to /out dir
+$ npm run export
 ```
 
 
