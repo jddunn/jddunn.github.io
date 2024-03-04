@@ -1,0 +1,317 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<title>Text RPG Engine</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<meta name="description" content="Website for text-rpg-engine, a Node library to create text adventures with flexible player interactions.">
+		<meta name="keywords" content="text, adventure, game, interactive, fiction, library, JavaScript, Node">
+		<meta name="author" content="Johnny Dunn">
+		<link rel="stylesheet" href="assets/css/main.css" />
+		<noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
+	</head>
+	<body class="is-preload">
+
+		<!-- Wrapper -->
+			<div id="wrapper" class="divided">
+					<section class="wrapper style1 align-center">
+						<div class="inner">
+							<h2>Text RPG Engine</h2>
+							<p>A lightweight (~50kb minified) JavaScript library to create text adventures / interactive fiction with flexible player interactions.</p>
+							<a href='https://github.com/jddunn/text-rpg-engine'>https://github.com/jddunn/text-rpg-engine</a>
+							<div class="index align-left">
+
+								<!-- Text -->
+									<section>
+										<header>
+											<h3>Web Demo</h3>
+										</header>
+										<div class="content">
+											<div id="display">
+												</div>
+												<form>
+													<input type="text" name="input" id="input" placeholder="Type something!">
+													<br>
+													<p style="color: grey; font-size: .8em">Hint: Try 'look at room'</p>
+												</form>
+											</div>
+									</section>
+
+													<!-- Text -->
+									<section>
+										<header>
+											<h3>Animated Demo</h3>
+										</header>
+										<div class="content">
+												<img src="https://raw.githubusercontent.com/jddunn/text-rpg-engine/master/screenshots/text-rpg-demo-full.gif" height="243" alt="Text RPG Engine - Example Demo"/>
+											</div>
+									</section>
+
+								<!-- Heading -->
+									<section>
+										<header>
+											<h3>Download / Install</h3>
+										</header>
+										<div class="content">
+											<code>
+											npm install text-rpg-engine
+											</code>
+										</div>
+									</section>
+
+								<!-- Unordered List -->
+									<section>
+										<header>
+											<h3>Features</h3>
+										</header>
+										<div class="content">
+
+											<ul class="alt">
+												<li>Games can be programmatically built with API or populated with data from a static JSON file</li>
+												<li>No server required to play games (JS files are bundled and transpiled with Browserify)</li>
+												<li>Player can move through rooms (rooms can have item requirements)</li>
+												<li>Inventory system</li>
+												<li>Environment and item interactions through prompts</li>
+												<li>Extreme flexibility; prompts can be anything and are stored in rooms, so prompts can have the same keyword triggers as long as they belong to different rooms</li>
+											</ul>
+										</div>
+									</section>
+
+													<!-- Ordered List -->
+									<section>
+										<header>
+											<h3>Limitations</h3>
+										</header>
+										<div class="content">
+
+											<ul class="alt">
+												<li>User can only perform one prompt / command at a time</li>
+												<li>There are no "common" prompt interactions; everything must be defined and repeated throughout different rooms if necessary</li>
+											</ul>
+
+										</div>
+									</section>
+
+
+															<!-- Ordered List -->
+									<section>
+										<header>
+											<h3>Depedencies</h3>
+						</header>
+										<div class="content">
+
+							
+											<ul class="alt">
+												<li><a href='https://babeljs.io/'>Babel</a></li>
+												<li><a href='https://webpack.js.org/'>Webpack</a></li>
+												<li><a href='http://browserify.org/'>Browserify</a></li>
+											</ul>
+										</div>
+										</section>
+
+								<!-- Ordered List -->
+									<section>
+										<header>
+											<h3>Build Notes</h3>
+										</header>
+										<div class="content">
+
+If you make any changes to the library files (anything inside /src), you will have to run <code>npm run build</code> to produce a new production version of the library. 
+
+<br><br>
+
+ANY changes you make in your client JS script, e.g. the <code>main.js</code> file, you will have to transpile the code again with Browserify. For example, if you make any changes for the example game, you will have to run this command inside the directory:
+
+<code>browserify -t brfs main.js -o bundle.js</code>
+
+
+										</div>
+									</section>
+									
+									<!-- Heading -->
+									<section>
+										<header>
+											<h3>Library API Usage</h3>
+										</header>
+										<div class="content" style="overflow-x: scroll">
+
+										<pre> <code>const game = require('text-rpg-engine');
+
+// Below code uses library API to programmatically build games
+// Add a room (by default will be beginning room since it was first added)
+const startRoom = game.addRoom('Beginning', 'This is the beginning room');
+// Add a second room (by default will be winning room since it was added last)
+const endRoom = game.addRoom('SecondRoom', 'You did it! You won!');
+// Or we could do this, to manually set which rooms to start / end
+// game.startRoom = 'Beginning'; // Set beginning room programatically
+// game.endRoom = 'SecondRoom'; // Set end room programatically
+
+// Add required item to room
+endRoom.requirements.push('accessKey');
+
+startRoom.addPrompt(
+  // name of prompt (required)
+  'go right',
+  // keywords that will activate prompt (required)
+  ['go right', 'move right', 'open right', 'enter right', 'door right', 'right door'],
+  // results of prompt
+  {
+    // successful prompt result text (required)
+    'successText': 'You enter in the access code "14052" and successfully open the door.',
+    // failed prompt result text (optional; a default fail text is displayed when a prompt fails)
+    'failText': 'The door is locked with an access code!',
+    // room to enter as result of prompt (optional)
+    'roomToEnter': 'SecondRoom',
+    // items added to inventory after successful prompt result (optional)
+    'itemsGiven': 'trophy'
+  },
+  // required items to successfully do prompt (optional)
+  ['accessKey']
+);
+
+
+startRoom.addPrompt(
+  'look room',
+  ['look room', 'look at room', 'search room', 'examine room', 'look in'],
+  {
+    'successText': 'You see a room with a door to the right and a statue in the middle.'
+  }
+);
+
+startRoom.addPrompt(
+  'get statue',
+  ['get statue', 'pick up statue', 'take statue', 'pick statue'],
+  {
+    'successText': `You pick up the statue. It feels heavy in your hands, and there's something hanging off
+                    the bottom.`,
+    'itemsGiven': ['statue']
+  }
+);
+
+startRoom.addPrompt(
+  'rotate statue', 
+  ['rotate statue', 'rotate the statue'],
+  {
+    'successText': 'You take the note from the bottom of the statue.',
+    'failText': 'You have no statue to look at!',
+    'itemsGiven': ['note']
+  },
+  ['statue']
+);
+
+startRoom.addPrompt(
+  'look note',
+  ['look at note', 'examine note', 'take note', 'get note', 'check note', 'read note', 'look note'],
+  {
+    'successText': 'You look at the note and find an access code: "14052."',
+    'failText': 'You have no note to look at!',
+    'itemsGiven': ['accessKey']
+  },
+  ['statue', 'note']
+);
+
+game.init();
+											</code>
+											</pre>
+										</div>
+									</section>
+
+
+		<!-- Heading -->
+									<section>
+										<header>
+											<h3>Loading from JSON file</h3>
+										</header>
+										<div class="content" style="overflow-x: scroll">
+
+										<a href='https://github.com/jddunn/text-rpg-engine/blob/master/example/example.json'>Link to example JSON here</a>
+
+										<pre> <code>const game = require('text-rpg-engine');
+
+const path = require('path');
+const fs = require('fs');
+
+// Below code loads game data from static JSON file
+let data = JSON.parse(fs.readFileSync(path.join(__dirname, './example.json')));
+
+game.loadData(data);
+
+game.init();
+											</code>
+											</pre>
+										</div>
+									</section>
+
+
+		<!-- Heading -->
+									<section>
+										<header>
+											<h3>Playing on the web</h3>
+										</header>
+										<div class="content" style="overflow-x: scroll">
+
+										<pre> <code>// By default, the library looks for an input form element with the class `input`, and a div element with the class `display` 
+// for the game's input and display (these classnames can be remapped in the game's input and display properties). 
+
+// Send user input to our game (on pressing 'Enter' in the form)
+document.getElementById('input').addEventListener('keypress', function (event) {
+  if (event.keyCode === 13) {
+    event.preventDefault();
+    game.userSend(document.getElementById('input').value);
+    document.getElementById('input').value = '';
+  }
+});
+											</code>
+											</pre>
+										</div>
+									</section>
+
+								<!-- Definition List -->
+									<section>
+										<header>
+											<h3>Future</h3>
+										</header>
+										<div class="content">
+
+							
+											<ul class="alt">
+												<li>Make game be able to parse user input for multiple prompts / commands</li>
+												<li>Make game be able to interchange common words in prompt keywords (so developers won't have to repeat synonyms for keyword triggers)</li>
+												<li>Add saving ability with different player names and scores (time it takes to solve game)</li>
+												<li>Create GUI to automatically generate JSON game data files</li>
+											</ul>
+
+										</div>
+									</section>
+
+						</div>
+					</section>
+
+				<!-- Footer -->
+					<footer class="wrapper style1 align-center">
+						<div class="inner">
+							<p>&copy; Licensed under the MIT License (MIT)
+							<br>
+												Copyright (c) 2019 Johnny Dunn.
+							<br>
+							Website template design <i>Story</i> by <a href='https://html5up.net/story'>HTML5Up.</a>
+
+						</div>
+					</footer>
+
+			</div>
+
+		<!-- Scripts -->
+			<script src="assets/js/jquery.min.js"></script>
+			<script src="assets/js/jquery.scrollex.min.js"></script>
+			<script src="assets/js/jquery.scrolly.min.js"></script>
+			<script src="assets/js/browser.min.js"></script>
+			<script src="assets/js/breakpoints.min.js"></script>
+			<script src="assets/js/util.js"></script>
+			<script src="assets/js/main.js"></script>
+
+		<!-- Note: Only needed for demo purposes. Delete for production sites. -->
+			<script src="assets/js/demo.js"></script>
+			<script src="bundle.js"></script>
+	</body>
+</html>
