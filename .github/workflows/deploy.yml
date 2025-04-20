@@ -38,7 +38,7 @@ jobs:
       - name: Build and Export 🔧
         run: npm run export
         env:
-          GITHUB_API_TOKEN: ${{ secrets.GITHUB_API_TOKEN }}
+          GH_API_TOKEN: ${{ secrets.GH_API_TOKEN }}
           GOOGLE_ANALYTICS_ID: ${{ secrets.GOOGLE_ANALYTICS_ID }}
           
       - name: Setup GitHub Pages 🔧
