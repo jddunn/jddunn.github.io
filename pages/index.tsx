@@ -17,7 +17,7 @@ export default function Home() {
   let counter = 0;
   const texts = [
     "a full-stack dev specializing in machine learning and web3 projects", 
-    "a co-founder amongst a small team of builders and hackers", 
+    "a co-founder at manic.agency an open-source and writing collective", 
     'an artist formerly known as an "artist" formerly known as an artifice', 
     "a persona non grata to myself looking for forgiveness",
     "a part of a god split and scattered by a goddess and tasked to find its pieces again, just like you",
