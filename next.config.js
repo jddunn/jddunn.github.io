@@ -8,9 +8,8 @@ const nextConfig = {
   reactStrictMode: true,
   output: 'export',
   // publicPath: "/jddunn.github.io",
-  // basePath: '/',
-  // basePath: basePath,
-  // assetPrefix: assetPrefix, // Uncomment out this line to deploy to GitHub Pages
+  assetPrefix: process.env.NODE_ENV === 'production' ? 'https://jddunn.github.io' : '',
+  basePath: '',
   trailingSlash: true,
   images: { unoptimized: true }
 }
