@@ -169,17 +169,14 @@ const About = () => {
           <span><span className="disappearing">*</span><h1 className="font-bold tracking-tighter leading-tight md:pr-8 inline" style={{color: 'white'}}> // About me</h1></span>
           <span><span className="disappearing">*</span><span> I have 6 years of experience in full-stack,</span></span>
           <span><span className="disappearing">*</span><span> development mainly focusing on backend work,</span></span>
-          <span><span className="disappearing">*</span><span> as well as NLP / ML engineering. I have</span></span>
-          <span><span className="disappearing">*</span><span> successfully created multiple E2E machine</span></span>
-          <span><span className="disappearing">*</span><span> learning applications based around NLP and</span></span>
-          <span><span className="disappearing">*</span><span> CV. I've also worked in blockchain-related</span></span>
+          <span><span className="disappearing">*</span><span> as well as NLP / ML engineering. I've worked in blockchain
           <span><span className="disappearing">*</span><span> teams developing custom smart contracts and</span></span>
           <span><span className="disappearing">*</span><span> NFTs. I've a wide breadth of skills and am a</span></span>
           <span><span className="disappearing">*</span><span> tech generalist. I graduated in 2017 with a</span></span>
           <span><span className="disappearing">*</span><span> BFA in Design & Technology / Game Design. I</span></span>
-          <span><span className="disappearing">*</span><span> want to work on platforms and products that </span></span>
-          <span><span className="disappearing">*</span><span> focus user experience and expression. </span></span>
-          <span><span className="disappearing">*</span><span> See my resume <a href='/Johnny_Dunn_Resume_2024.pdf' style={{color: 'rgb(176,196,222)'}} target='_blank'>here</a>.</span></span>
+          <span><span className="disappearing">*</span><span> make open-source projects and other projects at </span></span>
+          <span><span className="disappearing">*</span><span> <a href="https://manic.agency">Manic.agency</a> and write about it <a href="https://manic.agency/blog" target="_blank">here</a>.</span></span></span></span>
+          <span><span className="disappearing">*</span><span> See my resume <a href='/Johnny_Dunn_Resume_2025.pdf' style={{color: 'rgb(176,196,222)'}} target='_blank'>here</a>.</span></span>
           <span><span className="disappearing">*</span><span> </span></span>
           <span><span className="disappearing">*</span><span> Email me at <a href='mailto:johnnyfived@protonmail.com' style={{color: 'rgb(176,196,222)'}} target='_blank'>johnnyfived@protonmail.com</a></span></span>
           <span><span className="disappearing">*</span><span> for inquiries and work.</span></span>
