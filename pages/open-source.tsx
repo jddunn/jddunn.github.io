@@ -13,7 +13,7 @@ import { setContext } from "@apollo/client/link/context";
 
 import { NextSeo } from "next-seo";
 
-import { GITHUB_API_TOKEN } from "lib/constants";
+import { GH_API_TOKEN } from "lib/constants";
 
 const OpenSource = ({ pinnedItems }) => {
   return (
@@ -103,7 +103,7 @@ export async function getStaticProps() {
     return {
       headers: {
         ...headers,
-        authorization: `Bearer ` + GITHUB_API_TOKEN,
+        authorization: `Bearer ` + GH_API_TOKEN,
       },
     };
   });

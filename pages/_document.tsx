@@ -9,14 +9,14 @@ export default function Document() {
   return (
     <Html lang="en">
         <DefaultSeo {...SEO} />
-        <Script src={`https://www.googletagmanager.com/gtag/js?id=${GOOGLE_ANALYTICS_ID}`}/>
-        <Script id="google-analytics">
+        <Script strategy="afterInteractive" src={`https://www.googletagmanager.com/gtag/js?id=${GOOGLE_ANALYTICS_ID}`}/>
+        <Script id="google-analytics" strategy="afterInteractive">
         {`
           window.dataLayer = window.dataLayer || [];
           function gtag(){dataLayer.push(arguments);}
           gtag('js', new Date());
  
-          gtag('config', ${GOOGLE_ANALYTICS_ID});
+          gtag('config', '${GOOGLE_ANALYTICS_ID}');
         `}
       </Script>
       <Head>
@@ -24,7 +24,6 @@ export default function Document() {
       <body>
         <Main />
         <NextScript />
-
       </body>
     </Html>
   )
