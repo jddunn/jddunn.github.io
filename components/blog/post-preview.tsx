@@ -1,5 +1,4 @@
 import DateFormatter from './date-formatter'
-
 import CoverImage from './cover-image'
 import Link from 'next/link'
 import type Author from '../../interfaces/author'
@@ -7,10 +6,10 @@ import type Author from '../../interfaces/author'
 type Props = {
   title: string
   coverImage?: string
-  date: string
+  date?: string
   createdDate: string
   excerpt: string
-  author: Author
+  author?: Author
   tags?: string
   slug: string
   dir?: string
@@ -28,7 +27,9 @@ const PostPreview = ({
   dir='blog'
 }: Props) => {
 
-  const _tags = tags.split(",")
+  // Add null check before calling split
+  const _tags = tags ? tags.split(",") : []
+  
   return (
     <div>
       <h3 className="text-3xl mb-3 leading-snug">
@@ -66,4 +67,4 @@ const PostPreview = ({
   )
 }
 
-export default PostPreview
+export default PostPreview;
