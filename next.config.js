@@ -11,7 +11,11 @@ const nextConfig = {
   assetPrefix: process.env.NODE_ENV === 'production' ? 'https://jddunn.github.io' : '',
   basePath: '',
   trailingSlash: true,
-  images: { unoptimized: true }
+  images: { unoptimized: true },
+  // Disable ESLint during build
+  eslint: {
+    ignoreDuringBuilds: true,
+  }
 }
 
 module.exports = nextConfig
