@@ -2,43 +2,53 @@ name: Build and Deploy
 
 on:
   push:
-    branches: [ master, main ]
-  workflow_dispatch:
+    branches: [ master, main ] # Triggers on push to master or main
+  workflow_dispatch: # Allows manual triggering
 
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
 
+    # --- Set environment variables for the entire job ---
+    env:
+      # Reads secrets and makes them available as env variables
+      GH_API_TOKEN: ${{ secrets.GH_API_TOKEN }}
+      GOOGLE_ANALYTICS_ID: ${{ secrets.GOOGLE_ANALYTICS_ID }}
+
+    # --- Permissions needed for the deployment step ---
     permissions:
-      contents: write # Needed for peaceiris/actions-gh-pages
+      contents: write # Allows actions-gh-pages to push to the gh-pages branch
 
     steps:
+      # --- Step 1: Check out the repository code ---
       - name: Checkout
         uses: actions/checkout@v3
         with:
-          lfs: true # <--- ADD THIS LINE TO FETCH LFS FILES
+          lfs: true # Ensures Git LFS files are downloaded
 
+      # --- Step 2: Set up Node.js environment ---
       - name: Setup Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: '18'
+          node-version: '18' # Use the Node.js version your project requires
 
+      # --- Step 3: Install project dependencies ---
       - name: Install Dependencies
-        run: npm ci # Use ci for cleaner installs in CI
+        run: npm ci # 'ci' is generally recommended for CI environments
 
+      # --- Step 4: Build the Next.js application ---
+      # Environment variables set at the job level are available here
       - name: Build
         run: |
           npm run build
           npm run export
-          touch out/.nojekyll
-        env:
-          # You might not need GH_API_TOKEN here unless your build process uses it
-          # GITHUB_TOKEN is automatically available for actions-gh-pages
-          # NEXT_DISABLE_ESLINT: 1 # Optional: If you want to disable eslint check during build
-          GOOGLE_ANALYTICS_ID: ${{ secrets.GOOGLE_ANALYTICS_ID }} # Keep if needed by build
+          touch out/.nojekyll # Create .nojekyll file for GitHub Pages
 
+      # --- Step 5: Deploy the built site to gh-pages branch ---
       - name: Deploy
         uses: peaceiris/actions-gh-pages@v3
         with:
-          github_token: ${{ secrets.GITHUB_TOKEN }} # Use the default GITHUB_TOKEN
+          # Uses the automatically generated token for repo write access
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          # Specifies the directory containing the built site
           publish_dir: ./out
