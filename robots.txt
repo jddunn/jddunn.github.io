@@ -1,0 +1,9 @@
+# *
+User-agent: *
+Allow: /
+
+# Host
+Host: https://jddunn.github.io
+
+# Sitemaps
+Sitemap: https://jddunn.github.io/sitemap.xml

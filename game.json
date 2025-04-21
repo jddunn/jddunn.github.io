@@ -1,0 +1,736 @@
+{
+    "game": {
+        "startRoom": "Beginning",
+        "endRoom": "EndRoom",
+        "rooms": 
+            [
+                {
+                    "name": "WelcomeRoom",
+                    "getText": "<p class='neonText'>Welcome to our journey.</p> <br> <p class=\"text-content\" style=\"color: grey\"> You may learn some things about me, or learn some things about you. Here and now, there is no difference anyway. Remember this, not every action you can take will be shown to you. </p> <br> <p>You're in a tiny, tiny room, and you see an even tinier door in front of you. You can barely even turn your head! </p>",
+                    "prompts": [
+                        {
+                            "name": "go further",
+                            "keywords": ["go", "further", "forward", "enter", "go in", "go further"],
+                            "results":  {
+                                "successText": "Note: All the rooms <u>in this particular path</u> from here on out were written with the help of LLMs / ChatGPT, with some prompt engineering to make the content similar to the style in the Alice in Wonderland novels, and also to blend with the style dictated in the other rooms regarding power and choices. Around has ~70-80% of the content written directly by ChatGPT with little to no modifications. This was done purposefully to show what an aide and competent writer LLMs can act as, with the right prompts and collaborative effort.",
+                                "failText": "Try as you might, you're unable to move any further than where you currently are. Hint: look around your surroundings.",
+                                "roomToEnter": "DungeonAdventureRoom"
+                            },
+                            "itemRequirements": ["drunkSmallPotion"],
+                            "show": true,
+                            "showIfLackingRequirements": true
+                        },
+                        {
+                            "name": "special entrance",
+                            "keywords": ["special entrance", "special"],
+                            "results":  {
+                                "successText": "You hold up the magical hourglass to the entrance, and a light glimmers and you are let in.",
+                                "failText": "The entrance is inaccessible, you'll need something special to open it!",
+                                "roomToEnter": "RoomSpecial"
+                            },
+                            "itemRequirements": ["hourglassOfRestoration"],
+                            "show": true,
+                            "showIfLackingRequirements": false
+                        },
+                        {
+                            "name": "i'm in charge here",
+                            "keywords": ["in charge", "no", "refuse", "refusal", "i won't"],
+                            "results":  {
+                                "roomToEnter": "ImInChargeRoom"
+                            },
+                            "show": true
+                        },
+                        {
+                            "name": "how was this created?",
+                            "keywords": ["i want to know how this was created", "how this was created", "how was this created", "how was this created?"],
+                            "results":  {
+                                "successText": "<p style=\"font-weight: normal; color: rgba(253, 243, 240, .80)\">This portfolio site was built with Next.js 13 and Tailwind CSS, written in TypeScript, and uses markdown files for the blog content and project posts, which are rendered with <a href=\"https://github.com/showdownjs/showdown/\" style=\"color: rgb(176,196,222)\" target=\"_blank\">showdown</a>. The homepage also uses Three.js to render and make the 3D potion interactive, and the object is removed from the scene whenever someone browses to a different page that's not home. <br><br> The <span style=\"color: grey\">open source </span> page pulls from the GitHub API for my GitHub profile's pinned repositories, and uses GraphQL / Apollo to query the data. The API calls are made at build time for the Next app (using getStaticProps), and all the web files are exported with Next after building, allowing the site to be hosted on a static server still. So if you look at the source code for this page, you'll see regular HTML with bundled CSS and JS files. <br><br> The game you're playing now was created with my open-source JavaScript library <a href=\"https://jddunn.github.io/text-rpg-engine/\" style=\"color: rgb(176,196,222)\" target=\"_blank\">text-rpg-engine</a>, which lets users create interactive fiction games with any type of web content displayable, driven by any type of verbal or web-based (e.g. button clicking) player interactions. <br> <br> The paths / rooms inspired by the Alice in Wonderland novels were written with the help (or mostly by) ChatGPT; this is meant to showcase the powerful writing and stylistic capabilities of an LLM with the right prompt engineering and context. <br> <br> You can see the source code for this site <a href=\"https://github.com/jddunn/portfolio/\" style=\"color: rgb(176,196,222)\" target=\"_blank\">here</a>, and see the JSON data that powers this game <a href=\"./game.json\" style=\"color: rgb(176,196,222)\" target=\"_blank\">here</a>.</p>",
+                                "roomToEnter": "WelcomeRoom"
+                            },
+                            "show": true
+                        },
+                        {
+                            "name": "look around",
+                            "keywords": ["look around", "examine", "search", "look", "investigate"],
+                            "results": {
+                                "successText": "You look around your surroundings and see a tiny door in front of you. You couldn't possibly fit in there! But to your right there's a potion that says <b>DRINK ME</b>.",
+                                "roomToEnter": "WelcomeRoom"
+                            }
+                        },
+                        {
+                            "name": "drink potion",
+                            "keywords": ["drink", "drink potion", "drinking", "potion", "slurp"],
+                            "results": {
+                                "successText": "You take globe of liquid in your hands and the color changes as soon as you touch it to your surprise. You drink, cautiously at first, then deeply, feeling a level of refreshment you forgot you were familiar with. You begin to shrink!  <p style='font-size: .95em; text-align: center'>Special thanks to <b>ArneDC</b> on Sketchfab for the model.</b></p>",
+                                "itemsGiven": ["drunkSmallPotion"],
+                                "roomToEnter": "WelcomeRoom"
+                            }
+                        },
+                        {
+                            "name": "greeting",
+                            "keywords": ["what's up", "sup", "hey", "hi", "hello", "greetings"],
+                            "results": {
+                                "successText": "Oh, hello there.",
+                                "roomToEnter": "WelcomeRoom"
+                            }
+                        },
+                        {
+                            "name": "bye",
+                            "keywords": ["good-bye", "bye", "goodbye", "farewell", "see ya", "see you later", "cya"],
+                            "results": {
+                                "successText": "You're leaving, so soon? You haven't even started yet. But it's nice that you took the time to say goodbye.",
+                                "roomToEnter": "WelcomeRoom"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "name": "WelcomeRoom2",
+                    "getText": "<p class='neonText'>Welcome again to our journey.</p> <br> <p class=\"text-content\" style=\"color: grey\"> You feel a little bit wiser than the last time you were here, but believe me, it makes no difference anyway. </p> <br> <p>You're in a tiny, tiny room, and you see an even tinier door in front of you. You can barely even turn your head! </p>",
+                    "prompts": [
+                        {
+                            "name": "go further",
+                            "keywords": ["go", "further", "forward", "enter", "go in", "go further"],
+                            "results":  {
+                                "successText": "You're able to move forward, and with a little effort, you're able to push open and pass through the door.",
+                                "failText": "Try as you might, you're unable to move any further than where you currently are. Hint: look around your surroundings.",
+                                "roomToEnter": "DungeonAdventureRoom"
+                            },
+                            "itemRequirements": ["drunkSmallPotion"],
+                            "show": true,
+                            "showIfLackingRequirements": true
+                        },
+                        {
+                            "name": "special entrance",
+                            "keywords": ["special entrance", "special"],
+                            "results":  {
+                                "successText": "You hold up the special key to the entrance, and a light glimmers and you are let in.",
+                                "failText": "The entrance is inaccessible, you'll need an access key to open it! Hint: look around your surroundings.",
+                                "roomToEnter": "RoomSpecial"
+                            },
+                            "itemRequirements": ["specialKey"],
+                            "show": true,
+                            "showIfLackingRequirements": false
+                        },
+                        {
+                            "name": "how was this created?",
+                            "keywords": ["i want to know how this was created", "how this was created", "how was this created", "how was this created?"],
+                            "results":  {
+                                "successText": "This portfolio site was built with Next.js 13, and uses markdown files for the blog content and project posts, which are rendered with <a href=\"https://github.com/showdownjs/showdown/\" style=\"color: rgb(176,196,222)\" target=\"_blank\">showdown</a>. The homepage also uses three.js to render and make the 3D potion interactive, and the object is removed from the scene whenever someone browses to a different page that's not home. <br><br> The <span style=\"color: grey\">open source </span> page pulls from the GitHub API for my GitHub profile's pinned repositories, and uses GraphQL / Apollo to query the data. The game you're playing now that you see on the homepage was created with my open-source JavaScript library <a href=\"https://jddunn.github.io/text-rpg-engine/\" style=\"color: rgb(176,196,222)\" target=\"_blank\">text-rpg-engine</a>, which lets users create interactive fiction games with any type of web content displayable, and any type of verbal player interactions. <br> <br> You can see the source code for this site <a href=\"https://github.com/jddunn/jddunn.github.io/\" style=\"color: rgb(176,196,222)\" target=\"_blank\">here</a>, and see the JSON data that powers this game <a href=\"https://github.com/jddunn/jddunn.github.io/\" style=\"color: rgb(176,196,222)\" target=\"_blank\">here</a>.",
+                                "roomToEnter": "WelcomeRoom2"
+                            },
+                            "show": true
+                        },
+                        {
+                            "name": "look around",
+                            "keywords": ["look around", "examine", "search", "look", "investigate"],
+                            "results": {
+                                "successText": "You look around your surroundings and see a tiny door in front of you. You couldn't possibly fit in there! But to your right there's a potion that says <b>DRINK ME</b>",
+                                "roomToEnter": "WelcomeRoom2"
+                            }
+                        },
+                        {
+                            "name": "drink potion",
+                            "keywords": ["drink", "drink potion", "drinking", "potion", "slurp"],
+                            "results": {
+                                "successText": "You take globe of liquid in your hands and the color changes as soon as you touch it to your surprise. You drink, cautiously at first, then deeply, feeling a level of refreshment you forgot you were familiar with. You begin to shrink! <p style='font-size: .95em; text-align: center'>Special thanks to <b>ArneDC</b> on Sketchfab for the model.</b></p>",
+                                "itemsGiven": ["drunkSmallPotion"],
+                                "itemsRemoved": ["drunkBigPotion"],
+                                "roomToEnter": "WelcomeRoom2"
+                            }
+                        },
+                        {
+                            "name": "greeting",
+                            "keywords": ["what's up", "sup", "hey", "hi", "hello", "greetings"],
+                            "results": {
+                                "successText": "Oh, hello there.",
+                                "roomToEnter": "WelcomeRoom2"
+                            }
+                        },
+                        {
+                            "name": "bye",
+                            "keywords": ["good-bye", "bye", "goodbye", "farewell", "see ya", "see you later", "cya"],
+                            "results": {
+                                "successText": "You're leaving, so soon? You haven't even started yet. But it's nice that you took the time to say goodbye.",
+                                "roomToEnter": "WelcomeRoom2"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "name": "ImInChargeRoom",
+                    "getText": "<p>It's said that power comes with responsibility, but in fact it's the opposite: <b> Power alleviates responsibility. </b> It's not a duty; it's a choice. And you had power and you chose wrongly. </p> <br> <p> You remember you used to be proud to be lazy—you wore it like a badge of honor, as if it was a symbol of intelligence. Now its place has been taken by a badge of shame.</p> <br> <p><b>Shame.</b> It's so great, the shame. The weight, the burden of it, you must bear it somewhere. Will you carry the burden in your heart, or carry it on your back?</p>",
+                    "prompts": [
+                        {
+                            "name": "in the heart",
+                            "keywords": ["heart", "the heart", "menu"],
+                            "results":  {
+                                "roomToEnter": "InTheHeartRoom",
+                                "itemsGiven": ["weightedHeart"],
+                                "itemsRemoved": ["weightedBack"]
+                            },
+                            "show": true
+                        },
+                        {
+                            "name": "on my back",
+                            "keywords": ["back", "my back"],
+                            "results":  {
+                                "roomToEnter": "OnMybackRoom",
+                                "itemsGiven": ["weightedBack"],
+                                "itemsRemoved": ["weightedHeart"]
+                            },
+                            "show": true
+                        },
+                        {
+                            "name": "return",
+                            "keywords": ["return", "menu", "main menu"],
+                            "results":  {
+                                "roomToEnter": "WelcomeRoom",
+                                "itemsRemoved": ["drunkBigPotion"]
+                            },
+                            "show": true
+                        }
+                    ]
+                },
+                {
+                    "name": "InTheHeartRoom",
+                    "getText": "So you think your heart is stronger than your body. You made a bet didn't you? A bet that your heart was strong enough, that it wouldn't get any heavier. <br><br> Or was it so heavy that you just didn't think you'd notice any more load? You may think, that unlike the body, your heart won't show the wear, but in time we'll see if you've been able to hold that true. It takes more than aging to see these effects. <br> The burden in your heart will wear away at your body, and one day you may become unrecognizable; your face will keep eating itself, unless you learn relief.",
+                    "prompts": [
+                        {
+                            "name": "move on",
+                            "keywords": ["move", "move on", "forward", "go"],
+                            "results":  {
+                                "roomToEnter": "MoveForwardRoom"
+                            },
+                            "show": true
+                        },
+                        {
+                            "name": "back",
+                            "keywords": ["back", "menu", "main menu"],
+                            "results":  {
+                                "roomToEnter": "InTheHeartRoom",
+                                "successText": "You made your choice, and with some choices there is no going back. However, you can start anew, if you leave and come back again. But one of these days you may leave and not be able to return."
+                            },
+                            "show": true
+                        }
+                    ]
+                },
+                {
+                    "name": "OnMybackRoom",
+                    "getText": "So you think your body is stronger than your heart. It can carry the weight, but you will slouch, you will ache, you will deteriorate further with age. Your heart may not become heavier, but you will feel the toll on your body. The day will come that you will have to find another way to ease the load, and you may find that the burden on the body can seep its way to the heart with an exigent influence.",
+                    "prompts": [
+                        {
+                            "name": "move on",
+                            "keywords": ["move", "move on", "forward", "go"],
+                            "results":  {
+                                "roomToEnter": "MoveForwardRoom"
+                            },
+                            "show": true
+                        },
+                        {
+                            "name": "back",
+                            "keywords": ["back", "menu", "main menu"],
+                            "results":  {
+                                "roomToEnter": "OnMybackRoom",
+                                "successText": "You made your choice, and with some choices there is no going back. But you can start anew if you leave and come back again. But one of these days you may leave and not be able to return."
+                            },
+                            "show": true
+                        }
+                    ]
+                },
+                {
+                    "name": "MoveForwardRoom",
+                    "getText": "You want to move on, and moving on is a choice. <b> Power is choices. </b> And you are in charge, so you have a choice now. <br> <br> Your loved ones, your guardians, you love them so, but they're aging now, the decay is starting to set in. This is a common symptom of the plight of the immigrant, the burden of the plebeian. If they were luckier, born in better circumstances, the toll would be lesser, the heart would be lighter. <br> <br> If you had the choice (<i>and you do here</i>), would you freeze time now, so that you could be with them as they are for much longer, or would you go back in time to fix your regret, make it so you never left your dearest friend when they needed you the most?",
+                    "prompts": [
+                        {
+                            "name": "freeze time",
+                            "keywords": ["freeze time", "freeze", "frozen", "stop"],
+                            "results":  {
+                                "roomToEnter": "FreezeTimeRoom",
+                                "successText": "You chose to freeze time, to not fix it when you could. Will you regret it, or will you find solace in selflessness and giving? But why could you not be so selfless before?"
+                            },
+                            "show": true
+                        },
+                        {
+                            "name": "go back in time",
+                            "keywords": ["go back", "back", "past"],
+                            "results":  {
+                                "roomToEnter": "backInTimeRoom",
+                                "successText": "You chose to go back in time, to fix things. But time passes quickly, will you regret not keeping things as they are? Was it not enough to stay?"
+                            },
+                            "show": true
+                        }
+                    ]
+                },
+                {
+                    "name": "FreezeTimeRoom",
+                    "getText": "<p class=\"glitch\" style=\"font-size: .9em; letter-spacing: 1px\">You stopped it.</p> <br> <p>Time is a construct, and you are a builder. And here, everything will stay as it-is, you don't have to leave anyone anymore. </p> <br> <p> But there is still blood on your hands, blood that pools up in your mouth so these days you can barely even speak.</p> <br> <p>If words were currency, you would take a vow of silence to save it all till it mattered. But timing was something you could never get quite right. What do you do now?</p>",
+                    "prompts": [
+                        {
+                            "name": "let go of your power",
+                            "keywords": ["let go", "set free"],
+                            "results":  {
+                                "roomToEnter": "AfterlifeRoom",
+                                "successText": "You chose to let go."
+                            },
+                            "show": true
+                        },
+                        {
+                            "name": "keep your power",
+                            "keywords": ["keep"],
+                            "results":  {
+                                "roomToEnter": "FreezeTimeRoom",
+                                "successText": "You refuse to let your power go; you refuse to go back. You can stay here forever, and never let them go."
+                            },
+                            "show": true
+                        },
+                        {
+                            "name": "i don't know",
+                            "keywords": ["idk", "don't know", "dont know", "not sure"],
+                            "results": {
+                                "successText": "Exactly. You just don't know anything at all.",
+                                "roomToEnter": "FreezeTimeRoom"
+                            }
+                        },
+                        {
+                            "name": "i love you",
+                            "keywords": ["love"],
+                            "results": {
+                                "successText": "Your love is the greatest gift you could give to us.",
+                                "roomToEnter": "FreezeTimeRoom"
+                            }
+                        },
+                        {
+                            "name": "i miss you",
+                            "keywords": ["miss you"],
+                            "results": {
+                                "successText": "You may not think the happy memories were enough, but they were for us. You will be missed too.",
+                                "roomToEnter": "FreezeTimeRoom"
+                            }
+                        },
+                        {
+                            "name": "greeting",
+                            "keywords": ["what's up", "sup", "hey", "hi", "hello", "greetings", "hii", "heyy"],
+                            "results": {
+                                "successText": "It is so very good to see you.",
+                                "roomToEnter": "FreezeTimeRoom"
+                            }
+                        },
+                        {
+                            "name": "bye",
+                            "keywords": ["good-bye", "bye", "goodbye", "farewell", "see ya", "see you later", "cya"],
+                            "results": {
+                                "successText": "It was so very good to see you, and it's okay if you have to go.",
+                                "roomToEnter": "FreezeTimeRoom"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "name": "backInTimeRoom",
+                    "getText": "<p class=\"glitch\" style=\"font-size: .9em; letter-spacing: 1px;\">You went back.</p> <p>Time is a construct, and you are a builder. And here you've been able to return in time, to fix the regrets that hunt you relentlessly. </p> <br> <p> But there is still blood on your hands, blood that pools up in your mouth so these days you can barely even speak.</p> <br> <p>If words were currency, you would take a vow of silence to save it all till it mattered. But timing was never something you could get quite right. What do you do now? </p>",
+                    "prompts": [
+                        {
+                            "name": "let go of your power",
+                            "keywords": ["let go", "set free"],
+                            "results":  {
+                                "roomToEnter": "AfterlifeRoom",
+                                "successText": "You chose to let go."
+                            },
+                            "show": true
+                        },
+                        {
+                            "name": "keep your power",
+                            "keywords": ["keep"],
+                            "results":  {
+                                "roomToEnter": "backInTimeRoom",
+                                "successText": "You refuse to let your power go; you refuse to move forward. You can stay here forever, and never regret again."
+                            },
+                            "show": true
+                        },
+                        {
+                            "name": "i don't know",
+                            "keywords": ["idk", "don't know", "dont know", "not sure"],
+                            "results": {
+                                "successText": "Exactly. You just don't know anything at all.",
+                                "roomToEnter": "backInTimeRoom"
+                            }
+                        },
+                        {
+                            "name": "yes",
+                            "keywords": ["yes", "yeah", "maybe", "i think"],
+                            "results": {
+                                "successText": "Then why didn't you?",
+                                "roomToEnter": "backInTimeRoom"
+                            }
+                        },
+                        {
+                            "name": "no",
+                            "keywords": ["nope", "nah", "maybe not", "no"],
+                            "results": {
+                                "successText": "Then that is one less regret.",
+                                "roomToEnter": "backInTimeRoom"
+                            }
+                        },
+                        {
+                            "name": "i love you",
+                            "keywords": ["love"],
+                            "results": {
+                                "successText": "You show your affection to your dear friend, and they are happy to see you.",
+                                "roomToEnter": "backInTimeRoom"
+                            }
+                        },
+                        {
+                            "name": "i miss you",
+                            "keywords": ["miss you"],
+                            "results": {
+                                "successText": "You may not think the happy memories were enough, but they were.",
+                                "roomToEnter": "backInTimeRoom"
+                            }
+                        },
+                        {
+                            "name": "greeting",
+                            "keywords": ["what's up", "sup", "hey", "hi", "hello", "greetings", "hii", "heyy"],
+                            "results": {
+                                "successText": "Your friend is so very happy to see you.",
+                                "roomToEnter": "backInTimeRoom"
+                            }
+                        },
+                        {
+                            "name": "bye",
+                            "keywords": ["good-bye", "bye", "goodbye", "farewell", "see ya", "see you later", "cya"],
+                            "results": {
+                                "successText": "It's okay if you have to go. The time you had together was enough.",
+                                "roomToEnter": "backInTimeRoom"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "name": "AfterlifeRoom",
+                    "getText": "<p> You knew you couldn't have stayed anyway, no matter how badly you wanted. </p> <br> <p> Life is finite, and time machines only move forward. Life is a dream, and time exists only as a memory. Maybe after an eternity, we'll loop and I'll have the chance to do it over again. Maybe if I had a second chance, I would try so much harder, and see you to the end. </p> <br> <p class=\"glitch\" style=\"font-size: .9em; letter-spacing: 1px;\"> But, if I die tonight, would I see you in the afterlife? </p> <br><p>Will I be able to find you again, my dearest sweetest friend? <br><br> And if there exists an afterlife, I will live forever with regret.",
+                    "prompts": [
+                        {
+                            "name": "return",
+                            "keywords": ["return"],
+                            "results":  {
+                                "roomToEnter": "WelcomeRoom2",
+                                "itemsRemoved": ["drunkBigPotion"]
+                            },
+                            "show": true
+                        }
+                    ]
+                },
+                {
+                    "name": "RoomSpecial",
+                    "getText": "Wow, you got to the special room! You're awesome and everybody loves you. <br><br> <img src=\"http://2.bp.blogspot.com/-nJJm_EbENsk/UF6C9N-ZzrI/AAAAAAAAAyw/6wVis8mrDWw/s320/excited+minions+2.gif\" width=\"200px\">",
+                    "prompts": [
+                        {
+                            "name": "back",
+                            "keywords": ["back", "menu", "main menu"],
+                            "results":  {
+                                "roomToEnter": "WelcomeRoom"
+                            },
+                            "show": true
+                        }
+                    ]
+                },
+                {
+                    "name": "DungeonAdventureRoom",
+                    "getText": "A door is a door, unless it isn't. Sometimes it's an entrance, sometimes it's an exit. But who decides that, is it you, or is it the doormaker, you wonder? </p> <br> <p> You're probably asking this of yourself, cause what you just entered isn’t a mere room. The space warps around you and colors swirl, melding and blending like paint on an artist’s canvas. You feel as though you've been pulled through the eye of a needle, and now everything is inside out and upside down. <br> <br> The tiny door behind you now appears colossal, its wooden frame stretching up and beyond your line of sight. It has a polished bronze handle that shines with an otherworldly gleam. <br><br> Echoes of conversations past run through your mind: <i>\"The choices we make define us, but sometimes it’s the choices we don’t make that haunt us.\"</i> <br> <br> The decisions of the past weigh on your mind, and you wonder if this is a chance at redemption or another descent into madness. Suddenly, the room shudders. Whispers creep into your ears, a cacophony of voices from the past, present, and perhaps even the future. Among them, you discern one voice, clear and strong, reciting: \"<i>I can't go back to yesterday because I was a different person then.</i>\" <br><br> The sound of soft tapping distracts you. Turning your gaze, you notice a white rabbit with a pocket watch, looking at you impatiently. \"Oh dear! Oh dear! You'll be late!\" he says, wringing his tiny paws, which to you are gigantic, since you are still small. <br><br> There's another potion in this room, one that matches your size so it's much tinier now, and a different color. Maybe if you drink it you'll grow bigger again? </p> <br> <p> <i> Well, this story is definitely a familiar one, you murmur to no one in particular, and a little played out at this point, don't you think? Nonetheless, you're still glad that expiration for copyrights exists.</p>",
+                    "prompts": [
+                        {
+                            "name": "look around",
+                            "keywords": ["look around", "examine", "search", "look", "investigate"],
+                            "results": {
+                                "successText": "You take a look around you and see an enormous but adorable white rabbit prancing about in place. Beside you, there's a potion that says <b>DRINK ME AGAIN</b>.",
+                                "roomToEnter": "DungeonAdventureRoom"
+                            }
+                        },
+                        {
+                            "name": "late for what?",
+                            "keywords": ["late?", "for what?", "for what", "what do you mean", "what", "wdym", "don't understand", "dont understand", "don't get it", "dont get it"],
+                            "results":  {
+                                "roomToEnter": "DungeonAdventureLateForWhatRoom",
+                                "itemsRemoved": ["drunkSmallPotion"],
+                                "failText": "You try to speak, but you're too small for the rabbit to hear you!"
+                            },
+                            "itemRequirements": ["drunkBigPotion"],
+                            "show": true
+                        },
+                        {
+                            "name": "oh i should hurry up then!",
+                            "keywords": ["i should", "hurry up", "go"],
+                            "results":  {
+                                "roomToEnter": "DungeonAdventureHurryUpRoom",
+                                "itemsRemoved": ["drunkSmallPotion"],
+                                "failText": "You try to speak, but you're too small for the rabbit to hear you!"
+                            },
+                            "itemRequirements": ["drunkBigPotion"],
+                            "show": true
+                        },
+                        {
+                            "name": "i have all the time in the world",
+                            "keywords": ["can wait", "no rush", "no hurry", "all the time", "plenty of time"],
+                            "results":  {
+                                "roomToEnter": "DungeonAdventureAllTheTimeRoom",
+                                "itemsRemoved": ["drunkSmallPotion"],
+                                "failText": "You try to speak, but you're too small for the rabbit to hear you!"
+                            },
+                            "itemRequirements": ["drunkBigPotion"],
+                            "show": true
+                        },
+                        {
+                            "name": "drink potion",
+                            "keywords": ["drink", "drink potion", "drinking", "potion", "slurp"],
+                            "results": {
+                                "successText": "You take globe of liquid in your hands and the color changes as soon as you touch, though you're not surprised this time. You drink, no longer cautiously at first, then deeply, and begin to grow, until you're back to your normal size. <p style='font-size: .95em; text-align: center'>Special thanks to <b>ArneDC</b> on Sketchfab for the model.</b></p>",
+                                "itemsGiven": ["drunkBigPotion"],
+                                "itemsRemoved": ["drunkSmallPotion"],
+                                "roomToEnter": "DungeonAdventureRoom"
+                            }
+                        },
+                        {
+                            "name": "back",
+                            "keywords": ["back", "menu", "main menu"],
+                            "results":  {
+                                "roomToEnter": "WelcomeRoom",
+                                "successText": "You retreat back into the tiny door. To return is a privilege, to move forward is a choice."
+                            },
+                            "show": true
+                        }
+                    ]
+                },
+                {
+                    "name": "DungeonAdventureLateForWhatRoom",
+                    "getText": "\"You're late for a very important <b>date!</b>\" the rabbit exclaimed, hopping in place. <br> <br> He pointed with his tiny paw, actually tiny now, to a mirror on the wall, a mirror unlike any you've seen before. Its surface swirled with colors and whispered promises of places beyond imagination. <br><br> \"You have an audience with the Queen of Reflections,\" the rabbit continued. \"And she doesn't take kindly to tardiness.\" <br><br>You approach the mirror, and with every step, the whispers grow louder. The memories it contains pull at you, offering a tantalizing dance of the past. The maze of reflections greets you once more, each pane of glass a reminder of choices made and paths not taken. The weight of your past decisions, the shame and regret, press against you, urging you to step through. But will it be a step towards understanding or another step into chaos? <br><br> The call of the mirror pulls you; you are bound to step through.",
+                    "prompts": [
+                        {
+                            "name": "into the maze you go",
+                            "keywords": ["into the maze", "go"],
+                            "results":  {
+                                "roomToEnter": "DungeonAdventureMirrorRoom"
+                            },
+                            "show": true
+                        },
+                        {
+                            "name": "back",
+                            "keywords": ["back", "menu", "main menu"],
+                            "results":  {
+                                "roomToEnter": "DungeonAdventureRoom"
+                            },
+                            "show": true
+                        }
+                    ]
+                },
+                {
+                    "name": "DungeonAdventureHurryUpRoom",
+                    "getText": "Without waiting for another word, the rabbit nods approvingly and gestures emphatically towards a swirling mirror on the wall. <br><br>\"Right you are! Through there, and don't dawdle.\" <br><br> Spurred by the rabbit's urgency and your own curiosity, you step briskly toward the mirror, a mirror unlike any you've seen before. Its surface swirled with colors and whispered promises of places beyond imagination. The memories it contains pull at you, offering a tantalizing dance of the past. <br><br> \"You have an audience with the Queen of Reflections,\" the rabbit urged. \"And she doesn't take kindly to tardiness.\" <br><br> The maze of reflections greets you once more, each pane of glass a reminder of choices made and paths not taken. The weight of your past decisions, the shame and regret, press against you, urging you to step through. Yet there's a sense of urgency now, a feeling that the Queen of Reflections may have answers you seek, answers to questions you hadn't even thought to ask. <br><br> Surrendering to the mirror's pull, you find yourself enveloped by the same vast labyrinth of glass. <br><br> The Queen of Reflections, the guardian of this echoing maze, you think to yourself, might have the answers to questions about power, responsibility, and the weight of the past.",
+                    "prompts": [
+                        {
+                            "name": "into the maze you go",
+                            "keywords": ["into the maze", "go"],
+                            "results":  {
+                                "roomToEnter": "DungeonAdventureMirrorRoom"
+                            },
+                            "show": true
+                        },
+                        {
+                            "name": "back",
+                            "keywords": ["back", "menu", "main menu"],
+                            "results":  {
+                                "roomToEnter": "DungeonAdventureRoom"
+                            },
+                            "show": true
+                        }
+                    ]
+                },
+                {
+                    "name": "DungeonAdventureAllTheTimeRoom",
+                    "getText": "The rabbit huffed, clearly frustrated. \"Time may be a construct,\" he grumbled, \"but there are some who can bend and twist it to their will.\" <br><br> The rabbit gestures toward a mirror on the wall, a mirror unlike any one you've seen before. \"This is the maze of reflections. You must be careful not get lost within its past memories, but if you pass through, you may find answers you may not even known you were seeking.\" the rabbit says. <br><br>The maze of reflections greets you once more, each pane of glass a reminder of choices made and paths not taken. The weight of your past decisions, the shame and regret, press against you, urging you to step through. But will it be a step towards understanding or another step into chaos? <br><br> As you contemplate these thoughts and the rabbit's words, a large, grinning Cheshire Cat appears before you, fading in and out of existence. <br><br> <span style=\"color: rgb(231, 109, 137) !important;\">\"<i>Time, choices, identity,</i>\" </span> <span> he purrs, his voice dripping with mischief. </span> <span style=\"color: rgb(231, 109, 137);\">\"<i>All intertwined in a delicate dance. Sometimes you lead, sometimes you follow.</i>\"</span> <span> He continues, </span> <span style=\"color: rgb(231, 109, 137);\"> \"<i>The question isn't how much time you have but how you choose to spend it. In pursuit of understanding or running from it?</i>\" </span> <br><br> <span> With a final enigmatic smile, he fades away, leaving you in the ever-shifting room, pondering his words. Do you seek out the keepers of time and understanding in this realm, or do you delve deeper into your introspection? </span>",
+                    "prompts": [
+                        {
+                            "name": "seek out the keepers of time",
+                            "keywords": ["seek out", "find", "seek", "keepers"],
+                            "results":  {
+                                "roomToEnter": "DungeonAdventureMirrorRoom",
+                                "successText": "You and you alone have made your decision. You step through into the mirror."
+                            },
+                            "show": true
+                        },
+                        {
+                            "name": "return and delve deeper into your introspection",
+                            "keywords": ["return", "delve deeper", "introspection"],
+                            "results":  {
+                                "roomToEnter": "WelcomeRoom",
+                                "successText": "You retreat back into the tiny door. To return is a privilege, to move forward is a choice. Having thought about it more, will you make use of your time more wisely now?"
+                            },
+                            "show": true
+                        },
+                        {
+                            "name": "back",
+                            "keywords": ["back", "menu", "main menu"],
+                            "results":  {
+                                "roomToEnter": "DungeonAdventureRoom"
+                            },
+                            "show": true
+                        }
+                    ]
+                },
+                {
+                    "name": "DungeonAdventureMirrorRoom",
+                    "getText": "The world inside the mirror is both mesmerizing and disorienting. Ethereal and shimmering, it's a place where reality fractures into countless shards of memories. <br><br> Each fragment, suspended in the air, pulsates with life, replaying moments from your past. Some are crystal clear, filled with joy or sorrow, while others are distorted, their true nature obscured by the mists of time. Around you, the sounds of laughter, cries, and whispered secrets echo, intertwining to form a haunting melody. <br><br> The fragments beckon, inviting you to relive those moments, to dive deep into the emotions they hold. In the distance, past the swirling memories, you can glimpse another mirror. Its surface is calm, offering a stark contrast to the tumultuous world you're currently in. It seems to promise an escape, a way out of this maze of reflections. <br><br> But the allure of the memories is strong, each fragment promising understanding, closure, or perhaps a chance to relive a cherished moment. Amidst this whirlwind of reflections, one fragment stands out, radiant and inviting. <br><br> It's a sun-drenched meadow, with wildflowers swaying gently in the breeze. The laughter of loved ones fills the air, their faces familiar and filled with joy. It's a day from your youth, a picnic with family and friends, a moment of pure, unbridled happiness. Even your dearest friend is here, the one you never thought you'd see again, that you spent everyday regretting you weren't able to help more. <br> <br> The memory you see is so vivid, so real, that you can almost feel the warmth of the sun on your skin and hear the soft hum of bees nearby. It's a memory you'd always cherished, a day where everything felt right in the world, and as usual your friend is so very very glad to see you. The allure of that moment is irresistible.",
+                    "prompts": [
+                        {
+                            "name": "pass through the other side of the mirror",
+                            "keywords": ["pass through", "go through", "other mirror", "other side"],
+                            "results":  {
+                                "roomToEnter": "DungeonAdventurePassThroughRoom"
+                            },
+                            "show": true
+                        },
+                        {
+                            "name": "stay inside the maze within a happy memory",
+                            "keywords": ["stay", "remain", "memory", "happy"],
+                            "results":  {
+                                "roomToEnter": "DungeonAdventureStayInsideRoom"
+                            },
+                            "show": true
+                        }
+                    ]
+                },
+                {
+                    "name": "DungeonAdventureStayInsideRoom",
+                    "getText": "Drawn to the memory like a moth to a flame, you step into the meadow. The world around you becomes tangible; the fragrant scent of wildflowers fills your nostrils, and the soft grass cushions your feet. You're there, reliving that perfect day, surrounded by your family and loved ones, laughter echoing in your ears, with your sweetest friend sitting happily by your side. <br><br> The world outside the mirror fades away, as you choose to immerse yourself fully in this moment of pure happiness, content to remain in a time where joy was simple and love was abundant. A time when your regrets were empty.<br><br> Every now and then, a suspicion arises in your mind that you were not meant for this reality, but that feeling dissipates every time. <br> <br> You could be happy here forever you think, and it is here that you will remain."
+                },
+                {
+                    "name": "DungeonAdventurePassThroughRoom",
+                    "getText": "As you step past the meadow memory, the alluring laughter and sunshine start to dim, replaced by a profound tranquility. The vivid fragments of your past start to dissolve, their magnetic pull diminishing as you move forward, their whispers growing distant. When your eyes finally adjust, you find yourself surrounded by an astonishing expanse of crystalline beauty. <br><br>This vast corridor, seemingly sculpted from pure crystal, reflects innumerable versions of you, each slightly different, each whispering tales of what was, what could have been, and what might yet be. You're treading through the delicate filigree of your own existence, woven with threads of choices made and paths not yet explored. <br><br> As you progress, an ethereal magic takes hold. The crystalline walls seem to sense your presence, reacting with a life of their own. From the sheer expanse, two mystical patterns begin to form and etch themselves before your eyes: <br><br> <b> 1. <u> The Oracle's Quandary</u>: </b> An ornate box, bathed in the glow of moonlight, materializes out of the shimmering walls. As it settles on a pedestal carved from the corridor itself, symbols dance across its surface, settling into a riddle: <i>\"I speak without a mouth and hear without ears. I have no body, but I come alive with the wind. What am I?\"</i> <br><br> <b> 2. <u>The Enigma of the Ages</u>:</b> From the very fabric of the corridor, a grand tapestry weaves itself into existence. Imprinted upon this celestial canvas is a challenge: <i>\"I've witnessed empires rise and fall, held stories of the old and new, yet I'm not alive. In me, the past lingers, but the present flows right through. What am I?\"</i> <br><br> Solving either enigma is whispered to grant an audience with the enigmatic Queen of Reflections, a being said to possess dominion over the tides of time. Speak your answer, and test your skill.",
+                    "prompts": [
+                        {
+                            "name": "echo",
+                            "keywords": ["echo", "echoes"],
+                            "results":  {
+                                "roomToEnter": "DungeonAdventureQueenRoom",
+                                "successText": "Having figured out the answer, you say the words confidently towards the ornate box: \"An echo!\""
+                            },
+                            "show": false
+                        },
+                        {
+                            "name": "river",
+                            "keywords": ["river", "rivers"],
+                            "results":  {
+                                "roomToEnter": "DungeonAdventureQueenRoom",
+                                "successText": "Having figured out the answer, you say the words confidently towards the grand tapestry: \"A river!\""
+                            },
+                            "show": false
+                        },
+                        {
+                            "name": "i don't know",
+                            "keywords": ["idk", "don't know", "dont know", "not sure"],
+                            "results": {
+                                "successText": "You must figure out the answer to a riddle, or else you will not be able to progress any further.",
+                                "roomToEnter": "DungeonAdventurePassThroughRoom"
+                            },
+                            "show": true
+                        },
+                        {
+                            "name": "no",
+                            "keywords": ["nope", "nah", "maybe not", "no"],
+                            "results": {
+                                "successText": "You must try to answer the riddle, or else you will never be able to progress any further.",
+                                "roomToEnter": "DungeonAdventurePassThroughRoom"
+                            }
+                        },
+                        {
+                            "name": "back",
+                            "keywords": ["back", "menu", "main menu"],
+                            "results":  {
+                                "roomToEnter": "DungeonAdventureMirrorRoom",
+                                "successText": "You return through the mirror back into the maze of reflections. Do you think you will learn something here, or do you wish to make a different choice?"
+                            },
+                            "show": true
+                        }
+                    ]
+                },
+                {
+                    "name": "DungeonAdventureQueenRoom",
+                    "getText": "Upon solving the chosen enigma, the atmosphere around you becomes denser, almost tangible, as if you could grasp the very essence of the air. The crystal corridor, once transparent and clear, now pulsates with an opalescent glow, each pulse reshaping and contorting the space around you. <br><br> The corridor shifts, spiraling you into a realm where the boundaries of reality blur. Time seems to slow, each second stretching into an eternity. The ground underfoot morphs into a shimmering pool of liquid silver. <br><br> Emerging from this kaleidoscope of existence stands a throne, reflecting both the cosmos and the minutiae of existence. Seated upon it is the Queen of Reflections, her form a fluid dance of light and shadow. <br><br> Her appearance is ever-changing: One moment a radiant being of pure luminosity, the next a shifting silhouette of enigmatic shadows. Her eyes, twin nebulas, seem to hold within them the very birth and death of stars, and her gaze is both tender and imposing. <br><br> <span class=\"glitch\" style=\"font-size: .9em; letter-spacing: 1px\"> \"You have traversed the labyrinth of existence and found your way to the heart of reflections.\"</span> <span> her voice, a haunting harmony of countless whispers, envelopes you. </span>  <span class=\"glitch\" style=\"font-size: .9em; letter-spacing: 1px\">\"In acknowledgment of your journey, a gift I offer.\" </span> <br><br> <span> From the abyss of her robes, she brings forth three hourglasses, their sand comprised of stardust, twilight shadows, and dawn's first light. Each one pulsates with a power that resonates with the very core of your being. Which will you choose? <br><br>  <b> The Hourglass of the Past ⏳:</b> Offering the chance to step back into any fragment of time, to relive or alter it. <br><br> <b> The Hourglass of Stasis ⧗:</b> A pause in the relentless march of time, capturing a singular, precious moment to bask in for eternity. <br><br> <b> The Hourglass of Restoration ⌛: </b> The power to heal temporal wounds, to set the fractured shards of reality into a coherent whole once more. </span>",
+                    "prompts": [
+                        {
+                            "name": "hourglass of the past",
+                            "keywords": ["past"],
+                            "results":  {
+                                "successText": "You wish to choose this so badly. With this, you could fix your biggest regret, and have your dearest friend with you once more. But you know it's not the right choice.",
+                                "roomToEnter": "DungeonAdventureQueenRoom"
+                            },
+                            "show": true
+                        },
+                        {
+                            "name": "hourglass of stasis",
+                            "keywords": ["stasis"],
+                            "results":  {
+                                "successText": "You wish to choose this so badly. With this, you could keep everything as it is, and your loved ones will never age, never decay, and never leave you. But you know it's not the right choice.",
+                                "roomToEnter": "DungeonAdventureQueenRoom"
+                            },
+                            "show": true
+                        },
+                        {
+                            "name": "hourglass of restoration",
+                            "keywords": ["restoration"],
+                            "results":  {
+                                "successText": "Despite your desire to fix your past, or to keep your present still, you know that you made the right choice. You know that you have to let go, and you know that you have to move on. Your redemption will come in the form of your future, and you will make the most of it.",
+                                "roomToEnter": "DungeonAdventureEndRoom",
+                                "itemsGiven": ["hourglassOfRestoration"]
+                            },
+                            "show": true
+                        },
+                        {
+                            "name": "i don't know",
+                            "keywords": ["idk", "don't know", "dont know", "not sure"],
+                            "results": {
+                                "successText": "The queen will not allow you to leave without making a choice.",
+                                "roomToEnter": "DungeonAdventureEndRoom"
+                            }
+                        },
+                        {
+                            "name": "back",
+                            "keywords": ["back", "menu", "main menu", "retreat", "return"],
+                            "results":  {
+                                "successText": "The queen will not allow you to go back without making a choice.",
+                                "roomToEnter": "DungeonAdventureQueenRoom"
+                            }
+                        },
+                        {
+                            "name": "attack",
+                            "keywords": ["fight", "punch", "attack", "hit", "kick", "stab", "lunge`"],
+                            "results":  {
+                                "successText": "Thankfully, you know better than to do that with the queen..",
+                                "roomToEnter": "DungeonAdventureQueenRoom"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "name": "DungeonAdventureEndRoom",
+                    "getText": "The chamber's luminescence casts an ethereal glow upon the Queen, emphasizing the gravity of your choice. <br> <span class=\"glitch\" style=\"font-size: .9em; letter-spacing: 1px;\">\"You've chosen the Hourglass of Restoration.\"</span> <span> she begins, voice echoing with a blend of wonder and respect. </span> <span class=\"glitch\" style=\"font-size: .9em; letter-spacing: 1px;\">\"In a world where many would cling to cherished moments or seek to undo past regrets, you wish to mend and move forward.\" </span> <br><br> <span> She rises, her silhouette shimmering against a backdrop of cosmic wonders. </span> <span class=\"glitch\" style=\"font-size: .9em; letter-spacing: 1px;\">\"To forgo the comfort of fixing your past or the allure of living a timeless moment, you have embraced a path that resonates with the very essence of time itself.\"</span> <span> she states, a hint of admiration lacing her words. As the hourglass, its sands flowing with the very essence of time, drifts towards you, a sense of profound connection envelops you, binding you to all that has been and all that is yet to come. </span> <br><br> <span> The Queen's visage starts to blur, stars and galaxies emanating from her form. </span> <span class=\"glitch\" style=\"font-size: .9em; letter-spacing: 1px;\">\"In this chamber..\" </span> <span> she murmurs as her form dissipates, </span> <span class=\"glitch\" style=\"font-size: .9em; letter-spacing: 1px;\">\"time has its own rhythm. If you so choose, you can let the ebb and flow of time circle back, letting past and future converge.\"</span> <br><br> <span> And as her words linger, you notice the room's unique nature. It seems to breathe, expanding and contracting, each cycle a miniature echo of time itself. If you were to wait, to truly immerse in the room's rhythm, perhaps time might loop, offering another chance at choices made and the paths they forge. </span> <br><br> <div id=\"watch\"> <img src=\"https://s3-us-west-2.amazonaws.com/s.cdpn.io/4273/pocketwatch-no-second-hand.png\" alt=\"Pocketwatch on chain\" class=\"watch\"> <img src=\"https://s3-us-west-2.amazonaws.com/s.cdpn.io/4273/second-hand.png\" alt=\"Pocketwatch second hand\" class=\"seconds\"> </div> <span> With the power of restoration in hand, and the cyclical nature of the chamber revealed, your journey takes on a depth of possibilities, each one awaiting your decision. </span> ",
+                    "prompts": [
+                        {
+                            "name": "wait",
+                            "keywords": ["wait"],
+                            "results":  {
+                                "roomToEnter": "WelcomeRoom",
+                                "successText": "You've returned to the same place where you were before. Nothing seems different except for yourself. Or maybe something has changed.",
+                                "itemsRemoved": ["drunkBigPotion"]
+                            },
+                            "show": true
+                        }
+                    ]
+                },
+                {
+                    "name": "EndRoom",
+                    "getText": "Game end."
+                }
+            ]
+    }
+}

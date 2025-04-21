@@ -1,0 +1,600 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url("https://fonts.googleapis.com/css2?family=Exo+2:wght@300;400;500;600;700;800&display=swap");
+
+html,
+body {
+  font-family: "Exo 2", sans-serif;
+  background-color: rgb(13, 17, 23);
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+
+/* Set core root defaults */
+html:focus-within {
+  scroll-behavior: smooth;
+}
+
+/* Set core body defaults */
+body {
+  min-height: 100vh;
+  text-rendering: optimizeSpeed;
+  line-height: 1.5;
+  color: rgb(255, 253, 253);
+}
+
+/* A elements that don't have a class get default styles */
+a:not([class]) {
+  text-decoration-skip-ink: auto;
+}
+
+/* Make images easier to work with */
+img,
+picture {
+  max-width: 100%;
+  display: block;
+}
+
+.video-container { position: relative; padding-bottom: 56.25%; padding-top: 30px; height: 0; overflow: hidden; }
+
+.video-container iframe, .video-container object, .video-container embed { position: absolute; top: 0; left: 0; width: 100%; height: 100%; }
+
+// Give all images a shadow by default
+.img {
+  box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.4);
+}
+
+ul {
+  list-style-type: disc;
+}
+
+ul li {
+  margin-left: 20px;
+}
+
+/* Inherit fonts for inputs and buttons */
+input,
+button,
+textarea,
+select {
+  font: inherit;
+}
+
+// Prevent zoom on input focus
+@media screen and (-webkit-min-device-pixel-ratio:0) { 
+  select,
+  textarea,
+  input {
+    font-size: 160px;
+  }
+}
+
+input[type="text"] {
+  /* enlarge by 16/12 = 133.33% */
+  border-radius: 6.666666667px;
+  font-size: 160px !important;
+  line-height: 26.666666667px;
+  padding: 6.666666667px;
+  width: 133.333333333%;
+
+  /* scale down by 12/16 = 75% */
+  transform: scale(0.75);
+  transform-origin: left top;
+
+  /* remove extra white space */
+  margin-bottom: -10px;
+  margin-right: -33.333333333%;
+}
+
+@keyframes disappearAnimation {
+  0%{
+    opacity: 1;
+  }
+  50%{
+    opacity: 0.8;
+  }
+  75% {
+    opacity: .7;
+  }
+  100%{
+    // display: none;
+    opacity: 0;
+  }
+}
+
+.disappearing {
+    animation-name: disappearAnimation;
+    animation-duration: 2500ms;
+    animation-fill-mode: forwards;
+}
+
+.backButton {
+  top: 0;
+  z-index: 100000 !important;
+  -webkit-transform: translateZ(0) !important;
+  position: fixed !important;
+  font-size: 1.7em;
+}
+
+.backButton:hover {
+  color: rgb(79, 78, 78);
+  transition: .5s ease;
+}
+
+// Weird styles to make the three.js scene look right on the page
+#canvasEl {
+  margin-top: -500px;
+  margin-left: -600px;
+  z-index: -1;
+}
+
+.firstCol {
+  margin: auto;
+  padding: auto;
+}
+
+.secondCol {
+  display: inline-block;
+  vertical-align: middle;
+}
+
+// Text-rpg-engine custom styles
+#game {
+  padding-top: 50px;
+  max-width: 500px;
+  max-height:  480px;
+  overflow: auto;
+  overflow-x: hidden;
+  padding: 20px;
+  font-size: .92em;
+  // padding: 20px;
+  // margin: auto;
+  // scale: .2;
+  box-shadow: 0 3px 10px rgb(0 0 0 / 0.2);
+  // transition: opacity 500ms ease, visibility 0s ease 500ms;
+  // background-color: var(--bg-color);
+  // color: var(--font-color);
+}
+
+#inputContainer {
+  margin: 10px;
+  margin-left: 3px;
+  margin-top: 15px;
+}
+
+.inventoryItem {
+  margin-left: 15px;
+  color: rgba(167, 150, 150, 0.8);
+}
+
+#input {
+  height: 30px;
+  min-width: 260px !important;
+  margin-right: 10px;
+  margin-top: 5px;
+  padding: 3px;
+  padding-left: 6px;
+  // font-size: .9em;
+  font-size: 16px !important;
+  border-radius: 5px;
+  box-shadow: 0px -5px 10px 0px rgba(0, 0, 0, 0.5);
+  background-color: rgba(113, 113, 113, 0.45);
+  color: rgba(189, 189, 189, 0.95);
+}
+
+#player {
+  padding: 10px;
+  padding-bottom: 5px;
+}
+
+#status {
+  max-width: 350px;
+  margin-left: 15px;
+  color: grey;
+}
+
+.prompt {
+  margin: 23px;
+  font-size: .85em;
+  border-radius: 5px;
+  border-color: rgba(113, 113, 113, 0.45);
+  outline: 1px solid #71717173;
+  color: var(--secondary-color);
+  padding: 8px;
+  width: 50%;
+  padding-left: 12px;
+  margin-left: 2px;
+}
+
+.prompt-revealed {
+  margin: 12px;
+  font-size: 1.0em;
+  border-radius: 5px;
+  border-color: rgba(113, 113, 113, 0.45);
+  outline: 1px solid rgba(113, 113, 113, 0.45);
+  color: rgb(65, 65, 65);
+  padding: 5px;
+  width: 70%;
+  margin-left: 5px;
+}
+
+.prompt:hover {
+  background: #b9b8b8;
+  cursor: pointer;
+}
+
+.failText {
+  font-style: italic !important;
+  font-weight: bold !important;
+  margin-left: 5px;
+  margin-top: 20px;
+  color: rgb(234, 0, 0) !important;
+}
+
+.successText {
+  font-style: italic !important;
+  font-weight: bold !important;
+  margin-left: 5px;
+  margin-top: 20px;
+  color: var(--secondary-color);
+  margin-bottom: 20px;
+}
+
+.missingItems {
+  font-size: 1.05em;
+  margin-left: 5px;
+  color: rgb(234, 0, 0) !important;
+  margin-bottom: 20px;
+}
+
+// End text-rpg-engine game styles
+
+// Blog styles for markdown content
+.img-shadow {
+  box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.4);
+}
+
+.md-link {
+  color:#0785d3;
+  margin-left: auto;
+  margin-right: auto;
+  display: block;
+}
+
+.md-link:hover {
+  text-decoration: underline;
+  transition: .5s ease;
+  color: #065e94;
+}
+
+::-webkit-scrollbar {
+  width: 12px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3); 
+    -webkit-border-radius: 10px;
+    border-radius: 10px;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+    -webkit-border-radius: 10px;
+    border-radius: 10px;
+    background: rgba(80, 79, 79, 0.8); 
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.5); 
+}
+::-webkit-scrollbar-thumb:window-inactive {
+    background: rgba(28, 26, 26, 0.4); 
+}
+
+.neonText {
+  color: #fff;
+  text-shadow:
+    0 0 7px #fff,
+    0 0 10px #fff,
+    0 0 21px #fff,
+    0 0 42px #f09,
+    0 0 82px #f09,
+    0 0 92px #f09,
+    0 0 102px #f09,
+    0 0 151px #f09 !important;
+}
+
+// Disintegrate effect
+.willHide {
+  display: table;
+  -webkit-mask-image: linear-gradient(to right, transparent 40%, #fff 60%);
+  -webkit-mask-position: right;
+  -webkit-mask-size: 250% 100%;
+  color: rgba(26, 51, 97, 0.9);
+  animation: hide 33.4s linear forwards;
+  letter-spacing: 6px;
+  font-family: 'Fira Mono', monospace;
+  margin-bottom: 20px;
+}
+
+.willHide.opposite {
+  -webkit-mask-image: linear-gradient(to left, transparent 40%, #fff 60%);
+  animation-direction: reverse;
+}
+
+@keyframes hide {
+  to {
+    -webkit-mask-position: left;
+  }
+  0% {
+    background-position: top left;
+  }
+  100% {
+    background-position: top right;
+  }
+}
+
+.glitch2 {
+  animation: glitch2animation 1s linear infinite;
+}
+
+@keyframes glitch2animation {
+  2%,64%{
+    transform: translate(2px,0) skew(0deg);
+  }
+  4%,60%{
+    transform: translate(-2px,0) skew(0deg);
+  }
+  62%{
+    transform: translate(0,0) skew(5deg); 
+  }
+}
+
+.glitch2:before,
+.glitch2:after{
+  content: attr(title);
+  position: absolute;
+  left: 0;
+}
+
+.glitch2:before{
+  animation: glitchTop 1s linear infinite;
+  clip-path: polygon(0 0, 100% 0, 100% 33%, 0 33%);
+  -webkit-clip-path: polygon(0 0, 100% 0, 100% 33%, 0 33%);
+}
+
+@keyframes glitchTop{
+  2%,64%{
+    transform: translate(2px,-2px);
+  }
+  4%,60%{
+    transform: translate(-2px,2px);
+  }
+  62%{
+    transform: translate(13px,-1px) skew(-13deg); 
+  }
+}
+
+.glitch2:after{
+  animation: glitchBottom 1.5s linear infinite;
+  clip-path: polygon(0 67%, 100% 67%, 100% 100%, 0 100%);
+  -webkit-clip-path: polygon(0 67%, 100% 67%, 100% 100%, 0 100%);
+}
+
+@keyframes glitchBottom{
+  2%,64%{
+    transform: translate(-2px,0);
+  }
+  4%,60%{
+    transform: translate(-2px,0);
+  }
+  62%{
+    transform: translate(-22px,5px) skew(21deg); 
+  }
+}
+
+// Glitch effect
+.glitch {
+  letter-spacing: 4px;
+  font-weight: bold;
+  font-size: 1.4em;
+  position: relative;
+  text-shadow: 0.05em 0 0 #00fffc, -0.03em -0.04em 0 #fc00ff,
+    0.025em 0.04em 0 #fffc00;
+  animation: glitch 725ms infinite;
+}
+
+.glitch span {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.glitch span:first-child {
+  animation: glitch 500ms infinite;
+  clip-path: polygon(0 0, 100% 0, 100% 35%, 0 35%);
+  transform: translate(-0.04em, -0.03em);
+  opacity: 0.75;
+}
+
+.glitch span:last-child {
+  animation: glitch 375ms infinite;
+  clip-path: polygon(0 65%, 100% 65%, 100% 100%, 0 100%);
+  transform: translate(0.04em, 0.03em);
+  opacity: 0.75;
+}
+
+.glitch2 {
+  letter-spacing: 4px;
+  font-weight: bold;
+  font-size: 1.4em !important;
+  text-transform: uppercase;
+  position: relative;
+  text-shadow: 0.05em 0 0 #512f4a, -0.03em -0.04em 0 #fc00ff,
+    0.025em 0.04em 0 #fffc00;
+  animation: glitch 1725ms infinite;
+}
+
+.glitch2 span {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.glitch2 span:first-child {
+  animation: glitch 500ms infinite;
+  clip-path: polygon(0 0, 100% 0, 100% 35%, 0 35%);
+  transform: translate(-0.04em, -0.03em);
+  opacity: 0.75;
+}
+
+.glitch2 span:last-child {
+  animation: glitch 375ms infinite;
+  clip-path: polygon(0 65%, 100% 65%, 100% 100%, 0 100%);
+  transform: translate(0.04em, 0.03em);
+  opacity: 0.75;
+}
+
+@keyframes glitch {
+  0% {
+    text-shadow: 0.05em 0 0 #00fffc, -0.03em -0.04em 0 #fc00ff,
+      0.025em 0.04em 0 #fffc00;
+  }
+  15% {
+    text-shadow: 0.05em 0 0 #00fffc, -0.03em -0.04em 0 #fc00ff,
+      0.025em 0.04em 0 #fffc00;
+  }
+  16% {
+    text-shadow: -0.05em -0.025em 0 #00fffc, 0.025em 0.035em 0 #fc00ff,
+      -0.05em -0.05em 0 #fffc00;
+  }
+  49% {
+    text-shadow: -0.05em -0.025em 0 #00fffc, 0.025em 0.035em 0 #fc00ff,
+      -0.05em -0.05em 0 #fffc00;
+  }
+  50% {
+    text-shadow: 0.05em 0.035em 0 #00fffc, 0.03em 0 0 #fc00ff,
+      0 -0.04em 0 #fffc00;
+  }
+  99% {
+    text-shadow: 0.05em 0.035em 0 #00fffc, 0.03em 0 0 #fc00ff,
+      0 -0.04em 0 #fffc00;
+  }
+  100% {
+    text-shadow: -0.05em 0 0 #00fffc, -0.025em -0.04em 0 #fc00ff,
+      -0.04em -0.025em 0 #fffc00;
+  }
+}
+
+// Subheading styles
+.text-show {
+  color: black;
+  opacity: 1;
+  transition: all 2s ease;
+}
+
+.text-fade {
+  color: black;
+  opacity: 0;
+  transition: all 2s ease;
+}
+
+#subHeading {
+  max-width: 350px;
+  color: rgba(255,255,255,0.1);
+}
+
+.shimmer {
+  background: -webkit-gradient(linear, left top, right top, from(#222), to(#222), color-stop(0.5, #fff));
+  background: -moz-gradient(linear, left top, right top, from(#222), to(#222), color-stop(0.5, #fff));
+  background: gradient(linear, left top, right top, from(#222), to(#222), color-stop(0.5, #fff));
+  -webkit-background-size: 125px 100%;
+  -moz-background-size: 125px 100%;
+  background-size: 125px 100%;
+  -webkit-background-clip: text;
+  -moz-background-clip: text;
+  background-clip: text;
+  -webkit-animation-name: shimmer;
+  -moz-animation-name: shimmer;
+  animation-name: shimmer;
+  -webkit-animation-name: shimmer;
+  -moz-animation-name: shimmer;
+  animation-name: shimmer;
+  -webkit-animation-duration: 5s;
+  -moz-animation-duration: 5s;
+  animation-duration: 5s;
+  -webkit-animation-iteration-count: infinite;
+  -moz-animation-iteration-count: infinite;
+  animation-iteration-count: infinite;
+  background-repeat: no-repeat;
+  background-position: 0 0;
+  background-color: #222;
+}
+
+@-moz-keyframes shimmer {
+  0% {
+    background-position: top left;
+  }
+  100% {
+    background-position: top right;
+  }
+}
+@-webkit-keyframes shimmer {
+  0% {
+    background-position: top left;
+  }
+  100% {
+    background-position: top right;
+  }
+}
+@-o-keyframes shimmer {
+  0% {
+    background-position: top left;
+  }
+  100% {
+    background-position: top right;
+  }
+}
+@keyframes shimmer {
+  0% {
+    background-position: top left;
+  }
+  100% {
+    background-position: top right;
+  }
+}
+
+// Watch animation for last game room
+@import url(https://fonts.googleapis.com/css?family=Hammersmith+One);
+
+@keyframes sway { 
+	to { transform: rotate(30deg);   } 
+}
+@keyframes fade {
+	to { opacity: 1; }
+}
+@keyframes widen {
+	to { width: 40%; }
+}
+@keyframes secondcount {
+	to { transform: rotate(355deg); }
+}
+
+#watch { 
+  width: 125px;
+  margin: 0 auto;
+  transform-origin: center top;
+  transform: rotate(-30deg); 
+  top: -10px; 
+  animation: sway 2.2s infinite alternate ease-in-out;
+} 
+
+#watch img.watch { width: 100%; height: auto; }
+
+img.seconds { 
+  position: absolute;
+  width: 8%; height:auto;
+  bottom: 11.75%; left: 45%;
+  transform-origin: center 72.4%;
+  animation: secondcount 60s infinite linear; 
+}
