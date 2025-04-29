@@ -1,0 +1,339 @@
+.body {
+  margin-left: 0%;
+  margin-right: 0%;
+  margin-bottom: 0%;
+  margin-left: 0%;
+  padding: 0%;
+  border: 0%;
+}
+
+.nav  {
+  background : white;
+  margin: 2.5%;
+  list-style-type: none;
+  display: inline-block;
+  vertical-align: top;
+  position: absolute;
+  margin-top: 6.3%;
+  font-size : 110%;
+  font-weight: bold;
+  padding-bottom : 10%;
+  padding-left : .5%;
+  padding-right : 0%;
+  width: 18%;
+
+}
+
+a:link {
+  text-decoration: none; color:#4862F7;
+}
+
+a:focus {
+    text-decoration: none; color: #AD97B0;
+}
+
+a:visited{
+  text-decoration: none; color: #4862F7;
+}
+
+a:hover{
+  text-decoration: none; color: #AD97B0;
+}
+
+a:active{ 
+    text-decoration: none; color: #AD97B0;
+}
+
+
+.title h1  {
+  display: inline-block;
+  width: 20%;
+  height: 3%;
+  margin-top: 2.75%;
+  margin-left: 27%;
+  font-size : 175%;
+  color: #5a5a5a;
+  font-weight: bold;
+  font-family: 'Shift', sans-serif;
+}
+
+.contactInfo {
+  display: inline-block;
+  vertical-align: top;
+  margin-top: .5%;
+  margin-left: 27.1%;
+}
+
+.jumbotron  p {
+  display: inline-block;
+  margin-top: 0%;
+  margin-left: 0%;
+  margin-right: 27%;
+  width: 25%;
+  padding-bottom: 0%;
+  font-size: 105%;
+}
+
+img {
+  display: inline-block;
+  float: left;
+  vertical-align:; top;
+  margin-top: -1%;
+  margin-left: 22.175%;
+  width: 30%;
+  height: 30%;
+}
+
+.text_line {
+  clear: right;
+}
+
+.image_caption p {
+  display: inline-block;
+  vertical-align: top;
+  margin-top: 22%;
+  margin-left: -78%;
+  width: 40%;
+  height: 20%;
+  font-size: 85%;
+}
+
+.homeText  p {
+  display: inline-block;
+  vertical-align: top;
+  font-size: 120%;
+  margin-top:-12%;
+  margin-left: 56%;
+  width: 26.5%;
+  margin-right: 15.5%;
+}
+
+.homeTextPoem p {
+  display: inline-block;
+  vertical-align: top;
+  font-size: 105%;
+  margin-top: -27%;
+  margin-left: 41%;
+  width: 20%;
+  margin-right: 0%;
+}
+
+.homeTextPoemAuthor p {
+  display: inline-block;
+  vertical-align: top;
+  font-size: 105%;
+  margin-top: -22.3%;
+  margin-left: 36%;
+  width: 23%;
+  margin-right: 5%;
+}
+
+.homeTextPoem1 p {
+  display: inline-block;
+  vertical-align: top;
+  font-size: 105%;
+  margin-top: -20%;
+  margin-left: 33%;
+  width: 23%;
+  margin-right: 0%;
+}
+
+.youtubeVideo {
+  display: inline-block;
+  margin-left: 25.5%;
+}
+
+.jumbotronDreamCatcher p {
+  font-size: 120%;
+  margin-left: -11%;
+  color: grey;
+}
+
+.jumbotronDreamCatcher2 p {
+  display: inline-block;
+  font-size: 100%;
+  margin-left: -10%;
+  width: 30%;
+  color: black;
+}
+
+.homeTextPoem1Author p {
+  display: inline-block;
+  vertical-align: top;
+  font-size: 105%;
+  margin-left: 60%;
+  width: 23%;
+  margin-right: 0%;
+}
+
+.homeTextQuote p {
+  display: inline-block;
+  vertical-align: top;
+  font-size: 105%;
+  margin-top: -10.85%;
+  margin-left: 35%;
+  width: 23%;
+  margin-right: 0%;
+}
+
+.homeTextQuoteAuthor p {
+  display: inline-block;
+  vertical-align: top;
+  font-size: 105%;
+  margin-left: 62%;
+  width: 20;
+  margin-right: 0%;
+
+}
+
+.dataLog h4 {
+  display: inline-block;
+  vertical-align: top;
+  font-size: 130%;
+  margin-left: 20.1%;
+  margin-top: 50%;
+}
+
+.dataLogSpreadsheet {
+  margin-left: 27.2%;
+  margin-top: -1%;
+  display: inline-block;
+  vertical-align: top;
+  width: 200%;
+  height: 0%;
+}
+
+.introText h4 {
+  display: inline-block;
+  vertical-align: top;
+  font-size: 130%;
+  margin-left: 27.1%;
+  margin-top: -.5%;
+}
+
+.introTextP p {
+  display: inline-block;
+  vertical-align: top;
+  margin-left: 27.2%;
+  margin-top: -1.5%;
+  font-size: 105%;
+  width: 35%;
+}
+
+.introTextP2 p {
+  display: inline-block;
+  vertical-align: top;
+  margin-left: 25.5%;
+  margin-top: 1%;
+  font-size: 105%;
+  width: 220%;
+}
+
+.introTextP3 p {
+  display: inline-block;
+  vertical-align: top;
+  margin-left: 26%;
+  margin-top: 1%;
+  font-size: 125%;
+  width: 150%;
+  color: blue;
+}
+
+
+.researchText h4 {
+  display: inline-block;
+  vertical-align: top;
+  font-size: 130%;
+  margin-left: 27.1%;
+  margin-top: -.5%;
+}
+
+.researchTextP p {
+  display: inline-block;
+  vertical-align: top;
+  text-align: center;
+  margin-left: 25.5%;
+  margin-top: -2%;
+  font-size: 118%;
+  width: 40%;
+}
+
+.researchTextP li {
+  width: 42.5%;
+  list-style-type: circle;
+}
+
+
+.contactInfo p {
+  margin-left: 0%;
+  margin-top: -1%;
+}
+
+.emailInfo p{
+  margin-left: 27.1%;
+  margin-top: 0%;
+}
+
+.dreamVisualizationsTitle h4 {
+  display: inline-block;
+  vertical-align: top;
+  font-size: 130%;
+  margin-left: 27.1%;
+  margin-top: -.5%;
+  margin-bottom: .25%;
+}
+
+.controllingDeltaThroughMood {
+  margin-top: .5%;
+  margin-left: 25%;
+  margin-right: 10%
+}
+
+.dreamJournal {
+  margin-left: 57.1%;
+  display: inline-block;
+  vertical-align: top;
+  font-size: 200%;
+  margin-top: -.5%;
+}
+
+.dataLog h4 {
+  display: inline-block;
+  vertical-align: top;
+  margin-left: 27.1%;
+  margin-top: -.5%;
+  font-size: 130%;
+
+}
+
+.dataLog iframe {
+  display: inline-block;
+  vertical-align: top;
+  margin-left: 27.1%;
+  margin-top: -.5%;
+}
+
+.copyright h1{
+  clear: left;
+  float: right;
+  border-bottom: dotted;
+  border-width: 1px;
+  margin-top: 20%;
+  margin-left: 81%;
+  margin-right: 0%;
+  font-size: 90%;
+  height: 10%;
+  padding-bottom: 0%;
+  width: 19%;
+}
+
+.autoUpdated {
+  padding-top: 5%;
+  margin-left: 27.2%;
+}
+
+.feelFree {
+  margin-top: -.8%;
+  padding-top: 0%;
+  margin-left: 27.2%;
+}

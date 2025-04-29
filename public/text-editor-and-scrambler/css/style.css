@@ -1,0 +1,280 @@
+#title {
+   margin-top: 4%;
+   text-align : center;
+   font-size: 200%;
+   margin-left: -8%;
+   /*border-bottom: 1px solid #ADADAD;*/
+}
+
+body {
+	background-color: #fefdfb;
+}
+ 
+#githubLink{
+	font-size: 120%;
+	margin-top: 2%;
+	padding-left: 80%;
+	margin-left: -39.0%;
+	padding-bottom: 2%;
+	padding-right: 5%;
+}
+
+
+#aboutLink {
+	font-size: 120%;
+	margin-top: -1%;
+	padding-left: 80%;
+	margin-left: 3.0%;
+	padding-bottom: 2%;
+	padding-right: 5%;
+}
+
+a {
+   color:black;
+}
+
+a:visited { text-decoration: none; color:black; }
+a:hover { text-decoration: none; color:red; }
+a:focus { text-decoration: none; color:black; }
+a:hover, a:active { text-decoration: none; color:black }
+
+
+#backLink {
+	text-align: center;
+	margin-left: -5%;
+	margin-top: 0%;
+	font-size: 135%;
+}
+
+#paragraphText {
+	text-align: center;
+	margin-left: 25%;
+	margin-top: 2%;
+	font-size: 125%;
+	width: 43%;
+}
+
+#paragraphText1 {
+	text-align: center;
+	margin-left: 15.5%;
+	margin-top: 2%;
+	font-size: 125%;
+	width: 62%;
+}
+
+#paragraphText2 {
+	text-align: center;
+	margin-left: 15.5%;
+	margin-top: 2%;
+	font-size: 125%;
+	width: 62%;
+}
+
+#menuButtons {
+	margin-top: -2.5%;
+	margin-left: 83%;
+	padding-top: 2%;
+	padding-right: 5%;
+}
+
+#largerMenuButtons {
+	margin-top: 0%;
+	margin-left: 83%;
+	padding-top: 1.0%;
+	padding-right: 5%;
+	padding-bottom: .4%;
+}
+
+#largerMenuButtons1 {
+	margin-left: 83%;
+	padding-top: .2%;
+	padding-right: 5%;
+}
+
+#fontBar {
+	margin-left: 83%;
+	margin-top: -.1%;
+	padding-top:.6%;
+	padding-bottom:.55%;
+}
+
+#specialMenuButtons {
+	margin-left: 83%;
+	padding-right: 5%;
+	margin-top: .1%;
+	padding-top: .5%;
+	padding-bottom: .4%;
+}
+
+#specialMenuButtons1 {
+	margin-left: 83%;
+	padding-right: 5%;
+	margin-top: -.5%;
+	padding-top: .7%;
+	padding-bottom: 1.5%;
+}
+
+#specialMenuButtons {
+}
+
+
+.textWrite {
+	margin-top: 1%;
+    margin-left: 13%;
+   	width: 62%;
+    height: 53px;
+    font-size: 120%;
+    resize: vertical;
+}
+
+#textInputButton {
+	margin-left: 76.3%;
+	margin-top: -4.5%;
+}
+
+#clearButton {
+	padding-top: 1.11%;
+	margin-left: 76.3%;
+}
+
+
+#eraseButton {
+	margin-left: 79.9%;
+	margin-top: -6.51%;
+	padding-right: 5%;
+}
+#textInput {
+	width: 100%;
+	height: 50%;
+	padding-top: .5%;
+	font-size: 120%;
+}
+
+#textWritten {
+	width: 66%;
+	font-size: 120%;
+	margin-top: -14.5%;
+	margin-left: 13%;
+	height: 450px;
+    resize: vertical;
+    overflow: scroll;
+    overflow-x: hidden;
+}
+
+#textScrambled {
+	text-align: center;
+	display: none;
+	width: 66%;
+	font-size: 120%;
+	margin-top: -14.5%;
+	margin-left: 13%;
+	height: 450px;
+    resize: vertical;
+    overflow: scroll;
+    overflow-x: hidden;
+}
+
+#cipherInput {
+	margin-left: 83%;
+	margin-top: -16.95%;
+	padding-top: .3%;
+	padding-right: 5%;
+	padding-bottom: 1%;
+	font-size: 105%;
+}
+
+#cipherButtons {
+	margin-left: 83%;
+	margin-top: -.6%;
+	padding-right: 5%;
+	padding-bottom: 1%;
+}
+
+#but {
+	font-size: 80%;
+	width:25.7%;
+}
+
+
+#but3 {
+	font-size: 95.5%;
+	width:13.7%;
+}
+
+#but4 {
+	font-size: 82.5%;
+	width:13.7%;
+}
+
+
+
+#circleText {
+	margin-left: 83.10%;
+	font-size: 105%;
+	padding-top: .1%;
+	padding-right: 5%;
+	margin-top: -.5%;
+}
+
+
+#circleButtons {
+	margin-left: 83.15%;
+	padding-top: .5%;
+	font-size: 80%;
+	margin-top: 0%;
+
+}
+
+#circleCanvas {
+	width: 5%;
+	margin-left: 85%;
+	margin-top: -1%;
+	padding-top: 1%;
+	margin-top: 0%;
+}
+
+#lftBut {
+	width: 18.2%;
+}
+
+#rghtBut {
+	width: 18.2%;
+}
+
+#cntrBut {
+	width: 18.2%;
+}
+
+#ssBut {
+	width: 82%;
+}
+
+#dsBut {
+	width: 82%;
+}
+
+#scramBut {
+	width: 82%;
+}
+
+#unscramBut {
+	width: 82%;
+}
+
+
+#decodingTextLabel {
+	margin-left: 83.15%;
+	font-size: 105%;
+	padding-top: .4%;
+	padding-right: 5%;
+	margin-top: .4%;
+}
+
+#decodingTextButtons {
+	margin-left: 83.15%;
+	padding-top: .5%;
+	font-size: 92.25%;
+	margin-top: 0%;
+	width: 9.0%;
+	padding-right: 0%;
+}
