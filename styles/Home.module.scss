@@ -499,6 +499,29 @@
   .subHeadingContainer {
     min-height: 4rem; // More space for mobile where text might wrap more
   }
+  
+  // Stack columns vertically on mobile/tablet
+  .container {
+    .grid {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+  }
+  
+  .left_col_top {
+    padding: 1rem 0.5rem;
+  }
+  
+  .secondCol {
+    order: -1; // Put potion first on mobile
+    
+    #scene-container {
+      max-width: 300px !important;
+      height: 300px !important;
+      margin: 0 auto 1rem;
+    }
+  }
 }
 
 @media (max-width: 480px) {
@@ -522,7 +545,9 @@
   
   #game {
     max-width: 100%;
-    padding: 1rem;
+    padding: 0.75rem;
+    margin: 0.25rem auto;
+    minHeight: '350px';
   }
   
   .links {
@@ -532,6 +557,25 @@
       width: 100%;
       text-align: center;
     }
+  }
+  
+  .secondCol {
+    #scene-container {
+      max-width: 250px !important;
+      height: 250px !important;
+    }
+  }
+  
+  // Better touch targets for prompts on mobile
+  .prompt {
+    padding: 0.75rem 1rem;
+    font-size: 0.9rem;
+    min-height: 44px; // iOS touch target minimum
+    width: calc(100% - 0.5rem) !important;
+    margin-bottom: 0.5rem;
+    text-align: center;
+    white-space: normal;
+    line-height: 1.3;
   }
 }
 

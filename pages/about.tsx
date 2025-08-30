@@ -79,30 +79,22 @@ const About = () => {
       
       <div className={style.pageBody}>
         <p className={style.firstParagraph}>
-          <span className={style.dropCap}>I</span> have spent the last six years crafting digital experiences 
-          at the intersection of technology and creativity. My journey in full-stack development has been 
-          marked by a particular fascination with backend engineering and the emerging possibilities of 
-          machine learning.
+          <span className={style.dropCap}>I</span> have been working in full-stack engineering and ML-oriented engineering
+          (NLP, applied AI, generative AI) for over six years now. I've worked directly on enterprise AI assistants like Amelia.ai
+          and worked alongside deep learning teams at eBay before jumping headfirst into web3 and decentralized tech.
+        </p>
+        <p>
+          Through extensive collaboration with blockchain teams launching NFTs and tokens and working at Tilting Point, I garnered an expertise in smart contracts,
+          before heading into the direction of LLMs and gen AI over the last few years, committed to working in this realm
+          steadfastly and in conventional product engineering.
         </p>
         
         <p>
-          Through extensive collaboration with blockchain teams, I've developed custom smart contracts 
-          and NFT platforms that push the boundaries of decentralized technology. Each project has been 
-          an opportunity to explore how code can reshape our digital landscape.
-        </p>
-        
-        <p>
-          As a tech generalist with a BFA in Design & Technology from Parsons (class of 2017), I find 
-          myself uniquely positioned at the crossroads of creative design and technical implementation. 
+          As a tech generalist with a BFA in Game Design (class of 2017), I enjoy experimenting with new mechanics in UX and brutually efficient while simultaneously ornamental and practical design.
           This dual perspective informs my work at <a href="https://manic.agency" target="_blank" rel="noreferrer" 
-          className={style.link}>Manic.agency</a>, where I collaborate on open-source projects that 
-          challenge conventional boundaries.
+          className={style.link}>Manic.agency</a>, where I collaborate on and lead open-source projects and tech-driven art.
         </p>
         
-        <p>
-          Currently, my explorations lead me through the convergent paths of AI, web3, and immersive 
-          experiences — seeking those moments where technology transcends utility to become art.
-        </p>
       </div>
     </div>,
     

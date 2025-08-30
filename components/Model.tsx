@@ -55,8 +55,21 @@ const Model = (props: { game: any, onSceneInit?: (scene: any) => void }) => {
   
   return (
     <>
-    <div id="scene-container" style={{width: '400px', height: '700px'}} >
-        <canvas id="canvasId"></canvas>
+    <div id="scene-container" style={{
+      width: '100%', 
+      maxWidth: '400px', 
+      height: 'clamp(300px, 50vh, 700px)',
+      margin: '0 auto',
+      position: 'relative',
+      pointerEvents: 'auto'
+    }}>
+        <canvas id="canvasId" style={{
+          width: '100%',
+          height: '100%',
+          display: 'block',
+          touchAction: 'none',
+          cursor: 'grab'
+        }}></canvas>
       </div>
     </>
   );

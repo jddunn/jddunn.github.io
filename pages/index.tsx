@@ -507,6 +507,56 @@ function updateStatuses() {
       /* Scrollbar for prompts container */
       #prompts-container {
         overflow-y: auto !important;
+        -webkit-overflow-scrolling: touch;
+      }
+      
+      /* Mobile optimizations */
+      @media (max-width: 768px) {
+        .prompt {
+          width: calc(100% - 0.5rem) !important;
+          margin-bottom: 0.5rem;
+          padding: 0.75rem 1rem;
+          min-height: 44px;
+          font-size: 0.9rem;
+          white-space: normal;
+          height: auto;
+        }
+        
+        #prompts-container {
+          min-height: 200px !important;
+          max-height: 300px !important;
+          height: auto !important;
+        }
+        
+        #prompts {
+          padding-bottom: 1rem !important;
+        }
+        
+        #game {
+          min-height: 400px !important;
+        }
+        
+        #display {
+          font-size: 0.95rem !important;
+        }
+        
+        #scene-container {
+          width: 100% !important;
+          max-width: 300px !important;
+          height: 300px !important;
+          margin: 0 auto !important;
+        }
+        
+        #canvasId {
+          touch-action: pan-y pinch-zoom !important;
+        }
+      }
+      
+      @media (max-width: 480px) {
+        #scene-container {
+          max-width: 250px !important;
+          height: 250px !important;
+        }
       }
 
       /* Enhanced Victorian prompt styles */
@@ -537,6 +587,8 @@ function updateStatuses() {
         width: calc(50% - 0.25rem);
         height: 36px;
         line-height: 1.3;
+        -webkit-tap-highlight-color: rgba(var(--accent-primary-rgb), 0.2);
+        user-select: none;
       }
       
       .prompt:hover {
@@ -645,7 +697,7 @@ function updateStatuses() {
     `}</style>
     <div className={styles.container}>
       <div className={styles.body}>
-        <div className={'grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-3'}>
+        <div className={'grid grid-cols-1 lg:grid-cols-2 gap-3'}>
           <div className={'firstCol'}>
             <AnimatePresence>
               <motion.div
@@ -790,6 +842,7 @@ function updateStatuses() {
                   </div>
                     <div id="game" suppressHydrationWarning style={{
                       maxWidth: '900px',
+                      width: '100%',
                       margin: '0.5rem auto',
                       position: 'relative',
                       background: 'linear-gradient(135deg, rgba(var(--page-bg-rgb), 0.98) 0%, rgba(var(--bg-primary-rgb), 0.95) 100%)',
@@ -797,27 +850,27 @@ function updateStatuses() {
                       borderRadius: '8px',
                       boxShadow: '0 20px 40px rgba(0, 0, 0, 0.2), 0 0 60px rgba(0, 0, 0, 0.1), inset 0 1px 0 rgba(var(--accent-primary-rgb), 0.1)',
                       fontFamily: 'Crimson Text, serif',
-                      fontSize: '1.05rem',
+                      fontSize: 'clamp(0.9rem, 2.5vw, 1.05rem)',
                       lineHeight: 1.7,
                       color: 'var(--accent-primary)',
                       backdropFilter: 'blur(15px)',
                       overflow: 'hidden',
-                      minHeight: '600px'
+                      minHeight: 'clamp(400px, 80vh, 600px)'
                     }}>
                       {/* Scrollable content area with custom scrollbar */}
                       <div id="display" style={{
-                        height: '300px',
-                        padding: '1.5rem 2rem',
+                        height: 'clamp(200px, 40vh, 300px)',
+                        padding: 'clamp(0.75rem, 3vw, 1.5rem) clamp(1rem, 4vw, 2rem)',
                         overflow: 'auto',
                         color: 'var(--accent-primary)',
-                        fontSize: '1.05rem',
+                        fontSize: 'inherit',
                         lineHeight: 1.5,
                         textAlign: 'justify'
                       }}></div>
                       {/* Input section */}
                       <div style={{
                         borderTop: '1px solid rgba(var(--accent-primary-rgb), 0.2)',
-                        padding: '1.5rem 2rem',
+                        padding: 'clamp(0.75rem, 3vw, 1.5rem) clamp(1rem, 4vw, 2rem)',
                         background: 'rgba(var(--accent-primary-rgb), 0.02)'
                       }}>
                         <div style={{
@@ -833,9 +886,9 @@ function updateStatuses() {
                               placeholder="Write something..."
                               style={{
                                 flex: 1,
-                                height: '50px',
-                                padding: '0 1.5rem',
-                                fontSize: '1.1rem',
+                                height: 'clamp(40px, 8vh, 50px)',
+                                padding: '0 clamp(0.75rem, 3vw, 1.5rem)',
+                                fontSize: 'clamp(0.9rem, 2.5vw, 1.1rem)',
                                 background: 'rgba(var(--bg-primary-rgb), 0.8)',
                                 border: '2px solid rgba(var(--accent-primary-rgb), 0.3)',
                                 borderRadius: '8px',
@@ -905,12 +958,13 @@ function updateStatuses() {
                       </div>
                       {/* Prompts section inside the book - for choice inputs */}
                       <div id="prompts-container" style={{
-                        height: '120px',
+                        height: 'clamp(100px, 20vh, 120px)',
                         borderTop: '1px solid rgba(var(--accent-primary-rgb), 0.1)',
                         background: 'rgba(var(--accent-primary-rgb), 0.02)',
                         overflowY: 'auto',
                         overflowX: 'hidden',
-                        position: 'relative'
+                        position: 'relative',
+                        WebkitOverflowScrolling: 'touch'
                       }}>
                         <div id="prompts" style={{
                           padding: '0.75rem 1rem',

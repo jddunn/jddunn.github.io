@@ -72,6 +72,7 @@ export default class SceneInit {
       this.controls.enableRotate = true;
       this.controls.enableZoom = true;
       this.controls.enablePan = false;
+      this.controls.enabled = true; // Ensure controls are enabled
   
       // ambient light which is for the whole scene
       this.ambientLight = new THREE.AmbientLight(0xffffff, 1.0);
@@ -90,11 +91,9 @@ export default class SceneInit {
   }
 
   onPointerMove(camera, event) {
-
-    const mouse_x = (( event.clientX - this.renderer.domElement.offsetLeft) / 
-      this.renderer.domElement.clientWidth ) * 2 - 1;
-    const mouse_y = - (( event.clientY - this.renderer.domElement.offsetTop) / 
-      this.renderer.domElement.clientHeight ) * 2 + 1;
+    const rect = this.renderer.domElement.getBoundingClientRect();
+    const mouse_x = ((event.clientX - rect.left) / rect.width) * 2 - 1;
+    const mouse_y = -((event.clientY - rect.top) / rect.height) * 2 + 1;
     const mouse3D = new THREE.Vector3(mouse_x, mouse_y, 0.5)
 
     const raycaster = new THREE.Raycaster()
@@ -114,18 +113,15 @@ export default class SceneInit {
 
   onPointerDown(camera, event){
     // Detect mouse clicks on the canvas object / three.js model 
-    event.preventDefault();
-    event.stopPropagation();
     
     // Prevent multiple clicks from being processed simultaneously
     if (this.isProcessingClick) {
       return;
     }
 
-    const mouse_x = (( event.clientX - this.renderer.domElement.offsetLeft) / 
-      this.renderer.domElement.clientWidth ) * 2 - 1;
-    const mouse_y = - (( event.clientY - this.renderer.domElement.offsetTop) / 
-      this.renderer.domElement.clientHeight ) * 2 + 1;
+    const rect = this.renderer.domElement.getBoundingClientRect();
+    const mouse_x = ((event.clientX - rect.left) / rect.width) * 2 - 1;
+    const mouse_y = -((event.clientY - rect.top) / rect.height) * 2 + 1;
 
     const mouse3D = new THREE.Vector3(mouse_x, mouse_y, 0.5)
 
@@ -141,6 +137,9 @@ export default class SceneInit {
       console.log('Click detected, intersects:', intersects.length);
       
       if(intersects.length > 0){
+          // Now prevent default since we're interacting with the model
+          event.preventDefault();
+          event.stopPropagation();
           this.isProcessingClick = true;
           
           // Change potion color on click
@@ -220,17 +219,21 @@ export default class SceneInit {
   
   onTouchEnd(camera, event){
     // Detect taps after let go in the canvas object / three.js model 
-    event.preventDefault();
+    // Don't prevent default to allow proper scrolling
+    // event.preventDefault();
     
     // Prevent multiple clicks from being processed simultaneously
     if (this.isProcessingClick) {
       return;
     }
 
-    const mouse_x = (( event.touches[0].clientX - this.renderer.domElement.offsetLeft) / 
-      this.renderer.domElement.clientWidth ) * 2 - 1;
-    const mouse_y = - (( event.touches[0].clientY - this.renderer.domElement.offsetTop) / 
-      this.renderer.domElement.clientHeight ) * 2 + 1;
+    // Handle case where touches might be empty after touchend
+    const touch = event.changedTouches?.[0] || event.touches?.[0];
+    if (!touch) return;
+    
+    const rect = this.renderer.domElement.getBoundingClientRect();
+    const mouse_x = ((touch.clientX - rect.left) / rect.width) * 2 - 1;
+    const mouse_y = -((touch.clientY - rect.top) / rect.height) * 2 + 1;
 
     const mouse3D = new THREE.Vector3(mouse_x, mouse_y, 0.5)
 
@@ -243,6 +246,8 @@ export default class SceneInit {
       const intersects = raycaster.intersectObjects(
         this.scene.children, true);
       if(intersects.length > 0){
+          // Now prevent default since we're interacting with the model
+          event.preventDefault();
           this.isProcessingClick = true;
           
           // Change potion color on click
