@@ -6,6 +6,8 @@
   grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
   gap: 2.5rem;
   margin-top: 3rem;
+  align-items: start;
+  grid-auto-rows: min-content;
 }
 
 // Error Handling Styles
@@ -209,8 +211,8 @@
   border: 2px solid rgba(var(--accent-primary-rgb), 0.2);
   padding: 2rem;
   position: relative;
-  overflow: hidden;
-  transition: all 400ms cubic-bezier(0.4, 0, 0.2, 1);
+  overflow: visible;
+  transition: transform 400ms cubic-bezier(0.4, 0, 0.2, 1), box-shadow 400ms cubic-bezier(0.4, 0, 0.2, 1);
   backdrop-filter: blur(10px);
   box-shadow: 
     0 4px 12px rgba(0, 0, 0, 0.1),

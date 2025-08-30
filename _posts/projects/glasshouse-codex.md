@@ -1,5 +1,5 @@
 ---
-title: 'Restless'
+title: 'Glasshouse Codex'
 coverImage: '/assets/projects/restless-transparent-logo.png'
 excerpt: 'Drawing-based one-shot digital TTRPG to learn and practice meditation.'
 date: '2025'

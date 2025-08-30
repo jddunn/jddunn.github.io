@@ -1,5 +1,5 @@
 ---
-title: 'Restless'
+title: 'tenets'
 coverImage: '/assets/projects/restless-transparent-logo.png'
 excerpt: 'Always-on anti-malware software using malicious language processing (hierarchical attention network).'
 date: '2020'

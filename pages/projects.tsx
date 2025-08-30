@@ -37,6 +37,7 @@ export default function Index({ allPosts }: Props) {
               slug={heroPost.slug}
               excerpt={heroPost.excerpt}
               dir={dir}
+              featured={heroPost.featured}
             />
           )}
           {morePosts.length > 0 && <MoreStories posts={morePosts} dir={dir} />}
@@ -57,6 +58,7 @@ export const getStaticProps = async () => {
     'tags',
     'coverImage',
     'excerpt',
+    'featured',
   ])
   
   return {

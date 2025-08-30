@@ -14,6 +14,7 @@ type Props = {
   tags?: string
   slug: string
   dir?: string
+  featured?: boolean
 }
 
 const HeroPost = ({
@@ -25,7 +26,8 @@ const HeroPost = ({
   // author,
   tags,
   slug,
-  dir='blog'
+  dir='blog',
+  featured = false
 }: Props) => {
 
   const _tags = tags?.split(",")
@@ -33,9 +35,9 @@ const HeroPost = ({
   return (
     <section className={styles.heroSection}>
       <div className={styles.heroCard}>
-        {/* Featured Badge */}
+        {/* Featured or Most Recent Badge */}
         <div className={styles.featuredBadge}>
-          <span className={styles.badgeText}>Featured</span>
+          <span className={styles.badgeText}>{featured ? 'Featured' : 'Most Recent'}</span>
         </div>
         
         {/* Cover Image with Content Overlay */}

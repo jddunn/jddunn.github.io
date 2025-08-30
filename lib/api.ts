@@ -48,6 +48,11 @@ export function getAllPosts(fields: string[] = []) {
     .map((slug) => getPostBySlug(slug, fields))
     // sort posts by date in descending order (most recent first)
     .sort((post1, post2) => {
+      // Check if either post is featured
+      if (post1.featured && !post2.featured) return -1
+      if (!post1.featured && post2.featured) return 1
+      
+      // If both or neither are featured, sort by date
       const date1 = new Date(post1.date || post1.createdDate)
       const date2 = new Date(post2.date || post2.createdDate)
       return date2.getTime() - date1.getTime()
@@ -60,6 +65,11 @@ export function getAllProjects(fields: string[] = []) {
     .map((slug) => getPostBySlug(slug, fields, projectsDirectory))
     // sort projects by date in descending order (most recent first)
     .sort((project1, project2) => {
+      // Check if either project is featured
+      if (project1.featured && !project2.featured) return -1
+      if (!project1.featured && project2.featured) return 1
+      
+      // If both or neither are featured, sort by date
       const date1 = new Date(project1.createdDate || project1.date)
       const date2 = new Date(project2.createdDate || project2.date)
       return date2.getTime() - date1.getTime()

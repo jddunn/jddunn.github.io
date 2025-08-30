@@ -80,7 +80,7 @@ const GitHubRepoCard: React.FC<Props> = ({ repo, index }) => {
       animate={{ opacity: 1, y: 0 }}
       transition={{ delay: index * 0.1, duration: 0.5 }}
       className={styles.repoCard}
-      layout
+      layout={false}
     >
       {/* Main Card Content */}
       <div className={styles.cardHeader}>
@@ -170,14 +170,15 @@ const GitHubRepoCard: React.FC<Props> = ({ repo, index }) => {
       </button>
 
       {/* Expanded Content */}
-      <AnimatePresence>
+      <AnimatePresence mode="wait">
         {isExpanded && (
           <motion.div
-            initial={{ height: 0, opacity: 0 }}
-            animate={{ height: 'auto', opacity: 1 }}
-            exit={{ height: 0, opacity: 0 }}
-            transition={{ duration: 0.3 }}
+            initial={{ maxHeight: 0, opacity: 0 }}
+            animate={{ maxHeight: '1000px', opacity: 1 }}
+            exit={{ maxHeight: 0, opacity: 0 }}
+            transition={{ duration: 0.3, ease: 'easeInOut' }}
             className={styles.expandedContent}
+            style={{ overflow: 'hidden' }}
           >
             {/* Language Statistics */}
             {languageStats.length > 0 && (
