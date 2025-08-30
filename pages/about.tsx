@@ -42,13 +42,13 @@ const About = () => {
   }, [router.query]);
 
   const skills = {
-    'Frontend': ['React', 'Next.js', 'TypeScript', 'Three.js', 'Tailwind CSS', 'SCSS', 'Framer Motion'],
-    'Backend': ['Python', 'Node.js', 'Solidity', 'FastAPI', 'Express', 'Django', 'Flask'],
-    'ML/AI': ['PyTorch', 'TensorFlow', 'LangChain', 'OpenAI', 'Hugging Face', 'scikit-learn', 'spaCy'],
-    'Blockchain': ['Ethers.js', 'Web3.js', 'Hardhat', 'Truffle', 'Smart Contracts', 'NFTs'],
-    'Database': ['PostgreSQL', 'MongoDB', 'MySQL', 'Redis', 'Elasticsearch', 'SQLAlchemy'],
-    'DevOps': ['Docker', 'Kubernetes', 'AWS', 'Git', 'CI/CD', 'Jenkins'],
-    'Design': ['Figma', 'Photoshop', 'After Effects', 'Unity3D', 'AR/VR', 'UX Research']
+    'Languages': ['Python', 'TypeScript', 'JavaScript', 'Go', 'Scala', 'SQL', 'Solidity'],
+    'Frontend': ['React', 'Next.js', 'Redux', 'Vue', 'Nuxt', 'Tailwind', 'D3.js', 'three.js'],
+    'Backend': ['FastAPI', 'Django', 'Node.js (Express, NestJS)', 'gRPC', 'GraphQL', 'RabbitMQ'],
+    'AI/ML': ['PyTorch', 'TensorFlow', 'Keras', 'LangChain', 'LlamaIndex', 'Transformers', 'Hugging Face', 'Scikit-learn', 'spaCy', 'Pandas', 'NumPy', 'OpenCV', 'CUDA', 'XGBoost', 'Stable Diffusion', 'Claude', 'OpenAI'],
+    'Databases': ['PostgreSQL', 'Redis', 'Pinecone', 'MongoDB', 'Elasticsearch', 'Weaviate'],
+    'DevOps': ['AWS (Lambda, EC2, EBS, RedShift)', 'Docker', 'Kubernetes', 'Jenkins', 'GitHub Actions'],
+    'Tools/Other': ['Unity3D', 'Adobe Creative Suite', 'Electron', 'Capacitor', 'Android Studio', 'Quasar', 'Selenium', 'Puppeteer']
   };
 
   const pageVariants = {
@@ -79,20 +79,20 @@ const About = () => {
       
       <div className={style.pageBody}>
         <p className={style.firstParagraph}>
-          <span className={style.dropCap}>I</span> have been working in full-stack engineering and ML-oriented engineering
-          (NLP, applied AI, generative AI) for over six years now. I've worked directly on enterprise AI assistants like Amelia.ai
-          and worked alongside deep learning teams at eBay before jumping headfirst into web3 and decentralized tech.
+          <span className={style.dropCap}>I</span>'m a full-stack engineer specializing in building and deploying end-to-end AI/ML systems.
+          With experience creating RAG pipelines, fine-tuning LLMs, and architecting scalable backend services in Python and TypeScript,
+          I focus on delivering robust solutions with exceptional developer experience and API design.
         </p>
         <p>
-          Through extensive collaboration with blockchain teams launching NFTs and tokens and working at Tilting Point, I garnered an expertise in smart contracts,
-          before heading into the direction of LLMs and gen AI over the last few years, committed to working in this realm
-          steadfastly and in conventional product engineering.
+          My journey spans from enterprise AI assistants at Amelia.ai to building ML delivery infrastructure at eBay,
+          developing blockchain systems at Tilting Point (including rescuing $1M+ in MATIC), and consulting for companies
+          like Linkby, Grapple Research, and ImmenseX on cutting-edge ML solutions.
         </p>
         
         <p>
-          As a tech generalist with a BFA in Game Design (class of 2017), I enjoy experimenting with new mechanics in UX and brutually efficient while simultaneously ornamental and practical design.
-          This dual perspective informs my work at <a href="https://manic.agency" target="_blank" rel="noreferrer" 
-          className={style.link}>Manic.agency</a>, where I collaborate on and lead open-source projects and tech-driven art.
+          With a BFA in Design and Technology from Parsons (2017), I bring a unique perspective combining technical excellence
+          with creative problem-solving. This dual approach drives my work at <a href="https://manic.agency" target="_blank" rel="noreferrer" 
+          className={style.link}>Manic.agency</a>, where I collaborate on open-source projects and publish technical writing at The Looking Glass.
         </p>
         
       </div>
@@ -133,14 +133,36 @@ const About = () => {
       <div className={style.pageBody}>
         <div className={style.timeline}>
           <div className={style.timelineEntry}>
-            <span className={style.year}>2017 — Present</span>
-            <h4 className={style.role}>Full-Stack Developer & ML Engineer</h4>
-            <p className={style.company}>Independent Practice</p>
+            <span className={style.year}>2023 — Present</span>
+            <h4 className={style.role}>ML Engineer & Product Designer</h4>
+            <p className={style.company}>Independent Consultant</p>
             <ul className={style.achievements}>
-              <li>Architected blockchain applications and smart contract systems</li>
-              <li>Engineered ML pipelines and natural language processing systems</li>
-              <li>Crafted AR/VR experiences using Unity3D</li>
-              <li>Contributed to numerous open-source initiatives</li>
+              <li>Linkby: Built unified ML pipeline automating feature engineering and model training from SQL</li>
+              <li>Grapple Research: Improved AI text detection accuracy from 55% to 71%, reduced costs by 64%</li>
+              <li>ImmenseX: Built RAG pipeline using Weaviate for conversational AI memory</li>
+              <li>HereAfterLegacy: Achieved 74% accuracy on sentiment analysis with random forest</li>
+            </ul>
+          </div>
+          
+          <div className={style.timelineEntry}>
+            <span className={style.year}>2021 — 2023</span>
+            <h4 className={style.role}>Senior Blockchain Engineer</h4>
+            <p className={style.company}>Tilting Point, New York</p>
+            <ul className={style.achievements}>
+              <li>Developed ERC-20/721 smart contracts and REST APIs for NFT marketplace</li>
+              <li>Rescued $1M+ in MATIC through reverse engineering deployed contracts</li>
+              <li>Architected blockchain state gRPC microservices supporting 1000+ events/sec</li>
+            </ul>
+          </div>
+          
+          <div className={style.timelineEntry}>
+            <span className={style.year}>2020 — 2021</span>
+            <h4 className={style.role}>Software Engineer 2 (Full-Stack)</h4>
+            <p className={style.company}>eBay, New York</p>
+            <ul className={style.achievements}>
+              <li>Built REST APIs in Scala/Spring-Boot for real-time ad rendering (&lt;1s latency)</li>
+              <li>Built E2E ML delivery infrastructure (K8s + Jenkins)</li>
+              <li>Accelerated deep learning team iteration by 50% with sandboxed UI deployments</li>
             </ul>
           </div>
           
@@ -150,19 +172,30 @@ const About = () => {
             <p className={style.company}>Manic.agency</p>
             <ul className={style.achievements}>
               <li>Building open-source tools and creative projects</li>
-              <li>Publishing technical articles and documentation</li>
+              <li>Publishing technical articles and documentation at The Looking Glass</li>
+              <li>Operating the Synthetic Publishing Platform (The Rabbit Hole)</li>
               <li>Fostering collaboration between artists and developers</li>
             </ul>
           </div>
           
           <div className={style.timelineEntry}>
+            <span className={style.year}>2017 — 2020</span>
+            <h4 className={style.role}>Cognitive Implementation Engineer</h4>
+            <p className={style.company}>Amelia.ai, New York</p>
+            <ul className={style.achievements}>
+              <li>Implemented PII redaction and external integrations for enterprise virtual assistant</li>
+              <li>Served Fortune 500 clients with conversational AI solutions</li>
+            </ul>
+          </div>
+          
+          <div className={style.timelineEntry}>
             <span className={style.year}>2013 — 2017</span>
-            <h4 className={style.role}>Bachelor of Fine Arts</h4>
+            <h4 className={style.role}>Bachelor of Fine Arts in Design and Technology</h4>
             <p className={style.company}>Parsons School of Design</p>
             <ul className={style.achievements}>
+              <li>5th Place, AT&T National VR and AR Challenge (2017)</li>
               <li>Specialized in Game Design and Interactive Media</li>
               <li>Studied creative coding and physical computing</li>
-              <li>Explored AR/VR and immersive experiences</li>
             </ul>
           </div>
         </div>
@@ -189,7 +222,7 @@ const About = () => {
           <h1 className={style.mainTitle}>
             <span className={style.firstLetter} data-letter="A">A</span>bout Me
           </h1>
-          <p className={style.subtitle}>Full-Stack Developer, NLP Engineer, Game Designer, Writer</p>
+          <p className={style.subtitle}>Full-Stack Engineer • ML/AI Specialist • Open-Source Contributor</p>
         </motion.div>
 
         {/* Book */}
@@ -232,7 +265,7 @@ const About = () => {
               
               {/* Links Section */}
               <div className={style.coverLinks}>
-                <a href="mailto:johnnyfived@protonmail.com" className={style.coverLink}>
+                <a href="mailto:johnnyddunn@gmail.com" className={style.coverLink}>
                   <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                     <rect x="2" y="4" width="20" height="16" rx="2"/>
                     <path d="m22 7-10 5L2 7"/>
@@ -255,7 +288,7 @@ const About = () => {
                   </svg>
                   <span>GitHub</span>
                 </a>
-                <a href="https://linkedin.com/in/johnny-dunn" target="_blank" rel="noreferrer" className={style.coverLink}>
+                <a href="https://www.linkedin.com/in/jdfive/" target="_blank" rel="noreferrer" className={style.coverLink}>
                   <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
                     <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
                   </svg>

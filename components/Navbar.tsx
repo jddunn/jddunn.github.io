@@ -46,10 +46,35 @@ const Navbar = () => {
             onClick={toggleTheme}
             className={style.themeToggleMobile}
             aria-label="Toggle theme"
-            style={{position: 'fixed', top: '20px', right: '70px', zIndex: 1001}}
+            style={{
+              position: 'fixed', 
+              top: '20px', 
+              right: '70px', 
+              zIndex: 1002,
+              width: '40px',
+              height: '40px',
+              borderRadius: '50%',
+              border: '2px solid var(--accent-primary)',
+              background: 'var(--bg-primary)',
+              color: 'var(--accent-primary)',
+              display: 'flex !important',
+              alignItems: 'center',
+              justifyContent: 'center',
+              cursor: 'pointer',
+              transition: 'all 0.3s ease',
+              boxShadow: '0 2px 8px rgba(0,0,0,0.1)'
+            }}
+            onMouseEnter={(e) => {
+              e.currentTarget.style.background = 'var(--accent-primary)';
+              e.currentTarget.style.color = 'var(--bg-primary)';
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.background = 'var(--bg-primary)';
+              e.currentTarget.style.color = 'var(--accent-primary)';
+            }}
           >
             {theme === 'dark' ? (
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style={{color: 'inherit'}}>
                 <g className={style.sunIcon}>
                   <circle cx="12" cy="12" r="4" stroke="currentColor" strokeWidth="1.5" fill="none"/>
                   <g className={style.sunRays}>
@@ -65,7 +90,7 @@ const Navbar = () => {
                 </g>
               </svg>
             ) : (
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style={{color: 'inherit'}}>
                 <g className={style.moonIcon}>
                   <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" stroke="currentColor" strokeWidth="1.5" fill="none"/>
                   <circle cx="18" cy="5" r="0.5" fill="currentColor" className={style.star1}/>
@@ -78,11 +103,21 @@ const Navbar = () => {
           <div
             className="hamburger-icon space-y-2"
             onClick={() => setIsMobileNavOpen((prev) => !prev)}
-            style={{cursor: 'pointer', position: 'fixed',  top: '25px', right: '20px', margin: '0', zIndex: 1001}}
+            style={{
+              cursor: 'pointer', 
+              position: 'fixed',  
+              top: '25px', 
+              right: '20px', 
+              margin: '0', 
+              zIndex: 1001,
+              display: 'flex',
+              flexDirection: 'column',
+              gap: '6px'
+            }}
           >
-            <span className="block h-0.5 w-8 bg-gray-400"></span>
-            <span className="block h-0.5 w-8 bg-gray-400"></span>
-            <span className="block h-0.5 w-8 bg-gray-400"></span>
+            <span className="block h-0.5 w-8" style={{backgroundColor: 'var(--accent-primary)'}}></span>
+            <span className="block h-0.5 w-8" style={{backgroundColor: 'var(--accent-primary)'}}></span>
+            <span className="block h-0.5 w-8" style={{backgroundColor: 'var(--accent-primary)'}}></span>
           </div>
 
           <div className={isMobileNavOpen ? "showMenuNav" : "hideMenuNav"}>
@@ -92,65 +127,118 @@ const Navbar = () => {
               style={{cursor: 'pointer', zIndex: 1002}}
             >
               <svg
-                className="h-8 w-8 text-gray-400"
+                className="h-8 w-8"
                 viewBox="0 0 24 24"
                 fill="none"
                 stroke="currentColor"
                 strokeWidth="2"
                 strokeLinecap="round"
                 strokeLinejoin="round"
-                style={{cursor: 'pointer'}}
+                style={{cursor: 'pointer', color: 'var(--accent-primary)'}}
               >
                 <line x1="18" y1="6" x2="6" y2="18" />
                 <line x1="6" y1="6" x2="18" y2="18" />
               </svg>
             </div>
-            <ul className="flex flex-col items-center justify-center min-h-[400px]">
-              <Link href="/" passHref>
-                <li className={router.pathname == "/" ? `border-b border-gray-400 
-                my-8 ${style.active} font-semibold` : "border-b border-gray-400 my-8 uppercase"}
-                style={{marginLeft: '0px'}}
+            <ul style={{
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center',
+              justifyContent: 'center',
+              minHeight: '400px',
+              listStyle: 'none',
+              padding: '60px 0 0 0',
+              margin: 0
+            }}>
+              <li 
+                onClick={() => { router.push('/'); setIsMobileNavOpen(false); }}
+                className={router.pathname == "/" ? `${style.active} font-semibold` : ""}
+                style={{
+                  padding: '0.75rem 2rem',
+                  margin: '1rem 0',
+                  borderBottom: '1px solid var(--accent-primary)',
+                  color: router.pathname == "/" ? 'var(--accent-primary)' : 'var(--text-primary)',
+                  transition: 'all 0.3s ease',
+                  cursor: 'pointer',
+                  textTransform: 'uppercase',
+                  fontSize: '1.1rem',
+                  letterSpacing: '0.1em'
+                }}
                 >
                   HOME
                 </li>
-              </Link>
-              <Link href="/about" passHref>
-                <li className={router.pathname == "/about" ? `border-b border-gray-400
-                 my-8 ${style.active} font-semibold` : "border-b border-gray-400 my-8 uppercase"}
-                 style={{marginLeft: '0px'}}
+              <li 
+                onClick={() => { router.push('/about'); setIsMobileNavOpen(false); }}
+                className={router.pathname == "/about" ? `${style.active} font-semibold` : ""}
+                 style={{
+                   padding: '0.75rem 2rem',
+                   margin: '1rem 0',
+                   borderBottom: '1px solid var(--accent-primary)',
+                   color: router.pathname == "/about" ? 'var(--accent-primary)' : 'var(--text-primary)',
+                   transition: 'all 0.3s ease',
+                   cursor: 'pointer',
+                   textTransform: 'uppercase',
+                   fontSize: '1.1rem',
+                   letterSpacing: '0.1em'
+                 }}
                  >
                   ABOUT ME
                 </li>
-              </Link>
-              <Link href="/projects" passHref>
-                <li
-                  className={router.pathname == "/projects" ? `border-b border-gray-400 
-                  my-8 ${style.active} font-semibold` : "border-b border-gray-400 my-8 uppercase"}
-                  style={{marginLeft: '0px'}}
-                >
-                  PROJECTS
-                </li>
-              </Link>
-              <Link href="/open-source" passHref>
-                <li
-                  className={router.pathname == "/open-source" ?
-                   `border-b border-gray-400 my-8 ${style.active} font-semibold` : 
-                   "border-b border-gray-400 my-8 uppercase"}
-                   style={{marginLeft: '0px'}}
-                >
-                  OPEN SOURCE
-                </li>
-              </Link>
-              <Link href="/blog" passHref>
-                <li
-                  className={router.pathname == "/blog" || router.pathname.includes('posts') ? 
-                  `border-b border-gray-400 my-8 ${style.active} font-semibold` : 
-                  "border-b border-gray-400 my-8 uppercase"}
-                   style={{marginLeft: '0px'}}
-                >
-                  BLOG
-                </li>
-              </Link>
+              <li
+                onClick={() => { router.push('/projects'); setIsMobileNavOpen(false); }}
+                className={router.pathname == "/projects" ? `${style.active} font-semibold` : ""}
+                style={{
+                  padding: '0.75rem 2rem',
+                  margin: '1rem 0',
+                  borderBottom: '1px solid var(--accent-primary)',
+                  color: router.pathname == "/projects" ? 'var(--accent-primary)' : 'var(--text-primary)',
+                  transition: 'all 0.3s ease',
+                  cursor: 'pointer',
+                  textTransform: 'uppercase',
+                  fontSize: '1.1rem',
+                  letterSpacing: '0.1em'
+                }}
+              >
+                PROJECTS
+              </li>
+              <li
+                onClick={() => { router.push('/open-source'); setIsMobileNavOpen(false); }}
+                className={router.pathname == "/open-source" ?
+                 `${style.active} font-semibold` : 
+                 ""}
+                 style={{
+                   padding: '0.75rem 2rem',
+                   margin: '1rem 0',
+                   borderBottom: '1px solid var(--accent-primary)',
+                   color: router.pathname == "/open-source" ? 'var(--accent-primary)' : 'var(--text-primary)',
+                   transition: 'all 0.3s ease',
+                   cursor: 'pointer',
+                   textTransform: 'uppercase',
+                   fontSize: '1.1rem',
+                   letterSpacing: '0.1em'
+                 }}
+              >
+                OPEN SOURCE
+              </li>
+              <li
+                onClick={() => { router.push('/blog'); setIsMobileNavOpen(false); }}
+                className={router.pathname == "/blog" || router.pathname.includes('posts') ? 
+                `${style.active} font-semibold` : 
+                ""}
+                 style={{
+                   padding: '0.75rem 2rem',
+                   margin: '1rem 0',
+                   borderBottom: '1px solid var(--accent-primary)',
+                   color: router.pathname == "/blog" || router.pathname.includes('posts') ? 'var(--accent-primary)' : 'var(--text-primary)',
+                   transition: 'all 0.3s ease',
+                   cursor: 'pointer',
+                   textTransform: 'uppercase',
+                   fontSize: '1.1rem',
+                   letterSpacing: '0.1em'
+                 }}
+              >
+                BLOG
+              </li>
             </ul>
           </div>
         </section>
@@ -228,7 +316,7 @@ const Navbar = () => {
           )}
         </button>
       </nav>
-      <style>{`
+      <style jsx>{`
         .hideMenuNav {
           display: none;
         }
@@ -240,31 +328,36 @@ const Navbar = () => {
           top: 0;
           left: 0;
           z-index: 1000;
-          background-color: var(--bg-primary);
-          backdrop-filter: blur(10px);
+          background: var(--bg-primary);
+          backdrop-filter: blur(20px);
+          -webkit-backdrop-filter: blur(20px);
         }
         .showMenuNav ul {
           background-color: transparent;
           padding-top: 60px;
-        }
-        .${style.themeToggleMobile} {
-          width: 40px;
-          height: 40px;
-          border-radius: 8px;
-          border: 1px solid var(--border-primary);
-          background: var(--bg-secondary);
-          color: var(--accent-primary);
+          min-height: 400px;
           display: flex;
+          flex-direction: column;
           align-items: center;
           justify-content: center;
+        }
+        .showMenuNav li {
+          padding: 0.75rem 2rem;
+          margin: 2rem 0;
           cursor: pointer;
+          position: relative;
+          font-family: 'Crimson Text', serif;
+          letter-spacing: 0.1em;
           transition: all 0.3s ease;
+          list-style: none;
+          text-transform: uppercase;
+          font-size: 1.1rem;
         }
-        .${style.themeToggleMobile}:hover {
-          background: var(--accent-primary);
-          color: var(--bg-primary);
+        .showMenuNav li:hover {
+          color: var(--accent-secondary) !important;
+          transform: translateX(10px);
         }
-    `}</style>
+      `}</style>
     </div>
   );
 };

@@ -170,7 +170,7 @@ const GitHubRepoCard: React.FC<Props> = ({ repo, index }) => {
       </button>
 
       {/* Expanded Content */}
-      <AnimatePresence mode="wait">
+      <AnimatePresence>
         {isExpanded && (
           <motion.div
             initial={{ maxHeight: 0, opacity: 0 }}

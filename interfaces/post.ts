@@ -14,6 +14,7 @@ type PostType = {
   content: string
   dir?: string
   tags?: string
+  featured?: boolean
 }
 
 export default PostType
