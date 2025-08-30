@@ -48,8 +48,15 @@ export default function Home() {
     // This is a hackey way for us to update statuses in the player
     // based on clicking the prompts. With a new update / version
     // to the text-rpg-engine library, this will be taken care already.
-    document.addEventListener("click", function(){
-      updateStatuses();
+    document.addEventListener("click", function(e){
+      setTimeout(() => {
+        updateStatuses();
+        ensurePromptsVisible();
+        // Re-enable three.js controls after any click to ensure potion stays interactive
+        if (window.sceneInstance && window.sceneInstance.controls) {
+          window.sceneInstance.controls.enabled = true;
+        }
+      }, 100);
     });
 
     setDomLoaded(true);
@@ -65,13 +72,45 @@ export default function Home() {
       }
       // Below code loads game data from static JSON file
       fetchData();
-      // Add event listeners for prompt buttons
-      // document.querySelectorAll(".prompt").forEach(i => 
-      //   i.addEventListener(
-      //   "click",
-      //   e => {
-      //     game.userSend(e.currentTarget.dataset.myDataContent);
-      //   }));
+      
+      // Watch for dynamically added prompts
+      const observer = new MutationObserver((mutations) => {
+        let hasRelevantChanges = false;
+        mutations.forEach((mutation) => {
+          if (mutation.type === 'childList' && mutation.addedNodes.length > 0) {
+            mutation.addedNodes.forEach((node) => {
+              if (node.nodeType === Node.ELEMENT_NODE) {
+                const element = node as HTMLElement;
+                // Check if it's a prompt or contains prompts
+                if (element.classList?.contains('prompt') || 
+                    element.querySelector?.('.prompt') ||
+                    element.textContent?.includes('go further') ||
+                    element.textContent?.includes('special entrance') ||
+                    element.style?.cursor === 'pointer') {
+                  hasRelevantChanges = true;
+                  console.log('[DEBUG] Mutation detected - potential prompt added:', element.textContent?.substring(0, 50));
+                }
+              }
+            });
+          }
+        });
+        
+        if (hasRelevantChanges) {
+          setTimeout(() => {
+            ensurePromptsVisible();
+          }, 100);
+        }
+      });
+      
+      // Start observing both display and prompts containers
+      const displayEl = document.getElementById('display');
+      const promptsEl = document.getElementById('prompts');
+      if (displayEl) {
+        observer.observe(displayEl, { childList: true, subtree: true });
+      }
+      if (promptsEl) {
+        observer.observe(promptsEl, { childList: true, subtree: true });
+      }
   }
 
   }, [router, domLoaded]);
@@ -112,6 +151,93 @@ export default function Home() {
       data = response;
       game.loadData(data);
       game.init();
+      
+      // Set initial game state
+      const initialGameState = {
+        currentRoom: game.Player.currentRoom || 'WelcomeRoom',
+        inventory: game.Player.inventory?.items || []
+      };
+      localStorage.setItem('gameState', JSON.stringify(initialGameState));
+      
+      // Emit initial state
+      const event = new CustomEvent('gameStateUpdate', { detail: initialGameState });
+      window.dispatchEvent(event);
+
+      // Make sure prompts are visible initially
+      setTimeout(() => {
+        console.log('[DEBUG] Initial prompt check after game init');
+        ensurePromptsVisible();
+        
+        // Also try to manually check what the game has rendered
+        const displayContent = document.getElementById('display')?.innerHTML;
+        console.log('[DEBUG] Display content length:', displayContent?.length || 0);
+        console.log('[DEBUG] Display content preview:', displayContent?.substring(0, 200));
+        
+        // Try to manually add test prompts if none are found
+        const promptsContainer = document.getElementById('prompts');
+        if (promptsContainer && promptsContainer.children.length === 0) {
+          console.log('[DEBUG] No prompts found, adding default prompts for room:', game.Player?.currentRoom);
+          
+          // Add default prompts based on the room
+          const defaultPrompts = [
+            { text: 'go further', command: 'go further' },
+            { text: 'look around', command: 'look' },
+            { text: 'check inventory', command: 'inventory' }
+          ];
+          
+          // If in WelcomeRoom, add specific prompts
+          if (game.Player?.currentRoom === 'WelcomeRoom' || game.Player?.currentRoom === 'Beginning') {
+            defaultPrompts.push({ text: 'special entrance', command: 'special entrance' });
+            defaultPrompts.push({ text: "i'm in charge here", command: "i'm in charge here" });
+            defaultPrompts.push({ text: 'how was this created?', command: 'how was this created?' });
+          }
+          
+          defaultPrompts.forEach(promptData => {
+            const promptEl = document.createElement('div');
+            promptEl.className = 'prompt';
+            promptEl.textContent = promptData.text;
+            // Apply inline styles directly when creating
+            promptEl.style.cssText = `
+              display: block !important;
+              visibility: visible !important;
+              opacity: 1 !important;
+              padding: 0.5rem 1rem !important;
+              margin: 0 !important;
+              background: linear-gradient(135deg, rgba(212, 175, 55, 0.1) 0%, rgba(244, 228, 193, 0.1) 100%) !important;
+              border: 2px solid #D4AF37 !important;
+              border-radius: 6px !important;
+              color: #D4AF37 !important;
+              font-size: 0.85rem !important;
+              font-family: 'Crimson Text', serif !important;
+              font-style: italic !important;
+              cursor: pointer !important;
+              text-align: center !important;
+              position: relative !important;
+              z-index: 10 !important;
+              white-space: nowrap !important;
+              overflow: hidden !important;
+              text-overflow: ellipsis !important;
+              width: calc(50% - 0.25rem) !important;
+              height: 36px !important;
+            `;
+            promptEl.onclick = () => {
+              console.log('[DEBUG] Manual prompt clicked:', promptData.command);
+              game.userSend(promptData.command);
+              // Scroll to top of display
+              const displayEl = document.getElementById('display');
+              if (displayEl) {
+                displayEl.scrollTop = 0;
+              }
+              setTimeout(() => {
+                updateStatuses();
+                ensurePromptsVisible();
+              }, 100);
+            };
+            promptsContainer.appendChild(promptEl);
+            console.log('[DEBUG] Added manual prompt:', promptData.text);
+          });
+        }
+      }, 1000);
 
       // Send user input to our game (on pressing 'Enter' in the form)
       document.getElementById('input').addEventListener('keypress', function (event) {
@@ -137,7 +263,164 @@ export default function Home() {
     event.preventDefault();
     game.userSend((document.getElementById('input') as HTMLInputElement).value);
     (document.getElementById('input') as HTMLInputElement).value = '';
-    updateStatuses();
+    setTimeout(() => {
+      updateStatuses();
+      ensurePromptsVisible();
+    }, 100);
+}
+
+function ensurePromptsVisible() {
+  console.log('[DEBUG] ensurePromptsVisible called');
+  
+  // Make sure prompt buttons are visible
+  const promptsContainer = document.getElementById('prompts');
+  const promptsWrapper = document.getElementById('prompts-wrapper');
+  console.log('[DEBUG] Prompts container found:', !!promptsContainer);
+  console.log('[DEBUG] Prompts wrapper found:', !!promptsWrapper);
+  
+  if (promptsContainer) {
+    // Debug container visibility
+    const containerStyles = window.getComputedStyle(promptsContainer);
+    console.log('[DEBUG] Container visibility:', {
+      display: containerStyles.display,
+      visibility: containerStyles.visibility,
+      opacity: containerStyles.opacity,
+      height: promptsContainer.offsetHeight,
+      width: promptsContainer.offsetWidth,
+      position: containerStyles.position
+    });
+    
+    // Don't override the grid layout that's already set
+    // Just ensure visibility
+    promptsContainer.style.visibility = 'visible';
+    promptsContainer.style.opacity = '1';
+    
+    const existingPrompts = promptsContainer.querySelectorAll('.prompt');
+    console.log('[DEBUG] Existing prompts in container:', existingPrompts.length);
+    
+    // Debug: Check if prompts are actually visible
+    existingPrompts.forEach((prompt, i) => {
+      const el = prompt as HTMLElement;
+      const styles = window.getComputedStyle(el);
+      console.log(`[DEBUG] Prompt ${i} visibility:`, {
+        display: styles.display,
+        visibility: styles.visibility,
+        opacity: styles.opacity,
+        height: el.offsetHeight,
+        width: el.offsetWidth,
+        text: el.textContent?.substring(0, 30)
+      });
+      
+      // Force visibility with explicit styles using cssText
+      el.style.cssText = `
+        display: inline-block !important;
+        visibility: visible !important;
+        opacity: 1 !important;
+        padding: 0.4rem 0.8rem !important;
+        margin: 0 !important;
+        background: linear-gradient(135deg, rgba(212, 175, 55, 0.1) 0%, rgba(244, 228, 193, 0.1) 100%) !important;
+        border: 2px solid #D4AF37 !important;
+        border-radius: 6px !important;
+        color: #D4AF37 !important;
+        font-size: 0.85rem !important;
+        font-family: 'Crimson Text', serif !important;
+        font-style: italic !important;
+        cursor: pointer !important;
+        text-align: center !important;
+        position: relative !important;
+        z-index: 10 !important;
+        flex: 0 1 calc(50% - 0.25rem) !important;
+        white-space: nowrap !important;
+        overflow: hidden !important;
+        text-overflow: ellipsis !important;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.2) !important;
+        height: 32px !important;
+      `;
+    });
+    
+    if (existingPrompts.length === 0) {
+      // If no prompts found, check if they might be in the display area
+      const displayArea = document.getElementById('display');
+      console.log('[DEBUG] Display area found:', !!displayArea);
+      
+      if (displayArea) {
+        const displayPrompts = displayArea.querySelectorAll('.prompt');
+        console.log('[DEBUG] Prompts found in display area:', displayPrompts.length);
+        
+        displayPrompts.forEach((prompt, index) => {
+          console.log(`[DEBUG] Moving prompt ${index}:`, prompt.textContent);
+          // Move prompts to the prompts container
+          const clonedPrompt = prompt.cloneNode(true) as HTMLElement;
+          promptsContainer.appendChild(clonedPrompt);
+        });
+        
+        // Remove prompts from display area
+        displayPrompts.forEach(prompt => prompt.remove());
+        console.log('[DEBUG] Removed prompts from display area');
+      }
+      
+      // Also check for any divs with onclick that might be prompts
+      const allDivs = displayArea?.querySelectorAll('div[onclick]');
+      console.log('[DEBUG] Divs with onclick found:', allDivs?.length || 0);
+      
+      // Check for any elements that look like prompts
+      const potentialPrompts = displayArea?.querySelectorAll('div[style*="cursor: pointer"], span[style*="cursor: pointer"], p[style*="cursor: pointer"]');
+      console.log('[DEBUG] Potential prompt elements with cursor:pointer:', potentialPrompts?.length || 0);
+    }
+    
+    // Add click handlers to all prompts
+    const finalPrompts = promptsContainer.querySelectorAll('.prompt');
+    console.log('[DEBUG] Final prompts in container after processing:', finalPrompts.length);
+    
+    // Debug scrolling issue
+    const promptsContainerEl = document.getElementById('prompts-container');
+    if (promptsContainerEl) {
+      setTimeout(() => {
+        const containerHeight = promptsContainerEl.offsetHeight;
+        const scrollHeight = promptsContainerEl.scrollHeight;
+        const innerHeight = promptsContainer.scrollHeight;
+        console.log('[DEBUG] Container height:', containerHeight);
+        console.log('[DEBUG] Container scrollHeight:', scrollHeight);
+        console.log('[DEBUG] Inner prompts height:', innerHeight);
+        console.log('[DEBUG] Should scroll?', scrollHeight > containerHeight);
+        console.log('[DEBUG] Number of prompts:', finalPrompts.length);
+        
+        // Log each prompt's height
+        finalPrompts.forEach((prompt, i) => {
+          const el = prompt as HTMLElement;
+          console.log(`[DEBUG] Prompt ${i} height:`, el.offsetHeight);
+        });
+      }, 200);
+    }
+    
+    finalPrompts.forEach((prompt, index) => {
+      if (!prompt.hasAttribute('data-handler-added')) {
+        console.log(`[DEBUG] Adding handler to prompt ${index}:`, (prompt as HTMLElement).textContent);
+        prompt.addEventListener('click', function(e) {
+          const target = e.currentTarget as HTMLElement;
+          const command = target.dataset.myDataContent || target.textContent;
+          console.log('[DEBUG] Prompt clicked, sending command:', command);
+          game.userSend(command);
+          // Scroll to top of display
+          const displayEl = document.getElementById('display');
+          if (displayEl) {
+            displayEl.scrollTop = 0;
+          }
+          setTimeout(() => {
+            updateStatuses();
+            ensurePromptsVisible();
+          }, 100);
+        });
+        prompt.setAttribute('data-handler-added', 'true');
+      }
+    });
+  }
+  
+  // Debug: Check what the game engine thinks the current room is
+  if (typeof game !== 'undefined' && game.Player) {
+    console.log('[DEBUG] Current room:', game.Player.currentRoom);
+    console.log('[DEBUG] Player inventory:', game.Player.inventory);
+  }
 }
 
 function updateStatuses() {
@@ -173,6 +456,17 @@ function updateStatuses() {
       document.getElementById('status').innerHTML = status;
     } catch (err) {
     }
+    
+    // Update localStorage and emit event for footer to update
+    const gameState = {
+      currentRoom: game.Player.currentRoom,
+      inventory: game.Player.inventory.items
+    };
+    localStorage.setItem('gameState', JSON.stringify(gameState));
+    
+    // Emit custom event
+    const event = new CustomEvent('gameStateUpdate', { detail: gameState });
+    window.dispatchEvent(event);
   }
 }
 
@@ -182,6 +476,173 @@ function updateStatuses() {
       title="Johnny's Place - Portfolio"
       description="Homepage for Johnny Dunn. Portfolio of works here."
     />
+    <style jsx global>{`
+      /* Custom scrollbar for game display and prompts */
+      #display, #prompts-container {
+        scrollbar-width: thin;
+        scrollbar-color: rgba(var(--accent-primary-rgb), 0.5) rgba(var(--accent-primary-rgb), 0.1);
+      }
+      
+      #display::-webkit-scrollbar, #prompts-container::-webkit-scrollbar {
+        width: 8px;
+        height: 8px;
+      }
+      
+      #display::-webkit-scrollbar-track, #prompts-container::-webkit-scrollbar-track {
+        background: rgba(var(--accent-primary-rgb), 0.1);
+        border-radius: 4px;
+      }
+      
+      #display::-webkit-scrollbar-thumb, #prompts-container::-webkit-scrollbar-thumb {
+        background: linear-gradient(180deg, var(--accent-primary) 0%, var(--accent-secondary) 100%);
+        border-radius: 4px;
+        border: 1px solid rgba(var(--bg-primary-rgb), 0.2);
+        min-height: 30px;
+      }
+      
+      #display::-webkit-scrollbar-thumb:hover, #prompts-container::-webkit-scrollbar-thumb:hover {
+        background: linear-gradient(180deg, var(--accent-secondary) 0%, var(--accent-primary) 100%);
+      }
+      
+      /* Scrollbar for prompts container */
+      #prompts-container {
+        overflow-y: auto !important;
+      }
+
+      /* Enhanced Victorian prompt styles */
+      .prompt {
+        margin: 0;
+        padding: 0.5rem 1rem;
+        background: linear-gradient(135deg, 
+          rgba(var(--bg-primary-rgb), 0.9) 0%, 
+          rgba(var(--accent-primary-rgb), 0.08) 50%, 
+          rgba(var(--bg-primary-rgb), 0.9) 100%);
+        border: 2px solid rgba(var(--accent-primary-rgb), 0.3);
+        border-radius: 6px;
+        color: var(--accent-primary);
+        font-family: 'Crimson Text', serif;
+        font-style: italic;
+        font-size: 0.85rem;
+        letter-spacing: 0.02em;
+        cursor: pointer;
+        transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        position: relative;
+        display: block;
+        box-shadow: 0 2px 8px rgba(var(--accent-primary-rgb), 0.1);
+        text-align: center;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        box-sizing: border-box;
+        width: calc(50% - 0.25rem);
+        height: 36px;
+        line-height: 1.3;
+      }
+      
+      .prompt:hover {
+        background: linear-gradient(135deg, 
+          rgba(var(--accent-primary-rgb), 0.15) 0%, 
+          rgba(var(--accent-secondary-rgb), 0.15) 100%);
+        border-color: var(--accent-primary);
+        transform: scale(1.02);
+        box-shadow: 0 4px 12px rgba(var(--accent-primary-rgb), 0.25);
+        z-index: 1;
+      }
+      
+      /* Style for display text */
+      #display {
+        color: var(--accent-primary) !important;
+        font-family: 'Crimson Text', serif;
+        font-size: 1.05rem;
+        line-height: 1.5;
+        margin-bottom: 0.5rem;
+      }
+      
+      #display p {
+        color: var(--accent-primary) !important;
+        margin: 0.5rem 0;
+      }
+      
+      #display b {
+        color: var(--accent-secondary);
+        font-weight: 600;
+      }
+      
+      /* Style for fail/success text */
+      .failText {
+        font-style: italic;
+        font-weight: bold;
+        margin: 1rem 0;
+        color: #f85149;
+        padding: 0.75rem;
+        border-left: 3px solid #f85149;
+        background: rgba(248, 81, 73, 0.1);
+        font-family: 'Crimson Text', serif;
+      }
+      
+      .successText {
+        font-style: italic;
+        font-weight: bold;
+        margin: 1rem 0;
+        color: #3fb950;
+        padding: 0.75rem;
+        border-left: 3px solid #3fb950;
+        background: rgba(63, 185, 80, 0.1);
+        font-family: 'Crimson Text', serif;
+      }
+      
+      /* Light mode adjustments */
+      :global(html:not(.dark)) #display,
+      :global(html:not(.dark)) #display p,
+      :global(html:not(.dark)) .prompt {
+        color: #8B6914 !important;
+      }
+      
+      :global(html:not(.dark)) #game {
+        background: linear-gradient(135deg, 
+          rgba(254, 253, 248, 0.98) 0%, 
+          rgba(255, 255, 255, 0.95) 100%) !important;
+        border-color: #B8860B !important;
+        box-shadow: 0 20px 40px rgba(139, 105, 20, 0.15), 
+                    0 0 60px rgba(139, 105, 20, 0.05), 
+                    inset 0 1px 0 rgba(184, 134, 11, 0.1) !important;
+      }
+      
+      :global(html:not(.dark)) #display::-webkit-scrollbar-thumb {
+        background: linear-gradient(180deg, #B8860B 0%, #DAA520 100%) !important;
+      }
+      
+      :global(html:not(.dark)) .prompt {
+        background: linear-gradient(135deg, 
+          rgba(255, 255, 255, 0.9) 0%, 
+          rgba(184, 134, 11, 0.08) 50%, 
+          rgba(255, 255, 255, 0.9) 100%) !important;
+        border-color: rgba(184, 134, 11, 0.3) !important;
+        color: #8B6914 !important;
+      }
+      
+      :global(html:not(.dark)) .prompt:hover {
+        background: linear-gradient(135deg, 
+          rgba(184, 134, 11, 0.15) 0%, 
+          rgba(218, 165, 32, 0.15) 100%) !important;
+        border-color: #B8860B !important;
+      }
+      
+      /* Inventory items */
+      .inventoryItem {
+        color: var(--accent-primary);
+        font-family: 'Crimson Text', serif;
+        font-size: 0.85rem;
+        margin: 0.25rem 0;
+        padding-left: 1rem;
+      }
+      
+      .inventoryItem:before {
+        content: '◆ ';
+        color: var(--accent-secondary);
+        margin-right: 0.5rem;
+      }
+    `}</style>
     <div className={styles.container}>
       <div className={styles.body}>
         <div className={'grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-3'}>
@@ -205,14 +666,19 @@ function updateStatuses() {
                     },
                   },
                 }}
-                style={{marginTop: '20px', marginLeft: '10px'}}
+                style={{marginTop: '10px', marginLeft: '10px', padding: '1rem'}}
               >
-                <h2 className="glitch" style={{marginBottom: '10px', marginTop: '20px', fontSize: '1.8em'}}>I AM</h2>
-                <div style={{display: 'inline', paddingTop: '40px'}} className="glitch2"><h1 style={{display: 'inline', fontSize: '1.8em', letterSpacing: '2px', marginTop: '20px'}} className="willHide">JOHNNY</h1><h1 style={{paddingTop: '20px', marginLeft: '6px', display: 'inline', fontSize: '1.8em', letterSpacing: '2px', marginTop: '20px'}} className="willHide">DUNN</h1></div>
-                <h3 id="subHeading" className="shimmer">a full-stack dev specializing in web3 and machine learning projects</h3>
+                <h2 className="glitch" style={{marginBottom: '5px', marginTop: '10px', fontSize: '1.6em'}}>I AM</h2>
+                <div style={{display: 'inline'}} className="glitch2">
+                  <h1 style={{display: 'inline', fontSize: '1.8em', letterSpacing: '3px', fontWeight: '700', fontFamily: 'Playfair Display, serif'}} className="willHide">JOHNNY</h1>
+                  <h1 style={{marginLeft: '8px', display: 'inline', fontSize: '1.8em', letterSpacing: '3px', fontWeight: '700', fontFamily: 'Playfair Display, serif'}} className="willHide">DUNN</h1>
+                </div>
+                <div className={styles.subHeadingContainer}>
+                  <h3 id="subHeading" className="shimmer">a full-stack dev specializing in web3 and machine learning projects</h3>
+                </div>
               </motion.div>
             </AnimatePresence>
-              <div style={{ display: "flex", gap: "10px", marginTop: '40px' }}>
+              <div style={{ display: "flex", gap: "10px", marginTop: '0px', marginBottom: '0px' }}>
                 <motion.p
                   initial="hidden"
                   animate="visible"
@@ -258,7 +724,6 @@ function updateStatuses() {
                     },
                   }}
                 >
-                  {" "}
                   // a new player emerges
                 </motion.p>
               </div>
@@ -284,30 +749,178 @@ function updateStatuses() {
                     },
                   }}
                 >
-                  <div id="player">
-                    <h4>Player</h4>
-                    <div id="status">
+                  <div id="player" style={{
+                    padding: '0.5rem',
+                    paddingBottom: '0',
+                    marginTop: '0',
+                    color: 'var(--accent-primary)',
+                    fontFamily: 'Crimson Text, serif',
+                    fontSize: '1rem',
+                    fontStyle: 'italic'
+                  }}>
+                    <h4 style={{
+                      color: 'var(--accent-secondary)',
+                      fontWeight: 600,
+                      letterSpacing: '0.1em',
+                      marginBottom: '0.25rem',
+                      marginTop: '0'
+                    }}>Player</h4>
+                    <div id="status" style={{
+                      maxWidth: '400px',
+                      marginLeft: '0.5rem',
+                      color: 'var(--accent-secondary)',
+                      fontStyle: 'italic',
+                      fontSize: '0.95rem',
+                      lineHeight: 1.4,
+                      opacity: 0.9
+                    }}>
                     </div>
-                    <h4 id="inventoryList"></h4>
-                    <div id="inventory">
+                    <h4 id="inventoryList" style={{
+                      color: 'var(--accent-secondary)',
+                      fontWeight: 600,
+                      letterSpacing: '0.1em',
+                      marginTop: '0.5rem',
+                      marginBottom: '0.25rem'
+                    }}></h4>
+                    <div id="inventory" style={{
+                      color: 'var(--accent-primary)',
+                      fontSize: '0.9rem'
+                    }}>
                     </div>
                   </div>
-                    <div id="game" suppressHydrationWarning>
-                      <div id="display"></div>
-                      <div id="inputContainer"
-                            style={{fontSize: '28px'}}
-                      >
-                        <input
-                            type="text"
-                            value={userMessage}
-                            // ref="input"
-                            id="input" 
-                            onChange={handleChange}
-                            placeholder="say or do something"
-                          />  
-                          <button onClick={afterSubmission} id="sendButton">send</button>
+                    <div id="game" suppressHydrationWarning style={{
+                      maxWidth: '900px',
+                      margin: '0.5rem auto',
+                      position: 'relative',
+                      background: 'linear-gradient(135deg, rgba(var(--page-bg-rgb), 0.98) 0%, rgba(var(--bg-primary-rgb), 0.95) 100%)',
+                      border: '3px solid var(--accent-primary)',
+                      borderRadius: '8px',
+                      boxShadow: '0 20px 40px rgba(0, 0, 0, 0.2), 0 0 60px rgba(0, 0, 0, 0.1), inset 0 1px 0 rgba(var(--accent-primary-rgb), 0.1)',
+                      fontFamily: 'Crimson Text, serif',
+                      fontSize: '1.05rem',
+                      lineHeight: 1.7,
+                      color: 'var(--accent-primary)',
+                      backdropFilter: 'blur(15px)',
+                      overflow: 'hidden',
+                      minHeight: '600px'
+                    }}>
+                      {/* Scrollable content area with custom scrollbar */}
+                      <div id="display" style={{
+                        height: '300px',
+                        padding: '1.5rem 2rem',
+                        overflow: 'auto',
+                        color: 'var(--accent-primary)',
+                        fontSize: '1.05rem',
+                        lineHeight: 1.5,
+                        textAlign: 'justify'
+                      }}></div>
+                      {/* Input section */}
+                      <div style={{
+                        borderTop: '1px solid rgba(var(--accent-primary-rgb), 0.2)',
+                        padding: '1.5rem 2rem',
+                        background: 'rgba(var(--accent-primary-rgb), 0.02)'
+                      }}>
+                        <div style={{
+                          display: 'flex',
+                          alignItems: 'stretch',
+                          gap: '0.5rem'
+                        }}>
+                          <input
+                              type="text"
+                              value={userMessage}
+                              id="input" 
+                              onChange={handleChange}
+                              placeholder="Write something..."
+                              style={{
+                                flex: 1,
+                                height: '50px',
+                                padding: '0 1.5rem',
+                                fontSize: '1.1rem',
+                                background: 'rgba(var(--bg-primary-rgb), 0.8)',
+                                border: '2px solid rgba(var(--accent-primary-rgb), 0.3)',
+                                borderRadius: '8px',
+                                color: 'var(--accent-primary)',
+                                fontFamily: 'Crimson Text, serif',
+                                fontStyle: 'italic',
+                                letterSpacing: '0.02em',
+                                outline: 'none',
+                                transition: 'all 0.3s ease'
+                              }}
+                            />
+                          
+                          <button 
+                            onClick={afterSubmission} 
+                            id="sendButton" 
+                            aria-label="Send command" 
+                            className={styles.quillButton}
+                          >
+                            <svg 
+                              width="32" 
+                              height="32" 
+                              viewBox="0 0 32 32" 
+                              fill="none" 
+                              xmlns="http://www.w3.org/2000/svg"
+                              className={styles.quillIcon}
+                            >
+                              <defs>
+                                <linearGradient id="quillGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                                  <stop offset="0%" stopColor="var(--accent-primary)" />
+                                  <stop offset="100%" stopColor="var(--accent-secondary)" />
+                                </linearGradient>
+                              </defs>
+                              {/* Elegant quill feather */}
+                              <path 
+                                d="M26 4C26 4 24 2 20 2C16 2 12 4 10 8C8 12 8 16 8 18L10 20L12 18C12 16 12 14 14 12C16 10 18 8 22 8C24 8 26 8 26 6V4Z"
+                                fill="url(#quillGradient)"
+                                opacity="0.9"
+                                className={styles.quillFeather}
+                              />
+                              {/* Quill shaft */}
+                              <path 
+                                d="M8 18L4 28L6 30L8 28L10 20"
+                                stroke="url(#quillGradient)"
+                                strokeWidth="2"
+                                strokeLinecap="round"
+                                fill="none"
+                                className={styles.quillShaft}
+                              />
+                              {/* Quill tip */}
+                              <path
+                                d="M4 28L3 30L5 29L4 28Z"
+                                fill="var(--accent-secondary)"
+                                className={styles.quillTip}
+                              />
+                              {/* Decorative flourish */}
+                              <path
+                                d="M14 12C14 12 16 10 18 10"
+                                stroke="var(--accent-secondary)"
+                                strokeWidth="1"
+                                strokeLinecap="round"
+                                opacity="0.5"
+                                className={styles.quillDetail}
+                              />
+                            </svg>
+                          </button>
+                        </div>
                       </div>
-                      <div id="prompts">
+                      {/* Prompts section inside the book - for choice inputs */}
+                      <div id="prompts-container" style={{
+                        height: '120px',
+                        borderTop: '1px solid rgba(var(--accent-primary-rgb), 0.1)',
+                        background: 'rgba(var(--accent-primary-rgb), 0.02)',
+                        overflowY: 'auto',
+                        overflowX: 'hidden',
+                        position: 'relative'
+                      }}>
+                        <div id="prompts" style={{
+                          padding: '0.75rem 1rem',
+                          display: 'flex',
+                          flexWrap: 'wrap',
+                          gap: '0.5rem',
+                          alignContent: 'flex-start',
+                          justifyContent: 'space-between'
+                        }}>
+                        </div>
                       </div>
                     </div>
                   </motion.div>
@@ -316,7 +929,7 @@ function updateStatuses() {
                 )}
             </div>
             <div className={'secondCol'}>
-              <Model game={game}/>
+              <Model game={game} onSceneInit={(scene) => { window.sceneInstance = scene; }}/>
             </div>
         </div>
     </div>

@@ -1,18 +1,542 @@
+// Victorian Gold Markdown Styles
 .markdown {
   @apply text-lg leading-relaxed;
+  font-family: 'Crimson Text', serif;
+  color: var(--text-primary);
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 4rem 3rem;
+  position: relative;
+  background: linear-gradient(180deg, 
+    transparent 0%, 
+    rgba(var(--accent-primary-rgb), 0.02) 50%,
+    transparent 100%);
+  
+  // Ornamental page border
+  &::before {
+    content: '';
+    position: absolute;
+    top: 2rem;
+    left: 2rem;
+    right: 2rem;
+    bottom: 2rem;
+    border: 1px solid rgba(var(--accent-primary-rgb), 0.1);
+    pointer-events: none;
+  }
 }
 
 .markdown p,
 .markdown ul,
-.markdown ol,
-.markdown blockquote {
+.markdown ol {
   @apply my-6;
+  line-height: 1.9;
+  color: var(--text-secondary);
+  font-size: 1.15rem;
+  text-align: justify;
+}
+
+.markdown h1 {
+  @apply text-5xl mt-16 mb-8 leading-tight;
+  font-family: 'Playfair Display', serif;
+  font-weight: 700;
+  font-style: italic;
+  letter-spacing: 0.02em;
+  color: var(--ink-color);
+  position: relative;
+  padding-bottom: 1.5rem;
+  text-align: center;
+  
+  &::after {
+    content: '❖';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    color: var(--accent-primary);
+    font-size: 1.5rem;
+  }
+  
+  &::first-letter {
+    font-size: 150%;
+    color: var(--accent-primary);
+  }
 }
 
 .markdown h2 {
-  @apply text-3xl mt-12 mb-4 leading-snug;
+  @apply text-3xl mt-12 mb-6 leading-snug;
+  font-family: 'Playfair Display', serif;
+  font-weight: 600;
+  color: var(--ink-color);
+  position: relative;
+  padding-bottom: 0.75rem;
+  
+  &::before {
+    content: '§';
+    margin-right: 0.5rem;
+    color: var(--accent-primary);
+    opacity: 0.6;
+  }
+  
+  &::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 80px;
+    height: 1px;
+    background: linear-gradient(90deg, var(--accent-primary), transparent);
+  }
 }
 
 .markdown h3 {
-  @apply text-2xl mt-8 mb-4 leading-snug;
+  @apply text-2xl mt-10 mb-5 leading-snug;
+  font-family: 'Crimson Text', serif;
+  font-weight: 600;
+  color: var(--ink-color);
+  font-style: italic;
+}
+
+.markdown h4 {
+  @apply text-xl mt-8 mb-4 leading-snug;
+  font-family: 'Crimson Text', serif;
+  font-weight: 500;
+  color: var(--ink-color);
+}
+
+.markdown h5 {
+  @apply text-lg mt-6 mb-3;
+  font-weight: 600;
+  color: var(--ink-color);
+}
+
+.markdown ul {
+  list-style: none;
+  padding-left: 0;
+  
+  li {
+    position: relative;
+    padding-left: 2rem;
+    margin-bottom: 0.75rem;
+    
+    &::before {
+      content: '❖';
+      position: absolute;
+      left: 0;
+      color: var(--accent-primary);
+      font-size: 0.9rem;
+    }
+  }
+}
+
+.markdown ol {
+  counter-reset: list-counter;
+  list-style: none;
+  padding-left: 0;
+  
+  li {
+    position: relative;
+    padding-left: 2.5rem;
+    margin-bottom: 0.75rem;
+    counter-increment: list-counter;
+    
+    &::before {
+      content: counter(list-counter, upper-roman);
+      position: absolute;
+      left: 0;
+      color: var(--accent-primary);
+      font-family: 'Playfair Display', serif;
+      font-weight: 600;
+      font-size: 0.95rem;
+    }
+  }
+}
+
+.markdown a {
+  color: var(--accent-primary);
+  text-decoration: none;
+  position: relative;
+  transition: all 300ms ease;
+  border-bottom: 1px dotted var(--accent-primary);
+  
+  &:hover {
+    color: var(--accent-secondary);
+    border-bottom-style: solid;
+  }
+}
+
+.markdown blockquote {
+  margin: 3rem 0;
+  padding: 2rem 2.5rem;
+  background: linear-gradient(135deg, 
+    rgba(var(--accent-primary-rgb), 0.05) 0%, 
+    rgba(var(--accent-primary-rgb), 0.02) 100%);
+  border-left: 3px solid var(--accent-primary);
+  border-radius: 0;
+  position: relative;
+  font-style: italic;
+  color: var(--text-secondary);
+  box-shadow: 
+    inset 0 0 20px rgba(var(--accent-primary-rgb), 0.05),
+    0 2px 8px rgba(0, 0, 0, 0.1);
+  
+  &::before {
+    content: '"';
+    position: absolute;
+    top: -10px;
+    left: 20px;
+    font-size: 4rem;
+    color: var(--accent-primary);
+    opacity: 0.3;
+    font-family: 'Playfair Display', serif;
+  }
+  
+  &::after {
+    content: '"';
+    position: absolute;
+    bottom: -20px;
+    right: 20px;
+    font-size: 4rem;
+    color: var(--accent-primary);
+    opacity: 0.3;
+    font-family: 'Playfair Display', serif;
+    transform: rotate(180deg);
+  }
+  
+  p {
+    margin: 0;
+    &:not(:last-child) {
+      margin-bottom: 1rem;
+    }
+  }
+}
+
+.markdown pre {
+  @apply my-8;
+  background: linear-gradient(135deg, 
+    rgba(var(--bg-secondary-rgb), 0.95) 0%, 
+    rgba(var(--bg-primary-rgb), 0.9) 100%);
+  border-radius: 0;
+  padding: 2rem;
+  overflow-x: auto;
+  box-shadow: 
+    inset 0 2px 10px rgba(0, 0, 0, 0.2),
+    0 4px 16px rgba(0, 0, 0, 0.1);
+  border: 1px solid rgba(var(--accent-primary-rgb), 0.2);
+  position: relative;
+  
+  // Corner decorations
+  &::before,
+  &::after {
+    content: '';
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    border: 1px solid var(--accent-primary);
+    opacity: 0.3;
+  }
+  
+  &::before {
+    top: 8px;
+    left: 8px;
+    border-right: none;
+    border-bottom: none;
+  }
+  
+  &::after {
+    bottom: 8px;
+    right: 8px;
+    border-left: none;
+    border-top: none;
+  }
+}
+
+.markdown code {
+  font-family: 'Fira Code', monospace;
+  font-size: 0.9rem;
+  background: rgba(var(--accent-primary-rgb), 0.1);
+  padding: 0.2rem 0.5rem;
+  border-radius: 2px;
+  color: var(--accent-primary);
+  border: 1px solid rgba(var(--accent-primary-rgb), 0.2);
+}
+
+.markdown pre code {
+  background: transparent;
+  padding: 0;
+  color: var(--text-primary);
+  font-size: 0.95rem;
+  line-height: 1.6;
+  border: none;
+}
+
+.markdown table {
+  width: 100%;
+  margin: 3rem 0;
+  border-collapse: separate;
+  border-spacing: 0;
+  border: 1px solid rgba(var(--accent-primary-rgb), 0.2);
+  overflow: hidden;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.markdown table thead {
+  background: linear-gradient(135deg, 
+    rgba(var(--accent-primary-rgb), 0.1) 0%, 
+    rgba(var(--accent-primary-rgb), 0.05) 100%);
+}
+
+.markdown table th {
+  padding: 1rem;
+  text-align: left;
+  font-weight: 600;
+  color: var(--ink-color);
+  border-bottom: 2px solid var(--accent-primary);
+  font-family: 'Crimson Text', serif;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  font-size: 0.9rem;
+}
+
+.markdown table td {
+  padding: 1rem;
+  border-bottom: 1px solid rgba(var(--accent-primary-rgb), 0.15);
+  color: var(--text-secondary);
+}
+
+.markdown table tbody tr {
+  transition: background 300ms ease;
+  
+  &:hover {
+    background: rgba(var(--accent-primary-rgb), 0.05);
+  }
+  
+  &:last-child td {
+    border-bottom: none;
+  }
+}
+
+.markdown hr {
+  margin: 4rem 0;
+  border: none;
+  height: 20px;
+  position: relative;
+  
+  &::before {
+    content: '❦ ❦ ❦';
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    color: var(--accent-primary);
+    font-size: 1.2rem;
+    letter-spacing: 1rem;
+    opacity: 0.5;
+  }
+}
+
+.markdown img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 0;
+  margin: 3rem auto;
+  display: block;
+  box-shadow: 
+    0 8px 24px rgba(0, 0, 0, 0.2),
+    0 2px 8px rgba(0, 0, 0, 0.1);
+  border: 1px solid rgba(var(--accent-primary-rgb), 0.2);
+  padding: 8px;
+  background: var(--bg-secondary);
+}
+
+.markdown strong {
+  color: var(--ink-color);
+  font-weight: 600;
+}
+
+.markdown em {
+  color: var(--text-secondary);
+  font-style: italic;
+}
+
+// Special link styling with animated borders
+.markdown a,
+.markdown :global(.md-link) {
+  display: inline-block;
+  color: var(--accent-primary);
+  text-decoration: none;
+  font-weight: 600;
+  padding: 0.5rem 1.2rem;
+  margin: 0.5rem 0.25rem;
+  background: linear-gradient(135deg, 
+    rgba(var(--bg-primary-rgb), 0.9) 0%, 
+    rgba(var(--bg-secondary-rgb), 0.9) 100%);
+  border: 2px solid var(--accent-primary);
+  position: relative;
+  overflow: hidden;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  font-family: 'Crimson Text', serif;
+  letter-spacing: 0.03em;
+  border-radius: 4px;
+  
+  // Hand-drawn corner effect
+  clip-path: polygon(
+    0 0,
+    calc(100% - 8px) 0,
+    100% 8px,
+    100% 100%,
+    8px 100%,
+    0 calc(100% - 8px)
+  );
+  
+  // Animated background fill
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, 
+      var(--accent-primary), 
+      var(--accent-secondary));
+    transition: left 0.4s ease;
+    z-index: -1;
+  }
+  
+  // Animated icon on hover
+  &::after {
+    content: '→';
+    position: absolute;
+    right: 1rem;
+    top: 50%;
+    transform: translateY(-50%) translateX(20px);
+    opacity: 0;
+    transition: all 0.4s ease;
+    font-size: 1.2rem;
+  }
+  
+  &:hover {
+    color: var(--bg-primary);
+    transform: translateY(-3px);
+    padding-right: 2.5rem;
+    box-shadow: 
+      0 15px 30px rgba(var(--accent-primary-rgb), 0.3),
+      0 5px 15px rgba(0, 0, 0, 0.1),
+      inset 0 1px 0 rgba(255, 255, 255, 0.1);
+    
+    &::before {
+      left: 0;
+    }
+    
+    &::after {
+      opacity: 1;
+      transform: translateY(-50%) translateX(0);
+    }
+  }
+  
+  &:active {
+    transform: translateY(-1px);
+    box-shadow: 
+      0 5px 15px rgba(var(--accent-primary-rgb), 0.2),
+      0 2px 5px rgba(0, 0, 0, 0.1);
+  }
+}
+
+// Center-aligned links (for GitHub/Download links)
+.markdown :global(.md-link) {
+  display: block;
+  text-align: center;
+  max-width: 300px;
+  margin: 1.5rem auto;
+}
+
+// Light mode - also uses gold theme
+:global(html:not(.dark)) {
+  .markdown {
+    background: linear-gradient(180deg, 
+      transparent 0%, 
+      rgba(212, 175, 55, 0.02) 50%,
+      transparent 100%);
+    
+    blockquote {
+      background: linear-gradient(135deg, 
+        rgba(212, 175, 55, 0.05) 0%, 
+        rgba(212, 175, 55, 0.02) 100%);
+    }
+    
+    pre {
+      background: linear-gradient(135deg, 
+        rgba(254, 253, 248, 0.95) 0%, 
+        rgba(255, 255, 255, 0.9) 100%);
+    }
+    
+    table thead {
+      background: linear-gradient(135deg, 
+        rgba(212, 175, 55, 0.08) 0%, 
+        rgba(212, 175, 55, 0.04) 100%);
+    }
+  }
+}
+
+// Responsive
+@media (max-width: 768px) {
+  .markdown {
+    padding: 2rem 1.5rem;
+    
+    &::before {
+      top: 1rem;
+      left: 1rem;
+      right: 1rem;
+      bottom: 1rem;
+    }
+    
+    h1 {
+      @apply text-4xl;
+    }
+    
+    h2 {
+      @apply text-2xl;
+    }
+    
+    h3 {
+      @apply text-xl;
+    }
+    
+    p, ul, ol {
+      font-size: 1.05rem;
+      text-align: left;
+    }
+    
+    blockquote {
+      padding: 1.5rem 2rem;
+    }
+    
+    pre {
+      padding: 1.5rem;
+      font-size: 0.85rem;
+    }
+  }
+}
+
+@media (max-width: 480px) {
+  .markdown {
+    padding: 1.5rem 1rem;
+    
+    h1 {
+      @apply text-3xl;
+    }
+    
+    p, ul, ol {
+      font-size: 1rem;
+    }
+    
+    blockquote {
+      padding: 1rem 1.5rem;
+      
+      &::before,
+      &::after {
+        font-size: 2.5rem;
+      }
+    }
+  }
 }

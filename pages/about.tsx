@@ -1,1529 +1,372 @@
 /* eslint-disable react/jsx-no-comment-textnodes */
 import style from "../styles/About.module.scss";
-import { BsFolderFill, BsArrowRightSquareFill } from "react-icons/bs";
-import { FiChevronRight, FiChevronDown } from "react-icons/fi";
-import { useState } from "react";
-import { AnimatePresence, motion } from "framer-motion";
-
-import { AiTwotoneEye, AiFillEye } from "react-icons/ai";
-
+import { useState, useEffect } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 import { NextSeo } from 'next-seo';
+import { useRouter } from 'next/router';
 
 const About = () => {
-  const [showMenu, setShowMenu] = useState(true);
-  const [showReactNext, setShowReactNext] = useState(true);
-  const [showUILib, setShowUILib] = useState(false);
-  const [showTools, setShowTools] = useState(false);
-  const [showBackendLanguages, setShowBackendLanguages] = useState(false);
-  const [showBackendLib, setShowBackendLib] = useState(false);
-  const [showDatabases, setShowDatabases] = useState(false);
-  const [showUnityGames, setShowUnityGames] = useState(false);
-  const [showUnityARVR, setShowUnityARVR] = useState(false);
-  const [showDevOpsCloudPlatforms, setShowDevOpsCloudPlatforms] = useState(false);
-  const [showDevOpsCloudTools, setShowDevOpsCloudTools] = useState(false);
-  const [showHardwareGeneral, setShowHardwareGeneral] = useState(false);
-  const [showHardware3DModel, setShowHardware3DModel] = useState(false);
-  const [showArtDesignGeneral, setShowArtDesignGeneral] = useState(false);
-  const [showArtDesignTools, setShowArtDesignTools] = useState(false);
-  const [showAudioGeneral, setShowAudioGeneral] = useState(false);
-  const [showAudioTools, setShowAudioTools] = useState(false);
+  const [currentPage, setCurrentPage] = useState(0);
+  const [isFlipping, setIsFlipping] = useState(false);
+  const router = useRouter();
+  
+  const totalPages = 3;
 
-  function collapse(collapseFlag: boolean) {
-    if (!collapseFlag) {
-      setShowReactNext(true);
-      setShowArtDesignGeneral(true);
-      setShowArtDesignTools(true);
-      setShowAudioGeneral(true);
-      setShowAudioTools(true);
-      setShowBackendLanguages(true);
-      setShowBackendLib(true);
-      setShowDatabases(true);
-      setShowDevOpsCloudPlatforms(true);
-      setShowDevOpsCloudTools(true);
-      setShowHardware3DModel(true);
-      setShowHardwareGeneral(true);
-      setShowTools(true);
-      setShowUILib(true);
-      setShowUnityARVR(true);
-      setShowUnityGames(true);
-    } else {
-      setShowReactNext(false);
-      setShowArtDesignGeneral(false);
-      setShowArtDesignTools(false);
-      setShowAudioGeneral(false);
-      setShowAudioTools(false);
-      setShowBackendLanguages(false);
-      setShowBackendLib(false);
-      setShowDatabases(false);
-      setShowDevOpsCloudPlatforms(false);
-      setShowDevOpsCloudTools(false);
-      setShowHardware3DModel(false);
-      setShowHardwareGeneral(false);
-      setShowTools(false);
-      setShowUILib(false);
-      setShowUnityARVR(false);
-      setShowUnityGames(false);
+  // Update URL query when page changes
+  const handlePageChange = (page: number) => {
+    if (isFlipping || page === currentPage) return;
+    setIsFlipping(true);
+    
+    setTimeout(() => {
+      setCurrentPage(page);
+      const pageNames = ['about', 'skills', 'experience'];
+      router.push({
+        pathname: '/about',
+        query: { tab: pageNames[page] }
+      }, undefined, { shallow: true });
+      setIsFlipping(false);
+    }, 300);
+  };
+  
+  // Set initial page from URL query
+  useEffect(() => {
+    const tab = router.query.tab as string;
+    const pageMap: { [key: string]: number } = {
+      'about': 0,
+      'skills': 1,
+      'experience': 2
+    };
+    if (tab && pageMap[tab] !== undefined) {
+      setCurrentPage(pageMap[tab]);
     }
-  }
+  }, [router.query]);
 
+  const skills = {
+    'Frontend': ['React', 'Next.js', 'TypeScript', 'Three.js', 'Tailwind CSS', 'SCSS', 'Framer Motion'],
+    'Backend': ['Python', 'Node.js', 'Solidity', 'FastAPI', 'Express', 'Django', 'Flask'],
+    'ML/AI': ['PyTorch', 'TensorFlow', 'LangChain', 'OpenAI', 'Hugging Face', 'scikit-learn', 'spaCy'],
+    'Blockchain': ['Ethers.js', 'Web3.js', 'Hardhat', 'Truffle', 'Smart Contracts', 'NFTs'],
+    'Database': ['PostgreSQL', 'MongoDB', 'MySQL', 'Redis', 'Elasticsearch', 'SQLAlchemy'],
+    'DevOps': ['Docker', 'Kubernetes', 'AWS', 'Git', 'CI/CD', 'Jenkins'],
+    'Design': ['Figma', 'Photoshop', 'After Effects', 'Unity3D', 'AR/VR', 'UX Research']
+  };
+
+  const pageVariants = {
+    enter: (direction: number) => ({
+      rotateY: direction > 0 ? -90 : 90,
+      opacity: 0,
+      scale: 0.9,
+    }),
+    center: {
+      rotateY: 0,
+      opacity: 1,
+      scale: 1,
+    },
+    exit: (direction: number) => ({
+      rotateY: direction > 0 ? 90 : -90,
+      opacity: 0,
+      scale: 0.9,
+    }),
+  };
+
+  const pages = [
+    // Page 1 - About
+    <div className={style.pageContent} key="about">
+      <div className={style.pageHeader}>
+        <h2 className={style.chapterTitle}>Page 1</h2>
+        <h3 className={style.chapterSubtitle}>Introduction</h3>
+      </div>
+      
+      <div className={style.pageBody}>
+        <p className={style.firstParagraph}>
+          <span className={style.dropCap}>I</span> have spent the last six years crafting digital experiences 
+          at the intersection of technology and creativity. My journey in full-stack development has been 
+          marked by a particular fascination with backend engineering and the emerging possibilities of 
+          machine learning.
+        </p>
+        
+        <p>
+          Through extensive collaboration with blockchain teams, I've developed custom smart contracts 
+          and NFT platforms that push the boundaries of decentralized technology. Each project has been 
+          an opportunity to explore how code can reshape our digital landscape.
+        </p>
+        
+        <p>
+          As a tech generalist with a BFA in Design & Technology from Parsons (class of 2017), I find 
+          myself uniquely positioned at the crossroads of creative design and technical implementation. 
+          This dual perspective informs my work at <a href="https://manic.agency" target="_blank" rel="noreferrer" 
+          className={style.link}>Manic.agency</a>, where I collaborate on open-source projects that 
+          challenge conventional boundaries.
+        </p>
+        
+        <p>
+          Currently, my explorations lead me through the convergent paths of AI, web3, and immersive 
+          experiences — seeking those moments where technology transcends utility to become art.
+        </p>
+      </div>
+    </div>,
+    
+    // Page 2 - Skills
+    <div className={style.pageContent} key="skills">
+      <div className={style.pageHeader}>
+        <h2 className={style.chapterTitle}>Page 2</h2>
+        <h3 className={style.chapterSubtitle}>Technical Compendium</h3>
+      </div>
+      
+      <div className={style.pageBody}>
+        <div className={style.skillsGrid}>
+          {Object.entries(skills).map(([category, items]) => (
+            <div key={category} className={style.skillSection}>
+              <h4 className={style.skillCategory}>{category}</h4>
+              <div className={style.skillList}>
+                {items.map((skill, i) => (
+                  <span key={i} className={style.skillItem}>
+                    {skill}{i < items.length - 1 ? ' • ' : ''}
+                  </span>
+                ))}
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>,
+    
+    // Page 3 - Experience
+    <div className={style.pageContent} key="experience">
+      <div className={style.pageHeader}>
+        <h2 className={style.chapterTitle}>Page 3</h2>
+        <h3 className={style.chapterSubtitle}>Professional Chronicle</h3>
+      </div>
+      
+      <div className={style.pageBody}>
+        <div className={style.timeline}>
+          <div className={style.timelineEntry}>
+            <span className={style.year}>2017 — Present</span>
+            <h4 className={style.role}>Full-Stack Developer & ML Engineer</h4>
+            <p className={style.company}>Independent Practice</p>
+            <ul className={style.achievements}>
+              <li>Architected blockchain applications and smart contract systems</li>
+              <li>Engineered ML pipelines and natural language processing systems</li>
+              <li>Crafted AR/VR experiences using Unity3D</li>
+              <li>Contributed to numerous open-source initiatives</li>
+            </ul>
+          </div>
+          
+          <div className={style.timelineEntry}>
+            <span className={style.year}>2020 — Present</span>
+            <h4 className={style.role}>Co-Founder</h4>
+            <p className={style.company}>Manic.agency</p>
+            <ul className={style.achievements}>
+              <li>Building open-source tools and creative projects</li>
+              <li>Publishing technical articles and documentation</li>
+              <li>Fostering collaboration between artists and developers</li>
+            </ul>
+          </div>
+          
+          <div className={style.timelineEntry}>
+            <span className={style.year}>2013 — 2017</span>
+            <h4 className={style.role}>Bachelor of Fine Arts</h4>
+            <p className={style.company}>Parsons School of Design</p>
+            <ul className={style.achievements}>
+              <li>Specialized in Game Design and Interactive Media</li>
+              <li>Studied creative coding and physical computing</li>
+              <li>Explored AR/VR and immersive experiences</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  ];
 
   return (
-
     <>
     <NextSeo
       title="Johnny's Place - About Me"
       description="Place for Johnny Dunn. Learn about me here."
     />
     <div className={style.about}>
-      <div className={style.skill_menu} onClick={() => setShowMenu(!showMenu)}>
-        {" "}
-        {showMenu ? <AiFillEye/> : <AiTwotoneEye />}
-      </div>
-
-      <div className={style.left}>
-        <motion.div
-          className={style.left_number}
-          initial="hidden"
-          animate="visible"
-          variants={{
-            hidden: {
-              y: "100px",
-              opacity: 0,
-            },
-            visible: {
-              y: "-370px",
-              opacity: 1,
-              transition: {
-                type: "spring",
-                delay: 0.2,
-                duration: 2,
-              },
-            },
-          }}
+      <div className={style.bookContainer}>
+        
+        {/* Book Title */}
+        <motion.div 
+          className={style.bookTitle}
+          initial={{ opacity: 0, y: -20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6 }}
         >
-          <span className={style.text_fade_01}>14</span>
-          <span className={style.text_fade_01}>15</span>
-          <span className={style.text_fade_01}>16</span>
-          <span className={style.text_fade_01}>17</span>
-          <span className={style.text_fade_01}>18</span>
-          <span className={style.text_fade_01}>19</span>
-          <span className={style.text_fade_01}>20</span>
-          <span className={style.text_fade_01}>21</span>
-          <span className={style.text_fade_01}>22</span>
-          <span className={style.text_fade_01}>23</span>
-          <span className={style.text_fade_01}>24</span>
-          <span className={style.text_fade_01}>25</span>
-          <span className={style.text_fade_01}>26</span>
-          <span className={style.text_fade_01}>27</span>
-          <span className={style.text_fade_01}>28</span>
-          <span className={style.text_fade_01}>29</span>
-          <span className={style.text_fade_02}>30</span>
-          <span className={style.text_fade_03}>31</span>
-          <span>32</span>
-          <span>33</span>
-          <span>34</span>
-          <span>35</span>
-          <span>36</span>
-          <span>37</span>
-          <span>38</span>
-          <span>39</span>
-          <span>40</span>
-          <span>39</span>
-          <span>41</span>
-          <span>42</span>
-          <span>43</span>
-          <span>44</span>
-          <span>45</span>
-          <span>46</span>
-          <span>47</span>
-          <span>48</span>
-          <span>49</span>
-          <span>50</span>
-          <span className={style.text_fade_03}>51</span>
-          <span className={style.text_fade_02}>52</span>
-          <span className={style.text_fade_01}>53</span>
+          <h1 className={style.mainTitle}>
+            <span className={style.firstLetter} data-letter="A">A</span>bout Me
+          </h1>
+          <p className={style.subtitle}>Full-Stack Developer, NLP Engineer, Game Designer, Writer</p>
         </motion.div>
-        <div className={style.left_line}></div>
-        <div className={style.left_line2}></div>
-        <motion.div
-          className={style.left_about}
-          initial="hidden"
-          animate="visible"
-          variants={{
-            hidden: {
-              y: "350px",
-              opacity: 0,
-            },
-            visible: {
-              y: "0px",
-              opacity: 1,
-              transition: {
-                type: "spring",
-                delay: 0.2,
-                duration: 3,
-              },
-            },
-          }}
+
+        {/* Book */}
+        <motion.div 
+          className={style.book}
+          initial={{ opacity: 0, scale: 0.9 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ delay: 0.2, duration: 0.6 }}
         >
-          <span className={style.ml_2}> /**</span>
-          <span><span className="disappearing">*</span><h1 className="font-bold tracking-tighter leading-tight md:pr-8 inline" style={{color: 'white'}}> // About me</h1></span>
-          <span><span className="disappearing">*</span><span> I have 6 years of experience in full-stack</span></span>
-          <span><span className="disappearing">*</span><span> development mainly focusing on backend work,</span></span>
-          <span><span className="disappearing">*</span><span> as well as NLP / ML engineering. I've worked in blockchain</span></span>
-          <span><span className="disappearing">*</span><span> teams developing custom smart contracts and</span></span>
-          <span><span className="disappearing">*</span><span> NFTs. I've a wide breadth of skills and am a</span></span>
-          <span><span className="disappearing">*</span><span> tech generalist. I graduated in 2017 with a</span></span>
-          <span><span className="disappearing">*</span><span> BFA in Design & Technology / Game Design. I</span></span>
-          <span><span className="disappearing">*</span><span> make open-source projects and other projects at </span></span>
-          <span><span className="disappearing">*</span><span> <a href="https://manic.agency">Manic.agency</a> and write about it <a href="https://manic.agency/blog" style={{color: 'rgb(176,196,222)'}} target="_blank">here</a>.</span></span>
-          <span><span className="disappearing">*</span><span> See my resume <a href='/Johnny_Dunn_Resume_2025.pdf' style={{color: 'rgb(176,196,222)'}} target='_blank'>here</a>.</span></span>
-          <span><span className="disappearing">*</span><span> </span></span>
-          <span><span className="disappearing">*</span><span> Email me at <a href='mailto:johnnyfived@protonmail.com' style={{color: 'rgb(176,196,222)'}} target='_blank'>johnnyfived@protonmail.com</a></span></span>
-          <span><span className="disappearing">*</span><span> for inquiries and work.</span></span>
-          <span className={style.ml_2}>*/</span>
-        </motion.div>
-      </div>
-      {showMenu && (
-        <motion.div
-          className={style.right}
-          initial="hidden"
-          animate="visible"
-          variants={{
-            hidden: {
-              x: "100px",
-              opacity: 0,
-              transition: {
-                type: "spring",
-                delay: .2,
-              },
-            },
-            visible: {
-              x: "0",
-              opacity: 1,
-              transition: {
-                type: "spring",
-                delay: .2,
-              },
-            },
-          }}
-        >
-          <div className={style.right_container}>
-            <h3>Skills & Interests</h3>
-            <button className="outline outline-offset-2 outline-1 mt-1 mr-5 ml-2 mb-2 p-1" onClick={() => collapse(true)}>Collapse</button>
-            <button className="outline outline-offset-2 outline-1 mt-1 mb-2 p-1" onClick={() => collapse(false)}>Expand</button>
-            <div className={style.right_interest}>
-              {/* <span> */}
-                {/* <FiChevronDown /> */}
-              {/* </span> */}
-              <span style={{ marginLeft: "5px" }}>Frontend</span>
-              <div className={style.skill}>
-                <div
-                  onClick={() => setShowReactNext(!showReactNext)}
-                  className={style.dropdownSkill}
-                >
-                  <span>
-                    {showReactNext ? <FiChevronDown /> : <FiChevronRight />}
-                  </span>
-                  <span style={{ color: "rgb(175,183,10)" }}>
-                    <BsFolderFill />
-                  </span>
-                  <span> React / Next</span>
-                </div>
-                <AnimatePresence>
-                  {showReactNext && (
-                    <motion.div
-                      className={style.showSkill}
-                      initial="hidden"
-                      animate="visible"
-                      exit="go"
-                      variants={{
-                        hidden: {
-                          y: "-20px",
-                          opacity: 0,
-                        },
-                        visible: {
-                          y: "0",
-                          opacity: 1,
-                          transition: {
-                            type: "spring",
-                            delay: 0.2,
-                            duration: 0.5,
-                          },
-                        },
-                        go: {
-                          y: "-20px",
-                          opacity: 0,
-                          transition: {
-                            type: "spring",
-                            delay: 0.2,
-                            duration: 0.3,
-                          },
-                        },
-                      }}
-                    >
-                      <span style={{display: 'inline'}}>
-                        <BsArrowRightSquareFill style={{display: 'inline', marginRight: '5px'}}/> Reusable components
-                      </span>
-                      <br></br>
-                      <span style={{display: 'inline'}}>
-                        <BsArrowRightSquareFill style={{display: 'inline', marginRight: '5px'}}/> SSR
-                      </span>
-                      <br></br>
-                      <span style={{display: 'inline'}}>
-                        <BsArrowRightSquareFill style={{display: 'inline', marginRight: '5px'}}/> SEO
-                      </span>
-                      <br></br>
-                      <span style={{display: 'inline'}}>
-                        <BsArrowRightSquareFill style={{display: 'inline', marginRight: '5px'}}/> React-Query
-                      </span>
-                      <br></br>
-                      <span style={{display: 'inline'}}>
-                        <BsArrowRightSquareFill style={{display: 'inline', marginRight: '5px'}}/> Redux and Redux Toolkit (RTK)
-                      </span>
-                      <br></br>
-                      <span style={{display: 'inline'}}>
-                        <BsArrowRightSquareFill style={{display: 'inline', marginRight: '5px'}}/> Zustand
-                      </span>
-
-                    </motion.div>
-                  )}
-                </AnimatePresence>
+          {/* Left Page (cover with links) */}
+          <div className={style.leftPage}>
+            <div className={style.coverContent}>
+              {/* Decorative SVG Graphics */}
+              <svg className={style.coverGraphic} viewBox="0 0 300 400" xmlns="http://www.w3.org/2000/svg">
+                {/* Ornamental border */}
+                <rect x="10" y="10" width="280" height="380" fill="none" stroke="currentColor" strokeWidth="2" opacity="0.3"/>
+                <rect x="20" y="20" width="260" height="360" fill="none" stroke="currentColor" strokeWidth="1" opacity="0.2"/>
+                
+                {/* Decorative corners */}
+                <path d="M 10 40 L 10 10 L 40 10" fill="none" stroke="currentColor" strokeWidth="2" opacity="0.5"/>
+                <path d="M 260 10 L 290 10 L 290 40" fill="none" stroke="currentColor" strokeWidth="2" opacity="0.5"/>
+                <path d="M 290 360 L 290 390 L 260 390" fill="none" stroke="currentColor" strokeWidth="2" opacity="0.5"/>
+                <path d="M 40 390 L 10 390 L 10 360" fill="none" stroke="currentColor" strokeWidth="2" opacity="0.5"/>
+                
+                {/* Central ornament */}
+                <circle cx="150" cy="100" r="40" fill="none" stroke="currentColor" strokeWidth="1" opacity="0.3"/>
+                <circle cx="150" cy="100" r="35" fill="none" stroke="currentColor" strokeWidth="1" opacity="0.2"/>
+                <path d="M 150 60 L 150 140 M 110 100 L 190 100" stroke="currentColor" strokeWidth="1" opacity="0.3"/>
+                
+                {/* Decorative flourishes */}
+                <path d="M 50 180 Q 100 170, 150 180 T 250 180" fill="none" stroke="currentColor" strokeWidth="1" opacity="0.3"/>
+                <path d="M 50 320 Q 100 330, 150 320 T 250 320" fill="none" stroke="currentColor" strokeWidth="1" opacity="0.3"/>
+              </svg>
+              
+              {/* Cover Title */}
+              <div className={style.coverTitle}>
+                <h2>Johnny Dunn</h2>
+                <p></p>
               </div>
-              <div className={style.skill}>
-                <div
-                  onClick={() => setShowUILib(!showUILib)}
-                  className={style.dropdownSkill}
-                >
-                  <span>
-                    {showUILib ? <FiChevronDown /> : <FiChevronRight />}
-                  </span>
-                  <span style={{ color: "rgb(136,192,208)" }}>
-                    <BsFolderFill />
-                  </span>
-                  <span> UI Libraries</span>
-                </div>
-                <AnimatePresence>
-                  {showUILib && (
-                    <motion.div
-                      className={style.showSkill}
-                      initial="hidden"
-                      animate="visible"
-                      exit="go"
-                      variants={{
-                        hidden: {
-                          y: "-20px",
-                          opacity: 0,
-                        },
-                        visible: {
-                          y: "0",
-                          opacity: 1,
-                          transition: {
-                            type: "spring",
-                            delay: 0.2,
-                            duration: 0.5,
-                          },
-                        },
-                        go: {
-                          y: "-20px",
-                          opacity: 0,
-                          transition: {
-                            type: "spring",
-                            delay: 0.2,
-                            duration: 0.3,
-                          },
-                        },
-                      }}
-                    >
-                      <span style={{display: 'inline'}}>
-                        <BsArrowRightSquareFill style={{display: 'inline', marginRight: '5px'}}/> Material-UI
-                      </span>
-                      <br></br>
-                      <span style={{display: 'inline'}}>
-                        <BsArrowRightSquareFill style={{display: 'inline', marginRight: '5px'}}/> Tailwind CSS
-                      </span>
-                      <br></br>
-                      <span style={{display: 'inline'}}>
-                        <BsArrowRightSquareFill style={{display: 'inline', marginRight: '5px'}}/> ChakraUI
-                      </span>
-                      <br></br>
-                      <span style={{display: 'inline'}}>
-                        <BsArrowRightSquareFill style={{display: 'inline', marginRight: '5px'}}/> NextUI
-                      </span>
-                      <br></br>
-                      <span style={{display: 'inline'}}>
-                        <BsArrowRightSquareFill style={{display: 'inline', marginRight: '5px'}}/> Babel
-                      </span>
-                      <br></br>
-                      <span style={{display: 'inline'}}>
-                        <BsArrowRightSquareFill style={{display: 'inline', marginRight: '5px'}}/> Webpack
-                      </span>
-                      <br></br>
-                      <span style={{display: 'inline'}}>
-                        <BsArrowRightSquareFill style={{display: 'inline', marginRight: '5px'}}/> PostCSS
-                      </span>
-                      <br></br>
-                      <span style={{display: 'inline'}}>
-                        <BsArrowRightSquareFill style={{display: 'inline', marginRight: '5px'}}/> SASS
-                      </span>
-                      <br></br>
-                      <span style={{display: 'inline'}}>
-                        <BsArrowRightSquareFill style={{display: 'inline', marginRight: '5px'}}/> Framer
-                      </span>
-                      <br></br>
-                      <span style={{display: 'inline'}}>
-                        <BsArrowRightSquareFill style={{display: 'inline', marginRight: '5px'}}/> Three.js / React-three / React-three-fiber
-                      </span>
-                      <br></br>
-                      <span style={{display: 'inline'}}>
-                        <BsArrowRightSquareFill style={{display: 'inline', marginRight: '5px'}}/> Vis.js
-                      </span>
-                      <br></br>
-                      <span style={{display: 'inline'}}>
-                        <BsArrowRightSquareFill style={{display: 'inline', marginRight: '5px'}}/> Bootstrap
-                      </span>
-                      <br></br>
-                      <span style={{display: 'inline'}}>
-                        <BsArrowRightSquareFill style={{display: 'inline', marginRight: '5px'}}/> Kibana (ELK stack)
-                      </span>
-                    </motion.div>
-                  )}
-                </AnimatePresence>
+              
+              {/* Links Section */}
+              <div className={style.coverLinks}>
+                <a href="mailto:johnnyfived@protonmail.com" className={style.coverLink}>
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                    <rect x="2" y="4" width="20" height="16" rx="2"/>
+                    <path d="m22 7-10 5L2 7"/>
+                  </svg>
+                  <span>Email</span>
+                </a>
+                <a href="/Johnny_Dunn_Resume_2025.pdf" target="_blank" className={style.coverLink}>
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+                    <polyline points="14 2 14 8 20 8"/>
+                    <line x1="16" y1="13" x2="8" y2="13"/>
+                    <line x1="16" y1="17" x2="8" y2="17"/>
+                    <polyline points="10 9 9 9 8 9"/>
+                  </svg>
+                  <span>Resume</span>
+                </a>
+                <a href="https://github.com/jddunn" target="_blank" rel="noreferrer" className={style.coverLink}>
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/>
+                  </svg>
+                  <span>GitHub</span>
+                </a>
+                <a href="https://linkedin.com/in/johnny-dunn" target="_blank" rel="noreferrer" className={style.coverLink}>
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+                  </svg>
+                  <span>LinkedIn</span>
+                </a>
+                <a href="https://manic.agency/blog" target="_blank" rel="noreferrer" className={style.coverLink}>
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                    <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/>
+                    <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/>
+                  </svg>
+                  <span>Blog</span>
+                </a>
               </div>
-              <div className={style.right_interest}>
-              {/* <span>
-                <FiChevronDown />
-              </span> */}
-              <span style={{ marginLeft: "5px" }}>Mobile</span>
-              </div>
-              <div className={style.skill}>
-                <div
-                  onClick={() => setShowTools(!showTools)}
-                  className={style.dropdownSkill}
-                >
-                  <span>
-                    {showTools ? <FiChevronDown /> : <FiChevronRight />}
-                  </span>
-                  <span style={{ color: "rgb(191,97,106)" }}>
-                    <BsFolderFill />
-                  </span>
-                  <span> Tools</span>
-                </div>
-                <AnimatePresence>
-                  {showTools && (
-                    <motion.div
-                      className={style.showSkill}
-                      initial="hidden"
-                      animate="visible"
-                      exit="go"
-                      variants={{
-                        hidden: {
-                          y: "-20px",
-                          opacity: 0,
-                        },
-                        visible: {
-                          y: "0",
-                          opacity: 1,
-                          transition: {
-                            type: "spring",
-                            delay: 0.2,
-                            duration: 0.5,
-                          },
-                        },
-                        go: {
-                          y: "-20px",
-                          opacity: 0,
-                          transition: {
-                            type: "spring",
-                            delay: 0.2,
-                            duration: 0.3,
-                          },
-                        },
-                      }}
-                    >
-                      <span style={{display: 'inline'}}>
-                        <BsArrowRightSquareFill style={{display: 'inline', marginRight: '5px'}}/> Unity3D cross-platform apps
-                      </span>
-                      <br></br>
-                      <span style={{display: 'inline'}}>
-                        <BsArrowRightSquareFill style={{display: 'inline', marginRight: '5px'}}/> Android Studio
-                      </span>
-                      <br></br>
-                      <span style={{display: 'inline'}}>
-                        <BsArrowRightSquareFill style={{display: 'inline', marginRight: '5px'}}/> Electron / Capacitor / Ionic
-                      </span>
-                      <br></br>
-                    </motion.div>
-                  )}
-                </AnimatePresence>
-              </div>
-              <div className={style.right_interest}>
-              {/* <span>
-                <FiChevronDown />
-              </span> */}
-              <span style={{ marginLeft: "5px" }}>Backend</span>
-              </div>
-              <div className={style.skill}>
-                <div
-                  onClick={() => setShowBackendLanguages(!showBackendLanguages)}
-                  className={style.dropdownSkill}
-                >
-                  <span>
-                    {showBackendLanguages ? <FiChevronDown /> : <FiChevronRight />}
-                  </span>
-                  <span style={{ color: "rgb(163,190,140)" }}>
-                    <BsFolderFill />
-                  </span>
-                  <span> Languages</span>
-                </div>
-                <AnimatePresence>
-                  {showBackendLanguages && (
-                    <motion.div
-                      className={style.showSkill}
-                      initial="hidden"
-                      animate="visible"
-                      exit="go"
-                      variants={{
-                        hidden: {
-                          y: "-20px",
-                          opacity: 0,
-                        },
-                        visible: {
-                          y: "0",
-                          opacity: 1,
-                          transition: {
-                            type: "spring",
-                            delay: 0.2,
-                            duration: 0.5,
-                          },
-                        },
-                        go: {
-                          y: "-20px",
-                          opacity: 0,
-                          transition: {
-                            type: "spring",
-                            delay: 0.2,
-                            duration: 0.3,
-                          },
-                        },
-                      }}
-                    >
-                      <span style={{display: 'inline'}}>
-                        <BsArrowRightSquareFill style={{display: 'inline', marginRight: '5px'}}/> Python
-                      </span>
-                      <br></br>
-                      <span style={{display: 'inline'}}>
-                        <BsArrowRightSquareFill style={{display: 'inline', marginRight: '5px'}}/> Solidity
-                      </span>
-                      <br></br>
-                      <span style={{display: 'inline'}}>
-                        <BsArrowRightSquareFill style={{display: 'inline', marginRight: '5px'}}/> JavaScript / Node.js / TypeScript
-                      </span>
-                      <br></br>
-                      <span style={{display: 'inline'}}>
-                        <BsArrowRightSquareFill style={{display: 'inline', marginRight: '5px'}}/> Golang
-                      </span>
-                      <br></br>
-                      <span style={{display: 'inline'}}>
-                        <BsArrowRightSquareFill style={{display: 'inline', marginRight: '5px'}}/> Java
-                      </span>
-                      <br></br>
-                      <span style={{display: 'inline'}}>
-                        <BsArrowRightSquareFill style={{display: 'inline', marginRight: '5px'}}/> Scala
-                      </span>
-                      <br></br>
-                      <span style={{display: 'inline'}}>
-                        <BsArrowRightSquareFill style={{display: 'inline', marginRight: '5px'}}/> C#
-                      </span>
-                      <br></br>
-                      <span style={{display: 'inline'}}>
-                        <BsArrowRightSquareFill style={{display: 'inline', marginRight: '5px'}}/> Processing / p5.js
-                      </span>
-                    </motion.div>
-                  )}
-                </AnimatePresence>
-              </div>
-
-              <div className={style.skill}>
-                <div
-                  onClick={() => setShowBackendLib(!showBackendLib)}
-                  className={style.dropdownSkill}
-                >
-                  <span>
-                    {showBackendLib ? <FiChevronDown /> : <FiChevronRight />}
-                  </span>
-                  <span style={{ color: "rgb(263,190,140)" }}>
-                    <BsFolderFill />
-                  </span>
-                  <span> Libraries</span>
-                </div>
-                <AnimatePresence>
-                  {showBackendLib && (
-                    <motion.div
-                      className={style.showSkill}
-                      initial="hidden"
-                      animate="visible"
-                      exit="go"
-                      variants={{
-                        hidden: {
-                          y: "-20px",
-                          opacity: 0,
-                        },
-                        visible: {
-                          y: "0",
-                          opacity: 1,
-                          transition: {
-                            type: "spring",
-                            delay: 0.2,
-                            duration: 0.5,
-                          },
-                        },
-                        go: {
-                          y: "-20px",
-                          opacity: 0,
-                          transition: {
-                            type: "spring",
-                            delay: 0.2,
-                            duration: 0.3,
-                          },
-                        },
-                      }}
-                    >
-                      <span style={{display: 'inline'}}>
-                        <BsArrowRightSquareFill style={{display: 'inline', marginRight: '5px'}}/> Ethers.js
-                      </span>
-                      <br></br>
-                      <span style={{display: 'inline'}}>
-                        <BsArrowRightSquareFill style={{display: 'inline', marginRight: '5px'}}/> Web3.js
-                      </span>
-                      <br></br>
-                      <span style={{display: 'inline'}}>
-                        <BsArrowRightSquareFill style={{display: 'inline', marginRight: '5px'}}/> Truffle
-                      </span>
-                      <br></br>
-                      <span style={{display: 'inline'}}>
-                        <BsArrowRightSquareFill style={{display: 'inline', marginRight: '5px'}}/> Hardhat
-                      </span>
-                      <br></br>
-                      <span style={{display: 'inline'}}>
-                        <BsArrowRightSquareFill style={{display: 'inline', marginRight: '5px'}}/> Geth
-                      </span>
-                      <br></br>
-                      <span style={{display: 'inline'}}>
-                        <BsArrowRightSquareFill style={{display: 'inline', marginRight: '5px'}}/> Express.js
-                      </span>
-                      <br></br>
-                      <span style={{display: 'inline'}}>
-                        <BsArrowRightSquareFill style={{display: 'inline', marginRight: '5px'}}/> Flask
-                      </span>
-                      <br></br>
-                      <span style={{display: 'inline'}}>
-                        <BsArrowRightSquareFill style={{display: 'inline', marginRight: '5px'}}/> Django
-                      </span>
-                      <br></br>
-                      <span style={{display: 'inline'}}>
-                        <BsArrowRightSquareFill style={{display: 'inline', marginRight: '5px'}}/> FastAPI
-                      </span>
-                      <br></br>
-                      <span style={{display: 'inline'}}>
-                        <BsArrowRightSquareFill style={{display: 'inline', marginRight: '5px'}}/> OpenAPI / SwaggerUI
-                      </span>
-                      <br></br>
-                      <span style={{display: 'inline'}}>
-                        <BsArrowRightSquareFill style={{display: 'inline', marginRight: '5px'}}/> OpenAI / LLMs
-                      </span>
-                      <br></br>
-                      <span style={{display: 'inline'}}>
-                        <BsArrowRightSquareFill style={{display: 'inline', marginRight: '5px'}}/> LangChain
-                      </span>
-                      <br></br>
-                      <span style={{display: 'inline'}}>
-                        <BsArrowRightSquareFill style={{display: 'inline', marginRight: '5px'}}/> Hugging Face
-                      </span>
-                      <br></br>
-                      <span style={{display: 'inline'}}>
-                        <BsArrowRightSquareFill style={{display: 'inline', marginRight: '5px'}}/> Stable Diffusion
-                      </span>
-                      <br></br>
-                      <span style={{display: 'inline'}}>
-                      <span style={{display: 'inline'}}>
-                        <BsArrowRightSquareFill style={{display: 'inline', marginRight: '5px'}}/> pandas
-                      </span>
-                      <br></br>
-                        <BsArrowRightSquareFill style={{display: 'inline', marginRight: '5px'}}/> NumPy / SciPy
-                      </span>
-                      <br></br>
-                      <span style={{display: 'inline'}}>
-                        <BsArrowRightSquareFill style={{display: 'inline', marginRight: '5px'}}/> scikit-learn
-                      </span>
-                      <br></br>
-                      <span style={{display: 'inline'}}>
-                        <BsArrowRightSquareFill style={{display: 'inline', marginRight: '5px'}}/> PyTorch
-                      </span>
-                      <br></br>
-                      <span style={{display: 'inline'}}>
-                        <BsArrowRightSquareFill style={{display: 'inline', marginRight: '5px'}}/> XGBoost
-                      </span>
-                      <br></br>
-                      
-                      <span style={{display: 'inline'}}>
-                        <BsArrowRightSquareFill style={{display: 'inline', marginRight: '5px'}}/> TensorFlow / Keras
-                      </span>
-                      <br></br>
-                      <span style={{display: 'inline'}}>
-                        <BsArrowRightSquareFill style={{display: 'inline', marginRight: '5px'}}/> NLTK
-                      </span>
-                      <br></br>
-                      <span style={{display: 'inline'}}>
-                        <BsArrowRightSquareFill style={{display: 'inline', marginRight: '5px'}}/> spaCy
-                      </span>
-                      <br></br>
-                      <span style={{display: 'inline'}}>
-                        <BsArrowRightSquareFill style={{display: 'inline', marginRight: '5px'}}/> Gensim
-                      </span>
-                      <br></br>
-
-                      <span style={{display: 'inline'}}>
-                        <BsArrowRightSquareFill style={{display: 'inline', marginRight: '5px'}}/> CoreNLP
-                      </span>
-                      <br></br>
-                      <span style={{display: 'inline'}}>
-                        <BsArrowRightSquareFill style={{display: 'inline', marginRight: '5px'}}/> OpenCV
-                      </span>
-                      <br></br>
-   
-                      <span style={{display: 'inline'}}>
-                        <BsArrowRightSquareFill style={{display: 'inline', marginRight: '5px'}}/> Selenium
-                      </span>
-                      <br></br>
-                      <span style={{display: 'inline'}}>
-                        <BsArrowRightSquareFill style={{display: 'inline', marginRight: '5px'}}/> Puppeteer
-                      </span>
-                      <br></br>
-                      <span style={{display: 'inline'}}>
-                        <BsArrowRightSquareFill style={{display: 'inline', marginRight: '5px'}}/> Scrapy
-                      </span>
-                      <br></br>
-                      <span style={{display: 'inline'}}>
-                        <BsArrowRightSquareFill style={{display: 'inline', marginRight: '5px'}}/> NestJS
-                      </span>
-                      <br></br>
-                      <span style={{display: 'inline'}}>
-                        <BsArrowRightSquareFill style={{display: 'inline', marginRight: '5px'}}/> Express
-                      </span>
-                      <br></br>
-                      
-
-                    </motion.div>
-                  )}
-                </AnimatePresence>
-              </div>
-
-              <div className={style.skill}>
-                <div
-                  onClick={() => setShowDatabases(!showDatabases)}
-                  className={style.dropdownSkill}
-                >
-                  <span>
-                    {showDatabases ? <FiChevronDown /> : <FiChevronRight />}
-                  </span>
-                  <span style={{ color: "whitesmoke" }}>
-                    <BsFolderFill />
-                  </span>
-                  <span> Databases</span>
-                </div>
-                <AnimatePresence>
-                  {showDatabases && (
-                    <motion.div
-                      className={style.showSkill}
-                      initial="hidden"
-                      animate="visible"
-                      exit="go"
-                      variants={{
-                        hidden: {
-                          y: "-20px",
-                          opacity: 0,
-                        },
-                        visible: {
-                          y: "0",
-                          opacity: 1,
-                          transition: {
-                            type: "spring",
-                            delay: 0.2,
-                            duration: 0.5,
-                          },
-                        },
-                        go: {
-                          y: "-20px",
-                          opacity: 0,
-                          transition: {
-                            type: "spring",
-                            delay: 0.2,
-                            duration: 0.3,
-                          },
-                        },
-                      }}
-                    >
-                      <span style={{display: 'inline'}}>
-                        <BsArrowRightSquareFill style={{display: 'inline', marginRight: '5px'}}/> MySQL
-                      </span>
-                      <br></br>
-                      <span style={{display: 'inline'}}>
-                        <BsArrowRightSquareFill style={{display: 'inline', marginRight: '5px'}}/> PostgreSQL
-                      </span>
-                      <br></br>
-                      <span style={{display: 'inline'}}>
-                        <BsArrowRightSquareFill style={{display: 'inline', marginRight: '5px'}}/> SQLite
-                      </span>
-                      <br></br>
-                      <span style={{display: 'inline'}}>
-                        <BsArrowRightSquareFill style={{display: 'inline', marginRight: '5px'}}/> SQLAlchemy
-                      </span>
-                      <br></br>
-                      <span style={{display: 'inline'}}>
-                        <BsArrowRightSquareFill style={{display: 'inline', marginRight: '5px'}}/> MongoDB
-                      </span>
-                      <br></br>
-                      <span style={{display: 'inline'}}>
-                        <BsArrowRightSquareFill style={{display: 'inline', marginRight: '5px'}}/> Mongoose
-                      </span>
-                      <br></br>
-                      <span style={{display: 'inline'}}>
-                        <BsArrowRightSquareFill style={{display: 'inline', marginRight: '5px'}}/> Cassandra
-                      </span>
-                      <br></br>
-                      <span style={{display: 'inline'}}>
-                        <BsArrowRightSquareFill style={{display: 'inline', marginRight: '5px'}}/> Elasticsearch
-                      </span>
-                      <br></br>
-                      <span style={{display: 'inline'}}>
-                        <BsArrowRightSquareFill style={{display: 'inline', marginRight: '5px'}}/> Hadoop
-                      </span>
-                      <br></br>
-                    </motion.div>
-                  )}
-                </AnimatePresence>
-              </div>
-              <div className={style.right_interest}>
-              {/* <span>
-                <FiChevronDown />
-              </span> */}
-              <span style={{ marginLeft: "5px" }}>Unity / Unity3D</span>
-              </div>
-              <div className={style.skill}>
-                <div
-                  onClick={() => setShowUnityGames(!showUnityGames)}
-                  className={style.dropdownSkill}
-                >
-                  <span>
-                    {showUnityGames ? <FiChevronDown /> : <FiChevronRight />}
-                  </span>
-                  <span style={{ color: "rgb(31,197,160)" }}>
-                    <BsFolderFill />
-                  </span>
-                  <span> 2D & 3D Games / Apps </span>
-                </div>
-                <AnimatePresence>
-                  {showUnityGames && (
-                    <motion.div
-                      className={style.showSkill}
-                      initial="hidden"
-                      animate="visible"
-                      exit="go"
-                      variants={{
-                        hidden: {
-                          y: "-20px",
-                          opacity: 0,
-                        },
-                        visible: {
-                          y: "0",
-                          opacity: 1,
-                          transition: {
-                            type: "spring",
-                            delay: 0.2,
-                            duration: 0.5,
-                          },
-                        },
-                        go: {
-                          y: "-20px",
-                          opacity: 0,
-                          transition: {
-                            type: "spring",
-                            delay: 0.2,
-                            duration: 0.3,
-                          },
-                        },
-                      }}
-                    >
-                      <span style={{display: 'inline'}}>
-                        <BsArrowRightSquareFill style={{display: 'inline', marginRight: '5px'}}/> 2D / 3D game development
-                      </span>
-                      <br></br>
-                      <span style={{display: 'inline'}}>
-                        <BsArrowRightSquareFill style={{display: 'inline', marginRight: '5px'}}/> Cross-platform app development
-                      </span>
-                      <br></br>
-                      <span style={{display: 'inline'}}>
-                        <BsArrowRightSquareFill style={{display: 'inline', marginRight: '5px'}}/> Responsive UI (menus, screens, in-game overlays)
-                      </span>
-                      <br></br>
-                    </motion.div>
-                  )}
-                </AnimatePresence>
-              </div>
-              <div className={style.skill}>
-                <div
-                  onClick={() => setShowUnityARVR(!showUnityARVR)}
-                  className={style.dropdownSkill}
-                >
-                  <span>
-                    {showUnityARVR ? <FiChevronDown /> : <FiChevronRight />}
-                  </span>
-                  <span style={{ color: "rgb(131,97,60)" }}>
-                    <BsFolderFill />
-                  </span>
-                  <span> AR / VR </span>
-                </div>
-                <AnimatePresence>
-                  {showUnityARVR && (
-                    <motion.div
-                      className={style.showSkill}
-                      initial="hidden"
-                      animate="visible"
-                      exit="go"
-                      variants={{
-                        hidden: {
-                          y: "-20px",
-                          opacity: 0,
-                        },
-                        visible: {
-                          y: "0",
-                          opacity: 1,
-                          transition: {
-                            type: "spring",
-                            delay: 0.2,
-                            duration: 0.5,
-                          },
-                        },
-                        go: {
-                          y: "-20px",
-                          opacity: 0,
-                          transition: {
-                            type: "spring",
-                            delay: 0.2,
-                            duration: 0.3,
-                          },
-                        },
-                      }}
-                    >
-                      <span style={{display: 'inline'}}>
-                        <BsArrowRightSquareFill style={{display: 'inline', marginRight: '5px'}}/> 360° / immersive apps and games (virtual reality) development
-                      </span>
-                      <br></br>
-                      <span style={{display: 'inline'}}>
-                        <BsArrowRightSquareFill style={{display: 'inline', marginRight: '5px'}}/> 360° filming and editing / stitching
-                      </span>
-                      <br></br>
-                      <span style={{display: 'inline'}}>
-                        <BsArrowRightSquareFill style={{display: 'inline', marginRight: '5px'}}/> Mixed reality apps and games (augmented reality) development 
-                      </span>
-                      <br></br>
-                      <span style={{display: 'inline'}}>
-                        <BsArrowRightSquareFill style={{display: 'inline', marginRight: '5px'}}/> Google Cardboard deployment
-                      </span>
-                      <br></br>
-                      <span style={{display: 'inline'}}>
-                        <BsArrowRightSquareFill style={{display: 'inline', marginRight: '5px'}}/> Samsung Gear VR deployment
-                      </span>
-                      <br></br>
-                      <span style={{display: 'inline'}}>
-                        <BsArrowRightSquareFill style={{display: 'inline', marginRight: '5px'}}/> Oculus Rift deployment
-                      </span>
-                      <br></br>
-                      <span style={{display: 'inline'}}>
-                        <BsArrowRightSquareFill style={{display: 'inline', marginRight: '5px'}}/> MagicLeap deployment
-                      </span>
-                      <br></br>
-                      <span style={{display: 'inline'}}>
-                        <BsArrowRightSquareFill style={{display: 'inline', marginRight: '5px'}}/> Hololens deployment
-                      </span>
-                      <br></br>
-                    </motion.div>
-                  )}
-                </AnimatePresence>
-              </div>
-              <div className={style.right_interest}>
-              {/* <span>
-                <FiChevronDown />
-              </span> */}
-              <span style={{ marginLeft: "5px" }}>DevOps / Cloud</span>
-              </div>
-              <div className={style.skill}>
-                <div
-                  onClick={() => setShowDevOpsCloudPlatforms(!showDevOpsCloudPlatforms)}
-                  className={style.dropdownSkill}
-                >
-                  <span>
-                    {showDevOpsCloudPlatforms ? <FiChevronDown /> : <FiChevronRight />}
-                  </span>
-                  <span style={{ color: "rgb(81,97,160)" }}>
-                    <BsFolderFill />
-                  </span>
-                  <span> Platforms </span>
-                </div>
-                <AnimatePresence>
-                  {showDevOpsCloudPlatforms && (
-                    <motion.div
-                      className={style.showSkill}
-                      initial="hidden"
-                      animate="visible"
-                      exit="go"
-                      variants={{
-                        hidden: {
-                          y: "-20px",
-                          opacity: 0,
-                        },
-                        visible: {
-                          y: "0",
-                          opacity: 1,
-                          transition: {
-                            type: "spring",
-                            delay: 0.2,
-                            duration: 0.5,
-                          },
-                        },
-                        go: {
-                          y: "-20px",
-                          opacity: 0,
-                          transition: {
-                            type: "spring",
-                            delay: 0.2,
-                            duration: 0.3,
-                          },
-                        },
-                      }}
-                    >
-                      <span style={{display: 'inline'}}>
-                        <BsArrowRightSquareFill style={{display: 'inline', marginRight: '5px'}}/> AWS (Amazon Web Services)
-                      </span>
-                      <br></br>
-                      <span style={{display: 'inline'}}>
-                        <BsArrowRightSquareFill style={{display: 'inline', marginRight: '5px'}}/> EC2, ElasticBeanstalk, Amplify, Redshift
-                      </span>
-                      <br></br>
-                      <span style={{display: 'inline'}}>
-                        <BsArrowRightSquareFill style={{display: 'inline', marginRight: '5px'}}/> GitHub / GitLab
-                      </span>
-                      <br></br>
-                      <span style={{display: 'inline'}}>
-                        <BsArrowRightSquareFill style={{display: 'inline', marginRight: '5px'}}/> Cloudflare
-                      </span>
-                      <br></br>
-                    </motion.div>
-                  )}
-                </AnimatePresence>
-              </div>
-
-              <div className={style.skill}>
-                <div
-                  onClick={() => setShowDevOpsCloudTools(!showDevOpsCloudTools)}
-                  className={style.dropdownSkill}
-                >
-                  <span>
-                    {showDevOpsCloudTools ? <FiChevronDown /> : <FiChevronRight />}
-                  </span>
-                  <span style={{ color: "rgb(161,27,20)" }}>
-                    <BsFolderFill />
-                  </span>
-                  <span> Tools </span>
-                </div>
-                <AnimatePresence>
-                  {showDevOpsCloudTools && (
-                    <motion.div
-                      className={style.showSkill}
-                      initial="hidden"
-                      animate="visible"
-                      exit="go"
-                      variants={{
-                        hidden: {
-                          y: "-20px",
-                          opacity: 0,
-                        },
-                        visible: {
-                          y: "0",
-                          opacity: 1,
-                          transition: {
-                            type: "spring",
-                            delay: 0.2,
-                            duration: 0.5,
-                          },
-                        },
-                        go: {
-                          y: "-20px",
-                          opacity: 0,
-                          transition: {
-                            type: "spring",
-                            delay: 0.2,
-                            duration: 0.3,
-                          },
-                        },
-                      }}
-                    >
-                      <span style={{display: 'inline'}}>
-                        <BsArrowRightSquareFill style={{display: 'inline', marginRight: '5px'}}/> Git
-                      </span>
-                      <br></br>
-                      <span style={{display: 'inline'}}>
-                        <BsArrowRightSquareFill style={{display: 'inline', marginRight: '5px'}}/> Docker / Docker-Compose
-                      </span>
-                      <br></br>
-                      <span style={{display: 'inline'}}>
-                        <BsArrowRightSquareFill style={{display: 'inline', marginRight: '5px'}}/> Kubernetes
-                      </span>
-                      <br></br>
-                      <span style={{display: 'inline'}}>
-                        <BsArrowRightSquareFill style={{display: 'inline', marginRight: '5px'}}/> Jenkins
-                      </span>
-                      <br></br>
-                      <span style={{display: 'inline'}}>
-                        <BsArrowRightSquareFill style={{display: 'inline', marginRight: '5px'}}/> Sentry
-                      </span>
-                      <br></br>
-                    </motion.div>
-                  )}
-                </AnimatePresence>
-              </div>
-              <div className={style.right_interest}>
-              {/* <span>
-                <FiChevronDown />
-              </span> */}
-              <span style={{ marginLeft: "5px" }}>Hardware</span>
-              </div>
-              <div className={style.skill}>
-                <div
-                  onClick={() => setShowHardwareGeneral(!showHardwareGeneral)}
-                  className={style.dropdownSkill}
-                >
-                  <span>
-                    {showHardwareGeneral ? <FiChevronDown /> : <FiChevronRight />}
-                  </span>
-                  <span style={{ color: "rgb(75,37,60)" }}>
-                    <BsFolderFill />
-                  </span>
-                  <span> General </span>
-                </div>
-                <AnimatePresence>
-                  {showHardwareGeneral && (
-                    <motion.div
-                      className={style.showSkill}
-                      initial="hidden"
-                      animate="visible"
-                      exit="go"
-                      variants={{
-                        hidden: {
-                          y: "-20px",
-                          opacity: 0,
-                        },
-                        visible: {
-                          y: "0",
-                          opacity: 1,
-                          transition: {
-                            type: "spring",
-                            delay: 0.2,
-                            duration: 0.5,
-                          },
-                        },
-                        go: {
-                          y: "-20px",
-                          opacity: 0,
-                          transition: {
-                            type: "spring",
-                            delay: 0.2,
-                            duration: 0.3,
-                          },
-                        },
-                      }}
-                    >
-                      <span style={{display: 'inline'}}>
-                        <BsArrowRightSquareFill style={{display: 'inline', marginRight: '5px'}}/> Arduino
-                      </span>
-                      <br></br>
-                      <span style={{display: 'inline'}}>
-                        <BsArrowRightSquareFill style={{display: 'inline', marginRight: '5px'}}/> Raspberry Pi
-                      </span>
-                      <br></br>
-                      <span style={{display: 'inline'}}>
-                        <BsArrowRightSquareFill style={{display: 'inline', marginRight: '5px'}}/> Sensors (light, IR, ultrasonic, sound)
-                      </span>
-                      <br></br>
-                      <span style={{display: 'inline'}}>
-                        <BsArrowRightSquareFill style={{display: 'inline', marginRight: '5px'}}/> Soldering
-                      </span>
-                      <br></br>
-                      <span style={{display: 'inline'}}>
-                        <BsArrowRightSquareFill style={{display: 'inline', marginRight: '5px'}}/> Circuitry
-                      </span>
-                      <br></br>
-                    </motion.div>
-                  )}
-                </AnimatePresence>
-              </div>
-              <div className={style.skill}>
-                <div
-                  onClick={() => setShowHardware3DModel(!showHardware3DModel)}
-                  className={style.dropdownSkill}
-                >
-                  <span>
-                    {showHardware3DModel ? <FiChevronDown /> : <FiChevronRight />}
-                  </span>
-                  <span style={{ color: "rgb(31,127,60)" }}>
-                    <BsFolderFill />
-                  </span>
-                  <span> Product Design / 3D Modeling </span>
-                </div>
-                <AnimatePresence>
-                  {showHardware3DModel && (
-                    <motion.div
-                      className={style.showSkill}
-                      initial="hidden"
-                      animate="visible"
-                      exit="go"
-                      variants={{
-                        hidden: {
-                          y: "-20px",
-                          opacity: 0,
-                        },
-                        visible: {
-                          y: "0",
-                          opacity: 1,
-                          transition: {
-                            type: "spring",
-                            delay: 0.2,
-                            duration: 0.5,
-                          },
-                        },
-                        go: {
-                          y: "-20px",
-                          opacity: 0,
-                          transition: {
-                            type: "spring",
-                            delay: 0.2,
-                            duration: 0.3,
-                          },
-                        },
-                      }}
-                    >
-                      <span style={{display: 'inline'}}>
-                        <BsArrowRightSquareFill style={{display: 'inline', marginRight: '5px'}}/> SketchUp
-                      </span>
-                      <br></br>
-                    </motion.div>
-                  )}
-                </AnimatePresence>
-              </div>
-
-              <div className={style.right_interest}>
-              {/* <span>
-                <FiChevronDown />
-              </span> */}
-              <span style={{ marginLeft: "5px" }}>Art / Design</span>
-              </div>
-              <div className={style.skill}>
-                <div
-                  onClick={() => setShowArtDesignGeneral(!showArtDesignGeneral)}
-                  className={style.dropdownSkill}
-                >
-                  <span>
-                    {showArtDesignGeneral ? <FiChevronDown /> : <FiChevronRight />}
-                  </span>
-                  <span style={{ color: "rgb(195,237,220)" }}>
-                    <BsFolderFill />
-                  </span>
-                  <span> General </span>
-                </div>
-                <AnimatePresence>
-                  {showArtDesignGeneral && (
-                    <motion.div
-                      className={style.showSkill}
-                      initial="hidden"
-                      animate="visible"
-                      exit="go"
-                      variants={{
-                        hidden: {
-                          y: "-20px",
-                          opacity: 0,
-                        },
-                        visible: {
-                          y: "0",
-                          opacity: 1,
-                          transition: {
-                            type: "spring",
-                            delay: 0.2,
-                            duration: 0.5,
-                          },
-                        },
-                        go: {
-                          y: "-20px",
-                          opacity: 0,
-                          transition: {
-                            type: "spring",
-                            delay: 0.2,
-                            duration: 0.3,
-                          },
-                        },
-                      }}
-                    >
-                      <span style={{display: 'inline'}}>
-                        <BsArrowRightSquareFill style={{display: 'inline', marginRight: '5px'}}/> Photography (analog and digital)
-                      </span>
-                      <br></br>
-                      <span style={{display: 'inline'}}>
-                        <BsArrowRightSquareFill style={{display: 'inline', marginRight: '5px'}}/> Darkroom photography development
-                      </span>
-                      <br></br>
-                      <span style={{display: 'inline'}}>
-                        <BsArrowRightSquareFill style={{display: 'inline', marginRight: '5px'}}/> Videography / film editing
-                      </span>
-                      <br></br>
-                      <span style={{display: 'inline'}}>
-                        <BsArrowRightSquareFill style={{display: 'inline', marginRight: '5px'}}/> Animation / video effects
-                      </span>
-                      <br></br>
-                      <span style={{display: 'inline'}}>
-                        <BsArrowRightSquareFill style={{display: 'inline', marginRight: '5px'}}/> Wireframing / mockups
-                      </span>
-                      <br></br>
-                      <span style={{display: 'inline'}}>
-                        <BsArrowRightSquareFill style={{display: 'inline', marginRight: '5px'}}/> UX development and research
-                      </span>
-                      <br></br>
-                    </motion.div>
-                  )}
-                </AnimatePresence>
-              </div>
-              <div className={style.skill}>
-                <div
-                  onClick={() => setShowArtDesignTools(!showArtDesignTools)}
-                  className={style.dropdownSkill}
-                >
-                  <span>
-                    {showArtDesignTools ? <FiChevronDown /> : <FiChevronRight />}
-                  </span>
-                  <span style={{ color: "rgb(162,42,260)" }}>
-                    <BsFolderFill />
-                  </span>
-                  <span> Tools </span>
-                </div>
-                <AnimatePresence>
-                  {showArtDesignTools && (
-                    <motion.div
-                      className={style.showSkill}
-                      initial="hidden"
-                      animate="visible"
-                      exit="go"
-                      variants={{
-                        hidden: {
-                          y: "-20px",
-                          opacity: 0,
-                        },
-                        visible: {
-                          y: "0",
-                          opacity: 1,
-                          transition: {
-                            type: "spring",
-                            delay: 0.2,
-                            duration: 0.5,
-                          },
-                        },
-                        go: {
-                          y: "-20px",
-                          opacity: 0,
-                          transition: {
-                            type: "spring",
-                            delay: 0.2,
-                            duration: 0.3,
-                          },
-                        },
-                      }}
-                    >
-                      <span style={{display: 'inline'}}>
-                        <BsArrowRightSquareFill style={{display: 'inline', marginRight: '5px'}}/> Figma
-                      </span>
-                      <br></br>
-                      <span style={{display: 'inline'}}>
-                        <BsArrowRightSquareFill style={{display: 'inline', marginRight: '5px'}}/> Adobe Creative Suite
-                      </span>
-                      <br></br>
-                      <span style={{display: 'inline'}}>
-                        <BsArrowRightSquareFill style={{display: 'inline', marginRight: '5px'}}/> Photoshop
-                      </span>
-                      <br></br>
-                      <span style={{display: 'inline'}}>
-                        <BsArrowRightSquareFill style={{display: 'inline', marginRight: '5px'}}/> Illustrator
-                      </span>
-                      <br></br>
-                      <span style={{display: 'inline'}}>
-                        <BsArrowRightSquareFill style={{display: 'inline', marginRight: '5px'}}/> InDesign
-                      </span>
-                      <br></br>
-                      <span style={{display: 'inline'}}>
-                        <BsArrowRightSquareFill style={{display: 'inline', marginRight: '5px'}}/> Premiere
-                      </span>
-                      <br></br>
-                      <span style={{display: 'inline'}}>
-                        <BsArrowRightSquareFill style={{display: 'inline', marginRight: '5px'}}/> After Effects
-                      </span>
-                      <br></br>
-                    </motion.div>
-                  )}
-                </AnimatePresence>
-              </div>
-
-              <div className={style.right_interest}>
-              {/* <span>
-                <FiChevronDown />
-              </span> */}
-              <span style={{ marginLeft: "5px" }}>Audio</span>
-              </div>
-              <div className={style.skill}>
-                <div
-                  onClick={() => setShowAudioGeneral(!showAudioGeneral)}
-                  className={style.dropdownSkill}
-                >
-                  <span>
-                    {showAudioGeneral ? <FiChevronDown /> : <FiChevronRight />}
-                  </span>
-                  <span style={{ color: "rgb(175,137,220)" }}>
-                    <BsFolderFill />
-                  </span>
-                  <span> General </span>
-                </div>
-                <AnimatePresence>
-                  {showAudioGeneral && (
-                    <motion.div
-                      className={style.showSkill}
-                      initial="hidden"
-                      animate="visible"
-                      exit="go"
-                      variants={{
-                        hidden: {
-                          y: "-20px",
-                          opacity: 0,
-                        },
-                        visible: {
-                          y: "0",
-                          opacity: 1,
-                          transition: {
-                            type: "spring",
-                            delay: 0.2,
-                            duration: 0.5,
-                          },
-                        },
-                        go: {
-                          y: "-20px",
-                          opacity: 0,
-                          transition: {
-                            type: "spring",
-                            delay: 0.2,
-                            duration: 0.3,
-                          },
-                        },
-                      }}
-                    >
-                      <span style={{display: 'inline'}}>
-                        <BsArrowRightSquareFill style={{display: 'inline', marginRight: '5px'}}/> Music production
-                      </span>
-                      <br></br>
-                      <span style={{display: 'inline'}}>
-                        <BsArrowRightSquareFill style={{display: 'inline', marginRight: '5px'}}/> Composition
-                      </span>
-                      <br></br>
-                      <span style={{display: 'inline'}}>
-                        <BsArrowRightSquareFill style={{display: 'inline', marginRight: '5px'}}/> Piano
-                      </span>
-                      <br></br>
-                      <span style={{display: 'inline'}}>
-                        <BsArrowRightSquareFill style={{display: 'inline', marginRight: '5px'}}/> Singing
-                      </span>
-                      <br></br>
-                      <span style={{display: 'inline'}}>
-                        <BsArrowRightSquareFill style={{display: 'inline', marginRight: '5px'}}/> Mixing & Mastering
-                      </span>
-                      <br></br>
-                      <span style={{display: 'inline'}}>
-                        <BsArrowRightSquareFill style={{display: 'inline', marginRight: '5px'}}/> Sampling
-                      </span>
-                      <br></br>
-                      <span style={{display: 'inline'}}>
-                        <BsArrowRightSquareFill style={{display: 'inline', marginRight: '5px'}}/> DJing
-                      </span>
-                      <br></br>
-                    </motion.div>
-                  )}
-                </AnimatePresence>
-              </div>
-              <div className={style.skill}>
-                <div
-                  onClick={() => setShowAudioTools(!showAudioTools)}
-                  className={style.dropdownSkill}
-                >
-                  <span>
-                    {showAudioTools ? <FiChevronDown /> : <FiChevronRight />}
-                  </span>
-                  <span style={{ color: "rgb(22,82,160)" }}>
-                    <BsFolderFill />
-                  </span>
-                  <span> Tools </span>
-                </div>
-                <AnimatePresence>
-                  {showAudioTools && (
-                    <motion.div
-                      className={style.showSkill}
-                      initial="hidden"
-                      animate="visible"
-                      exit="go"
-                      variants={{
-                        hidden: {
-                          y: "-20px",
-                          opacity: 0,
-                        },
-                        visible: {
-                          y: "0",
-                          opacity: 1,
-                          transition: {
-                            type: "spring",
-                            delay: 0.2,
-                            duration: 0.5,
-                          },
-                        },
-                        go: {
-                          y: "-20px",
-                          opacity: 0,
-                          transition: {
-                            type: "spring",
-                            delay: 0.2,
-                            duration: 0.3,
-                          },
-                        },
-                      }}
-                    >
-                      <span style={{display: 'inline'}}>
-                        <BsArrowRightSquareFill style={{display: 'inline', marginRight: '5px'}}/> FL Studio
-                      </span>
-                      <br></br>
-                      <span style={{display: 'inline'}}>
-                        <BsArrowRightSquareFill style={{display: 'inline', marginRight: '5px'}}/> Audacity
-                      </span>
-                      <br></br>
-                    </motion.div>
-                  )}
-                </AnimatePresence>
-              </div>
-
+              
+              <div className={style.pageNumber}>1</div>
             </div>
-            
+          </div>
+
+          {/* Right Page (content) */}
+          <div className={style.rightPage}>
+            <AnimatePresence>
+              <motion.div
+                key={currentPage}
+                custom={currentPage}
+                variants={pageVariants}
+                initial="enter"
+                animate="center"
+                exit="exit"
+                transition={{
+                  rotateY: { type: "spring", stiffness: 200, damping: 30 },
+                  opacity: { duration: 0.3 },
+                }}
+                style={{
+                  transformStyle: 'preserve-3d',
+                  width: '100%',
+                  height: '100%',
+                }}
+              >
+                {pages[currentPage]}
+              </motion.div>
+            </AnimatePresence>
+            <div className={style.pageNumber}>{currentPage + 2}</div>
+          </div>
+
+          {/* Book Spine */}
+          <div className={style.bookSpine}>
+            <div className={style.spineText}>ABOUT</div>
           </div>
         </motion.div>
-      )}
+
+        {/* Navigation */}
+        <motion.div 
+          className={style.navigation}
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.4 }}
+        >
+          <button 
+            className={style.navButton}
+            onClick={() => handlePageChange(Math.max(0, currentPage - 1))}
+            disabled={currentPage === 0 || isFlipping}
+            aria-label="Previous page"
+          >
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+              <polyline points="15 18 9 12 15 6" />
+            </svg>
+          </button>
+
+          <div className={style.pageIndicator}>
+            {[0, 1, 2].map((page) => (
+              <button
+                key={page}
+                className={`${style.dot} ${page === currentPage ? style.active : ''}`}
+                onClick={() => handlePageChange(page)}
+                aria-label={`Go to page ${page + 1}`}
+              />
+            ))}
+          </div>
+
+          <button 
+            className={style.navButton}
+            onClick={() => handlePageChange(Math.min(totalPages - 1, currentPage + 1))}
+            disabled={currentPage === totalPages - 1 || isFlipping}
+            aria-label="Next page"
+          >
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+              <polyline points="9 18 15 12 9 6" />
+            </svg>
+          </button>
+        </motion.div>
+
+        {/* Page flip hint */}
+        {currentPage === 0 && (
+          <motion.div 
+            className={style.hint}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 1 }}
+          >
+            <span>Click arrows or dots to turn pages</span>
+          </motion.div>
+        )}
+      </div>
     </div>
     </>
   );

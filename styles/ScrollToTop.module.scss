@@ -1,0 +1,195 @@
+// Scroll to Top Button Styles
+.scrollToTop {
+  position: fixed;
+  bottom: 2rem;
+  right: 2rem;
+  width: 48px;
+  height: 48px;
+  background: linear-gradient(135deg, 
+    var(--bg-primary) 0%, 
+    var(--bg-secondary) 100%);
+  border: 2px solid var(--accent-primary);
+  border-radius: 50%;
+  cursor: pointer;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 
+    0 4px 12px rgba(0, 0, 0, 0.1),
+    0 2px 4px rgba(0, 0, 0, 0.05);
+  animation: fadeInUp 0.4s ease-out;
+  overflow: visible;
+  
+  // Progress ring
+  .progressRing {
+    position: absolute;
+    top: -2px;
+    left: -2px;
+    transform: rotate(-90deg);
+    pointer-events: none;
+  }
+  
+  .progressRingCircle {
+    color: var(--accent-primary);
+    transition: stroke-dashoffset 0.3s ease;
+    opacity: 0.5;
+  }
+  
+  // Icon wrapper
+  .iconWrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+  }
+  
+  .icon {
+    width: 18px;
+    height: 18px;
+    color: var(--accent-primary);
+    transition: transform 0.3s ease;
+    position: relative;
+    z-index: 1;
+  }
+  
+  // Glow effect
+  &::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle at center, 
+      rgba(var(--accent-primary-rgb), 0.2) 0%, 
+      transparent 70%);
+    transform: translate(-50%, -50%);
+    opacity: 0;
+    transition: all 0.3s ease;
+    border-radius: 50%;
+  }
+  
+  // Victorian ornament
+  &::after {
+    content: '↑';
+    position: absolute;
+    top: -20px;
+    left: 50%;
+    transform: translateX(-50%) scale(0);
+    color: var(--accent-primary);
+    font-size: 12px;
+    opacity: 0;
+    transition: all 0.3s ease;
+    font-family: 'Crimson Text', serif;
+  }
+  
+  &:hover {
+    transform: translateY(-4px);
+    box-shadow: 
+      0 8px 24px rgba(var(--accent-primary-rgb), 0.25),
+      0 4px 8px rgba(0, 0, 0, 0.1);
+    border-color: var(--accent-primary);
+    
+    &::before {
+      opacity: 1;
+      width: 120%;
+      height: 120%;
+    }
+    
+    &::after {
+      opacity: 0.7;
+      transform: translateX(-50%) translateY(-5px) scale(1);
+    }
+    
+    .icon {
+      transform: translateY(-2px);
+    }
+    
+    .progressRingCircle {
+      opacity: 0.8;
+    }
+  }
+  
+  &:active {
+    transform: translateY(-2px);
+    box-shadow: 
+      0 4px 12px rgba(var(--accent-primary-rgb), 0.2),
+      0 2px 4px rgba(0, 0, 0, 0.05);
+  }
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+// Light mode adjustments
+:global(html:not(.dark)) {
+  .scrollToTop {
+    background: linear-gradient(135deg, 
+      rgba(255, 255, 255, 0.95) 0%, 
+      rgba(254, 253, 248, 0.9) 100%);
+    border-color: #B8860B;
+    
+    .icon {
+      color: #B8860B;
+    }
+    
+    .progressRingCircle {
+      color: #B8860B;
+    }
+    
+    &::before {
+      background: radial-gradient(circle at center, 
+        rgba(184, 134, 11, 0.15) 0%, 
+        transparent 70%);
+    }
+    
+    &::after {
+      color: #B8860B;
+    }
+    
+    &:hover {
+      border-color: #DAA520;
+      box-shadow: 
+        0 8px 24px rgba(212, 175, 55, 0.25),
+        0 4px 8px rgba(139, 105, 20, 0.1);
+    }
+  }
+}
+
+// Mobile responsive
+@media (max-width: 768px) {
+  .scrollToTop {
+    bottom: 1.5rem;
+    right: 1.5rem;
+    width: 40px;
+    height: 40px;
+    
+    .progressRing {
+      width: 40px;
+      height: 40px;
+    }
+    
+    .progressRingCircle {
+      r: 17;
+      cx: 20;
+      cy: 20;
+    }
+    
+    .icon {
+      width: 16px;
+      height: 16px;
+    }
+  }
+}

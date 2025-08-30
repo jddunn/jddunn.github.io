@@ -2,14 +2,147 @@
 @tailwind components;
 @tailwind utilities;
 
-@import url("https://fonts.googleapis.com/css2?family=Exo+2:wght@300;400;500;600;700;800&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Crimson+Text:ital,wght@0,400;0,600;0,700;1,400;1,600;1,700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap');
+
+// Dark theme - Deep noir book with golden accents
+html.dark {
+  --bg-primary: #0a0a0a;
+  --bg-secondary: #141414;
+  --bg-tertiary: #1a1a1a;
+  --bg-primary-rgb: 10, 10, 10;
+  --bg-secondary-rgb: 20, 20, 20;
+  --page-bg: #0f0f0f;
+  --page-bg-rgb: 15, 15, 15;
+  --bg-parchment: linear-gradient(135deg, #0a0a0a 0%, #141414 50%, #0f0f0f 100%);
+  --text-primary: #e0e0e0;
+  --text-secondary: #b0b0b0;
+  --text-tertiary: #808080;
+  --accent-primary: #D4AF37;
+  --accent-secondary: #F4E4C1;
+  --accent-primary-rgb: 212, 175, 55;
+  --accent-secondary-rgb: 244, 228, 193;
+  --border-primary: rgba(255, 255, 255, 0.1);
+  --ink-color: #ffffff;
+  --page-shadow: inset 0 0 60px rgba(212, 175, 55, 0.02), inset 0 0 40px rgba(0, 0, 0, 0.4);
+  --book-texture: url("data:image/svg+xml,%3Csvg width='100' height='100' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='paper'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.04' result='noise' numOctaves='5' /%3E%3CfeDiffuseLighting in='noise' lighting-color='%23D4AF37' surfaceScale='1'%3E%3CfeDistantLight azimuth='45' elevation='60' /%3E%3C/feDiffuseLighting%3E%3C/filter%3E%3Crect width='100' height='100' filter='url(%23paper)' opacity='0.03'/%3E%3C/svg%3E");
+}
+
+// Light theme - Clean white paper
+html:not(.dark) {
+  --bg-primary: #ffffff;
+  --bg-secondary: #fafafa;
+  --bg-tertiary: #f5f5f5;
+  --bg-primary-rgb: 255, 255, 255;
+  --bg-secondary-rgb: 250, 250, 250;
+  --page-bg: #fefdfd;
+  --page-bg-rgb: 254, 253, 253;
+  --bg-parchment: linear-gradient(135deg, #ffffff 0%, #fafafa 40%, #ffffff 100%);
+  --text-primary: #1a1a1a;
+  --text-secondary: #4a4a4a;
+  --text-tertiary: #6a6a6a;
+  --accent-primary: #2563eb;
+  --accent-secondary: #dc2626;
+  --accent-primary-rgb: 37, 99, 235;
+  --accent-secondary-rgb: 220, 38, 38;
+  --border-primary: rgba(0, 0, 0, 0.1);
+  --ink-color: #000000;
+  --page-shadow: inset 0 0 80px rgba(37, 99, 235, 0.02), inset 0 0 40px rgba(0, 0, 0, 0.03);
+  --book-texture: url("data:image/svg+xml,%3Csvg width='100' height='100' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='paper'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.04' result='noise' numOctaves='5' /%3E%3CfeDiffuseLighting in='noise' lighting-color='%232563eb' surfaceScale='1'%3E%3CfeDistantLight azimuth='45' elevation='60' /%3E%3C/feDiffuseLighting%3E%3C/filter%3E%3Crect width='100' height='100' filter='url(%23paper)' opacity='0.03'/%3E%3C/svg%3E");
+}
+
+// Default to dark theme
+:root {
+  --bg-primary: #0a0a0a;
+  --bg-secondary: #141414;
+  --bg-tertiary: #1a1a1a;
+  --bg-parchment: linear-gradient(135deg, #0a0a0a 0%, #141414 50%, #0f0f0f 100%);
+  --text-primary: #e0e0e0;
+  --text-secondary: #b0b0b0;
+  --text-tertiary: #808080;
+  --accent-primary: #D4AF37;
+  --accent-secondary: #F4E4C1;
+  --border-primary: rgba(255, 255, 255, 0.1);
+  --ink-color: #ffffff;
+  --page-shadow: inset 0 0 60px rgba(212, 175, 55, 0.02), inset 0 0 40px rgba(0, 0, 0, 0.4);
+  --book-texture: url("data:image/svg+xml,%3Csvg width='100' height='100' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='paper'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.04' result='noise' numOctaves='5' /%3E%3CfeDiffuseLighting in='noise' lighting-color='%23D4AF37' surfaceScale='1'%3E%3CfeDistantLight azimuth='45' elevation='60' /%3E%3C/feDiffuseLighting%3E%3C/filter%3E%3Crect width='100' height='100' filter='url(%23paper)' opacity='0.03'/%3E%3C/svg%3E");
+}
 
 html,
 body {
-  font-family: "Exo 2", sans-serif;
-  background-color: rgb(13, 17, 23);
+  font-family: 'Crimson Text', 'Garamond', serif;
+  background: var(--bg-parchment);
+  color: var(--text-primary);
   overflow-x: hidden;
   overflow-y: auto;
+  transition: background-color 500ms ease, color 500ms ease;
+  position: relative;
+  min-height: 100vh;
+  
+  // Parchment texture overlay
+  &::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: var(--book-texture);
+    background-size: 200px 200px;
+    pointer-events: none;
+    z-index: 1;
+    opacity: 0.3;
+  }
+  
+  // Page edges shadow
+  &::after {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    box-shadow: var(--page-shadow);
+    pointer-events: none;
+    z-index: 2;
+  }
+}
+
+
+// Removed 3D Pop-art paper effects for cleaner look
+.book-page {
+  display: none;
+}
+
+// Removed 3D Pop-art paper layers for cleaner look
+.page-stains {
+  display: none;
+}
+
+
+@keyframes paper-fold {
+  0%, 100% { 
+    transform: rotate(45deg) translateZ(20px) scale(1);
+  }
+  50% { 
+    transform: rotate(48deg) translateZ(40px) scale(1.1);
+  }
+}
+
+@keyframes paper-float {
+  0%, 100% { 
+    transform: rotateX(45deg) rotateY(0deg) rotateZ(45deg) translateZ(0px);
+  }
+  25% {
+    transform: rotateX(50deg) rotateY(10deg) rotateZ(50deg) translateZ(20px);
+  }
+  50% { 
+    transform: rotateX(40deg) rotateY(-10deg) rotateZ(40deg) translateZ(10px);
+  }
+  75% {
+    transform: rotateX(48deg) rotateY(5deg) rotateZ(48deg) translateZ(30px);
+  }
 }
 
 /* Set core root defaults */
@@ -22,7 +155,6 @@ body {
   min-height: 100vh;
   text-rendering: optimizeSpeed;
   line-height: 1.5;
-  color: rgb(255, 253, 253);
 }
 
 /* A elements that don't have a class get default styles */
@@ -116,13 +248,7 @@ select {
   overflow-x: hidden;
   padding: 20px;
   font-size: .92em;
-  // padding: 20px;
-  // margin: auto;
-  // scale: .2;
   box-shadow: 0 3px 10px rgb(0 0 0 / 0.2);
-  // transition: opacity 500ms ease, visibility 0s ease 500ms;
-  // background-color: var(--bg-color);
-  // color: var(--font-color);
 }
 
 #inputContainer {
@@ -143,7 +269,6 @@ select {
   margin-top: 5px;
   padding: 3px;
   padding-left: 6px;
-  // font-size: .9em;
   font-size: 16px;
   border-radius: 5px;
   box-shadow: 0px -5px 10px 0px rgba(0, 0, 0, 0.5);
@@ -281,11 +406,18 @@ select {
   -webkit-mask-image: linear-gradient(to right, transparent 40%, #fff 60%);
   -webkit-mask-position: right;
   -webkit-mask-size: 250% 100%;
-  color: rgba(26, 51, 97, 0.9);
+  background: linear-gradient(135deg, 
+    var(--accent-primary) 0%, 
+    var(--accent-secondary) 25%,
+    var(--accent-primary) 50%,
+    var(--accent-secondary) 75%,
+    var(--accent-primary) 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: var(--accent-primary);
   animation: hide 33.4s linear forwards;
-  letter-spacing: 6px;
-  font-family: 'Fira Mono', monospace;
-  margin-bottom: 20px;
+  text-shadow: 0 0 20px rgba(var(--accent-primary-rgb), 0.5);
 }
 
 .willHide.opposite {
@@ -568,4 +700,69 @@ img.seconds {
   bottom: 11.75%; left: 45%;
   transform-origin: center 72.4%;
   animation: secondcount 60s infinite linear; 
+}
+
+
+// Improved blog/project card styles
+.blog-card-improved {
+  background: var(--bg-secondary);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  padding: 1.5rem;
+  margin-bottom: 2rem;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+  
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, #f09, transparent);
+    transition: left 0.5s ease;
+  }
+  
+  &:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 30px rgba(240, 0, 153, 0.2);
+    border-color: rgba(240, 0, 153, 0.3);
+    
+    &::before {
+      left: 100%;
+    }
+  }
+}
+
+.project-card-improved {
+  background: linear-gradient(135deg, rgba(22, 27, 34, 0.8), rgba(13, 17, 23, 0.9));
+  border: 1px solid rgba(7, 133, 211, 0.3);
+  border-radius: 8px;
+  padding: 1.25rem;
+  transition: all 0.3s ease;
+  position: relative;
+  
+  &::after {
+    content: '';
+    position: absolute;
+    top: -2px;
+    left: -2px;
+    right: -2px;
+    bottom: -2px;
+    background: linear-gradient(45deg, #0785d3, #f09, #00fffc, #fc00ff);
+    border-radius: 8px;
+    opacity: 0;
+    z-index: -1;
+    transition: opacity 0.3s ease;
+  }
+  
+  &:hover {
+    transform: translateY(-3px) scale(1.02);
+    
+    &::after {
+      opacity: 0.3;
+    }
+  }
 }

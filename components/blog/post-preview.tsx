@@ -2,6 +2,7 @@ import DateFormatter from './date-formatter'
 import CoverImage from './cover-image'
 import Link from 'next/link'
 import type Author from '../../interfaces/author'
+import styles from '../../styles/PostPreview.module.scss'
 
 type Props = {
   title: string
@@ -31,38 +32,48 @@ const PostPreview = ({
   const _tags = tags ? tags.split(",") : []
   
   return (
-    <div>
-      <h3 className="text-3xl mb-3 leading-snug">
+    <div className={styles.postCard}>
+      <div className={styles.postContent}>
+        <h3 className={styles.postTitle}>
+          <Link
+            as={`/${dir}/${slug}`}
+            href={`/${dir}/${slug}`}
+          >
+            {title}
+          </Link>
+        </h3>
+
+        <div className={styles.postDate}>
+          <DateFormatter dateString={createdDate} />
+        </div>
+        
+        {coverImage && (
+          <div className={styles.postImage}>
+            <CoverImage slug={slug} title={title} src={coverImage} dir={dir}/>
+          </div>
+        )}
+
+        {_tags && _tags.length > 0 && (
+          <div className={styles.postTags}>
+            {_tags.map((tag, index) => (
+              <span key={index} className={styles.tag}>
+                {tag.trim()}
+              </span>
+            ))}
+          </div>
+        )}
+        
+        <p className={styles.postExcerpt}>{excerpt}</p>
+        
         <Link
           as={`/${dir}/${slug}`}
           href={`/${dir}/${slug}`}
-          className="hover:underline"
+          className={styles.readMore}
         >
-          {title}
+          Read More
+          <span className={styles.arrow}>→</span>
         </Link>
-      </h3>
-
-      <div className="text-lg mb-1 text-slate-400 mt-2 m-4 ml-8 tracking-widest">
-        <DateFormatter dateString={createdDate} />
       </div>
-      
-      {coverImage && (
-        <div className="mt-5 mb-0">
-          <CoverImage slug={slug} title={title} src={coverImage} dir={dir}/>
-        </div>
-      )}
-
-      {_tags && _tags.length > 0 && (
-        <div className="text-sm text-slate-500 mb-3 mt-2 text-center">
-          {_tags.map((tag, index) => (
-            <span key={index} className="mr-3 underline">
-              {tag}
-            </span>
-          ))}
-          </div>
-      )}
-      <p className="text-lg leading-relaxed mb-4 ml-8 mr-4">{excerpt}</p>
-      {/* <Avatar name={author.name} picture={author.picture} /> */}
     </div>
   )
 }

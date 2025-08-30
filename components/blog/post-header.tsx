@@ -1,10 +1,9 @@
-import DateFormatter from './date-formatter'
 import CoverImage from './cover-image'
-import PostTitle from './post-title'
 import type Author from '../../interfaces/author'
-
+import styles from '../../styles/PostHeader.module.scss'
 import { useRouter } from "next/router"
 import { BsArrowLeftCircleFill } from "react-icons/bs"
+import { FaCalendarPlus, FaCalendarCheck, FaLink } from "react-icons/fa"
 
 type Props = {
   title: string
@@ -20,64 +19,81 @@ const PostHeader = ({ title, coverImage, date, createdDate, tags,
    // author,
    dir='blog'}: Props) => {
 
-
-  const _tags = tags.split(",")
+  const _tags = tags ? tags.split(",") : []
   const router = useRouter()
+  
+  // Format dates to human readable format
+  const formatDate = (dateString: string) => {
+    const date = new Date(dateString)
+    return date.toLocaleDateString('en-US', { 
+      year: 'numeric', 
+      month: 'long', 
+      day: 'numeric' 
+    })
+  }
+  
   return (
-    <>
-      <div>
-        <PostTitle>{title}</PostTitle>
-        {/* <div className="hidden md:block md:mb-12"> */}
-          {/* <Avatar name={author.name} picture={author.picture} /> */}
-        {/* </div> */}
-        <div className="mb-0">
-     
-        <div className="text-md text-slate-500 text-center">
-          {/* Ternary statement to change the text from Project created to Post created 
-              if dirs is equal to projects
-          */}
-          {createdDate && (
-            dir === 'projects' ? 'Project created: ' : 'Post created:' 
-          )}
-          {createdDate && (
-            <DateFormatter dateString={createdDate} />)
-          }
+    <div className={styles.postHeader}>
+      {/* Back Button */}
+      {router.pathname !== "/" && (
+        <div className={styles.backButton}>
+          <button onClick={() => router.back()}>
+            <BsArrowLeftCircleFill />
+          </button>
         </div>
-
-
-        <div className="text-md text-slate-200 mb-3 backButton">
-          {router.pathname !== "/" && (
-            <button onClick={() => router.back()}>
-                <BsArrowLeftCircleFill />
-            </button>
-          )}
+      )}
+      
+      {/* Title with // styling */}
+      <div className={styles.titleWrapper}>
+        <h1 className={styles.postTitle}>
+          <span className={styles.separator}>//</span>
+          <span className={styles.titleText}>{title}</span>
+        </h1>
+      </div>
+      
+      {/* Meta Information - Dates on one line with icons */}
+      <div className={styles.metaInfo}>
+        {createdDate && (
+          <div className={styles.dateItem}>
+            <span className={styles.dateIcon}>
+              <FaCalendarPlus />
+            </span>
+            <span className={styles.dateLabel}>
+              {dir === 'projects' ? 'Created' : 'Published'}:
+            </span>
+            <span className={styles.dateValue}>{formatDate(createdDate)}</span>
           </div>
+        )}
+        
+        {date && (
+          <div className={styles.dateItem}>
+            <span className={styles.dateIcon}>
+              <FaCalendarCheck />
+            </span>
+            <span className={styles.dateLabel}>Updated:</span>
+            <span className={styles.dateValue}>{formatDate(date)}</span>
+          </div>
+        )}
       </div>
-
-        <div className="text-md text-slate-500 text-center">
-          Post updated: <DateFormatter dateString={date} />
+      
+      {/* Tags */}
+      {_tags && _tags.length > 0 && (
+        <div className={styles.tagsContainer}>
+          {_tags.map((tag, index) => (
+            <span key={index} className={styles.tag}>
+              {tag.trim()}
+            </span>
+          ))}
         </div>
-        <div className="mb-8 md:mb-16 sm:mx-0 mt-5">
+      )}
+      
+      {/* Cover Image */}
+      {coverImage && (
+        <div className={styles.coverImageWrapper}>
           <CoverImage title={title} src={coverImage} dir={dir}/>
-          {_tags && _tags.length > 0 && (
-          <div className="text-sm text-slate-500 mb-4 mt-2 text-center">
-            {_tags.map((tag, index) => (
-              <span key={index} className="mr-5 underline">
-                {tag}
-              </span>
-            ))}
-            </div>
-          )}
         </div>
-
-
-      <div className="max-w-2xl mx-auto">
-        {/* <div className="block md:hidden mb-6">
-          <Avatar name={author.name} picture={author.picture} />
-        </div> */}
-      </div>
-      </div>
-    </>
+      )}
+    </div>
   )
 }
 

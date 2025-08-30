@@ -1,49 +1,110 @@
 .footer {
-  color: rgb(139, 148, 158);
+  background: transparent;
+  color: var(--text-tertiary);
   display: flex;
   justify-content: space-between;
-  padding-right: 1rem;
   align-items: center;
-  border-top: 1px solid rgba(139, 148, 158, 0.2);
   height: 50px;
-  padding-bottom: 0px !important;
-  margin-bottom: 0px !important;
-  bottom: 0px !important;
+  padding: 0 60px;
+  bottom: 0;
   position: fixed;
-  z-index: 1;
+  width: 100%;
+  z-index: 100;
+  transition: all 300ms ease;
+  overflow: visible;
+  font-family: 'Crimson Text', serif;
+  
+  // Intricate SVG top border
+  &::before {
+    content: '';
+    position: absolute;
+    top: -8px;
+    left: 0;
+    right: 0;
+    height: 25px;
+    background-image: url("data:image/svg+xml,%3Csvg width='1200' height='40' viewBox='0 0 1200 40' xmlns='http://www.w3.org/2000/svg'%3E%3Cg opacity='0.15'%3E%3Cpath d='M0,20 L50,10 L100,20 L150,10 L200,20 L250,10 L300,20 L350,10 L400,20 L450,10 L500,20 L550,10 L600,20 L650,10 L700,20 L750,10 L800,20 L850,10 L900,20 L950,10 L1000,20 L1050,10 L1100,20 L1150,10 L1200,20' stroke='%23D4AF37' stroke-width='1' fill='none'/%3E%3Cpath d='M100,25 Q200,15 300,25 T500,25 T700,25 T900,25 T1100,25' stroke='%23F4E4C1' stroke-width='0.5' fill='none' opacity='0.5'/%3E%3Ccircle cx='200' cy='20' r='3' fill='%23D4AF37' opacity='0.3'/%3E%3Ccircle cx='400' cy='20' r='3' fill='%23D4AF37' opacity='0.3'/%3E%3Ccircle cx='600' cy='20' r='3' fill='%23D4AF37' opacity='0.3'/%3E%3Ccircle cx='800' cy='20' r='3' fill='%23D4AF37' opacity='0.3'/%3E%3Ccircle cx='1000' cy='20' r='3' fill='%23D4AF37' opacity='0.3'/%3E%3Crect x='295' y='15' width='10' height='10' fill='none' stroke='%23D4AF37' stroke-width='0.5' transform='rotate(45 300 20)'/%3E%3Crect x='595' y='15' width='10' height='10' fill='none' stroke='%23D4AF37' stroke-width='0.5' transform='rotate(45 600 20)'/%3E%3Crect x='895' y='15' width='10' height='10' fill='none' stroke='%23D4AF37' stroke-width='0.5' transform='rotate(45 900 20)'/%3E%3C/g%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
+    pointer-events: none;
+  }
+  
+  // 3D paper fold effect
+  &::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 100%;
+    background: linear-gradient(to top,
+      rgba(212, 175, 55, 0.01) 0%,
+      transparent 30%);
+    transform: perspective(1000px) rotateX(-2deg);
+    pointer-events: none;
+    z-index: -1;
+  }
 }
+
 .footer div {
   display: flex;
-  font-size: 1.2rem;
+  font-size: 0.9rem;
   align-items: center;
+  font-style: italic;
 }
+
+.pageNumber {
+  font-family: 'Crimson Text', serif;
+  font-size: 1rem;
+  color: var(--accent-primary);
+  font-weight: 600;
+  letter-spacing: 3px;
+  position: absolute;
+  right: 120px;
+}
+
+.pageTotal {
+  font-family: 'Crimson Text', serif;
+  font-size: 0.9rem;
+  color: var(--text-tertiary);
+  font-style: italic;
+  position: absolute;
+  right: 60px;
+  letter-spacing: 2px;
+}
+
 .footer p {
-  border-right: 1px solid rgba(139, 148, 158, 0.2);
-  font-size: 1.2rem;
-  padding: 5px 10px;
+  border-right: 1px solid var(--border-primary);
+  font-size: 0.85rem;
+  padding: 5px 15px;
+  font-family: 'Crimson Text', serif;
+  color: var(--text-tertiary);
+  opacity: 0.7;
 }
+
 .footer span {
-  border-right: 1px solid rgba(139, 148, 158, 0.2);
-  padding: 5px 10px;
+  border-right: 1px solid var(--border-primary);
+  padding: 5px 15px;
   display: flex;
   align-items: center;
-}
-@media screen and (max-width: 425px) {
-  .footer div {
-    font-size: 1.2rem;
-  }
-  .find {
-    display: none;
+  transition: all 250ms ease;
+  font-size: 0.85rem;
+  
+  &:hover {
+    color: var(--accent-primary);
+    transform: translateY(-1px);
   }
 }
 
 .footerIcon {
   padding: 20px;
+  transition: all 250ms ease;
+  color: var(--text-secondary);
 }
 
 .footerIcon:hover {
-  color: white;
-  transition: .5s ease;
+  color: #D4AF37;
+  transform: translateY(-2px);
 }
 
 @media screen and (max-width: 850px) {
@@ -55,7 +116,77 @@
 
 @media screen and (max-width: 510px) {
   .footer {
-    background: rgba(21, 21, 21, 1.0);
+    background: var(--bg-secondary);
     transition: 2.0s ease;
+  }
+}
+
+@media screen and (max-width: 425px) {
+  .footer div {
+    font-size: 1rem;
+  }
+  .find {
+    display: none;
+  }
+}
+
+// Geometric animations
+@keyframes slide-geometric-reverse {
+  0% { 
+    background-position: 0 0, 50px 0, 100px 0;
+  }
+  100% { 
+    background-position: -100px 0, -90px 0, -80px 0;
+  }
+}
+
+@keyframes float-geometric-up {
+  0%, 100% { 
+    transform: translateY(0) perspective(100px) rotateX(-2deg);
+  }
+  50% { 
+    transform: translateY(5px) perspective(100px) rotateX(2deg);
+  }
+}
+
+// Light mode adjustments
+:global(html:not(.dark)) .footer {
+  background: var(--bg-secondary);
+  color: var(--text-secondary);
+  box-shadow: 
+    0 -1px 3px rgba(0, 0, 0, 0.08),
+    0 -1px 2px rgba(0, 0, 0, 0.12),
+    inset 0 1px 0 rgba(0, 0, 0, 0.05);
+  
+  &::before {
+    background-image: 
+      linear-gradient(45deg, transparent 30%, rgba(9, 105, 218, 0.02) 30%, rgba(9, 105, 218, 0.02) 35%, transparent 35%),
+      linear-gradient(315deg, transparent 30%, rgba(9, 105, 218, 0.015) 30%, rgba(9, 105, 218, 0.015) 35%, transparent 35%),
+      linear-gradient(135deg, transparent 65%, rgba(9, 105, 218, 0.015) 65%, rgba(9, 105, 218, 0.015) 70%, transparent 70%);
+  }
+  
+  &::after {
+    background-image: url("data:image/svg+xml,%3Csvg width='120' height='60' viewBox='0 0 120 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg opacity='0.04'%3E%3Cpolygon points='30,50 40,30 30,10 20,30' fill='none' stroke='%230969da' stroke-width='0.5'/%3E%3Cpolygon points='60,45 70,35 60,25 50,35' fill='%230969da' opacity='0.15'/%3E%3Cpolygon points='100,40 110,30 100,20 90,30' fill='%230969da' opacity='0.1'/%3E%3C/g%3E%3C/svg%3E");
+  }
+  
+  p {
+    color: var(--text-tertiary);
+    border-right-color: var(--border-primary);
+  }
+  
+  span {
+    border-right-color: var(--border-primary);
+    
+    &:hover {
+      color: var(--accent-primary);
+    }
+  }
+  
+  .footerIcon {
+    color: var(--text-secondary);
+    
+    &:hover {
+      color: var(--accent-primary);
+    }
   }
 }

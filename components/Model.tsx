@@ -6,7 +6,7 @@ import SceneInit from "../lib/threeSceneInit";
 // import SceneInit from "../public/SceneInit.js";
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader.js";
 
-const Model = (props) => {
+const Model = (props: { game: any, onSceneInit?: (scene: any) => void }) => {
     // const mountRef = useRef(null);
 
     let loadedModel;
@@ -29,6 +29,11 @@ const Model = (props) => {
       scene = new SceneInit("canvasId", "scene-container", props.game);
       scene.initialize();
       scene.animate();
+      
+      // Pass scene instance back to parent if callback provided
+      if (props.onSceneInit) {
+        props.onSceneInit(scene);
+      }
  
       // render, or 'create a still image', of the scene
       const glftLoader = new GLTFLoader();

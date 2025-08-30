@@ -1,14 +1,11 @@
 /** @type {import('next').NextConfig} */
 
-const repo = 'jddunn.github.io'
-const assetPrefix = `https://jddunn.github.io/`
-// const basePath = `/${repo}`0
+const isProd = process.env.NODE_ENV === 'production'
 
 const nextConfig = {
   reactStrictMode: true,
-  output: 'export',
-  // publicPath: "/jddunn.github.io",
-  assetPrefix: 'https://jddunn.github.io',
+  output: isProd ? 'export' : undefined,
+  assetPrefix: isProd ? 'https://jddunn.github.io' : '',
   basePath: '',
   trailingSlash: true,
   images: { unoptimized: true },

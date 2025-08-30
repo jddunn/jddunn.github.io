@@ -9,6 +9,8 @@ import { getPostBySlug, getAllProjects } from '../../lib/api'
 import PostTitle from '../../components/blog/post-title'
 import { PROJECTS_DIR } from '../../lib/constants'
 import PostType from '../../interfaces/post'
+import TableOfContents from '../../components/TableOfContents'
+import ScrollToTop from '../../components/ScrollToTop'
 
 import { NextSeo } from 'next-seo'
 
@@ -55,8 +57,10 @@ export default function Post({ post,
                 tags={post?.tags}
                 dir={dir}
               />
+              <TableOfContents contentSelector="article .post-content" />
               <PostBody content={post.content} />
             </article>
+            <ScrollToTop />
           </>
         )}
       </Container>

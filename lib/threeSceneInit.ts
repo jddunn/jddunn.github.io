@@ -27,6 +27,7 @@ export default class SceneInit {
     this.game = game;
 
     this.drankPotion = false;
+    this.isProcessingClick = false;
   }
 
   initialize() {
@@ -42,8 +43,8 @@ export default class SceneInit {
     const canvas = document.getElementById(this.canvasId);
 
     if (this.camera) {
-      // Add mousedown event listener for canvas only
-      canvas?.addEventListener('pointerdown', (e) => this.onPointerDown(this.camera, e));
+      // Add event listeners for canvas only
+      canvas?.addEventListener('click', (e) => this.onPointerDown(this.camera, e));
       canvas?.addEventListener('pointermove', (e) => this.onPointerMove(this.camera, e));
       canvas?.addEventListener('touchend', (e) => this.onTouchEnd(this.camera, e));
     }
@@ -68,6 +69,9 @@ export default class SceneInit {
   
       this.clock = new THREE.Clock();
       this.controls = new OrbitControls(this.camera, this.renderer.domElement);
+      this.controls.enableRotate = true;
+      this.controls.enableZoom = true;
+      this.controls.enablePan = false;
   
       // ambient light which is for the whole scene
       this.ambientLight = new THREE.AmbientLight(0xffffff, 1.0);
@@ -111,6 +115,12 @@ export default class SceneInit {
   onPointerDown(camera, event){
     // Detect mouse clicks on the canvas object / three.js model 
     event.preventDefault();
+    event.stopPropagation();
+    
+    // Prevent multiple clicks from being processed simultaneously
+    if (this.isProcessingClick) {
+      return;
+    }
 
     const mouse_x = (( event.clientX - this.renderer.domElement.offsetLeft) / 
       this.renderer.domElement.clientWidth ) * 2 - 1;
@@ -120,10 +130,6 @@ export default class SceneInit {
     const mouse3D = new THREE.Vector3(mouse_x, mouse_y, 0.5)
 
     // Raycasting to determine if user clicked on potion
-    // This doesn't work properly in mobile due to our site layout;
-    // we will not worry about fixing it since they can drink the potion
-    // through a text command and are hinted to do that in the game.
-
     const raycaster = new THREE.Raycaster()
 
     if (camera) {
@@ -131,49 +137,82 @@ export default class SceneInit {
       // Detect a collision for the potion / scene object
       const intersects = raycaster.intersectObjects(
         this.scene.children, true);
+      
+      console.log('Click detected, intersects:', intersects.length);
+      
       if(intersects.length > 0){
+          this.isProcessingClick = true;
+          
+          // Change potion color on click
           for (let i = 0; i < intersects.length; i++) {
-            intersects[i].object.material.color.setHex(
-               Math.random() * 0xffffff )
-          }
-          // Drink the potion and send the command to the game, 
-          // if it hasn't been done already
-
-          // The logic below is pretty complicated, because we're mapping
-          // a custom web interaction that the text-rpg-engine library doesn't
-          // support out-the-box.
-          if (this.game.Player.inventory.items.includes("drunkSmallPotion")) {
-            if (this.game.Player.currentRoom === 'DungeonAdventureRoom') {
-              // Add the big potion to the inventory
-              this.game.Player.inventory.addItems(['drunkBigPotion']);
-              this.game.Player.inventory.dropItems(['drunkSmallPotion']);
-              // Drunk the second big potion, make it bigger
-              for (let i = 0; i < this.scene.children.length; i++) {
-                console.log(this.scene.children[i].name)
-                if (this.scene.children[i].name === 'Sketchfab_Scene') {
-                  this.scene.children[i].scale.set(0.15, 0.15, 0.15);
-                }
-              }
-              this.game.refreshDisplay();
+            if (intersects[i].object.material) {
+              intersects[i].object.material.color.setHex(
+                 Math.random() * 0xffffff )
             }
-          } else {
+          }
+          
+          const currentRoom = this.game.Player.currentRoom;
+          const hasSmallPotion = this.game.Player.inventory.items.includes("drunkSmallPotion");
+          const hasBigPotion = this.game.Player.inventory.items.includes("drunkBigPotion");
+          
+          console.log('Potion clicked in room:', currentRoom, 'hasSmall:', hasSmallPotion, 'hasBig:', hasBigPotion);
+          
+          // DungeonAdventureRoom logic - can drink potion when small to become big again
+          if (currentRoom === 'DungeonAdventureRoom') {
+            // In DungeonAdventureRoom, always allow drinking
             this.game.userSend("drink potion");
-            // Drunk the first small potion, make it smaller
-            if (this.game.Player.inventory.items.includes('drunkBigPotion')) {
-              if (this.game.Player.currentRoom === 'WelcomeRoom' || this.game.Player.currentRoom === 'WelcomeRoom2') {
-                this.game.Player.inventory.dropItems(['drunkBigPotion']);
-              }
-            } else {
-              if (this.game.Player.inventory.items.includes('drunkSmallPotion')) {
-                this.game.Player.inventory.dropItems(['drunkBigPotion']);
-                for (let i = 0; i < this.scene.children.length; i++) {
-                  if (this.scene.children[i].name === 'Sketchfab_Scene') {
+            
+            setTimeout(() => {
+              // Check state after drinking
+              const nowHasBigPotion = this.game.Player.inventory.items.includes('drunkBigPotion');
+              const nowHasSmallPotion = this.game.Player.inventory.items.includes('drunkSmallPotion');
+              
+              for (let i = 0; i < this.scene.children.length; i++) {
+                if (this.scene.children[i].name === 'Sketchfab_Scene') {
+                  if (nowHasBigPotion && !nowHasSmallPotion) {
+                    // Player is now big, make potion normal size
+                    this.scene.children[i].scale.set(0.15, 0.15, 0.15);
+                  } else if (nowHasSmallPotion && !nowHasBigPotion) {
+                    // Player is still small, keep potion small
                     this.scene.children[i].scale.set(0.075, 0.075, 0.075);
                   }
                 }
               }
+              this.updateGameState();
+              this.isProcessingClick = false;
+            }, 300);
+          } else if (currentRoom === 'WelcomeRoom' || currentRoom === 'WelcomeRoom2') {
+            // In welcome rooms, drink potion to become small if not already
+            if (!hasSmallPotion) {
+              this.game.userSend("drink potion");
+              
+              setTimeout(() => {
+                // After drinking, check if we're now small
+                if (this.game.Player.inventory.items.includes('drunkSmallPotion')) {
+                  for (let i = 0; i < this.scene.children.length; i++) {
+                    if (this.scene.children[i].name === 'Sketchfab_Scene') {
+                      // Make potion smaller since player is now small
+                      this.scene.children[i].scale.set(0.075, 0.075, 0.075);
+                    }
+                  }
+                }
+                this.updateGameState();
+                this.isProcessingClick = false;
+              }, 300);
+            } else {
+              // Already small, just change color
+              this.isProcessingClick = false;
             }
+          } else {
+            // In other rooms, try to drink if there's a potion available
+            this.game.userSend("drink potion");
+            setTimeout(() => {
+              this.updateGameState();
+              this.isProcessingClick = false;
+            }, 300);
           }
+      } else {
+        this.isProcessingClick = false;
       }
     }
   }
@@ -182,6 +221,11 @@ export default class SceneInit {
   onTouchEnd(camera, event){
     // Detect taps after let go in the canvas object / three.js model 
     event.preventDefault();
+    
+    // Prevent multiple clicks from being processed simultaneously
+    if (this.isProcessingClick) {
+      return;
+    }
 
     const mouse_x = (( event.touches[0].clientX - this.renderer.domElement.offsetLeft) / 
       this.renderer.domElement.clientWidth ) * 2 - 1;
@@ -191,10 +235,6 @@ export default class SceneInit {
     const mouse3D = new THREE.Vector3(mouse_x, mouse_y, 0.5)
 
     // Raycasting to determine if user clicked on potion
-    // This doesn't work properly in mobile due to our site layout;
-    // we will not worry about fixing it since they can drink the potion
-    // through a text command and are hinted to do that in the game.
-
     const raycaster = new THREE.Raycaster()
 
     if (camera) {
@@ -203,48 +243,78 @@ export default class SceneInit {
       const intersects = raycaster.intersectObjects(
         this.scene.children, true);
       if(intersects.length > 0){
+          this.isProcessingClick = true;
+          
+          // Change potion color on click
           for (let i = 0; i < intersects.length; i++) {
-            intersects[i].object.material.color.setHex(
-               Math.random() * 0xffffff )
-          }
-          // Drink the potion and send the command to the game, 
-          // if it hasn't been done already
-
-          // The logic below is pretty complicated, because we're mapping
-          // a custom web interaction that the text-rpg-engine library doesn't
-          // support out-the-box.
-          if (this.game.Player.inventory.items.includes("drunkSmallPotion")) {
-            if (this.game.Player.currentRoom === 'DungeonAdventureRoom') {
-              // Add the big potion to the inventory
-              this.game.Player.inventory.addItems(['drunkBigPotion']);
-              this.game.Player.inventory.dropItems(['drunkSmallPotion']);
-              // Drunk the second big potion, make it bigger
-              for (let i = 0; i < this.scene.children.length; i++) {
-                console.log(this.scene.children[i].name)
-                if (this.scene.children[i].name === 'Sketchfab_Scene') {
-                  this.scene.children[i].scale.set(0.15, 0.15, 0.15);
-                }
-              }
-              this.game.refreshDisplay();
+            if (intersects[i].object.material) {
+              intersects[i].object.material.color.setHex(
+                 Math.random() * 0xffffff )
             }
-          } else {
+          }
+          
+          const currentRoom = this.game.Player.currentRoom;
+          const hasSmallPotion = this.game.Player.inventory.items.includes("drunkSmallPotion");
+          const hasBigPotion = this.game.Player.inventory.items.includes("drunkBigPotion");
+          
+          console.log('Potion tapped in room:', currentRoom, 'hasSmall:', hasSmallPotion, 'hasBig:', hasBigPotion);
+          
+          // DungeonAdventureRoom logic - can drink potion when small to become big again
+          if (currentRoom === 'DungeonAdventureRoom') {
+            // In DungeonAdventureRoom, always allow drinking
             this.game.userSend("drink potion");
-            // Drunk the first small potion, make it smaller
-            if (this.game.Player.inventory.items.includes('drunkBigPotion')) {
-              if (this.game.Player.currentRoom === 'WelcomeRoom' || this.game.Player.currentRoom === 'WelcomeRoom2') {
-                this.game.Player.inventory.dropItems(['drunkBigPotion']);
-              }
-            } else {
-              if (this.game.Player.inventory.items.includes('drunkSmallPotion')) {
-                this.game.Player.inventory.dropItems(['drunkBigPotion']);
-                for (let i = 0; i < this.scene.children.length; i++) {
-                  if (this.scene.children[i].name === 'Sketchfab_Scene') {
+            
+            setTimeout(() => {
+              // Check state after drinking
+              const nowHasBigPotion = this.game.Player.inventory.items.includes('drunkBigPotion');
+              const nowHasSmallPotion = this.game.Player.inventory.items.includes('drunkSmallPotion');
+              
+              for (let i = 0; i < this.scene.children.length; i++) {
+                if (this.scene.children[i].name === 'Sketchfab_Scene') {
+                  if (nowHasBigPotion && !nowHasSmallPotion) {
+                    // Player is now big, make potion normal size
+                    this.scene.children[i].scale.set(0.15, 0.15, 0.15);
+                  } else if (nowHasSmallPotion && !nowHasBigPotion) {
+                    // Player is still small, keep potion small
                     this.scene.children[i].scale.set(0.075, 0.075, 0.075);
                   }
                 }
               }
+              this.updateGameState();
+              this.isProcessingClick = false;
+            }, 300);
+          } else if (currentRoom === 'WelcomeRoom' || currentRoom === 'WelcomeRoom2') {
+            // In welcome rooms, drink potion to become small if not already
+            if (!hasSmallPotion) {
+              this.game.userSend("drink potion");
+              
+              setTimeout(() => {
+                // After drinking, check if we're now small
+                if (this.game.Player.inventory.items.includes('drunkSmallPotion')) {
+                  for (let i = 0; i < this.scene.children.length; i++) {
+                    if (this.scene.children[i].name === 'Sketchfab_Scene') {
+                      // Make potion smaller since player is now small
+                      this.scene.children[i].scale.set(0.075, 0.075, 0.075);
+                    }
+                  }
+                }
+                this.updateGameState();
+                this.isProcessingClick = false;
+              }, 300);
+            } else {
+              // Already small, just change color
+              this.isProcessingClick = false;
             }
+          } else {
+            // In other rooms, try to drink if there's a potion available
+            this.game.userSend("drink potion");
+            setTimeout(() => {
+              this.updateGameState();
+              this.isProcessingClick = false;
+            }, 300);
           }
+      } else {
+        this.isProcessingClick = false;
       }
     }
   }
@@ -265,5 +335,38 @@ export default class SceneInit {
     this.camera.aspect = canvasEL.offsetWidth / canvasEL.offsetHeight;
     this.camera.updateProjectionMatrix();
     this.renderer.setSize(canvasEL.offsetWidth, canvasEL.offsetHeight);
+  }
+  
+  updateGameState() {
+    // Update localStorage and emit event for footer to update
+    const gameState = {
+      currentRoom: this.game.Player.currentRoom,
+      inventory: this.game.Player.inventory.items
+    };
+    localStorage.setItem('gameState', JSON.stringify(gameState));
+    
+    // Emit custom event
+    const event = new CustomEvent('gameStateUpdate', { detail: gameState });
+    window.dispatchEvent(event);
+    
+    // Update potion size based on current state
+    this.updatePotionSize();
+  }
+  
+  updatePotionSize() {
+    const hasSmallPotion = this.game.Player.inventory.items.includes('drunkSmallPotion');
+    const hasBigPotion = this.game.Player.inventory.items.includes('drunkBigPotion');
+    
+    for (let i = 0; i < this.scene.children.length; i++) {
+      if (this.scene.children[i].name === 'Sketchfab_Scene') {
+        if (hasSmallPotion && !hasBigPotion) {
+          // Player is small, make potion small
+          this.scene.children[i].scale.set(0.075, 0.075, 0.075);
+        } else {
+          // Player is big or default, make potion normal size
+          this.scene.children[i].scale.set(0.15, 0.15, 0.15);
+        }
+      }
+    }
   }
 }

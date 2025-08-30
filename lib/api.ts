@@ -46,18 +46,25 @@ export function getAllPosts(fields: string[] = []) {
   const slugs = getPostSlugs(postsDirectory)
   const posts = slugs
     .map((slug) => getPostBySlug(slug, fields))
-    // sort posts by date in descending order
-    .sort((post1, post2) => (post1.date > post2.date ? -1 : 1))
+    // sort posts by date in descending order (most recent first)
+    .sort((post1, post2) => {
+      const date1 = new Date(post1.date || post1.createdDate)
+      const date2 = new Date(post2.date || post2.createdDate)
+      return date2.getTime() - date1.getTime()
+    })
   return posts
 }
 
 export function getAllProjects(fields: string[] = []) {
-  const slugs = getPostSlugs(projectsDirectory)
-  .map((slug) => getPostBySlug(slug, fields, projectsDirectory))
-    // sort posts by date in descending order
-    // @ts-ignore
-    .sort((project1, project2) => (dateFormat(project1.createdDate?.toString()) > dateFormat(project2.createdDate?.toString()) ? -1 : 1))
-  return slugs
+  const projects = getPostSlugs(projectsDirectory)
+    .map((slug) => getPostBySlug(slug, fields, projectsDirectory))
+    // sort projects by date in descending order (most recent first)
+    .sort((project1, project2) => {
+      const date1 = new Date(project1.createdDate || project1.date)
+      const date2 = new Date(project2.createdDate || project2.date)
+      return date2.getTime() - date1.getTime()
+    })
+  return projects
 }
 
 function dateFormat(str) {

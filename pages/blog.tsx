@@ -5,6 +5,7 @@ import Intro from '../components/blog/intro'
 import Layout from '../components/blog/layout'
 import { getAllPosts } from '../lib/api'
 import Post from '../interfaces/post'
+import ScrollToTop from '../components/ScrollToTop'
 
 import { NextSeo } from 'next-seo'
 
@@ -37,6 +38,7 @@ export default function Index({ allPosts }: Props) {
           )}
           {morePosts.length > 0 && <MoreStories posts={morePosts} />}
         </Container>
+        <ScrollToTop />
       </Layout>
     </>
   )

@@ -1,0 +1,205 @@
+// Shared Victorian Page Intro Styles
+.introSection {
+  text-align: center;
+  margin: 7rem 0 6rem 0;
+  position: relative;
+  max-width: 1400px;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 0 2rem;
+  
+  // Removed decorative ornament above title
+  
+  // Decorative line below title
+  &::after {
+    content: '';
+    position: absolute;
+    bottom: -2rem;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 200px;
+    height: 2px;
+    background: linear-gradient(90deg, 
+      transparent, 
+      var(--accent-primary) 25%,
+      var(--accent-primary) 75%,
+      transparent);
+    opacity: 0.5;
+  }
+}
+
+@keyframes float {
+  0%, 100% { transform: translateX(-50%) translateY(0); }
+  50% { transform: translateX(-50%) translateY(-5px); }
+}
+
+.pageTitle {
+  font-family: 'Crimson Text', serif;
+  font-size: clamp(2.5rem, 4vw, 3.5rem);
+  font-weight: 300;
+  letter-spacing: 0.05em;
+  color: var(--ink-color);
+  margin-bottom: 2rem;
+  position: relative;
+  display: inline-block;
+  width: 100%;
+  line-height: 1.2;
+}
+
+.firstLetter {
+  font-family: 'Playfair Display', serif;
+  font-size: 180%;
+  color: transparent;
+  background: linear-gradient(135deg, 
+    var(--accent-primary) 0%, 
+    var(--accent-secondary) 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  font-weight: 900;
+  display: inline-block;
+  margin-right: 0.02em;
+  font-style: italic;
+  line-height: 1;
+  vertical-align: baseline;
+  position: relative;
+  text-shadow: none;
+  margin-left: 0;
+  
+  // Elegant border frame
+  &::before {
+    content: attr(data-letter);
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 100%;
+    color: transparent;
+    -webkit-text-stroke: 1px var(--accent-primary);
+    opacity: 0.5;
+    z-index: -1;
+  }
+  
+  // Glow effect
+  &::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 120%;
+    height: 120%;
+    background: radial-gradient(circle at center, 
+      rgba(var(--accent-primary-rgb), 0.2) 0%, 
+      transparent 70%);
+    z-index: -2;
+    animation: pulse 2s ease-in-out infinite;
+  }
+}
+
+@keyframes pulse {
+  0%, 100% { 
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 0.5;
+  }
+  50% { 
+    transform: translate(-50%, -50%) scale(1.2);
+    opacity: 0.2;
+  }
+}
+
+.subtitle {
+  position: absolute;
+  bottom: -4rem;
+  right: 2rem;
+  font-family: 'Crimson Text', serif;
+  font-size: clamp(0.95rem, 1.3vw, 1.1rem);
+  color: var(--text-secondary);
+  font-style: italic;
+  line-height: 1.5;
+  opacity: 0.8;
+  text-align: right;
+  max-width: 400px;
+  
+  &::before {
+    content: '—';
+    margin-right: 0.5rem;
+    color: var(--accent-primary);
+    opacity: 0.6;
+  }
+}
+
+// Light mode adjustments
+:global(html:not(.dark)) {
+  .firstLetter {
+    background: linear-gradient(135deg, 
+      #B8860B 0%, 
+      #DAA520 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    
+    &::before {
+      -webkit-text-stroke: 1px #B8860B;
+    }
+    
+    &::after {
+      background: radial-gradient(circle at center, 
+        rgba(184, 134, 11, 0.15) 0%, 
+        transparent 70%);
+    }
+  }
+  
+  .introSection::before {
+    color: #B8860B;
+  }
+  
+  .introSection::after {
+    background: linear-gradient(90deg, 
+      transparent, 
+      #B8860B 25%,
+      #B8860B 75%,
+      transparent);
+  }
+}
+
+// Responsive
+@media (max-width: 768px) {
+  .introSection {
+    margin: 5rem 0 4rem 0;
+    
+    &::before {
+      top: -2rem;
+      font-size: 1.5rem;
+    }
+  }
+  
+  .pageTitle {
+    font-size: clamp(2rem, 5vw, 2.8rem);
+  }
+  
+  .firstLetter {
+    font-size: 160%;
+  }
+  
+  .subtitle {
+    position: static;
+    margin-top: 1.5rem;
+    margin-bottom: 2rem;
+    text-align: center;
+    max-width: 100%;
+    right: auto;
+  }
+}
+
+@media (max-width: 480px) {
+  .pageTitle {
+    font-size: 2.2rem;
+  }
+  
+  .firstLetter {
+    font-size: 150%;
+  }
+  
+  .subtitle {
+    font-size: 0.95rem;
+  }
+}
