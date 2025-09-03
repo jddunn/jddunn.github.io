@@ -4,7 +4,7 @@ coverImage: '/assets/projects/fortune-screenshot.png'
 excerpt: 'A (eventual open-source) metaverse engine that lives on the web for interconnected experiences, integrated with web3 authentication and NFTs for persistent storage of player profiles and inventories.'
 date: '2022'
 createdDate: '2022'
-tags: 'typescript,metaverse,llms,web3,nfts'
+tags: 'smart contracts,metaverse,llms,web3,nfts'
 # author:
 #   name: Johnny Dunn
 #   picture: '/assets/blog/authors/jj.jpeg'

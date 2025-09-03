@@ -4,7 +4,7 @@ coverImage: '/assets/projects/quire-homepage-optimized.gif'
 excerpt: 'A platform for academics, professionals, and businesses alike to create and manage customizable virtual assistants that can perform any type of automation.'
 date: '2023-11-02'
 createdDate: '2023-08'
-tags: 'typescript,next.js,ai,nlp,llms'
+tags: 'typescript,react,next.js,ai,nlp,llms'
 # author:
 #   name: Johnny Dunn
 #   picture: '/assets/blog/authors/jj.jpeg'
@@ -12,7 +12,7 @@ ogImage:
   url: '/assets/projects/quire-work-sample-interview.png'
 ---
 
-<a href="https://quire.work" style="text-align: center" target="_blank" class="md-link">Link</a>
+<a href="https://quire.work" style="text-align: center; text-decoration: line-through"; target="_blank" class="md-link">Link (This project is no longer live)</a>
 
 ## Intro
 

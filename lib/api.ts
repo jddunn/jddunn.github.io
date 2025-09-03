@@ -90,3 +90,14 @@ function dateFormat(str) {
   }
   return `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`
 }
+
+// Count functions for API endpoints
+export function getBlogCount(): number {
+  const posts = getAllPosts(['slug'])
+  return posts.length
+}
+
+export function getProjectsCount(): number {
+  const projects = getAllProjects(['slug'])
+  return projects.length
+}

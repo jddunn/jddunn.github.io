@@ -32,13 +32,30 @@ const PostHeader = ({ title, coverImage, date, createdDate, tags,
     })
   }
   
+  // Determine the correct back path based on current route
+  const getBackPath = () => {
+    if (router.pathname.includes('/blog/')) {
+      return '/blog'
+    } else if (router.pathname.includes('/projects/')) {
+      return '/projects'
+    }
+    return '/'
+  }
+  
   return (
     <div className={styles.postHeader}>
       {/* Back Button */}
       {router.pathname !== "/" && (
         <div className={styles.backButton}>
-          <button onClick={() => router.back()}>
+          <button 
+            onClick={() => router.push(getBackPath())}
+            aria-label={`Back to ${dir === 'projects' ? 'Projects' : 'Blog'}`}
+            title={`Back to ${dir === 'projects' ? 'Projects' : 'Blog'}`}
+          >
             <BsArrowLeftCircleFill />
+            <span className={styles.backText}>
+              Back to {dir === 'projects' ? 'Projects' : 'Blog'}
+            </span>
           </button>
         </div>
       )}

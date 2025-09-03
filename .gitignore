@@ -30,3 +30,13 @@ yarn-error.log*
 
 # vercel
 .vercel
+
+# Image optimization backups and cache
+/public/_originals/
+/scripts/.image-optimization-cache.json
+/scripts/.favicon-cache.json
+/scripts/.image-optimization.log
+/scripts/.optimization-report.json
+
+# External backups (if stored in repo)
+/image-backups/

@@ -79,9 +79,9 @@ const About = () => {
       
       <div className={style.pageBody}>
         <p className={style.firstParagraph}>
-          <span className={style.dropCap}>I</span>'m a full-stack engineer specializing in building and deploying end-to-end AI/ML systems.
-          With experience creating RAG pipelines, fine-tuning LLMs, and architecting scalable backend services in Python and TypeScript,
-          I focus on delivering robust solutions with exceptional developer experience and API design.
+          <span className={style.dropCap}>I</span>'ve worked both as a NLP Engineer and a full-stack engineer specializing in building and deploying end-to-end AI/ML systems.
+          With experience creating RAG pipelines, fine-tuning LLMs, and architecting scalable backend microservices in Python and TypeScript, and monorepos in TS, I 
+          aim to bridge gaps between SOTA frameworks and techniques with practical product features.
         </p>
         <p>
           My journey spans from enterprise AI assistants at Amelia.ai to building ML delivery infrastructure at eBay,
@@ -90,7 +90,7 @@ const About = () => {
         </p>
         
         <p>
-          With a BFA in Design and Technology from Parsons (2017), I bring a unique perspective combining technical excellence
+          With a BFA in Design and Technology / Game Design from Parsons (2017), I bring a unique perspective combining technical excellence
           with creative problem-solving. This dual approach drives my work at <a href="https://manic.agency" target="_blank" rel="noreferrer" 
           className={style.link}>Manic.agency</a>, where I collaborate on open-source projects and publish technical writing at The Looking Glass.
         </p>

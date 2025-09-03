@@ -8,7 +8,8 @@
   justify-content: center;
   padding: 2rem 1rem;
   perspective: 2000px;
-  overflow: hidden;
+  overflow-x: hidden;
+  overflow-y: auto;
   position: relative;
   
   // Subtle parchment texture overlay
@@ -746,28 +747,52 @@
 
 // Responsive
 @media (max-width: 768px) {
+  .about {
+    padding: 1rem 0.5rem;
+    overflow-x: hidden;
+    overflow-y: auto;
+  }
+
+  .bookContainer {
+    width: 100%;
+    max-width: 100%;
+    padding: 0 0.5rem;
+    overflow: hidden;
+  }
+
   .book {
     height: 500px;
     transform: rotateY(0);
+    max-width: 100%;
+    margin: 0 auto;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
   }
   
   .bookTitle {
+    margin: 3rem 0 2rem 0;
+    padding: 0 1rem;
+    
     .mainTitle {
       font-size: 1.8rem;
     }
     
     .subtitle {
       font-size: 1rem;
+      padding: 0 0.5rem;
     }
   }
   
   .pageContent {
     padding: 1.5rem;
+    overflow-x: hidden;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
   }
   
   .leftPage {
     display: flex;
     padding: 1.5rem;
+    overflow: hidden;
     
     .coverTitle {
       h2 {
@@ -791,6 +816,7 @@
   
   .rightPage {
     padding: 2rem;
+    overflow: hidden;
   }
   
   .bookSpine {
@@ -817,11 +843,29 @@
 }
 
 @media (max-width: 480px) {
+  .about {
+    padding: 0.5rem;
+    min-height: calc(100vh - 140px);
+  }
+
+  .bookContainer {
+    padding: 0;
+  }
+
   .book {
     height: 450px;
+    width: calc(100% - 1rem);
+    margin: 0 0.5rem;
   }
   
   .pageContent {
+    padding: 1rem;
+    max-height: 400px;
+    overflow-y: auto;
+    overflow-x: hidden;
+  }
+  
+  .leftPage {
     padding: 1rem;
   }
   
@@ -839,5 +883,25 @@
   
   .pageBody {
     font-size: 0.95rem;
+  }
+
+  .navigation {
+    margin-top: 1rem;
+    padding: 0.5rem;
+  }
+
+  .coverLinks {
+    gap: 0.5rem;
+    max-width: 100%;
+  }
+
+  .coverLink {
+    padding: 0.5rem 0.8rem;
+    font-size: 0.85rem;
+    
+    svg {
+      width: 16px;
+      height: 16px;
+    }
   }
 }

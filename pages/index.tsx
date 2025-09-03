@@ -8,6 +8,17 @@ import Model from "../components/Model";
 
 const game = require('../lib/text-rpg-engine.min');
 
+// Extend Window interface for sceneInstance
+declare global {
+  interface Window {
+    sceneInstance?: {
+      controls?: {
+        enabled: boolean;
+      };
+    };
+  }
+}
+
 export default function Home() {
   const router = useRouter();
 
@@ -16,7 +27,7 @@ export default function Home() {
 
   let counter = 0;
   const texts = [
-    "a full-stack dev specializing in machine learning and web3 projects", 
+    "a full-stack dev specializing in machine learning and generative AI works", 
     "a co-founder at manic.agency an open-source and writing collective", 
     'an artist formerly known as an "artist" formerly known as an artifice', 
     "a persona non grata to myself looking for forgiveness",
@@ -48,7 +59,7 @@ export default function Home() {
     // This is a hackey way for us to update statuses in the player
     // based on clicking the prompts. With a new update / version
     // to the text-rpg-engine library, this will be taken care already.
-    document.addEventListener("click", function(e){
+    document.addEventListener("click", function(){
       setTimeout(() => {
         updateStatuses();
         ensurePromptsVisible();
@@ -196,39 +207,24 @@ export default function Home() {
             const promptEl = document.createElement('div');
             promptEl.className = 'prompt';
             promptEl.textContent = promptData.text;
-            // Apply inline styles directly when creating
-            promptEl.style.cssText = `
-              display: block !important;
-              visibility: visible !important;
-              opacity: 1 !important;
-              padding: 0.5rem 1rem !important;
-              margin: 0 !important;
-              background: linear-gradient(135deg, rgba(212, 175, 55, 0.1) 0%, rgba(244, 228, 193, 0.1) 100%) !important;
-              border: 2px solid #D4AF37 !important;
-              border-radius: 6px !important;
-              color: #D4AF37 !important;
-              font-size: 0.85rem !important;
-              font-family: 'Crimson Text', serif !important;
-              font-style: italic !important;
-              cursor: pointer !important;
-              text-align: center !important;
-              position: relative !important;
-              z-index: 10 !important;
-              white-space: nowrap !important;
-              overflow: hidden !important;
-              text-overflow: ellipsis !important;
-              width: calc(50% - 0.25rem) !important;
-              height: 36px !important;
-            `;
+            // Apply inline styles directly when creating - will be overridden by CSS media queries
+            promptEl.style.cssText = ``;
             promptEl.onclick = () => {
               console.log('[DEBUG] Manual prompt clicked:', promptData.command);
+              const previousRoom = game.Player.currentRoom;
               game.userSend(promptData.command);
-              // Scroll to top of display
-              const displayEl = document.getElementById('display');
-              if (displayEl) {
-                displayEl.scrollTop = 0;
-              }
               setTimeout(() => {
+                const currentRoom = game.Player.currentRoom;
+                const displayEl = document.getElementById('display');
+                if (displayEl) {
+                  if (previousRoom === currentRoom) {
+                    // Same room - scroll to bottom to show the result/error
+                    displayEl.scrollTop = displayEl.scrollHeight;
+                  } else {
+                    // New room - scroll to top to show new room description
+                    displayEl.scrollTop = 0;
+                  }
+                }
                 updateStatuses();
                 ensurePromptsVisible();
               }, 100);
@@ -261,9 +257,25 @@ export default function Home() {
 
  function afterSubmission(event) {
     event.preventDefault();
+    const previousRoom = game.Player.currentRoom;
     game.userSend((document.getElementById('input') as HTMLInputElement).value);
     (document.getElementById('input') as HTMLInputElement).value = '';
     setTimeout(() => {
+      const currentRoom = game.Player.currentRoom;
+      const displayEl = document.getElementById('display');
+      
+      // If we're in the same room (action failed or examining), scroll to bottom
+      // If we changed rooms, scroll to top
+      if (displayEl) {
+        if (previousRoom === currentRoom) {
+          // Same room - scroll to bottom to show the result/error
+          displayEl.scrollTop = displayEl.scrollHeight;
+        } else {
+          // New room - scroll to top to show new room description
+          displayEl.scrollTop = 0;
+        }
+      }
+      
       updateStatuses();
       ensurePromptsVisible();
     }, 100);
@@ -311,31 +323,10 @@ function ensurePromptsVisible() {
         text: el.textContent?.substring(0, 30)
       });
       
-      // Force visibility with explicit styles using cssText
-      el.style.cssText = `
-        display: inline-block !important;
-        visibility: visible !important;
-        opacity: 1 !important;
-        padding: 0.4rem 0.8rem !important;
-        margin: 0 !important;
-        background: linear-gradient(135deg, rgba(212, 175, 55, 0.1) 0%, rgba(244, 228, 193, 0.1) 100%) !important;
-        border: 2px solid #D4AF37 !important;
-        border-radius: 6px !important;
-        color: #D4AF37 !important;
-        font-size: 0.85rem !important;
-        font-family: 'Crimson Text', serif !important;
-        font-style: italic !important;
-        cursor: pointer !important;
-        text-align: center !important;
-        position: relative !important;
-        z-index: 10 !important;
-        flex: 0 1 calc(50% - 0.25rem) !important;
-        white-space: nowrap !important;
-        overflow: hidden !important;
-        text-overflow: ellipsis !important;
-        box-shadow: 0 2px 4px rgba(0,0,0,0.2) !important;
-        height: 32px !important;
-      `;
+      // Remove forced inline styles to allow CSS media queries to work
+      el.style.display = 'block';
+      el.style.visibility = 'visible';
+      el.style.opacity = '1';
     });
     
     if (existingPrompts.length === 0) {
@@ -400,13 +391,20 @@ function ensurePromptsVisible() {
           const target = e.currentTarget as HTMLElement;
           const command = target.dataset.myDataContent || target.textContent;
           console.log('[DEBUG] Prompt clicked, sending command:', command);
+          const previousRoom = game.Player.currentRoom;
           game.userSend(command);
-          // Scroll to top of display
-          const displayEl = document.getElementById('display');
-          if (displayEl) {
-            displayEl.scrollTop = 0;
-          }
           setTimeout(() => {
+            const currentRoom = game.Player.currentRoom;
+            const displayEl = document.getElementById('display');
+            if (displayEl) {
+              if (previousRoom === currentRoom) {
+                // Same room - scroll to bottom to show the result/error
+                displayEl.scrollTop = displayEl.scrollHeight;
+              } else {
+                // New room - scroll to top to show new room description
+                displayEl.scrollTop = 0;
+              }
+            }
             updateStatuses();
             ensurePromptsVisible();
           }, 100);
@@ -513,31 +511,51 @@ function updateStatuses() {
       /* Mobile optimizations */
       @media (max-width: 768px) {
         .prompt {
-          width: calc(100% - 0.5rem) !important;
+          width: calc(50% - 0.25rem) !important;
           margin-bottom: 0.5rem;
-          padding: 0.75rem 1rem;
-          min-height: 44px;
-          font-size: 0.9rem;
-          white-space: normal;
-          height: auto;
+          padding: 0.6rem 0.8rem;
+          min-height: 40px;
+          font-size: 0.85rem;
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          height: 40px;
+          line-height: 1.4;
         }
         
         #prompts-container {
-          min-height: 200px !important;
-          max-height: 300px !important;
-          height: auto !important;
+          height: 150px !important;
+          max-height: 150px !important;
+          overflow-y: auto !important;
+          overflow-x: hidden !important;
         }
         
         #prompts {
-          padding-bottom: 1rem !important;
+          padding: 0.75rem !important;
+          min-height: 100% !important;
         }
         
         #game {
-          min-height: 400px !important;
+          min-height: auto !important;
+          height: auto !important;
+          max-height: calc(100vh - 200px) !important;
+          margin: 0.5rem !important;
+          border-width: 2px !important;
         }
         
         #display {
-          font-size: 0.95rem !important;
+          font-size: 0.9rem !important;
+          height: 180px !important;
+          max-height: 180px !important;
+          padding: 0.75rem !important;
+        }
+        
+        #player {
+          display: none !important;
+        }
+        
+        .firstCol {
+          margin-bottom: 1rem !important;
         }
         
         #scene-container {
@@ -556,6 +574,58 @@ function updateStatuses() {
         #scene-container {
           max-width: 250px !important;
           height: 250px !important;
+        }
+        
+        #game {
+          margin: 0.25rem !important;
+          border-radius: 6px !important;
+        }
+        
+        #display {
+          height: 150px !important;
+          padding: 0.5rem !important;
+          font-size: 0.85rem !important;
+        }
+        
+        #prompts-container {
+          height: 120px !important;
+          max-height: 120px !important;
+        }
+        
+        #prompts {
+          padding: 0.5rem !important;
+          gap: 0.35rem !important;
+        }
+        
+        .prompt {
+          width: calc(50% - 0.175rem) !important;
+          padding: 0.5rem 0.6rem !important;
+          font-size: 0.8rem !important;
+          height: 36px !important;
+          min-height: 36px !important;
+        }
+        
+        input#input {
+          font-size: 0.9rem !important;
+          padding: 0 0.75rem !important;
+          height: 38px !important;
+        }
+        
+        #sendButton svg {
+          width: 24px !important;
+          height: 24px !important;
+        }
+      }
+      
+      /* Very small screens */
+      @media (max-width: 380px) {
+        .prompt {
+          width: 100% !important;
+          margin-bottom: 0.35rem !important;
+        }
+        
+        #prompts {
+          flex-direction: column !important;
         }
       }
 
@@ -855,20 +925,26 @@ function updateStatuses() {
                       color: 'var(--accent-primary)',
                       backdropFilter: 'blur(15px)',
                       overflow: 'hidden',
-                      minHeight: 'clamp(400px, 80vh, 600px)'
+                      minHeight: '400px',
+                      display: 'flex',
+                      flexDirection: 'column'
                     }}>
                       {/* Scrollable content area with custom scrollbar */}
                       <div id="display" style={{
-                        height: 'clamp(200px, 40vh, 300px)',
+                        flex: '1 1 auto',
+                        minHeight: '150px',
+                        maxHeight: '300px',
                         padding: 'clamp(0.75rem, 3vw, 1.5rem) clamp(1rem, 4vw, 2rem)',
                         overflow: 'auto',
                         color: 'var(--accent-primary)',
                         fontSize: 'inherit',
                         lineHeight: 1.5,
-                        textAlign: 'justify'
+                        textAlign: 'justify',
+                        WebkitOverflowScrolling: 'touch'
                       }}></div>
                       {/* Input section */}
                       <div style={{
+                        flex: '0 0 auto',
                         borderTop: '1px solid rgba(var(--accent-primary-rgb), 0.2)',
                         padding: 'clamp(0.75rem, 3vw, 1.5rem) clamp(1rem, 4vw, 2rem)',
                         background: 'rgba(var(--accent-primary-rgb), 0.02)'
@@ -958,7 +1034,9 @@ function updateStatuses() {
                       </div>
                       {/* Prompts section inside the book - for choice inputs */}
                       <div id="prompts-container" style={{
-                        height: 'clamp(100px, 20vh, 120px)',
+                        flex: '0 0 auto',
+                        minHeight: '120px',
+                        maxHeight: '200px',
                         borderTop: '1px solid rgba(var(--accent-primary-rgb), 0.1)',
                         background: 'rgba(var(--accent-primary-rgb), 0.02)',
                         overflowY: 'auto',

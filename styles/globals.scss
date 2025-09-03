@@ -766,3 +766,154 @@ img.seconds {
     }
   }
 }
+
+// Victorian Loading Spinner
+.loading-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: var(--bg-primary);
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  backdrop-filter: blur(10px);
+}
+
+.victorian-spinner {
+  position: relative;
+  width: 120px;
+  height: 120px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.spinner-ornament {
+  position: relative;
+  width: 100px;
+  height: 100px;
+}
+
+.spinner-gear {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  border: 3px solid transparent;
+  border-top-color: var(--accent-primary);
+  border-right-color: var(--accent-primary);
+  border-radius: 50%;
+  animation: victorianSpin 2s cubic-bezier(0.68, -0.55, 0.265, 1.55) infinite;
+  
+  &::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 80%;
+    height: 80%;
+    border: 2px solid transparent;
+    border-bottom-color: var(--accent-secondary);
+    border-left-color: var(--accent-secondary);
+    border-radius: 50%;
+    animation: victorianSpinReverse 1.5s cubic-bezier(0.68, -0.55, 0.265, 1.55) infinite;
+  }
+}
+
+.spinner-inner {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 50px;
+  height: 50px;
+  border: 2px solid var(--accent-secondary);
+  border-radius: 50%;
+  opacity: 0.3;
+  animation: victorianPulse 2s ease-in-out infinite;
+}
+
+.spinner-flourish {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  
+  &::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 30px;
+    height: 30px;
+    border: 1px solid var(--accent-primary);
+    border-radius: 50%;
+    animation: victorianFloat 3s ease-in-out infinite;
+  }
+}
+
+.loading-text {
+  margin-top: 20px;
+  font-family: 'Crimson Text', serif;
+  font-size: 1.2rem;
+  font-style: italic;
+  color: var(--accent-primary);
+  letter-spacing: 0.1em;
+  animation: victorianFade 2s ease-in-out infinite;
+}
+
+@keyframes victorianSpin {
+  0% {
+    transform: rotate(0deg) scale(1);
+  }
+  50% {
+    transform: rotate(180deg) scale(1.05);
+  }
+  100% {
+    transform: rotate(360deg) scale(1);
+  }
+}
+
+@keyframes victorianSpinReverse {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(-360deg);
+  }
+}
+
+@keyframes victorianPulse {
+  0%, 100% {
+    opacity: 0.3;
+    transform: translateX(-50%) scale(0.8);
+  }
+  50% {
+    opacity: 1;
+    transform: translateX(-50%) scale(1.2);
+  }
+}
+
+@keyframes victorianFloat {
+  0%, 100% {
+    opacity: 0.3;
+    transform: translateY(-50%) scale(0.8);
+  }
+  50% {
+    opacity: 1;
+    transform: translateY(-50%) scale(1.2);
+  }
+}
+
+@keyframes victorianFade {
+  0%, 100% {
+    opacity: 0.5;
+  }
+  50% {
+    opacity: 1;
+  }
+}

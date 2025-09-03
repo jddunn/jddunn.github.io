@@ -1,8 +1,12 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import { useRouter } from "next/router";
 import Layout from "../components/Layout";
 import "../styles/globals.scss";
 
 function MyApp({ Component, pageProps }) {
+  const [loading, setLoading] = useState(false);
+  const router = useRouter();
+
   useEffect(() => {
     try {
       // Initialize theme on mount
@@ -20,8 +24,35 @@ function MyApp({ Component, pageProps }) {
     }
   }, []);
 
+  useEffect(() => {
+    const handleStart = () => setLoading(true);
+    const handleComplete = () => setLoading(false);
+
+    router.events.on('routeChangeStart', handleStart);
+    router.events.on('routeChangeComplete', handleComplete);
+    router.events.on('routeChangeError', handleComplete);
+
+    return () => {
+      router.events.off('routeChangeStart', handleStart);
+      router.events.off('routeChangeComplete', handleComplete);
+      router.events.off('routeChangeError', handleComplete);
+    };
+  }, [router]);
+
   return (
     <>
+      {loading && (
+        <div className="loading-overlay">
+          <div className="victorian-spinner">
+            <div className="spinner-ornament">
+              <div className="spinner-gear"></div>
+              <div className="spinner-inner"></div>
+              <div className="spinner-flourish"></div>
+            </div>
+            <p className="loading-text">Loading...</p>
+          </div>
+        </div>
+      )}
       <div className="paper-shapes" />
       <Layout>
         <Component {...pageProps} />

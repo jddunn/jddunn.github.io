@@ -1,0 +1,257 @@
+// Cover Image Styles with Dynamic Padding
+.coverImagePadded {
+  position: relative;
+  min-height: 300px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  border-radius: 4px;
+  transition: all 500ms cubic-bezier(0.4, 0, 0.2, 1);
+  
+  // Victorian ornamental overlay
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: 
+      repeating-linear-gradient(
+        45deg,
+        transparent,
+        transparent 10px,
+        rgba(var(--accent-primary-rgb), 0.02) 10px,
+        rgba(var(--accent-primary-rgb), 0.02) 20px
+      );
+    pointer-events: none;
+    z-index: 2;
+    opacity: 0.5;
+  }
+  
+  // Subtle animated glow effect
+  &::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(
+      circle at center,
+      rgba(var(--accent-primary-rgb), 0.1) 0%,
+      transparent 60%
+    );
+    animation: pulse 4s ease-in-out infinite;
+    pointer-events: none;
+    z-index: 0;
+  }
+  
+  img {
+    position: relative;
+    z-index: 1;
+    filter: drop-shadow(0 4px 20px rgba(0, 0, 0, 0.1));
+    transition: transform 700ms cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  
+  &:hover img {
+    transform: scale(1.05);
+  }
+}
+
+.coverImageNormal {
+  position: relative;
+  overflow: hidden;
+  
+  img {
+    transition: transform 700ms cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  
+  &:hover img {
+    transform: scale(1.05);
+  }
+}
+
+// Corner decorative frames
+.cornerFrame {
+  position: absolute;
+  width: 60px;
+  height: 60px;
+  border: 2px solid;
+  border-color: var(--accent-primary);
+  opacity: 0.2;
+  z-index: 3;
+  pointer-events: none;
+  transition: all 500ms ease;
+  
+  &.topLeft {
+    top: 16px;
+    left: 16px;
+    border-right: none;
+    border-bottom: none;
+  }
+  
+  &.topRight {
+    top: 16px;
+    right: 16px;
+    border-left: none;
+    border-bottom: none;
+  }
+  
+  &.bottomLeft {
+    bottom: 16px;
+    left: 16px;
+    border-right: none;
+    border-top: none;
+  }
+  
+  &.bottomRight {
+    bottom: 16px;
+    right: 16px;
+    border-left: none;
+    border-top: none;
+  }
+}
+
+// Hover effects for corner frames
+.coverImagePadded:hover {
+  .cornerFrame {
+    opacity: 0.4;
+    width: 80px;
+    height: 80px;
+    
+    &.topLeft {
+      top: 8px;
+      left: 8px;
+    }
+    
+    &.topRight {
+      top: 8px;
+      right: 8px;
+    }
+    
+    &.bottomLeft {
+      bottom: 8px;
+      left: 8px;
+    }
+    
+    &.bottomRight {
+      bottom: 8px;
+      right: 8px;
+    }
+  }
+}
+
+// Animation for the glow effect
+@keyframes pulse {
+  0%, 100% {
+    opacity: 0.3;
+    transform: translate(-50%, -50%) scale(1);
+  }
+  50% {
+    opacity: 0.6;
+    transform: translate(-50%, -50%) scale(1.1);
+  }
+}
+
+// Light mode adjustments
+:global(html:not(.dark)) {
+  .coverImagePadded {
+    &::before {
+      background: 
+        repeating-linear-gradient(
+          45deg,
+          transparent,
+          transparent 10px,
+          rgba(212, 175, 55, 0.03) 10px,
+          rgba(212, 175, 55, 0.03) 20px
+        );
+    }
+    
+    img {
+      filter: drop-shadow(0 4px 20px rgba(139, 105, 20, 0.08));
+    }
+  }
+  
+  .cornerFrame {
+    border-color: rgba(212, 175, 55, 0.6);
+  }
+}
+
+// Dark mode enhancements
+:global(html.dark) {
+  .coverImagePadded {
+    img {
+      filter: drop-shadow(0 4px 20px rgba(212, 175, 55, 0.15));
+    }
+  }
+  
+  .cornerFrame {
+    border-color: rgba(212, 175, 55, 0.4);
+  }
+}
+
+// Responsive adjustments
+@media (max-width: 768px) {
+  .coverImagePadded {
+    min-height: 250px;
+  }
+  
+  .cornerFrame {
+    width: 40px;
+    height: 40px;
+    
+    &.topLeft {
+      top: 12px;
+      left: 12px;
+    }
+    
+    &.topRight {
+      top: 12px;
+      right: 12px;
+    }
+    
+    &.bottomLeft {
+      bottom: 12px;
+      left: 12px;
+    }
+    
+    &.bottomRight {
+      bottom: 12px;
+      right: 12px;
+    }
+  }
+}
+
+@media (max-width: 480px) {
+  .coverImagePadded {
+    min-height: 200px;
+  }
+  
+  .cornerFrame {
+    width: 30px;
+    height: 30px;
+    
+    &.topLeft {
+      top: 8px;
+      left: 8px;
+    }
+    
+    &.topRight {
+      top: 8px;
+      right: 8px;
+    }
+    
+    &.bottomLeft {
+      bottom: 8px;
+      left: 8px;
+    }
+    
+    &.bottomRight {
+      bottom: 8px;
+      right: 8px;
+    }
+  }
+}

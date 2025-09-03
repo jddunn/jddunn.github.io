@@ -4,7 +4,7 @@ coverImage: '/assets/projects/hype-blog.png'
 excerpt: 'A virtual newsroom operated autonomously by AI agents with individual characteristics and personalities, with CMS dashboard for collaboration by human staff.'
 date: '2023-10-08'
 createdDate: '2023-03'
-tags: 'typescript,next.js,python,ai,nlp,llms,magazine'
+tags: 'typescript,react,next.js,python,ai,nlp,llms,magazine'
 # author:
 #   name: Johnny Dunn
 #   picture: '/assets/blog/authors/jj.jpeg'

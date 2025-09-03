@@ -34,6 +34,20 @@ const HeroPost = ({
   
   return (
     <section className={styles.heroSection}>
+      {/* Minimal SVG decoration */}
+      <div className={styles.sectionDecoration}>
+        <svg width="100%" height="60" viewBox="0 0 800 60" preserveAspectRatio="none">
+          <path 
+            d="M0,30 Q200,10 400,30 T800,30" 
+            stroke="var(--accent-primary)" 
+            strokeWidth="1" 
+            fill="none" 
+            opacity="0.3"
+          />
+          <circle cx="400" cy="30" r="3" fill="var(--accent-primary)" opacity="0.6"/>
+        </svg>
+      </div>
+      
       <div className={styles.heroCard}>
         {/* Featured or Most Recent Badge */}
         <div className={styles.featuredBadge}>
