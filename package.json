@@ -4,11 +4,23 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "next build",
+    "build": "npm run optimize:all && next build",
+    "build:prod": "npm run optimize:all:prod && next build",
     "export": "next build && next export",
     "postbuild": "next-sitemap",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "favicons": "node scripts/generate-favicons.js",
+    "optimize:images": "node scripts/optimize-images.js",
+    "optimize:images:force": "node scripts/optimize-images.js --force",
+    "optimize:images:dry": "node scripts/optimize-images.js --dry-run",
+    "optimize:all": "npm run favicons && npm run optimize:images",
+    "optimize:all:prod": "npm run favicons && npm run optimize:images --force",
+    "lfs:track": "git lfs track",
+    "lfs:status": "git lfs status",
+    "lfs:pull": "git lfs pull",
+    "lfs:push": "git lfs push origin --all",
+    "prebuild": "npm run lfs:pull"
   },
   "dependencies": {
     "@apollo/client": "^3.8.5",
@@ -46,6 +58,7 @@
     "postcss": "^8.4.31",
     "postcss-import": "^15.1.0",
     "prettier": "^3.0.3",
+    "sharp": "^0.34.3",
     "tailwindcss": "^3.3.3",
     "typescript": "^5.2.2"
   }
