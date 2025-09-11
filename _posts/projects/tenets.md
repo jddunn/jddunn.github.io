@@ -2,8 +2,8 @@
 title: 'tenets'
 coverImage: '/assets/projects/tenets_dark_icon.png'
 excerpt: 'Using NLP and semantic understanding with embeddings and similarity to automatically aggregate context from any folder / repo to feed into a prompt.'
-date: '2025-09-02'
-createdDate: '2025-09-02'
+date: '2024-09-02'
+createdDate: '2024-09-02'
 tags: 'python,llms,ai,dev-tools'
 # author:
 #   name: JJ Kasper

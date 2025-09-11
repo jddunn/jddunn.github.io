@@ -26,32 +26,22 @@ const PostHeader = ({ title, coverImage, date, createdDate, tags,
   const formatDate = (dateString: string) => {
     if (!dateString) return ''
     
-    // Debug: log what we're receiving
-    console.log('PostHeader - formatDate input:', dateString, 'Type:', typeof dateString)
-    
     // Parse the date string as local time, not UTC
     // For YYYY-MM-DD format, create date with local timezone
     const [year, month, day] = dateString.split('-').map(Number)
     
     if (!year || !month || !day) {
-      console.log('PostHeader - Invalid date parts:', { year, month, day })
       return dateString
     }
     
     // Create date in local timezone (month is 0-indexed in JS)
     const date = new Date(year, month - 1, day)
     
-    console.log('PostHeader - Created date:', date.toString())
-    
-    const formatted = date.toLocaleDateString('en-US', { 
+    return date.toLocaleDateString('en-US', { 
       year: 'numeric', 
       month: 'long', 
       day: 'numeric' 
     })
-    
-    console.log('PostHeader - Formatted date:', formatted)
-    
-    return formatted
   }
   
   // Determine the correct back path based on current route
