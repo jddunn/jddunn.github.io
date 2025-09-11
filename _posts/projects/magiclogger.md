@@ -1,59 +1,56 @@
 ---
-title: "Building MagicLogger and MAGIC: A Universal Logging Standard for Color"
-excerpt: "One developer's journey into building a feature-rich colorful logging library and why."
-author: "Johnny Dunn"
-category: "tutorials"
-tags: ["typescript", "open-source", "library", "logging", "featured"]
-image: "/assets/blog/tutorials/building-magiclogger/magiclogger-primary-no-subtitle-transparent-4x.png"
-date: '2025-08-31'
-createdDate: '2025-08-31'
-featured: true
+title: 'MagicLogger'
+coverImage: '/assets/projects/magiclogger-dark-4x-with-subtitle.png'
+excerpt: 'A TypeScript logging library with native colors and styles, competitive performance, and zero dependencies.'
+date: '2024'
+createdDate: '2025-31-08'
+updatedDate: '2025-31-08'
+tags: 'typescript,logging,open-source,library'
+ogImage:
+  url: '/assets/projects/magiclogger-dark-4x-with-subtitle.png'
 ---
+<a href="https://github.com/manicinc/magiclogger" style="text-align: center" target="_blank" class="md-link">GitHub link</a>
 
-# Building MagicLogger and MAGIC: A Universal Logging Standard for Color
+<a href="https://magiclog.io" style="text-align: center" target="_blank" class="md-link">Website / docs link</a>
 
-**GitHub link: [https://github.com/manicinc/magiclogger](https://github.com/manicinc/magiclogger)**
+## Intro / Concepts
 
-See the full article link [here](https://manic.agency/blog/building-magiclogger-and-magic).
+After years of wrestling with logging libraries that required separate styling packages or complex configurations just to get colored output, I built MagicLogger, a TypeScript logging library where colors and styles are first-class citizens, not afterthoughts. Admittedly, I didn't do much research in product validation; is this something people cared about or just me? But for me, this was an undertaking well worth doing, to be able to achieve powerful visual clarity and making reading logs more pleasant of an experience. 
 
-MagicLogger is a TypeScript logging library based on a simple personal need: making logging visually clear and beautiful **even in production dashboards**. After years of wrestling with libraries that required separate styling packages or complex configurations just for colored output, I wanted something where colors and styles were first-class citizens.
+It was also something I realized I could try as an truly enterprise-level product, open-source with robust CI / CD and excellent documentation, that had a very reasonable scope compared to many of my other works with heavy ML integrations. I took the experience to shape a learning path that would allow me to demonstrate how I would lead a project to maximum effectiveness with minimal technical debt, simple as that. I also thought I would need to be able to showcase something like this eventually as I continue an IC path to eventually becoming staff-level at an engineering team, and not be stuck in a 10-15 year senior rut.
 
-This goes against the grain—most production loggers strip colors for performance. But I'm making different assumptions:
+**MagicLogger** is a zero-dependency TypeScript logging library that delivers:
+- Native color and styling support with an intuitive API and themes
+- Competitive performance (~90% of Pino's performance)
+- Tree-shakable exports for optimal bundle sizes
+- Integrated with MAGIC schema for preserving styles across transports
+- Multiple transports for streaming, storage, big data services
+- Optional extensions like PII redacting
 
-- Storage is cheap, a few extra KB rarely matters in web apps
-- Production logs often need human reading
-- Visual clarity means better debugging experiences
-- Good design might mean fewer logs overall (we never talk about designing log messages for readability!)
+See the full article I wrote on my experiences / design decisions [here](https://manic.agency/blog/tutorials/building-magiclogger).
 
-> This is built for users who meticulously plan color-coordinated dev logs like art, and want to see that in production environments too.
+## Features in Action
 
-MagicLogger is optimized enough to compete with pino (~90% of its speed) while being reasonably larger (~40kb vs pino's 25kb). Built for small teams managing many services where beautiful aggregated log streams are worth the trade-off.
-
-## The Problem: Colors Are an Afterthought
-
-Industry standard libraries make coloring unnecessarily complex. Winston requires multiple packages and loses colors in file transports. Pino deliberately excludes colors from production, requiring pino-pretty (which adds 600KB!) just for development. Even then, you can't style parts of messages—the entire line is one color.
-
-MagicLogger's approach:
-
-```javascript
-// MAGICLOGGER - colors preserved everywhere
+### Beautiful Logs by Default
+```typescript
 import { Logger } from 'magiclogger';
+
 const logger = new Logger();
 
-logger.error('<red.bold>CRITICAL:</> Database <yellow>MongoDB</> unreachable');
-// Console: Beautifully styled
-// File: {"message": "CRITICAL: Database MongoDB unreachable", 
-//        "styles": [[0, 9, "red.bold"], [19, 26, "yellow"]]}
-// Dashboard: Can reconstruct exact styling using MAGIC schema
+// Simple, intuitive styling syntax
+logger.info('<green.bold>Server started</> on port <yellow>3000</>');
+logger.error('<red>Database connection failed:</> <dim>{error}</>', { error });
+
+// Automatic theming with tags
+logger.tag(['api', 'auth']).info('User authenticated');
+// Output: [API] [AUTH] User authenticated (with themed colors)
 ```
 
-We're not just adding colors—we're preserving the **semantic meaning** of those colors throughout your entire logging pipeline.
-
-## The MAGIC Schema
-
-The [MAGIC schema](https://github.com/manicinc/magiclogger/blob/master/docs/magic_schema.md) (MagicLog Agnostic Generic Interface for Consistency) is an open format that enables seamless preservation of styles:
+### The MAGIC Schema
+MagicLogger introduces the [MAGIC schema](https://github.com/manicinc/magiclogger/blob/master/docs/magic_schema.md) (MAgicLogger Agnostic Generic Interface for Consistency) - a standardized format that preserves styles across any transport:
 
 ```typescript
+// A log entry in MAGIC format
 {
   "timestamp": "2024-01-15T10:30:45.123Z",
   "level": "info",
@@ -67,13 +64,64 @@ The [MAGIC schema](https://github.com/manicinc/magiclogger/blob/master/docs/magi
 }
 ```
 
-Any consumer—dashboards, SDKs, other loggers—can recreate the exact visual representation anywhere.
+This allows any consumer - dashboards, SDKs, other loggers - to recreate the exact visual representation.
 
-## Making It Fast
+Libraries like pino focus on low-overhead, recommending pretty printing be disabled in production. But, if we can serve logs from prod *with* styles intact to outer services, then ingest them again original styles and all, this allows for consistency of visuals and styling and formatting from creation to transport to dashboard.
 
-### Style Extraction in O(n)
+### Performance Without Complexity
+```typescript
+// Synchronous mode for audit trails (no log loss)
+const syncLogger = new Logger({ async: false });
+syncLogger.info('Critical audit event'); // ~38K ops/sec
 
-The angle-bracket syntax needs efficient parsing:
+// Async mode for high throughput (default)
+const asyncLogger = new Logger({ async: true });
+asyncLogger.info('High volume event'); // ~135K ops/sec
+```
+
+## Architecture Challenges & Design Decisions
+
+### Challenge 1: Achieving Near-Pino Performance with Zero Dependencies
+
+Pino achieves ~145K ops/sec using [sonic-boom](https://github.com/pinojs/sonic-boom), which employs memory-mapped files and worker threads. I wanted competitive performance without the complexity or native dependencies.
+
+The solution: a ring buffer with microtask batching.
+
+```typescript
+class AsyncBuffer {
+  private buffer: LogEntry[] = [];
+  private writeIndex = 0;
+  private readonly maxSize: number;
+
+  constructor(maxSize = 16384) {
+    this.maxSize = maxSize;
+    // Pre-allocate for zero allocation during logging
+    this.buffer = new Array(maxSize);
+  }
+
+  push(entry: LogEntry): boolean {
+    // Overwrite oldest entry when full - no memory allocation
+    this.buffer[this.writeIndex] = entry;
+    this.writeIndex = (this.writeIndex + 1) % this.maxSize;
+    return true;
+  }
+}
+```
+
+Combined with JavaScript's microtask queue for batching:
+```typescript
+queueMicrotask(() => this.flush());
+```
+
+This achieves ~135K ops/sec (93% of Pino's speed) with:
+- Zero dependencies
+- No worker thread overhead
+- Lower latency (same-thread processing)
+- Works in browsers without modification
+
+### Challenge 2: Efficient Style Extraction
+
+The angle-bracket syntax `<green.bold>text</>` needs to be parsed efficiently while maintaining O(n) complexity:
 
 ```typescript
 export function extractStyles(message: string): ExtractedStyles {
@@ -82,10 +130,18 @@ export function extractStyles(message: string): ExtractedStyles {
   let plainTextPos = 0;
   
   const regex = /<([^>]+)>([^<]*)<\/>/g;
+  let lastIndex = 0;
   let match;
   
   while ((match = regex.exec(message)) !== null) {
-    // Single-pass processing with regex finite automata
+    // Add unstyled text before match
+    if (match.index > lastIndex) {
+      const plainText = message.slice(lastIndex, match.index);
+      plainParts.push(plainText);
+      plainTextPos += plainText.length;
+    }
+    
+    // Extract styled content with position tracking
     const styles = match[1].split('.');
     const content = match[2];
     
@@ -97,80 +153,77 @@ export function extractStyles(message: string): ExtractedStyles {
     
     plainParts.push(content);
     plainTextPos += content.length;
+    lastIndex = regex.lastIndex;
   }
   
   return { plainText: plainParts.join(''), styles: styleRanges };
 }
 ```
 
-Optimizations: single-pass processing, negated character classes prevent backtracking, array accumulation instead of string concatenation.
+Key optimizations:
+- Single-pass processing with regex finite automata
+- Array accumulation instead of string concatenation
+- Negated character classes prevent backtracking
+- Pre-declared variables minimize allocations
 
-### The Ring Buffer Advantage
+### Challenge 3: Tree-Shaking and Module Resolution
 
-While Pino uses worker threads (adding communication overhead), MagicLogger uses a ring buffer with microtask batching:
+Supporting CommonJS, ESM, browsers, and bundlers required careful package.json configuration:
 
-```typescript
-class AsyncBuffer {
-  private buffer: LogEntry[] = [];
-  private writeIndex = 0;
-  private readonly maxSize: number;
-
-  constructor(maxSize = 16384) {
-    this.maxSize = maxSize;
-    this.buffer = new Array(maxSize); // Pre-allocate
-  }
-
-  push(entry: LogEntry): boolean {
-    // Overwrite oldest when full - O(1), no allocations
-    this.buffer[this.writeIndex] = entry;
-    this.writeIndex = (this.writeIndex + 1) % this.maxSize;
-    return true;
+```json
+{
+  "exports": {
+    ".": {
+      "browser": {
+        "types": "./dist/index.d.ts",
+        "default": "./dist/browser/index.js"
+      },
+      "import": {
+        "types": "./dist/index.d.ts",
+        "default": "./dist/index.js"
+      },
+      "require": {
+        "types": "./dist/index.d.cts",
+        "default": "./dist/index.cjs"
+      }
+    },
+    "./transports/console": {
+      // Separate entry for tree-shaking
+    }
   }
 }
-
-// Batch using microtasks - faster than setTimeout
-queueMicrotask(() => this.flush());
 ```
 
-This achieves ~238K ops/sec (93% of Pino's speed) with zero dependencies and works everywhere including browsers.
-
-### Performance Results
-
+With tsup configuration for optimal builds:
+```typescript
+export default defineConfig({
+  entry: {
+    index: 'src/index.ts',
+    'transports/console': 'src/transports/console.ts',
+    // Multiple entries enable tree-shaking
+  },
+  format: ['cjs', 'esm'],
+  dts: true,
+  splitting: true,
+  treeshake: true,
+  platform: 'neutral',
+  target: 'es2022'
+});
 ```
-=== BENCHMARK RESULTS ===
-Synchronous Performance:
-  MagicLogger: 50,316 ops/sec
-  Winston: 108,775 ops/sec
-  Pino: 97,743 ops/sec
 
-Asynchronous Performance:
-  MagicLogger: 238,199 ops/sec
-  Pino: 255,949 ops/sec
-  Winston: 114,647 ops/sec
-```
+Result: Core logger is 38KB gzipped, with transports adding only what you use.
 
-### Bundle Sizes
+### Challenge 4: Balancing Features and Performance
 
-| Export | Size | Gzipped |
-|--------|------|---------|
-| Core | 180 KB | 38 KB |
-| Core + Console | 185 KB | 39 KB |
-| Browser Bundle | 139 KB | 35 KB |
-
-Tree-shaking means you only pay for what you use. Import just the core logger without transports and save on bundle size.
-
-## Architecture Decisions
-
-**Zero dependencies**: Everything is built from scratch—no chalk, no external color libraries. This keeps the package lean and eliminates supply chain risks.
-
-**Dual implementations**: Synchronous mode (~50K ops/sec) for audit trails where no log can be lost. Asynchronous mode (~238K ops/sec) for high-throughput with predictable log dropping (overwrites oldest).
-
-**Browser-first**: Unlike Pino's Node-specific optimizations, MagicLogger works identically in browsers without polyfills or modifications.
-
-**Extensible by design**: Core stays fast, expensive features are opt-in:
+Every feature has a cost. The solution: make expensive features opt-in extensions:
 
 ```typescript
 const logger = new Logger({
+  // Minimal core for speed
+  useColors: false,
+  useTimestamp: false,
+  
+  // Opt into what you need
   extensions: [
     new RateLimiter({ maxPerSecond: 1000 }),
     new Redactor({ patterns: [/password/gi] }),
@@ -179,64 +232,81 @@ const logger = new Logger({
 });
 ```
 
-## CI/CD Excellence
+This keeps the fast path fast while enabling rich functionality when needed.
 
-The project maintains [80% test coverage](https://coveralls.io/github/manicinc/magiclogger?branch=master) with 2000+ tests. Every push triggers:
+## CI/CD and Quality Automation
 
-- Multi-platform testing (Windows, Linux, macOS)
-- Performance benchmarks against Winston/Pino/Bunyan
-- Security scanning with Trivy
-- Automated PR labeling and summarization
-- Bundle size tracking
+The project enforces quality through comprehensive automation:
 
-GitHub Actions handles everything from auto-formatting to release drafting. The documentation at [magiclog.io](https://magiclog.io/docs) auto-generates from JSDoc comments using TypeDoc.
+- **80% test coverage** with 2000+ tests
+- **Multi-platform CI** testing on Windows, Linux, macOS across multiple Node versions
+- **Automated PR workflows** including labeling, summarization, and security scanning
+- **Performance benchmarks** on every commit comparing against Winston, Pino, and Bunyan
+- **Bundle size tracking** with automatic documentation updates
 
-## AI Coding: Exponential Development and Failure
-
-MagicLogger was developed with AI pair programming (Claude, GPT-4, early GPT-5 previews). The acceleration was real—probably 2-2.5x faster than solo development. The 2000+ tests alone would've taken months to write manually.
-
-But AI can confidently suggest terrible ideas. An actual Claude suggestion:
-
-> "You should consider moving the async implementation to a worker thread for better performance isolation..."
-
-This is architecturally wrong—serialization overhead between threads would decrease performance for a logging library. The scariest part isn't the bad suggestions, it's how easily you can lead an LLM astray with a typo or wrong assumption, and it'll confidently build on that mistake.
-
-Key insight: AI accelerates development dramatically but requires constant architectural oversight. It excels at well-defined tasks (tests, docs, algorithms) but struggles with system design decisions.
-
-## Try It Yourself
-
-```bash
-npm install magiclogger
+```yaml
+# Example: Automatic PR labeling based on changed files
+name: Auto Label
+on: pull_request
+jobs:
+  label:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/labeler@v4
+        with:
+          repo-token: "${{ secrets.GITHUB_TOKEN }}"
+          configuration-path: .github/labeler.yml
 ```
 
-```typescript
+## AI-Assisted Development Insights
+
+MagicLogger was developed with AI pair programming assistance (mainly Copilot, Claude Code). Some observations:
+
+**The Good:** AI excelled at generating comprehensive test suites, writing documentation, and implementing well-defined algorithms. The 2000+ tests would have taken months to write manually.
+
+**The Tricky:** AI sometimes suggests (how often it is depends on how well-structured your messages are it seems) architecturally unsound solutions, or ones that are just flat out incompatible with an existing codebase, that sound plausible.
+
+An actual example from Claude Opus:
+
+> **Claude**: "You should consider moving the async implementation to a worker thread for better performance isolation for batching logs in your AsyncLogger implementation.."
+
+This suggestion is overkill for a logger where serialization between worker threads would actually decrease performance. Being I/O bound, logging done still in a single-threaded loop through [microtasks](https://developer.mozilla.org/en-US/docs/Web/API/HTML_DOM_API/Microtask_guide) is a clean and light implementation. 
+
+Logging is batched and flushed at the (async) logger level sending to transport **and** again at the transport level, allowing configurations and overrides per transport. This design is necessary (and the two-step batching more robust) since S3 buckets may require different optimizations than Elasticsearch.
+
+**The Takeaway:** AI accelerated development by at least 2x (a significant bit more), but required constant oversight, which is obvious, but what is a lot more unsuspecting (seemingly) is how confident a LLM will be in being *wrong* on something it was able to implement just a few messages before. The **scariest** part is how a developer can lead a LLM astray, as it's prone to agreeing with a user, with just the slightest typo or slipup in naming convention / idea. It's so easy to bias a LLM into settling on the wrong decision or abstraction, and it's even easier to fall into lazy habits of not checking in every single change and edit done with AI coding. 
+
+## Demo & Examples
+
+Try MagicLogger yourself:
+
+```bash
+# Install
+npm install magiclogger
+
+# Basic usage
 import { Logger } from 'magiclogger';
 
 const logger = new Logger();
-
-// Beautiful logs with inline styling
 logger.info('<green>Success!</> Operation completed in <yellow>{time}ms</>', 
   { time: 42 });
 
-// With context and hierarchical tags
-logger
-  .context({ requestId: '123' })
-  .tag(['api', 'auth'])
-  .error('Authentication failed');
-
-// Multiple transports with independent batching
+# Advanced configuration
 const logger = new Logger({
-  transports: [
+  async: true,
+  transport: [
     new ConsoleTransport({ colors: true }),
     new FileTransport({ path: 'app.log' }),
-    new HttpTransport({ 
-      endpoint: 'https://logs.example.com',
-      batchSize: 100 
-    })
-  ]
+    new HttpTransport({ endpoint: 'https://logs.example.com' })
+  ],
+  theme: 'cyberpunk'
 });
+
+# With context and tags
+logger
+  .context({ requestId: '123', userId: 'abc' })
+  .tag(['api', 'critical'])
+  .error('Database connection failed');
 ```
 
-MagicLogger proves you don't need to sacrifice visual clarity for performance. Sometimes the right solution is making different trade-offs than everyone else.
-
-**Links:** [GitHub](https://github.com/manicinc/magiclogger) | [Documentation](https://magiclog.io) | [NPM](https://www.npmjs.com/package/magiclogger)
+View the full documentation at [magiclog.io](https://magiclog.io) or explore the [GitHub repository](https://github.com/manicinc/magiclogger).

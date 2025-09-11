@@ -11,7 +11,7 @@ type Props = {
   createdDate: string
   excerpt: string
   author: Author
-  tags?: string
+  tags?: string | string[]
   slug: string
   dir?: string
   featured?: boolean
@@ -30,7 +30,7 @@ const HeroPost = ({
   featured = false
 }: Props) => {
 
-  const _tags = tags?.split(",")
+  const _tags = Array.isArray(tags) ? tags : tags?.split(",")
   
   return (
     <section className={styles.heroSection}>

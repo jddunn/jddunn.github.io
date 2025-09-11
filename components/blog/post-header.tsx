@@ -10,7 +10,7 @@ type Props = {
   coverImage: string
   date: string
   createdDate?: string
-  tags?: string
+  tags?: string | string[]
   author?: Author
   dir?: string
 }
@@ -19,20 +19,39 @@ const PostHeader = ({ title, coverImage, date, createdDate, tags,
    // author,
    dir='blog'}: Props) => {
 
-  const _tags = tags ? tags.split(",") : []
+  const _tags = Array.isArray(tags) ? tags : (tags ? tags.split(",") : [])
   const router = useRouter()
   
   // Format dates to human readable format
   const formatDate = (dateString: string) => {
+    if (!dateString) return ''
+    
+    // Debug: log what we're receiving
+    console.log('PostHeader - formatDate input:', dateString, 'Type:', typeof dateString)
+    
     // Parse the date string as local time, not UTC
-    // For YYYY-MM-DD format, append time to avoid timezone issues
-    const [year, month, day] = dateString.split('-')
-    const date = new Date(parseInt(year), parseInt(month) - 1, parseInt(day))
-    return date.toLocaleDateString('en-US', { 
+    // For YYYY-MM-DD format, create date with local timezone
+    const [year, month, day] = dateString.split('-').map(Number)
+    
+    if (!year || !month || !day) {
+      console.log('PostHeader - Invalid date parts:', { year, month, day })
+      return dateString
+    }
+    
+    // Create date in local timezone (month is 0-indexed in JS)
+    const date = new Date(year, month - 1, day)
+    
+    console.log('PostHeader - Created date:', date.toString())
+    
+    const formatted = date.toLocaleDateString('en-US', { 
       year: 'numeric', 
       month: 'long', 
       day: 'numeric' 
     })
+    
+    console.log('PostHeader - Formatted date:', formatted)
+    
+    return formatted
   }
   
   // Determine the correct back path based on current route

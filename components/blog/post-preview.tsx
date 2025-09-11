@@ -11,7 +11,7 @@ type Props = {
   createdDate: string
   excerpt: string
   author?: Author
-  tags?: string
+  tags?: string | string[]
   slug: string
   dir?: string
 }
@@ -29,7 +29,7 @@ const PostPreview = ({
 }: Props) => {
 
   // Add null check before calling split
-  const _tags = tags ? tags.split(",") : []
+  const _tags = Array.isArray(tags) ? tags : (tags ? tags.split(",") : [])
   
   return (
     <div className={styles.postCard}>
