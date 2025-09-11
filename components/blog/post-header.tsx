@@ -24,7 +24,10 @@ const PostHeader = ({ title, coverImage, date, createdDate, tags,
   
   // Format dates to human readable format
   const formatDate = (dateString: string) => {
-    const date = new Date(dateString)
+    // Parse the date string as local time, not UTC
+    // For YYYY-MM-DD format, append time to avoid timezone issues
+    const [year, month, day] = dateString.split('-')
+    const date = new Date(parseInt(year), parseInt(month) - 1, parseInt(day))
     return date.toLocaleDateString('en-US', { 
       year: 'numeric', 
       month: 'long', 
