@@ -2,9 +2,8 @@
 title: 'MagicLogger'
 coverImage: '/assets/projects/magiclogger-dark-4x-with-subtitle.png'
 excerpt: 'A TypeScript logging library with native colors and styles, competitive performance, and zero dependencies.'
-date: '2024'
 createdDate: '2025-31-08'
-updatedDate: '2025-31-08'
+date: '2025-31-08'
 tags: 'typescript,logging,open-source,library'
 ogImage:
   url: '/assets/projects/magiclogger-dark-4x-with-subtitle.png'
