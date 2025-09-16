@@ -75,7 +75,7 @@ import pino from 'pino';
 const logger = pino();
 logger.info('Server started'); // {"level":30,"time":1234567890,"msg":"Server started"}
 
-// Want colors? Need pino-pretty (600KB extra!)
+// Want colors? Need pino-pretty (200KB extra!)
 // Even with pino-pretty, you can't style parts of messages
 // Want colors in production? Against pino's philosophy
 // Want to use in browser? Not supported
@@ -183,10 +183,13 @@ export function extractStyles(message: string): ExtractedStyles {
 }
 ```
 
-**Additional optimizations:**
-- **Pre-compiled Pattern Cache** for AsyncLogger with 30,000 common benchmark patterns
-- **LRU Cache** for repeated patterns
-- **Worker thread** style processing for AsyncLogger when configured
+Our logger **also keeps styles in a LRU cache**, making the assumption that oftentimes styles will be reused and shouldn't be recalculated.
+
+```typescript
+const styleCache = new LRUCache<string, ExtractedStyles>(10000);
+const cached = styleCache.get(message);
+if (cached) return cached;
+```
 
 ### Performance Comparison
 
