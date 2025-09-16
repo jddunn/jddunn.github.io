@@ -32,7 +32,21 @@ export default class SceneInit {
 
   initialize() {
     const canvasEL = document.getElementById(this.canvasEl);
+    console.log('[SceneInit] Looking for canvas container with ID:', this.canvasEl);
+    console.log('[SceneInit] Canvas container element found:', !!canvasEL);
+
+    if (canvasEL) {
+      console.log('[SceneInit] Container dimensions:', canvasEL.offsetWidth, 'x', canvasEL.offsetHeight);
+    }
+
+    if (!canvasEL) {
+      console.error('[SceneInit] Canvas container not found:', this.canvasEl);
+      return;
+    }
+
     this.scene = new THREE.Scene();
+    console.log('[SceneInit] Scene created:', !!this.scene);
+
     this.camera = new THREE.PerspectiveCamera(
       this.fov,
       canvasEL.offsetWidth / canvasEL.offsetHeight,
@@ -40,13 +54,34 @@ export default class SceneInit {
       1000
     );
     this.camera.position.z = 48;
-    const canvas = document.getElementById(this.canvasId);
+    console.log('[SceneInit] Camera created:', !!this.camera);
 
-    if (this.camera) {
-      // Add event listeners for canvas only
-      canvas?.addEventListener('click', (e) => this.onPointerDown(this.camera, e));
-      canvas?.addEventListener('pointermove', (e) => this.onPointerMove(this.camera, e));
-      canvas?.addEventListener('touchend', (e) => this.onTouchEnd(this.camera, e));
+
+    // Check if canvas already exists and reuse it
+    let canvas = document.getElementById(this.canvasId) as HTMLCanvasElement;
+
+    if (!canvas) {
+      // Only create new canvas if it doesn't exist
+      console.log('[SceneInit] Creating new canvas');
+      canvas = document.createElement('canvas');
+      canvas.id = this.canvasId;
+      canvas.style.width = '100%';
+      canvas.style.height = '100%';
+      canvas.style.display = 'block';
+      canvas.style.touchAction = 'none';
+      canvas.style.cursor = 'grab';
+
+      // Set canvas size explicitly
+      canvas.width = canvasEL.offsetWidth;
+      canvas.height = canvasEL.offsetHeight;
+
+      canvasEL.appendChild(canvas);
+      console.log('[SceneInit] Created canvas with dimensions:', canvas.width, 'x', canvas.height);
+    } else {
+      console.log('[SceneInit] Reusing existing canvas');
+      // Update canvas dimensions if needed
+      canvas.width = canvasEL.offsetWidth;
+      canvas.height = canvasEL.offsetHeight;
     }
 
     // NOTE: Specify a canvas which is already created in the HTML.
@@ -54,11 +89,35 @@ export default class SceneInit {
       this.renderer = new THREE.WebGLRenderer({
         canvas,
         // NOTE: Anti-aliasing smooths out the edges.
-        // antialias: true,
-        // alpha: true,
+        antialias: true,
+        alpha: true
       });
+      console.log('[SceneInit] WebGL renderer created successfully');
     } catch (err) {
       this.renderer = undefined;
+      console.error('[SceneInit] Failed to initialize WebGL renderer:', err);
+
+      // Try without antialiasing as fallback
+      try {
+        this.renderer = new THREE.WebGLRenderer({
+          canvas,
+          antialias: false,
+          alpha: true,
+          powerPreference: "default",
+          failIfMajorPerformanceCaveat: false
+        });
+        console.log('[SceneInit] WebGL renderer created successfully (fallback mode)');
+      } catch (err2) {
+        console.error('[SceneInit] Failed to create fallback renderer:', err2);
+      }
+    }
+
+    // Add event listeners for canvas only AFTER renderer is created
+    if (this.camera && this.renderer) {
+      // Add event listeners for canvas only
+      canvas?.addEventListener('click', (e) => this.onPointerDown(this.camera, e));
+      canvas?.addEventListener('pointermove', (e) => this.onPointerMove(this.camera, e));
+      canvas?.addEventListener('touchend', (e) => this.onTouchEnd(this.camera, e));
     }
    
     if (this.renderer) {
@@ -82,6 +141,7 @@ export default class SceneInit {
       this.directionalLight = new THREE.DirectionalLight(0xffffff, .5);
       this.directionalLight.position.set(0, 0, 64);
       this.scene.add(this.directionalLight);
+
       const myArray = window.location.href.split(" ");
       if (myArray.at(-1) === "/") {
         // if window resizes
@@ -91,6 +151,10 @@ export default class SceneInit {
   }
 
   onPointerMove(camera, event) {
+    if (!this.renderer || !this.renderer.domElement) {
+      return;
+    }
+
     const rect = this.renderer.domElement.getBoundingClientRect();
     const mouse_x = ((event.clientX - rect.left) / rect.width) * 2 - 1;
     const mouse_y = -((event.clientY - rect.top) / rect.height) * 2 + 1;
@@ -112,10 +176,14 @@ export default class SceneInit {
   }
 
   onPointerDown(camera, event){
-    // Detect mouse clicks on the canvas object / three.js model 
-    
+    // Detect mouse clicks on the canvas object / three.js model
+
     // Prevent multiple clicks from being processed simultaneously
     if (this.isProcessingClick) {
+      return;
+    }
+
+    if (!this.renderer || !this.renderer.domElement) {
       return;
     }
 
@@ -218,19 +286,23 @@ export default class SceneInit {
 
   
   onTouchEnd(camera, event){
-    // Detect taps after let go in the canvas object / three.js model 
+    // Detect taps after let go in the canvas object / three.js model
     // Don't prevent default to allow proper scrolling
     // event.preventDefault();
-    
+
     // Prevent multiple clicks from being processed simultaneously
     if (this.isProcessingClick) {
+      return;
+    }
+
+    if (!this.renderer || !this.renderer.domElement) {
       return;
     }
 
     // Handle case where touches might be empty after touchend
     const touch = event.changedTouches?.[0] || event.touches?.[0];
     if (!touch) return;
-    
+
     const rect = this.renderer.domElement.getBoundingClientRect();
     const mouse_x = ((touch.clientX - rect.left) / rect.width) * 2 - 1;
     const mouse_y = -((touch.clientY - rect.top) / rect.height) * 2 + 1;
@@ -330,13 +402,19 @@ export default class SceneInit {
   }
 
   render() {
-    if (this.renderer) {
+    if (this.renderer && this.scene && this.camera) {
       this.renderer.render(this.scene, this.camera);
     }
   }
 
   onWindowResize() {
+    if (!this.renderer) {
+      return;
+    }
     const canvasEL = document.getElementById(this.canvasEl);
+    if (!canvasEL) {
+      return;
+    }
     this.camera.aspect = canvasEL.offsetWidth / canvasEL.offsetHeight;
     this.camera.updateProjectionMatrix();
     this.renderer.setSize(canvasEL.offsetWidth, canvasEL.offsetHeight);

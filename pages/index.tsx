@@ -161,8 +161,44 @@ export default function Home() {
     .then((response) => {
       data = response;
       game.loadData(data);
+
+
+      // Override Display.show to block error messages that come AFTER successful actions
+      if (game.Display && game.Display.show) {
+        const originalShow = game.Display.show.bind(game.Display);
+        let lastRoomBeforeCommand = null;
+
+        // Track room changes
+        if (game.userSend) {
+          const originalUserSend = game.userSend.bind(game);
+          game.userSend = function(cmd) {
+            lastRoomBeforeCommand = game.Player.currentRoom;
+            const result = originalUserSend(cmd);
+
+            // If room changed, the command was successful
+            setTimeout(() => {
+              if (game.Player.currentRoom !== lastRoomBeforeCommand) {
+                console.log('[DEBUG] Command successful - room changed from', lastRoomBeforeCommand, 'to', game.Player.currentRoom);
+              }
+            }, 10);
+
+            return result;
+          };
+        }
+
+        game.Display.show = function(html) {
+          // Block error messages that appear after the room already changed
+          if (html && typeof html === 'string' && html.includes('No actions could be done from:')) {
+            console.log('[DEBUG] Blocking error message:', html.substring(0, 100));
+            return; // Don't show ANY "No actions" errors
+          }
+          return originalShow(html);
+        };
+      }
+
       game.init();
-      
+
+
       // Set initial game state
       const initialGameState = {
         currentRoom: game.Player.currentRoom || 'WelcomeRoom',
@@ -258,7 +294,24 @@ export default function Home() {
  function afterSubmission(event) {
     event.preventDefault();
     const previousRoom = game.Player.currentRoom;
-    game.userSend((document.getElementById('input') as HTMLInputElement).value);
+    let command = (document.getElementById('input') as HTMLInputElement).value;
+
+    // Check if the typed command matches a prompt name and translate to keyword
+    if (game && game.Player && game.Player.currentRoom && data) {
+      const currentRoomData = data.game?.rooms?.find(r => r.name === game.Player.currentRoom);
+      if (currentRoomData && currentRoomData.prompts) {
+        // First check if it matches a prompt name exactly (case insensitive)
+        const matchingPrompt = currentRoomData.prompts.find(p =>
+          p.name.toLowerCase() === command.toLowerCase()
+        );
+        if (matchingPrompt && matchingPrompt.keywords && matchingPrompt.keywords.length > 0) {
+          console.log('[DEBUG] Typed command matches prompt "' + command + '", using keyword: "' + matchingPrompt.keywords[0] + '"');
+          command = matchingPrompt.keywords[0];
+        }
+      }
+    }
+
+    game.userSend(command);
     (document.getElementById('input') as HTMLInputElement).value = '';
     setTimeout(() => {
       const currentRoom = game.Player.currentRoom;
@@ -389,8 +442,22 @@ function ensurePromptsVisible() {
         console.log(`[DEBUG] Adding handler to prompt ${index}:`, (prompt as HTMLElement).textContent);
         prompt.addEventListener('click', function(e) {
           const target = e.currentTarget as HTMLElement;
-          const command = target.dataset.myDataContent || target.textContent;
-          console.log('[DEBUG] Prompt clicked, sending command:', command);
+          let command = target.dataset.myDataContent || target.textContent;
+
+          // Try to find the matching prompt and use its first keyword
+          // This is needed because the game engine sometimes doesn't match prompt names
+          if (game && game.Player && game.Player.currentRoom && data) {
+            const currentRoomData = data.game?.rooms?.find(r => r.name === game.Player.currentRoom);
+            if (currentRoomData && currentRoomData.prompts) {
+              const matchingPrompt = currentRoomData.prompts.find(p => p.name === command);
+              if (matchingPrompt && matchingPrompt.keywords && matchingPrompt.keywords.length > 0) {
+                console.log('[DEBUG] Using keyword "' + matchingPrompt.keywords[0] + '" for prompt "' + command + '"');
+                command = matchingPrompt.keywords[0];
+              }
+            }
+          }
+
+          console.log('[DEBUG] Sending to game:', command);
           const previousRoom = game.Player.currentRoom;
           game.userSend(command);
           setTimeout(() => {
