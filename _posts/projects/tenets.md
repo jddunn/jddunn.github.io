@@ -22,11 +22,35 @@ ogImage:
 
 ## The Problem with AI Code Assistants
 
-I work often with AI pair programming tools - CoPilot Chat, Cursor, Claude Code, aider. They all have access to your Git repos and CLI, with full permissions to run commands like `ls` and `grep`. But here's what actually happens:
+I work often with AI pair programming tools - CoPilot Chat, Cursor, Claude Code, aider. They all have access to your Git repos and CLI, with full permissions to run commands like `ls` and `grep`. 
 
-You give a specific prompt: "fix authentication bug in login handler"
+An incredibly strange thing with LLMs is you will tell them something very specific, like: "logic in the summarizer is looping twice because the batch processor isn't clearing the processed_chunks, fix it", and then you'll see the tool calling commands running:
 
-The LLM searches for... *that exact text*. Same capitalization, same order. When that fails, it tries synonyms it picks on its own. This is both costly (more LLM calls = more expensive API usage) and unpredictable.
+```bash
+# First attempt - literal string matching
+grep -r "batch processor isn't clearing the processed_chunks"
+grep -r "looping twice"
+```
+
+then maybe:
+
+```bash
+# Second attempt - basic word stemming
+grep -r "summar\(y\|izer\|ies\|ize\|ization\)"
+grep -r "loop\(ing\|ed\|s\)\?\s*twice\|double\|duplicate"
+grep -r "clear\(ing\|ed\|s\)\?\s*\(the\s*\)\?\(batch\|chunks\?\|buffer\)"
+grep -r "batch\s*process\(or\|er\|ing\)\?"
+```
+
+and maybe then:
+
+```bash
+# Third attempt - finally looking for actual variable names
+grep -r "processed_chunks\|process_chunks\|chunk_process\|chunks_processed"
+grep -r "self\.processed_chunks"
+```
+
+Usually it'll find it in 1-2 attempts, and this example the LLM would likely get it on the second try not third.
 
 **tenets** is a Python library that intelligently navigates repos to match, analyze, summarize, and aggregate the most relevant context based on speed, accuracy, or token limits. It uses deterministic algorithms (regex, BM25, cosine similarity) with optional ML embeddings for semantic understanding.
 
