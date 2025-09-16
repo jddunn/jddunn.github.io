@@ -303,14 +303,11 @@ export default function Home() {
                 if (displayEl) {
                   if (previousRoom !== currentRoom) {
                     // New room - scroll to top to show new room description
-                    console.log('[DEBUG] New room - forcing scroll to top');
+                    console.log('[DEBUG] New room - scrolling to top');
                     displayEl.scrollTop = 0;
                     setTimeout(() => displayEl.scrollTop = 0, 200);
-                  } else {
-                    // Same room - scroll to bottom to show the result/error
-                    console.log('[DEBUG] Same room - scrolling to bottom');
-                    displayEl.scrollTop = displayEl.scrollHeight;
                   }
+                  // Don't auto-scroll for same room actions
                 }
                 updateStatuses();
                 ensurePromptsVisible();
@@ -369,19 +366,15 @@ export default function Home() {
       console.log('[DEBUG] Command typed - Previous room:', previousRoom, 'Current room:', currentRoom);
       const displayEl = document.getElementById('display');
 
-      // If we're in the same room (action failed or examining), scroll to bottom
-      // If we changed rooms, scroll to top
+      // Only scroll to top if we changed rooms
       if (displayEl) {
         if (previousRoom !== currentRoom) {
           // New room - scroll to top to show new room description
-          console.log('[DEBUG] New room - forcing scroll to top');
+          console.log('[DEBUG] New room - scrolling to top');
           displayEl.scrollTop = 0;
           setTimeout(() => displayEl.scrollTop = 0, 200);
-        } else {
-          // Same room - scroll to bottom to show the result/error
-          console.log('[DEBUG] Same room - scrolling to bottom');
-          displayEl.scrollTop = displayEl.scrollHeight;
         }
+        // Don't auto-scroll for same room actions
       }
 
       updateStatuses();
@@ -523,19 +516,16 @@ function ensurePromptsVisible() {
 
             const displayEl = document.getElementById('display');
             if (displayEl) {
-              // Always scroll to top if room changed
+              // Only handle scrolling on room changes, not on same-room actions
               if (previousRoom !== currentRoom) {
-                console.log('[DEBUG] Room changed - forcing scroll to top');
-                // Scroll to top immediately and once more after delay
+                console.log('[DEBUG] Room changed - scrolling to top');
+                // Scroll to top when entering new room
                 displayEl.scrollTop = 0;
                 setTimeout(() => {
                   displayEl.scrollTop = 0;
                 }, 200);
-              } else {
-                // Same room - scroll to bottom to show the result/error
-                console.log('[DEBUG] Same room - scrolling to bottom');
-                displayEl.scrollTop = displayEl.scrollHeight;
               }
+              // Don't auto-scroll for same room actions - let user control scroll
             }
             updateStatuses();
             ensurePromptsVisible();

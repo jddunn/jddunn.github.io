@@ -251,13 +251,7 @@ export default class SceneInit {
                 }
               }
 
-              // If potion changed state, scroll to bottom to show status
-              if (stateChanged) {
-                const displayEl = document.getElementById('display');
-                if (displayEl) {
-                  displayEl.scrollTop = displayEl.scrollHeight;
-                }
-              }
+              // Don't auto-scroll - let user control their view
 
               this.updateGameState();
               this.isProcessingClick = false;
@@ -278,11 +272,7 @@ export default class SceneInit {
                       this.scene.children[i].scale.set(0.075, 0.075, 0.075);
                     }
                   }
-                  // Scroll to bottom since potion changed state
-                  const displayEl = document.getElementById('display');
-                  if (displayEl) {
-                    displayEl.scrollTop = displayEl.scrollHeight;
-                  }
+                  // Don't auto-scroll - let user control their view
                 }
                 this.updateGameState();
                 this.isProcessingClick = false;
@@ -301,13 +291,7 @@ export default class SceneInit {
               const inventoryChanged = previousInventory.length !== currentInventory.length ||
                                       !previousInventory.every(item => currentInventory.includes(item));
 
-              if (inventoryChanged) {
-                // Scroll to bottom if potion had an effect
-                const displayEl = document.getElementById('display');
-                if (displayEl) {
-                  displayEl.scrollTop = displayEl.scrollHeight;
-                }
-              }
+              // Don't auto-scroll - let user control their view
 
               this.updateGameState();
               this.isProcessingClick = false;
@@ -398,13 +382,7 @@ export default class SceneInit {
                 }
               }
 
-              // If potion changed state, scroll to bottom to show status
-              if (stateChanged) {
-                const displayEl = document.getElementById('display');
-                if (displayEl) {
-                  displayEl.scrollTop = displayEl.scrollHeight;
-                }
-              }
+              // Don't auto-scroll - let user control their view
 
               this.updateGameState();
               this.isProcessingClick = false;
@@ -425,11 +403,7 @@ export default class SceneInit {
                       this.scene.children[i].scale.set(0.075, 0.075, 0.075);
                     }
                   }
-                  // Scroll to bottom since potion changed state
-                  const displayEl = document.getElementById('display');
-                  if (displayEl) {
-                    displayEl.scrollTop = displayEl.scrollHeight;
-                  }
+                  // Don't auto-scroll - let user control their view
                 }
                 this.updateGameState();
                 this.isProcessingClick = false;
@@ -448,13 +422,7 @@ export default class SceneInit {
               const inventoryChanged = previousInventory.length !== currentInventory.length ||
                                       !previousInventory.every(item => currentInventory.includes(item));
 
-              if (inventoryChanged) {
-                // Scroll to bottom if potion had an effect
-                const displayEl = document.getElementById('display');
-                if (displayEl) {
-                  displayEl.scrollTop = displayEl.scrollHeight;
-                }
-              }
+              // Don't auto-scroll - let user control their view
 
               this.updateGameState();
               this.isProcessingClick = false;

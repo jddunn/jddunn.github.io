@@ -1,10 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useRouter } from "next/router";
 
-import SceneInit from "../lib/threeSceneInit";
-
-// import SceneInit from "../public/SceneInit.js";
-import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader.js";
+// Three.js imports removed - will be lazy loaded when needed
 
 // Store scene instance outside component to persist between re-renders
 let globalScene: any = null;
@@ -16,7 +13,7 @@ const Model = (props: { game: any, onSceneInit?: (scene: any) => void }) => {
     // Track initialization to prevent double mount in StrictMode
     const [isInitialized, setIsInitialized] = useState(false);
     const [potionScale, setPotionScale] = useState(1);
-    const [forceUseSVG, setForceUseSVG] = useState(false);
+    const [forceUseSVG, setForceUseSVG] = useState(true); // Default to SVG
     const [isBubbling, setIsBubbling] = useState(false);
     const [toastMessage, setToastMessage] = useState('');
     const [showToast, setShowToast] = useState(false);
@@ -58,7 +55,29 @@ const Model = (props: { game: any, onSceneInit?: (scene: any) => void }) => {
     }, [props.game]);
 
     useEffect(() => {
-      // Don't clean up contexts - that's causing the problem!
+      // Only initialize three.js if user explicitly wants WebGL (not SVG)
+      if (forceUseSVG) {
+        // Clean up three.js if it exists
+        if (globalScene) {
+          console.log('[Model] Cleaning up Three.js scene');
+          try {
+            if (globalScene.renderer) {
+              globalScene.renderer.dispose();
+              const canvas = document.getElementById('canvasId');
+              if (canvas) canvas.remove();
+            }
+            if (globalLoadedModel) {
+              globalScene.scene.remove(globalLoadedModel.scene);
+              globalLoadedModel = null;
+            }
+            globalScene = null;
+          } catch (err) {
+            console.log('[Model] Error cleaning up scene:', err);
+          }
+        }
+        setIsInitialized(false);
+        return;
+      }
 
       // If already initialized with a working scene, just reuse it
       if (globalScene && globalScene.renderer) {
@@ -70,9 +89,13 @@ const Model = (props: { game: any, onSceneInit?: (scene: any) => void }) => {
         return;
       }
 
-      // Wait a tick to ensure DOM is ready
-      const timeoutId = setTimeout(() => {
-        console.log('[Model] Initializing Three.js scene');
+      // Lazy load Three.js only when needed
+      const initThreeJS = async () => {
+        console.log('[Model] Lazy loading Three.js scene');
+        const SceneInitModule = await import('../lib/threeSceneInit');
+        const SceneInit = SceneInitModule.default;
+        const { GLTFLoader } = await import('three/examples/jsm/loaders/GLTFLoader.js');
+
         globalScene = new SceneInit("canvasId", "scene-container", props.game);
         globalScene.initialize();
 
@@ -118,14 +141,18 @@ const Model = (props: { game: any, onSceneInit?: (scene: any) => void }) => {
         }
 
         router.events.on('routeChangeComplete', handleRouteChange);
-      }, 100); // Small delay to ensure DOM is ready
+      };
+
+      // Wait a tick to ensure DOM is ready before initializing
+      const timeoutId = setTimeout(() => {
+        initThreeJS();
+      }, 100);
 
       return () => {
         clearTimeout(timeoutId);
-        // Don't dispose on unmount to preserve for next mount
         router.events.off('routeChangeComplete', handleRouteChange);
       };
-    }, []
+    }, [forceUseSVG]
   );
   
   // Check if potion can change state
@@ -144,8 +171,9 @@ const Model = (props: { game: any, onSceneInit?: (scene: any) => void }) => {
   };
 
   const handleToggle = () => {
-    setForceUseSVG(!forceUseSVG);
-    const message = !forceUseSVG ? '🎨 SVG animated potion toggled' : '🎮 WebGL / three.js potion toggled';
+    const newSVGState = !forceUseSVG;
+    setForceUseSVG(newSVGState);
+    const message = newSVGState ? '🎨 SVG animated potion toggled' : '🎮 WebGL / three.js potion toggled';
     setToastMessage(message);
     setShowToast(true);
     setTimeout(() => setShowToast(false), 2000);
@@ -178,19 +206,19 @@ const Model = (props: { game: any, onSceneInit?: (scene: any) => void }) => {
     <div id="scene-container" style={{
       width: '100%',
       maxWidth: '400px',
-      height: '550px',
+      height: '400px',
       margin: '0 auto',
+      marginTop: '150px',
       position: 'relative',
       pointerEvents: 'auto',
       display: 'flex',
       flexDirection: 'column',
       alignItems: 'center',
-      justifyContent: 'flex-end',
-      gap: '10px',
-      paddingBottom: '50px'
+      justifyContent: 'center',
+      gap: '10px'
     }}>
 
-      {(!isInitialized || forceUseSVG) && (
+      {(forceUseSVG || (!forceUseSVG && !isInitialized)) && (
         <div style={{
           cursor: 'pointer',
           transition: 'transform 0.5s cubic-bezier(0.4, 0, 0.2, 1)',
@@ -231,13 +259,7 @@ const Model = (props: { game: any, onSceneInit?: (scene: any) => void }) => {
               const inventoryChanged = previousInventory.length !== currentInventory.length ||
                                       !previousInventory.every(item => currentInventory.includes(item));
 
-              if (inventoryChanged) {
-                // Scroll to bottom if potion had an effect
-                const displayEl = document.getElementById('display');
-                if (displayEl) {
-                  displayEl.scrollTop = displayEl.scrollHeight;
-                }
-              }
+              // Don't auto-scroll - let user control their view
 
               const event = new CustomEvent('gameStateUpdate', {
                 detail: {
