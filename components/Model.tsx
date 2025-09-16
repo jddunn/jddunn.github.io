@@ -146,57 +146,63 @@ const Model = (props: { game: any, onSceneInit?: (scene: any) => void }) => {
     <div id="scene-container" style={{
       width: '100%',
       maxWidth: '400px',
-      height: 'clamp(300px, 50vh, 700px)',
-      margin: '0 auto',
+      height: 'clamp(300px, 50vh, 600px)',
+      margin: '20px auto 0',
       position: 'relative',
       pointerEvents: 'auto',
       display: 'flex',
       flexDirection: 'column',
       alignItems: 'center',
       justifyContent: 'center',
-      gap: '20px'
+      gap: '10px'
     }}>
-      {/* Neumorphic Toggle Button */}
+      {/* Minimal Toggle Button */}
       <button
         onClick={() => setForceUseSVG(!forceUseSVG)}
         style={{
           position: 'absolute',
-          top: '10px',
+          bottom: '10px',
           right: '10px',
-          width: '60px',
-          height: '60px',
-          borderRadius: '20px',
-          border: 'none',
-          background: forceUseSVG
-            ? 'linear-gradient(145deg, rgba(var(--accent-primary-rgb), 0.1), rgba(var(--accent-secondary-rgb), 0.05))'
-            : 'linear-gradient(145deg, rgba(var(--bg-primary-rgb), 0.9), rgba(var(--page-bg-rgb), 0.8))',
-          boxShadow: forceUseSVG
-            ? 'inset 8px 8px 16px rgba(0,0,0,0.2), inset -8px -8px 16px rgba(255,255,255,0.05)'
-            : '8px 8px 16px rgba(0,0,0,0.15), -8px -8px 16px rgba(255,255,255,0.05), inset 2px 2px 4px rgba(255,255,255,0.1)',
+          width: '32px',
+          height: '32px',
+          borderRadius: '50%',
+          border: '1px solid rgba(var(--accent-primary-rgb), 0.3)',
+          background: 'rgba(var(--bg-primary-rgb), 0.8)',
+          backdropFilter: 'blur(10px)',
           cursor: 'pointer',
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
-          fontSize: '24px',
-          transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
-          zIndex: 10,
-          color: 'var(--accent-primary)'
+          transition: 'all 0.2s ease',
+          zIndex: 10
         }}
         onMouseEnter={(e) => {
-          e.currentTarget.style.transform = 'scale(1.05) rotate(5deg)';
+          e.currentTarget.style.transform = 'scale(1.1)';
+          e.currentTarget.style.borderColor = 'var(--accent-primary)';
         }}
         onMouseLeave={(e) => {
-          e.currentTarget.style.transform = 'scale(1) rotate(0deg)';
+          e.currentTarget.style.transform = 'scale(1)';
+          e.currentTarget.style.borderColor = 'rgba(var(--accent-primary-rgb), 0.3)';
         }}
-        title={forceUseSVG ? 'Switch to 3D Mode' : 'Switch to 2D Mode'}
+        title={forceUseSVG ? '3D' : '2D'}
       >
-        <span style={{
-          display: 'inline-block',
-          transition: 'transform 0.3s ease',
-          transform: forceUseSVG ? 'rotate(180deg)' : 'rotate(0deg)'
-        }}>
-          {forceUseSVG ? '🎨' : '🎮'}
-        </span>
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          {forceUseSVG ? (
+            // 3D cube icon
+            <>
+              <path d="M12 2L2 7V17L12 22L22 17V7L12 2Z" stroke="var(--accent-primary)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+              <path d="M12 22V12" stroke="var(--accent-primary)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+              <path d="M12 12L2 7" stroke="var(--accent-primary)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+              <path d="M12 12L22 7" stroke="var(--accent-primary)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+            </>
+          ) : (
+            // 2D square icon
+            <>
+              <rect x="4" y="4" width="16" height="16" stroke="var(--accent-primary)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+              <circle cx="12" cy="12" r="3" stroke="var(--accent-primary)" strokeWidth="2"/>
+            </>
+          )}
+        </svg>
       </button>
 
       {(!isInitialized || forceUseSVG) && (
@@ -207,8 +213,9 @@ const Model = (props: { game: any, onSceneInit?: (scene: any) => void }) => {
           flexDirection: 'column',
           alignItems: 'center',
           justifyContent: 'center',
-          gap: '20px',
-          transform: `scale(${potionScale})`
+          gap: '10px',
+          transform: `scale(${potionScale})`,
+          marginTop: '20px'
         }}
         onClick={() => {
           if (props.game && canPotionChangeState()) {

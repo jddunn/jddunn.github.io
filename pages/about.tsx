@@ -85,8 +85,8 @@ const About = () => {
         </p>
         <p>
           My journey spans from enterprise AI assistants at Amelia.ai to building ML delivery infrastructure at eBay,
-          developing blockchain systems at Tilting Point (including rescuing $1M+ in MATIC), and consulting for companies
-          like Linkby, Grapple Research, and ImmenseX on cutting-edge ML solutions.
+          developing blockchain systems at Tilting Point (including rescuing $1M+ in MATIC), and working full-time
+          as an independent consultant on contracts spanning 3-9 months at Grapple, Edelman, Linkby, and HereAfterLegacy.
         </p>
         
         <p>
@@ -139,7 +139,8 @@ const About = () => {
             <ul className={style.achievements}>
               <li>Linkby: Built unified ML pipeline automating feature engineering and model training from SQL</li>
               <li>Grapple Research: Improved AI text detection accuracy from 55% to 71%, reduced costs by 64%</li>
-              <li>ImmenseX: Built RAG pipeline using Weaviate for conversational AI memory</li>
+              <li>EmergeX: Built RAG pipeline using Weaviate for conversational AI memory</li>
+              <li>Edelman: Developed an interactive photobooth app for an exhibition using neural style transfer to apply filters from film visuals onto selfies.</li>
               <li>HereAfterLegacy: Achieved 74% accuracy on sentiment analysis with random forest</li>
             </ul>
           </div>

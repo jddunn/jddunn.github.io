@@ -258,10 +258,12 @@ export default function Home() {
                     // New room - scroll to top to show new room description
                     console.log('[DEBUG] New room - forcing scroll to top');
                     displayEl.scrollTop = 0;
-                    // Double-check scroll position after a tiny delay
-                    setTimeout(() => {
+                    requestAnimationFrame(() => {
                       displayEl.scrollTop = 0;
-                    }, 50);
+                      setTimeout(() => displayEl.scrollTop = 0, 100);
+                      setTimeout(() => displayEl.scrollTop = 0, 200);
+                      setTimeout(() => displayEl.scrollTop = 0, 300);
+                    });
                   } else {
                     // Same room - scroll to bottom to show the result/error
                     console.log('[DEBUG] Same room - scrolling to bottom');
@@ -270,7 +272,7 @@ export default function Home() {
                 }
                 updateStatuses();
                 ensurePromptsVisible();
-              }, 400);
+              }, 500);
             };
             promptsContainer.appendChild(promptEl);
             console.log('[DEBUG] Added manual prompt:', promptData.text);
@@ -332,10 +334,12 @@ export default function Home() {
           // New room - scroll to top to show new room description
           console.log('[DEBUG] New room - forcing scroll to top');
           displayEl.scrollTop = 0;
-          // Double-check scroll position after a tiny delay
-          setTimeout(() => {
+          requestAnimationFrame(() => {
             displayEl.scrollTop = 0;
-          }, 50);
+            setTimeout(() => displayEl.scrollTop = 0, 100);
+            setTimeout(() => displayEl.scrollTop = 0, 200);
+            setTimeout(() => displayEl.scrollTop = 0, 300);
+          });
         } else {
           // Same room - scroll to bottom to show the result/error
           console.log('[DEBUG] Same room - scrolling to bottom');
@@ -345,7 +349,7 @@ export default function Home() {
 
       updateStatuses();
       ensurePromptsVisible();
-    }, 400);
+    }, 500);
 }
 
 function ensurePromptsVisible() {
@@ -485,12 +489,20 @@ function ensurePromptsVisible() {
               // Always scroll to top if room changed
               if (previousRoom !== currentRoom) {
                 console.log('[DEBUG] Room changed - forcing scroll to top');
-                // Force scroll to top with a small additional delay to ensure content is rendered
+                // Force scroll to top multiple times to ensure it sticks
                 displayEl.scrollTop = 0;
-                // Double-check scroll position after a tiny delay
-                setTimeout(() => {
+                requestAnimationFrame(() => {
                   displayEl.scrollTop = 0;
-                }, 50);
+                  setTimeout(() => {
+                    displayEl.scrollTop = 0;
+                  }, 100);
+                  setTimeout(() => {
+                    displayEl.scrollTop = 0;
+                  }, 200);
+                  setTimeout(() => {
+                    displayEl.scrollTop = 0;
+                  }, 300);
+                });
               } else {
                 // Same room - scroll to bottom to show the result/error
                 console.log('[DEBUG] Same room - scrolling to bottom');
@@ -499,7 +511,7 @@ function ensurePromptsVisible() {
             }
             updateStatuses();
             ensurePromptsVisible();
-          }, 400);
+          }, 500);
         });
         prompt.setAttribute('data-handler-added', 'true');
       }
