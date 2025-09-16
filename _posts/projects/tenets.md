@@ -148,7 +148,7 @@ BM25 can't extract keywords from a single prompt because it needs corpus statist
 
 ## Multi-Signal Ranking
 
-tenets combines 10 different factors with configurable weights:
+tenets combines [10 different factors](#multi-signal-ranking) with configurable weights:
 
 ```python
 class RankingFactors:
