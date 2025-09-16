@@ -18,6 +18,8 @@ const Model = (props: { game: any, onSceneInit?: (scene: any) => void }) => {
     const [potionScale, setPotionScale] = useState(1);
     const [forceUseSVG, setForceUseSVG] = useState(false);
     const [isBubbling, setIsBubbling] = useState(false);
+    const [toastMessage, setToastMessage] = useState('');
+    const [showToast, setShowToast] = useState(false);
 
     const router = useRouter();
 
@@ -141,69 +143,52 @@ const Model = (props: { game: any, onSceneInit?: (scene: any) => void }) => {
     return false;
   };
 
+  const handleToggle = () => {
+    setForceUseSVG(!forceUseSVG);
+    const message = !forceUseSVG ? '🎨 SVG animated potion toggled' : '🎮 WebGL / three.js potion toggled';
+    setToastMessage(message);
+    setShowToast(true);
+    setTimeout(() => setShowToast(false), 2000);
+  };
+
   return (
     <>
+    {/* Toast Notification */}
+    <div style={{
+      position: 'fixed',
+      top: '20px',
+      left: '50%',
+      transform: `translateX(-50%) translateY(${showToast ? '0' : '-100px'})`,
+      background: 'linear-gradient(135deg, rgba(var(--bg-primary-rgb), 0.95), rgba(var(--accent-primary-rgb), 0.1))',
+      border: '1px solid var(--accent-primary)',
+      borderRadius: '8px',
+      padding: '10px 20px',
+      color: 'var(--accent-primary)',
+      fontFamily: 'Crimson Text, serif',
+      fontSize: '14px',
+      fontStyle: 'italic',
+      zIndex: 1000,
+      transition: 'transform 0.3s ease',
+      backdropFilter: 'blur(10px)',
+      boxShadow: '0 4px 12px rgba(var(--accent-primary-rgb), 0.2)'
+    }}>
+      {toastMessage}
+    </div>
+
     <div id="scene-container" style={{
       width: '100%',
       maxWidth: '400px',
-      height: 'clamp(300px, 50vh, 600px)',
-      margin: '20px auto 0',
+      height: '700px',
+      margin: '0 auto',
       position: 'relative',
       pointerEvents: 'auto',
       display: 'flex',
       flexDirection: 'column',
       alignItems: 'center',
       justifyContent: 'center',
-      gap: '10px'
+      gap: '10px',
+      paddingTop: '200px'
     }}>
-      {/* Minimal Toggle Button */}
-      <button
-        onClick={() => setForceUseSVG(!forceUseSVG)}
-        style={{
-          position: 'absolute',
-          bottom: '10px',
-          right: '10px',
-          width: '32px',
-          height: '32px',
-          borderRadius: '50%',
-          border: '1px solid rgba(var(--accent-primary-rgb), 0.3)',
-          background: 'rgba(var(--bg-primary-rgb), 0.8)',
-          backdropFilter: 'blur(10px)',
-          cursor: 'pointer',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-          transition: 'all 0.2s ease',
-          zIndex: 10
-        }}
-        onMouseEnter={(e) => {
-          e.currentTarget.style.transform = 'scale(1.1)';
-          e.currentTarget.style.borderColor = 'var(--accent-primary)';
-        }}
-        onMouseLeave={(e) => {
-          e.currentTarget.style.transform = 'scale(1)';
-          e.currentTarget.style.borderColor = 'rgba(var(--accent-primary-rgb), 0.3)';
-        }}
-        title={forceUseSVG ? '3D' : '2D'}
-      >
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-          {forceUseSVG ? (
-            // 3D cube icon
-            <>
-              <path d="M12 2L2 7V17L12 22L22 17V7L12 2Z" stroke="var(--accent-primary)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-              <path d="M12 22V12" stroke="var(--accent-primary)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-              <path d="M12 12L2 7" stroke="var(--accent-primary)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-              <path d="M12 12L22 7" stroke="var(--accent-primary)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-            </>
-          ) : (
-            // 2D square icon
-            <>
-              <rect x="4" y="4" width="16" height="16" stroke="var(--accent-primary)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-              <circle cx="12" cy="12" r="3" stroke="var(--accent-primary)" strokeWidth="2"/>
-            </>
-          )}
-        </svg>
-      </button>
 
       {(!isInitialized || forceUseSVG) && (
         <div style={{
@@ -215,7 +200,8 @@ const Model = (props: { game: any, onSceneInit?: (scene: any) => void }) => {
           justifyContent: 'center',
           gap: '10px',
           transform: `scale(${potionScale})`,
-          marginTop: '20px'
+          marginTop: '0px',
+          position: 'relative'
         }}
         onClick={() => {
           if (props.game && canPotionChangeState()) {
@@ -429,6 +415,58 @@ const Model = (props: { game: any, onSceneInit?: (scene: any) => void }) => {
               </>
             )}
           </svg>
+
+          {/* Toggle Button positioned below potion */}
+          <button
+            onClick={(e) => {
+              e.stopPropagation();
+              handleToggle();
+            }}
+            style={{
+              width: '36px',
+              height: '36px',
+              borderRadius: '50%',
+              border: '1px solid rgba(var(--accent-primary-rgb), 0.3)',
+              background: 'rgba(var(--bg-primary-rgb), 0.9)',
+              backdropFilter: 'blur(10px)',
+              cursor: 'pointer',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              transition: 'all 0.2s ease',
+              marginTop: '15px'
+            }}
+            onMouseEnter={(e) => {
+              e.currentTarget.style.transform = 'scale(1.1)';
+              e.currentTarget.style.borderColor = 'var(--accent-primary)';
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.transform = 'scale(1)';
+              e.currentTarget.style.borderColor = 'rgba(var(--accent-primary-rgb), 0.3)';
+            }}
+            title={forceUseSVG ? 'Switch to WebGL/3D' : 'Switch to SVG/2D'}
+          >
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              {forceUseSVG ? (
+                // WebGL/3D icon (cube with perspective)
+                <>
+                  <path d="M12 2L4 6V14L12 18L20 14V6L12 2Z" stroke="var(--accent-primary)" strokeWidth="1.5" fill="rgba(var(--accent-primary-rgb), 0.1)"/>
+                  <path d="M12 18V10" stroke="var(--accent-primary)" strokeWidth="1.5"/>
+                  <path d="M4 6L12 10L20 6" stroke="var(--accent-primary)" strokeWidth="1.5"/>
+                  <circle cx="12" cy="10" r="2" fill="var(--accent-primary)"/>
+                </>
+              ) : (
+                // SVG/2D icon (artistic palette)
+                <>
+                  <circle cx="12" cy="12" r="8" stroke="var(--accent-primary)" strokeWidth="1.5" fill="rgba(var(--accent-primary-rgb), 0.1)"/>
+                  <circle cx="9" cy="9" r="1.5" fill="var(--accent-primary)"/>
+                  <circle cx="15" cy="9" r="1.5" fill="var(--accent-secondary)"/>
+                  <circle cx="9" cy="15" r="1.5" fill="var(--accent-secondary)"/>
+                  <circle cx="15" cy="15" r="1.5" fill="var(--accent-primary)"/>
+                </>
+              )}
+            </svg>
+          </button>
 
           <div style={{
             color: canPotionChangeState() ? 'var(--accent-primary)' : 'var(--accent-secondary)',

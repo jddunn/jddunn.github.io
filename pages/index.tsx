@@ -118,6 +118,32 @@ export default function Home() {
       const promptsEl = document.getElementById('prompts');
       if (displayEl) {
         observer.observe(displayEl, { childList: true, subtree: true });
+
+        // Additional observer specifically for room changes
+        const roomChangeObserver = new MutationObserver((mutations) => {
+          mutations.forEach((mutation) => {
+            if (mutation.type === 'childList' && mutation.addedNodes.length > 0) {
+              mutation.addedNodes.forEach((node) => {
+                if (node.nodeType === Node.TEXT_NODE || node.nodeType === Node.ELEMENT_NODE) {
+                  const text = node.textContent || '';
+                  // Check for room change indicators
+                  if (text.includes('You enter') || text.includes('You are in') || text.includes('You find yourself')) {
+                    console.log('[ROOM CONTENT CHANGE DETECTED] Forcing scroll to top');
+                    setTimeout(() => {
+                      displayEl.scrollTop = 0;
+                      requestAnimationFrame(() => {
+                        displayEl.scrollTop = 0;
+                        setTimeout(() => displayEl.scrollTop = 0, 100);
+                        setTimeout(() => displayEl.scrollTop = 0, 200);
+                      });
+                    }, 50);
+                  }
+                }
+              });
+            }
+          });
+        });
+        roomChangeObserver.observe(displayEl, { childList: true, subtree: true, characterData: true });
       }
       if (promptsEl) {
         observer.observe(promptsEl, { childList: true, subtree: true });
@@ -198,6 +224,39 @@ export default function Home() {
 
       game.init();
 
+      // Override game.Player.currentRoom setter to detect room changes
+      let _currentRoom = game.Player.currentRoom;
+      Object.defineProperty(game.Player, 'currentRoom', {
+        get: function() {
+          return _currentRoom;
+        },
+        set: function(newRoom) {
+          const oldRoom = _currentRoom;
+          _currentRoom = newRoom;
+          if (oldRoom !== newRoom) {
+            console.log('[ROOM CHANGE DETECTED]', oldRoom, '->', newRoom);
+            // Force scroll to top on ANY room change
+            setTimeout(() => {
+              const displayEl = document.getElementById('display');
+              if (displayEl) {
+                displayEl.scrollTop = 0;
+                console.log('[FORCED SCROLL TO TOP ON ROOM CHANGE]');
+                // Keep forcing it
+                requestAnimationFrame(() => {
+                  displayEl.scrollTop = 0;
+                  setTimeout(() => displayEl.scrollTop = 0, 50);
+                  setTimeout(() => displayEl.scrollTop = 0, 100);
+                  setTimeout(() => displayEl.scrollTop = 0, 200);
+                  setTimeout(() => displayEl.scrollTop = 0, 300);
+                  setTimeout(() => displayEl.scrollTop = 0, 500);
+                });
+              }
+            }, 100);
+          }
+        },
+        enumerable: true,
+        configurable: true
+      });
 
       // Set initial game state
       const initialGameState = {
@@ -205,7 +264,7 @@ export default function Home() {
         inventory: game.Player.inventory?.items || []
       };
       localStorage.setItem('gameState', JSON.stringify(initialGameState));
-      
+
       // Emit initial state
       const event = new CustomEvent('gameStateUpdate', { detail: initialGameState });
       window.dispatchEvent(event);

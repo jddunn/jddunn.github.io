@@ -37,36 +37,36 @@ None of tenets's functionality costs API credits - all processing is done locall
 ### Context Building
 When you run `tenets distill "add mistral api to summarizer"`, tenets analyzes your codebase:
 
-![Analyzing and ranking relevant files](/assets/projects/tenets/tenets-context-building-1.png)
+![Analyzing and ranking relevant files](/assets/projects/tenets/context-building-1.png)
 
-![Building optimized context with intelligent summarization](/assets/projects/tenets/tenets-context-building-2.png)
+![Building optimized context with intelligent summarization](/assets/projects/tenets/context-building-2.png)
 
 ### File Ranking
 `tenets rank "fix summarizing truncation bug" --tree`
 
-![File ranking visualization](/assets/projects/tenets/tenets-rank.png)
+![File ranking visualization](/assets/projects/tenets/rank.png)
 
 ### Code Analysis & Quality Metrics
 `tenets examine . --complexity --hotspots --ownership`
 
-![Comprehensive code analysis with actionable metrics](/assets/projects/tenets/tenets-code-analysis.png)
+![Comprehensive code analysis with actionable metrics](/assets/projects/tenets/code-analysis.png)
 
-![Code quality dashboard](/assets/projects/tenets/tenets-quality.png)
+![Code quality dashboard](/assets/projects/tenets/quality.png)
 
 ### Session Management
 Sessions maintain context across multiple interactions:
 
-![Creating a session and adding project-specific tenets](/assets/projects/tenets/tenets-sessions-1.png)
+![Creating a session and adding project-specific tenets](/assets/projects/tenets/sessions-1.png)
 
-![Managing and instilling guiding principles](/assets/projects/tenets/tenets-sessions-2.png)
+![Managing and instilling guiding principles](/assets/projects/tenets/sessions-2.png)
 
-![Building context with session-aware tenets applied](/assets/projects/tenets/tenets-sessions-3.png)
+![Building context with session-aware tenets applied](/assets/projects/tenets/sessions-3.png)
 
 ### Team Velocity & Visualization
 
-![Team velocity metrics and development trends](/assets/projects/tenets/tenets-velocity.png)
+![Team velocity metrics and development trends](/assets/projects/tenets/velocity.png)
 
-![Interactive D3.js dependency graph visualization](/assets/projects/tenets/tenets-visualization.png)
+![Interactive D3.js dependency graph visualization](/assets/projects/tenets/visualization.png)
 
 ## Technical Design: Why BM25 Over TF-IDF
 
