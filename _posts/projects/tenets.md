@@ -50,7 +50,7 @@ grep -r "processed_chunks\|process_chunks\|chunk_process\|chunks_processed"
 grep -r "self\.processed_chunks"
 ```
 
-Usually it'll find it in 1-2 attempts, and this example the LLM would likely get it on the second try not third. But, imagine you're in a new conversation, and maybe the LLM has full access to your Git repo / codebase; however, they won't go too exploratory in this process. LLMs won't (importantly it's not can't) even recursively search the filenames in your directory to build a tree structure to *understand* what the codebase actually looks like, at most it'll look at the imports, aggregate what it thinks is relevant, and calls it complete.
+Usually it'll find it in 2-3 attempts, and this example the LLM would likely get it on the second try not third. But, imagine you're in a new conversation, and maybe the LLM has full access to your Git repo / codebase; however, they won't go too exploratory in this process. LLMs won't (importantly it's not can't) even recursively search the filenames in your directory to build a tree structure to *understand* what the codebase actually looks like, at most it'll look at the imports, aggregate what it thinks is relevant, and calls it complete.
 
 It seems a incredibly weak process for document similarity matching from a NLP engineering perspective, let alone the costs of summarization through more LLM calls when extractive summarization algorithms or BERT, though BERT's significantly slower, could work.
 
