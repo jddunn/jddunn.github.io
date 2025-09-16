@@ -17,6 +17,9 @@ const Model = (props: { game: any, onSceneInit?: (scene: any) => void }) => {
     const [isBubbling, setIsBubbling] = useState(false);
     const [toastMessage, setToastMessage] = useState('');
     const [showToast, setShowToast] = useState(false);
+    const [showFlashText, setShowFlashText] = useState(false);
+    const [flashMessage, setFlashMessage] = useState('');
+    const [potionGlow, setPotionGlow] = useState(false);
 
     const router = useRouter();
 
@@ -173,6 +176,21 @@ const Model = (props: { game: any, onSceneInit?: (scene: any) => void }) => {
   const handleToggle = () => {
     const newSVGState = !forceUseSVG;
     setForceUseSVG(newSVGState);
+
+    // Flash text near potion
+    const flashMsg = newSVGState ? '✨ 2D Magic ✨' : '🌟 3D Power 🌟';
+    setFlashMessage(flashMsg);
+    setShowFlashText(true);
+
+    // Glow effect on potion
+    setPotionGlow(true);
+
+    setTimeout(() => {
+      setShowFlashText(false);
+      setPotionGlow(false);
+    }, 2000);
+
+    // Toast notification
     const message = newSVGState ? '🎨 SVG animated potion toggled' : '🎮 WebGL / three.js potion toggled';
     setToastMessage(message);
     setShowToast(true);
@@ -210,26 +228,45 @@ const Model = (props: { game: any, onSceneInit?: (scene: any) => void }) => {
       margin: '0 auto',
       marginTop: '150px',
       position: 'relative',
-      pointerEvents: 'auto',
-      display: 'flex',
-      flexDirection: 'column',
-      alignItems: 'center',
-      justifyContent: 'center',
-      gap: '10px'
+      pointerEvents: 'auto'
     }}>
+
+      {/* Flash text that appears on toggle */}
+      {showFlashText && (
+        <div style={{
+          position: 'absolute',
+          top: '30%',
+          left: '50%',
+          transform: 'translate(-50%, -50%)',
+          color: 'var(--accent-primary)',
+          fontSize: '1.4rem',
+          fontFamily: 'Crimson Text, serif',
+          fontStyle: 'italic',
+          fontWeight: 'bold',
+          textShadow: `0 0 20px var(--accent-primary), 0 0 40px var(--accent-secondary)`,
+          animation: 'fadeInOut 2s ease-in-out',
+          pointerEvents: 'none',
+          zIndex: 100,
+          letterSpacing: '0.1em'
+        }}>
+          {flashMessage}
+        </div>
+      )}
 
       {(forceUseSVG || (!forceUseSVG && !isInitialized)) && (
         <div style={{
           cursor: 'pointer',
-          transition: 'transform 0.5s cubic-bezier(0.4, 0, 0.2, 1)',
+          transition: 'all 0.5s cubic-bezier(0.4, 0, 0.2, 1)',
           display: 'flex',
           flexDirection: 'column',
           alignItems: 'center',
           justifyContent: 'center',
           gap: '10px',
-          transform: `scale(${potionScale})`,
-          marginTop: '0px',
-          position: 'relative'
+          position: 'absolute',
+          top: '50%',
+          left: '50%',
+          transform: `translate(-50%, -50%) scale(${potionScale})`,
+          filter: potionGlow ? 'drop-shadow(0 0 30px var(--accent-primary)) drop-shadow(0 0 60px var(--accent-secondary))' : 'none'
         }}
         onClick={() => {
           if (props.game && canPotionChangeState()) {
@@ -279,10 +316,7 @@ const Model = (props: { game: any, onSceneInit?: (scene: any) => void }) => {
               }, 500);
             }
           }
-        }}
-        onMouseEnter={(e) => e.currentTarget.style.transform = `scale(${potionScale * 1.05})`}
-        onMouseLeave={(e) => e.currentTarget.style.transform = `scale(${potionScale})`}
-        >
+        }}>
           <style>
             {`
               @keyframes drink {
@@ -310,6 +344,17 @@ const Model = (props: { game: any, onSceneInit?: (scene: any) => void }) => {
                 33% { stop-color: rgb(255, 20, 147); }
                 66% { stop-color: rgb(0, 191, 255); }
                 100% { stop-color: rgb(138, 43, 226); }
+              }
+              @keyframes fadeInOut {
+                0% { opacity: 0; transform: translate(-50%, -30%) scale(0.8); }
+                20% { opacity: 1; transform: translate(-50%, -50%) scale(1.1); }
+                80% { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+                100% { opacity: 0; transform: translate(-50%, -70%) scale(0.8); }
+              }
+              @keyframes potionPulse {
+                0% { transform: scale(1); }
+                50% { transform: scale(1.05); }
+                100% { transform: scale(1); }
               }
             `}
           </style>
@@ -443,6 +488,14 @@ const Model = (props: { game: any, onSceneInit?: (scene: any) => void }) => {
             onClick={(e) => {
               e.stopPropagation();
               handleToggle();
+              // Add pulse animation to potion on toggle
+              const potionSvg = document.querySelector('#potion-svg');
+              if (potionSvg) {
+                potionSvg.style.animation = 'potionPulse 0.5s ease-in-out';
+                setTimeout(() => {
+                  potionSvg.style.animation = '';
+                }, 500);
+              }
             }}
             style={{
               width: '36px',
@@ -490,26 +543,6 @@ const Model = (props: { game: any, onSceneInit?: (scene: any) => void }) => {
             </svg>
           </button>
 
-          <div style={{
-            color: canPotionChangeState() ? 'var(--accent-primary)' : 'var(--accent-secondary)',
-            fontSize: potionScale === 0.5 ? '10px' : '12px',
-            textAlign: 'center',
-            fontFamily: 'Crimson Text, serif',
-            fontStyle: 'italic',
-            opacity: canPotionChangeState() ? 0.9 : 0.7,
-            marginTop: '10px',
-            transition: 'all 0.5s ease',
-            textShadow: canPotionChangeState() ? '0 0 10px rgba(138, 43, 226, 0.5)' : 'none'
-          }}>
-            {potionScale === 0.5
-              ? "🔬 You feel smaller... The potion shrunk too! 🔬"
-              : canPotionChangeState()
-                ? "✨ The potion is ready to drink! ✨"
-                : forceUseSVG
-                  ? "🎨 2D Mode - The potion awaits... 🎨"
-                  : "✨ WebGL disabled - Click the 2D potion ✨"
-            }
-          </div>
         </div>
       )}
     </div>

@@ -306,8 +306,25 @@ export default function Home() {
                     console.log('[DEBUG] New room - scrolling to top');
                     displayEl.scrollTop = 0;
                     setTimeout(() => displayEl.scrollTop = 0, 200);
+                  } else {
+                    // Check for delayed room change or failed entry
+                    setTimeout(() => {
+                      const finalRoom = game.Player.currentRoom;
+                      if (finalRoom !== previousRoom) {
+                        // Room changed after delay
+                        console.log('[DEBUG] Delayed room change - scrolling to top');
+                        displayEl.scrollTop = 0;
+                      } else {
+                        const displayContent = displayEl.textContent || '';
+                        if (displayContent.includes('locked') || displayContent.includes('need') ||
+                            displayContent.includes('cannot') || displayContent.includes('can\'t') ||
+                            displayContent.includes('required') || displayContent.includes('must')) {
+                          console.log('[DEBUG] Failed room entry - scrolling to bottom');
+                          displayEl.scrollTop = displayEl.scrollHeight;
+                        }
+                      }
+                    }, 300);
                   }
-                  // Don't auto-scroll for same room actions
                 }
                 updateStatuses();
                 ensurePromptsVisible();
@@ -366,15 +383,32 @@ export default function Home() {
       console.log('[DEBUG] Command typed - Previous room:', previousRoom, 'Current room:', currentRoom);
       const displayEl = document.getElementById('display');
 
-      // Only scroll to top if we changed rooms
+      // Handle scrolling based on room change or failure
       if (displayEl) {
         if (previousRoom !== currentRoom) {
           // New room - scroll to top to show new room description
           console.log('[DEBUG] New room - scrolling to top');
           displayEl.scrollTop = 0;
           setTimeout(() => displayEl.scrollTop = 0, 200);
+        } else {
+          // Check for delayed room change or failed entry
+          setTimeout(() => {
+            const finalRoom = game.Player.currentRoom;
+            if (finalRoom !== previousRoom) {
+              // Room changed after delay
+              console.log('[DEBUG] Delayed room change in command - scrolling to top');
+              displayEl.scrollTop = 0;
+            } else {
+              const displayContent = displayEl.textContent || '';
+              if (displayContent.includes('locked') || displayContent.includes('need') ||
+                  displayContent.includes('cannot') || displayContent.includes('can\'t') ||
+                  displayContent.includes('required') || displayContent.includes('must')) {
+                console.log('[DEBUG] Failed room entry - scrolling to bottom');
+                displayEl.scrollTop = displayEl.scrollHeight;
+              }
+            }
+          }, 300);
         }
-        // Don't auto-scroll for same room actions
       }
 
       updateStatuses();
@@ -516,7 +550,6 @@ function ensurePromptsVisible() {
 
             const displayEl = document.getElementById('display');
             if (displayEl) {
-              // Only handle scrolling on room changes, not on same-room actions
               if (previousRoom !== currentRoom) {
                 console.log('[DEBUG] Room changed - scrolling to top');
                 // Scroll to top when entering new room
@@ -524,8 +557,40 @@ function ensurePromptsVisible() {
                 setTimeout(() => {
                   displayEl.scrollTop = 0;
                 }, 200);
+              } else {
+                // Check command type - some are status checks that should scroll down
+                const isStatusCommand = (command.includes('how was this created') ||
+                                        command.includes('look') ||
+                                        command.includes('examine') ||
+                                        command.includes('check')) &&
+                                       !command.includes("i'm in charge");
+
+                if (isStatusCommand) {
+                  // Status update in same room - scroll to bottom to see the result
+                  console.log('[DEBUG] Status command - scrolling to bottom');
+                  setTimeout(() => {
+                    displayEl.scrollTop = displayEl.scrollHeight;
+                  }, 100);
+                } else {
+                  // Check if this looks like a failed room entry attempt
+                  setTimeout(() => {
+                    const finalRoom = game.Player.currentRoom;
+                    if (finalRoom !== previousRoom) {
+                      // Room changed after delay - scroll to top
+                      console.log('[DEBUG] Delayed room change detected - scrolling to top');
+                      displayEl.scrollTop = 0;
+                    } else {
+                      const displayContent = displayEl.textContent || '';
+                      if (displayContent.includes('locked') || displayContent.includes('need') ||
+                          displayContent.includes('cannot') || displayContent.includes('can\'t') ||
+                          displayContent.includes('required') || displayContent.includes('must')) {
+                        console.log('[DEBUG] Failed room entry - scrolling to bottom');
+                        displayEl.scrollTop = displayEl.scrollHeight;
+                      }
+                    }
+                  }, 300);
+                }
               }
-              // Don't auto-scroll for same room actions - let user control scroll
             }
             updateStatuses();
             ensurePromptsVisible();
@@ -661,6 +726,7 @@ function updateStatuses() {
           min-height: auto !important;
           height: auto !important;
           max-height: calc(100vh - 200px) !important;
+          max-width: calc(100vw - 2rem) !important;
           margin: 0.5rem !important;
           border-width: 2px !important;
         }
@@ -922,7 +988,7 @@ function updateStatuses() {
                 </div>
               </motion.div>
             </AnimatePresence>
-              <div style={{ display: "flex", gap: "10px", marginTop: '-20px', marginBottom: '0px' }}>
+              <div style={{ display: "flex", gap: "10px", marginTop: '-35px', marginBottom: '0px' }}>
                 <motion.p
                   initial="hidden"
                   animate="visible"
