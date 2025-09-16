@@ -1,6 +1,6 @@
 ---
 title: 'tenets'
-coverImage: '/assets/projects/tenets_dark_icon.png'
+coverImage: '/assets/projects/tenets/tenets_dark_icon.png'
 excerpt: 'Using NLP and semantic understanding with embeddings and similarity to automatically aggregate context from any folder / repo to feed into a prompt.'
 date: '2025-09-02'
 createdDate: '2025-09-02'
@@ -9,7 +9,7 @@ tags: 'python,llms,ai,dev-tools'
 #   name: JJ Kasper
 #   picture: '/assets/blog/authors/jj.jpeg'
 ogImage:
-  url: '/assets/projects/tenets_dark_icon.png'
+  url: '/assets/projects/tenets/tenets_dark_icon.png'
 ---
 <a href="https://github.com/jddunn/tenets" style="text-align: center" target="_blank" class="md-link">GitHub link</a>
 
@@ -37,36 +37,36 @@ None of tenets's functionality costs API credits - all processing is done locall
 ### Context Building
 When you run `tenets distill "add mistral api to summarizer"`, tenets analyzes your codebase:
 
-![Analyzing and ranking relevant files](/assets/projects/tenets-context-building-1.png)
+![Analyzing and ranking relevant files](/assets/projects/tenets/tenets-context-building-1.png)
 
-![Building optimized context with intelligent summarization](/assets/projects/tenets-context-building-2.png)
+![Building optimized context with intelligent summarization](/assets/projects/tenets/tenets-context-building-2.png)
 
 ### File Ranking
 `tenets rank "fix summarizing truncation bug" --tree`
 
-![File ranking visualization](/assets/projects/tenets-rank.png)
+![File ranking visualization](/assets/projects/tenets/tenets-rank.png)
 
 ### Code Analysis & Quality Metrics
 `tenets examine . --complexity --hotspots --ownership`
 
-![Comprehensive code analysis with actionable metrics](/assets/projects/tenets-code-analysis.png)
+![Comprehensive code analysis with actionable metrics](/assets/projects/tenets/tenets-code-analysis.png)
 
-![Code quality dashboard](/assets/projects/tenets-quality.png)
+![Code quality dashboard](/assets/projects/tenets/tenets-quality.png)
 
 ### Session Management
 Sessions maintain context across multiple interactions:
 
-![Creating a session and adding project-specific tenets](/assets/projects/tenets-sessions-1.png)
+![Creating a session and adding project-specific tenets](/assets/projects/tenets/tenets-sessions-1.png)
 
-![Managing and instilling guiding principles](/assets/projects/tenets-sessions-2.png)
+![Managing and instilling guiding principles](/assets/projects/tenets/tenets-sessions-2.png)
 
-![Building context with session-aware tenets applied](/assets/projects/tenets-sessions-3.png)
+![Building context with session-aware tenets applied](/assets/projects/tenets/tenets-sessions-3.png)
 
 ### Team Velocity & Visualization
 
-![Team velocity metrics and development trends](/assets/projects/tenets-velocity.png)
+![Team velocity metrics and development trends](/assets/projects/tenets/tenets-velocity.png)
 
-![Interactive D3.js dependency graph visualization](/assets/projects/tenets-visualization.png)
+![Interactive D3.js dependency graph visualization](/assets/projects/tenets/tenets-visualization.png)
 
 ## Technical Design: Why BM25 Over TF-IDF
 
