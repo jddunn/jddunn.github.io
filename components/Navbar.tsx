@@ -47,9 +47,9 @@ const Navbar = () => {
             className={style.themeToggleMobile}
             aria-label="Toggle theme"
             style={{
-              position: 'fixed', 
-              top: '20px', 
-              right: '70px', 
+              position: 'fixed',
+              top: '20px',
+              right: '65px',
               zIndex: 1002,
               width: '40px',
               height: '40px',
@@ -104,15 +104,16 @@ const Navbar = () => {
             className="hamburger-icon space-y-2"
             onClick={() => setIsMobileNavOpen((prev) => !prev)}
             style={{
-              cursor: 'pointer', 
-              position: 'fixed',  
-              top: '25px', 
-              right: '20px', 
-              margin: '0', 
+              cursor: 'pointer',
+              position: 'fixed',
+              top: '15px',
+              right: '15px',
+              margin: '0',
               zIndex: 1001,
               display: 'flex',
               flexDirection: 'column',
-              gap: '6px'
+              gap: '6px',
+              padding: '10px'
             }}
           >
             <span className="block h-0.5 w-8" style={{backgroundColor: 'var(--accent-primary)'}}></span>
@@ -121,25 +122,6 @@ const Navbar = () => {
           </div>
 
           <div className={isMobileNavOpen ? "showMenuNav" : "hideMenuNav"}>
-            <div
-              className="absolute top-0 right-0 px-8 py-8"
-              onClick={() => setIsMobileNavOpen(false)}
-              style={{cursor: 'pointer', zIndex: 1002}}
-            >
-              <svg
-                className="h-8 w-8"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                style={{cursor: 'pointer', color: 'var(--accent-primary)'}}
-              >
-                <line x1="18" y1="6" x2="6" y2="18" />
-                <line x1="6" y1="6" x2="18" y2="18" />
-              </svg>
-            </div>
             <ul style={{
               display: 'flex',
               flexDirection: 'column',
@@ -148,8 +130,49 @@ const Navbar = () => {
               minHeight: '400px',
               listStyle: 'none',
               padding: '60px 0 0 0',
-              margin: 0
+              margin: 0,
+              position: 'relative'
             }}>
+              <div
+                className="close-button"
+                onClick={() => setIsMobileNavOpen(false)}
+                style={{
+                  position: 'absolute',
+                  top: '80px',
+                  right: '30px',
+                  cursor: 'pointer',
+                  zIndex: 1002,
+                  padding: '10px',
+                  borderRadius: '50%',
+                  background: 'rgba(var(--accent-primary-rgb), 0.1)',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  transition: 'all 0.3s ease'
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.background = 'rgba(var(--accent-primary-rgb), 0.2)';
+                  e.currentTarget.style.transform = 'rotate(90deg)';
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.background = 'rgba(var(--accent-primary-rgb), 0.1)';
+                  e.currentTarget.style.transform = 'rotate(0deg)';
+                }}
+              >
+                <svg
+                  className="h-6 w-6"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  style={{color: 'var(--accent-primary)'}}
+                >
+                  <line x1="18" y1="6" x2="6" y2="18" />
+                  <line x1="6" y1="6" x2="18" y2="18" />
+                </svg>
+              </div>
               <li 
                 onClick={() => { router.push('/'); setIsMobileNavOpen(false); }}
                 className={router.pathname == "/" ? `${style.active} font-semibold` : ""}

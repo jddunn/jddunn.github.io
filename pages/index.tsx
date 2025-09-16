@@ -194,6 +194,14 @@ export default function Home() {
           const originalUserSend = game.userSend.bind(game);
           game.userSend = function(cmd) {
             lastRoomBeforeCommand = game.Player.currentRoom;
+
+            // Handle "how was this created" as a special status command
+            if (cmd && (cmd.toLowerCase() === 'how was this created' ||
+                       cmd.toLowerCase() === 'how was this created?')) {
+              game.Display.show("This interactive fiction game was created using a custom text-based RPG engine, Three.js for 3D graphics, and React/Next.js. The story follows an Alice in Wonderland inspired adventure with puzzle elements and a unique potion mechanic.");
+              return;
+            }
+
             const result = originalUserSend(cmd);
 
             // If room changed, the command was successful
@@ -295,13 +303,33 @@ export default function Home() {
             promptEl.onclick = () => {
               console.log('[DEBUG] Manual prompt clicked:', promptData.command);
               const previousRoom = game.Player.currentRoom;
+
+              // Check if this is a status command BEFORE sending
+              const promptText = (promptData.text || promptData.command || '').toLowerCase();
+              const isStatusCommand = promptText.includes('how was this created') ||
+                                     promptText.includes('look') ||
+                                     promptText.includes('examine') ||
+                                     promptText.includes('check') ||
+                                     promptText.includes('status') ||
+                                     promptText.includes('help') ||
+                                     promptData.command === 'examine game';
+
               game.userSend(promptData.command);
+
               setTimeout(() => {
                 const currentRoom = game.Player.currentRoom;
                 console.log('[DEBUG] Room check - Previous:', previousRoom, 'Current:', currentRoom);
                 const displayEl = document.getElementById('display');
                 if (displayEl) {
-                  if (previousRoom !== currentRoom) {
+                  // If it's a status command, always scroll to bottom
+                  if (isStatusCommand) {
+                    console.log('[DEBUG] Status command from manual prompt - forcing scroll to bottom');
+                    displayEl.scrollTop = displayEl.scrollHeight;
+                    // Double-check scroll after delay
+                    setTimeout(() => {
+                      displayEl.scrollTop = displayEl.scrollHeight;
+                    }, 200);
+                  } else if (previousRoom !== currentRoom) {
                     // New room - scroll to top to show new room description
                     console.log('[DEBUG] New room - scrolling to top');
                     displayEl.scrollTop = 0;
@@ -391,23 +419,39 @@ export default function Home() {
           displayEl.scrollTop = 0;
           setTimeout(() => displayEl.scrollTop = 0, 200);
         } else {
-          // Check for delayed room change or failed entry
-          setTimeout(() => {
-            const finalRoom = game.Player.currentRoom;
-            if (finalRoom !== previousRoom) {
-              // Room changed after delay
-              console.log('[DEBUG] Delayed room change in command - scrolling to top');
-              displayEl.scrollTop = 0;
-            } else {
-              const displayContent = displayEl.textContent || '';
-              if (displayContent.includes('locked') || displayContent.includes('need') ||
-                  displayContent.includes('cannot') || displayContent.includes('can\'t') ||
-                  displayContent.includes('required') || displayContent.includes('must')) {
-                console.log('[DEBUG] Failed room entry - scrolling to bottom');
-                displayEl.scrollTop = displayEl.scrollHeight;
+          // Check if this is a status command typed by user
+          const isStatusCommand = command.toLowerCase().includes('how was this created') ||
+                                 command.toLowerCase().includes('look') ||
+                                 command.toLowerCase().includes('examine') ||
+                                 command.toLowerCase().includes('check') ||
+                                 command.toLowerCase().includes('status') ||
+                                 command.toLowerCase().includes('help');
+
+          if (isStatusCommand) {
+            // Status update - scroll to bottom
+            console.log('[DEBUG] Status command typed - scrolling to bottom');
+            setTimeout(() => {
+              displayEl.scrollTop = displayEl.scrollHeight;
+            }, 100);
+          } else {
+            // Check for delayed room change or failed entry
+            setTimeout(() => {
+              const finalRoom = game.Player.currentRoom;
+              if (finalRoom !== previousRoom) {
+                // Room changed after delay
+                console.log('[DEBUG] Delayed room change in command - scrolling to top');
+                displayEl.scrollTop = 0;
+              } else {
+                const displayContent = displayEl.textContent || '';
+                if (displayContent.includes('locked') || displayContent.includes('need') ||
+                    displayContent.includes('cannot') || displayContent.includes('can\'t') ||
+                    displayContent.includes('required') || displayContent.includes('must')) {
+                  console.log('[DEBUG] Failed room entry - scrolling to bottom');
+                  displayEl.scrollTop = displayEl.scrollHeight;
+                }
               }
-            }
-          }, 300);
+            }, 300);
+          }
         }
       }
 
@@ -541,6 +585,15 @@ function ensurePromptsVisible() {
 
           console.log('[DEBUG] Sending to game:', command);
           const previousRoom = game.Player.currentRoom;
+
+          // Check if this is a status command BEFORE sending
+          const isStatusCommand = command.toLowerCase().includes('how was this created') ||
+                                 command.toLowerCase().includes('look') ||
+                                 command.toLowerCase().includes('examine') ||
+                                 command.toLowerCase().includes('check') ||
+                                 command.toLowerCase().includes('status') ||
+                                 command.toLowerCase().includes('help');
+
           game.userSend(command);
 
           // Use a slightly longer timeout to ensure the game has updated
@@ -550,7 +603,15 @@ function ensurePromptsVisible() {
 
             const displayEl = document.getElementById('display');
             if (displayEl) {
-              if (previousRoom !== currentRoom) {
+              // If it's a status command, always scroll to bottom regardless of room
+              if (isStatusCommand) {
+                console.log('[DEBUG] Status command - forcing scroll to bottom');
+                displayEl.scrollTop = displayEl.scrollHeight;
+                // Double-check scroll after delay
+                setTimeout(() => {
+                  displayEl.scrollTop = displayEl.scrollHeight;
+                }, 200);
+              } else if (previousRoom !== currentRoom) {
                 console.log('[DEBUG] Room changed - scrolling to top');
                 // Scroll to top when entering new room
                 displayEl.scrollTop = 0;
@@ -558,38 +619,23 @@ function ensurePromptsVisible() {
                   displayEl.scrollTop = 0;
                 }, 200);
               } else {
-                // Check command type - some are status checks that should scroll down
-                const isStatusCommand = (command.includes('how was this created') ||
-                                        command.includes('look') ||
-                                        command.includes('examine') ||
-                                        command.includes('check')) &&
-                                       !command.includes("i'm in charge");
-
-                if (isStatusCommand) {
-                  // Status update in same room - scroll to bottom to see the result
-                  console.log('[DEBUG] Status command - scrolling to bottom');
-                  setTimeout(() => {
-                    displayEl.scrollTop = displayEl.scrollHeight;
-                  }, 100);
-                } else {
-                  // Check if this looks like a failed room entry attempt
-                  setTimeout(() => {
-                    const finalRoom = game.Player.currentRoom;
-                    if (finalRoom !== previousRoom) {
-                      // Room changed after delay - scroll to top
-                      console.log('[DEBUG] Delayed room change detected - scrolling to top');
-                      displayEl.scrollTop = 0;
-                    } else {
-                      const displayContent = displayEl.textContent || '';
-                      if (displayContent.includes('locked') || displayContent.includes('need') ||
-                          displayContent.includes('cannot') || displayContent.includes('can\'t') ||
-                          displayContent.includes('required') || displayContent.includes('must')) {
-                        console.log('[DEBUG] Failed room entry - scrolling to bottom');
-                        displayEl.scrollTop = displayEl.scrollHeight;
-                      }
+                // Check if this looks like a failed room entry attempt
+                setTimeout(() => {
+                  const finalRoom = game.Player.currentRoom;
+                  if (finalRoom !== previousRoom) {
+                    // Room changed after delay - scroll to top
+                    console.log('[DEBUG] Delayed room change detected - scrolling to top');
+                    displayEl.scrollTop = 0;
+                  } else {
+                    const displayContent = displayEl.textContent || '';
+                    if (displayContent.includes('locked') || displayContent.includes('need') ||
+                        displayContent.includes('cannot') || displayContent.includes('can\'t') ||
+                        displayContent.includes('required') || displayContent.includes('must')) {
+                      console.log('[DEBUG] Failed room entry - scrolling to bottom');
+                      displayEl.scrollTop = displayEl.scrollHeight;
                     }
-                  }, 300);
-                }
+                  }
+                }, 300);
               }
             }
             updateStatuses();
@@ -976,7 +1022,8 @@ function updateStatuses() {
                     },
                   },
                 }}
-                style={{marginTop: '5px', marginLeft: '10px', padding: '0.75rem'}}
+                style={{marginTop: '20px', marginLeft: '10px', padding: '0.75rem'}}
+              className="intro-header"
               >
                 <h2 className="glitch" style={{marginBottom: '2px', marginTop: '5px', fontSize: '1.4em'}}>I AM</h2>
                 <div style={{display: 'inline'}} className="glitch2">
