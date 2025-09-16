@@ -131,12 +131,7 @@ export default function Home() {
                     console.log('[ROOM CONTENT CHANGE DETECTED] Forcing scroll to top');
                     setTimeout(() => {
                       displayEl.scrollTop = 0;
-                      requestAnimationFrame(() => {
-                        displayEl.scrollTop = 0;
-                        setTimeout(() => displayEl.scrollTop = 0, 100);
-                        setTimeout(() => displayEl.scrollTop = 0, 200);
-                      });
-                    }, 50);
+                    }, 100);
                   }
                 }
               });
@@ -241,15 +236,8 @@ export default function Home() {
               if (displayEl) {
                 displayEl.scrollTop = 0;
                 console.log('[FORCED SCROLL TO TOP ON ROOM CHANGE]');
-                // Keep forcing it
-                requestAnimationFrame(() => {
-                  displayEl.scrollTop = 0;
-                  setTimeout(() => displayEl.scrollTop = 0, 50);
-                  setTimeout(() => displayEl.scrollTop = 0, 100);
-                  setTimeout(() => displayEl.scrollTop = 0, 200);
-                  setTimeout(() => displayEl.scrollTop = 0, 300);
-                  setTimeout(() => displayEl.scrollTop = 0, 500);
-                });
+                // One additional check after a delay
+                setTimeout(() => displayEl.scrollTop = 0, 200);
               }
             }, 100);
           }
@@ -317,12 +305,7 @@ export default function Home() {
                     // New room - scroll to top to show new room description
                     console.log('[DEBUG] New room - forcing scroll to top');
                     displayEl.scrollTop = 0;
-                    requestAnimationFrame(() => {
-                      displayEl.scrollTop = 0;
-                      setTimeout(() => displayEl.scrollTop = 0, 100);
-                      setTimeout(() => displayEl.scrollTop = 0, 200);
-                      setTimeout(() => displayEl.scrollTop = 0, 300);
-                    });
+                    setTimeout(() => displayEl.scrollTop = 0, 200);
                   } else {
                     // Same room - scroll to bottom to show the result/error
                     console.log('[DEBUG] Same room - scrolling to bottom');
@@ -393,12 +376,7 @@ export default function Home() {
           // New room - scroll to top to show new room description
           console.log('[DEBUG] New room - forcing scroll to top');
           displayEl.scrollTop = 0;
-          requestAnimationFrame(() => {
-            displayEl.scrollTop = 0;
-            setTimeout(() => displayEl.scrollTop = 0, 100);
-            setTimeout(() => displayEl.scrollTop = 0, 200);
-            setTimeout(() => displayEl.scrollTop = 0, 300);
-          });
+          setTimeout(() => displayEl.scrollTop = 0, 200);
         } else {
           // Same room - scroll to bottom to show the result/error
           console.log('[DEBUG] Same room - scrolling to bottom');
@@ -548,20 +526,11 @@ function ensurePromptsVisible() {
               // Always scroll to top if room changed
               if (previousRoom !== currentRoom) {
                 console.log('[DEBUG] Room changed - forcing scroll to top');
-                // Force scroll to top multiple times to ensure it sticks
+                // Scroll to top immediately and once more after delay
                 displayEl.scrollTop = 0;
-                requestAnimationFrame(() => {
+                setTimeout(() => {
                   displayEl.scrollTop = 0;
-                  setTimeout(() => {
-                    displayEl.scrollTop = 0;
-                  }, 100);
-                  setTimeout(() => {
-                    displayEl.scrollTop = 0;
-                  }, 200);
-                  setTimeout(() => {
-                    displayEl.scrollTop = 0;
-                  }, 300);
-                });
+                }, 200);
               } else {
                 // Same room - scroll to bottom to show the result/error
                 console.log('[DEBUG] Same room - scrolling to bottom');

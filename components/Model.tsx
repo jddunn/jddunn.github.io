@@ -178,16 +178,16 @@ const Model = (props: { game: any, onSceneInit?: (scene: any) => void }) => {
     <div id="scene-container" style={{
       width: '100%',
       maxWidth: '400px',
-      height: '700px',
+      height: '550px',
       margin: '0 auto',
       position: 'relative',
       pointerEvents: 'auto',
       display: 'flex',
       flexDirection: 'column',
       alignItems: 'center',
-      justifyContent: 'center',
+      justifyContent: 'flex-end',
       gap: '10px',
-      paddingTop: '200px'
+      paddingBottom: '50px'
     }}>
 
       {(!isInitialized || forceUseSVG) && (
