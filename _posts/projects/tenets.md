@@ -1,3 +1,20 @@
+---
+title: 'tenets'
+coverImage: '/assets/projects/tenets_dark_icon.png'
+excerpt: 'Using NLP and semantic understanding with embeddings and similarity to automatically aggregate context from any folder / repo to feed into a prompt.'
+date: '2025-09-02'
+createdDate: '2025-09-02'
+tags: 'python,llms,ai,dev-tools'
+# author:
+#   name: JJ Kasper
+#   picture: '/assets/blog/authors/jj.jpeg'
+ogImage:
+  url: '/assets/projects/tenets_dark_icon.png'
+---
+<a href="https://github.com/jddunn/tenets" style="text-align: center" target="_blank" class="md-link">GitHub link</a>
+
+<a href="https://tenets.dev" style="text-align: center" target="_blank" class="md-link">Website / docs link</a>
+
 # Building tenets: Intelligent Context Aggregation for AI Pair Programming
 
 **GitHub: [github.com/jddunn/tenets](https://github.com/jddunn/tenets)**  
