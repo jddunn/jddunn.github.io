@@ -880,19 +880,19 @@ function updateStatuses() {
                     },
                   },
                 }}
-                style={{marginTop: '10px', marginLeft: '10px', padding: '1rem'}}
+                style={{marginTop: '5px', marginLeft: '10px', padding: '0.75rem'}}
               >
-                <h2 className="glitch" style={{marginBottom: '5px', marginTop: '10px', fontSize: '1.6em'}}>I AM</h2>
+                <h2 className="glitch" style={{marginBottom: '2px', marginTop: '5px', fontSize: '1.4em'}}>I AM</h2>
                 <div style={{display: 'inline'}} className="glitch2">
-                  <h1 style={{display: 'inline', fontSize: '1.8em', letterSpacing: '3px', fontWeight: '700', fontFamily: 'Playfair Display, serif'}} className="willHide">JOHNNY</h1>
-                  <h1 style={{marginLeft: '8px', display: 'inline', fontSize: '1.8em', letterSpacing: '3px', fontWeight: '700', fontFamily: 'Playfair Display, serif'}} className="willHide">DUNN</h1>
+                  <h1 style={{display: 'inline', fontSize: '1.6em', letterSpacing: '1px', fontWeight: '700', fontFamily: 'Playfair Display, serif'}} className="willHide">JOHNNY</h1>
+                  <h1 style={{marginLeft: '6px', display: 'inline', fontSize: '1.6em', letterSpacing: '1px', fontWeight: '700', fontFamily: 'Playfair Display, serif'}} className="willHide">DUNN</h1>
                 </div>
-                <div className={styles.subHeadingContainer}>
-                  <h3 id="subHeading" className="shimmer">a full-stack dev specializing in web3 and machine learning projects</h3>
+                <div className={styles.subHeadingContainer} style={{marginTop: '3px'}}>
+                  <h3 id="subHeading" className="shimmer" style={{fontSize: '0.95em'}}>a full-stack dev specializing in web3 and machine learning projects</h3>
                 </div>
               </motion.div>
             </AnimatePresence>
-              <div style={{ display: "flex", gap: "10px", marginTop: '0px', marginBottom: '0px' }}>
+              <div style={{ display: "flex", gap: "10px", marginTop: '-20px', marginBottom: '0px' }}>
                 <motion.p
                   initial="hidden"
                   animate="visible"
@@ -1017,7 +1017,7 @@ function updateStatuses() {
                       color: 'var(--accent-primary)',
                       backdropFilter: 'blur(15px)',
                       overflow: 'hidden',
-                      minHeight: '400px',
+                      minHeight: '430px',
                       display: 'flex',
                       flexDirection: 'column'
                     }}>
