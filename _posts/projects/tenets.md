@@ -50,9 +50,11 @@ grep -r "processed_chunks\|process_chunks\|chunk_process\|chunks_processed"
 grep -r "self\.processed_chunks"
 ```
 
-Usually it'll find it in 1-2 attempts, and this example the LLM would likely get it on the second try not third.
+Usually it'll find it in 1-2 attempts, and this example the LLM would likely get it on the second try not third. But, imagine you're in a new conversation, and maybe the LLM has full access to your Git repo / codebase; however, they won't go too exploratory in this process. LLMs won't (importantly it's not can't) even recursively search the filenames in your directory to build a tree structure to *understand* what the codebase actually looks like, at most it'll look at the imports, aggregate what it thinks is relevant, and calls it complete.
 
-**tenets** is a Python library that intelligently navigates repos to match, analyze, summarize, and aggregate the most relevant context based on speed, accuracy, or token limits. It uses deterministic algorithms (regex, BM25, cosine similarity) with optional ML embeddings for semantic understanding.
+It seems a incredibly weak process for document similarity matching from a NLP engineering perspective, let alone the costs of summarization through more LLM calls when extractive summarization algorithms or BERT, though BERT's significantly slower, could work.
+
+**tenets** is a Python library that intelligently navigates repos to match, analyze, summarize, and aggregate the most relevant context based on speed, accuracy, or token limits. It uses deterministic algorithms (regex, BM25, cosine similarity) with optional ML embeddings for semantic understanding, and extractive summarization as well as optional LLM summarization that takes into account hierarchy in high-level metadata (how many times a function is referenced, how complex a function may be, etc.), imports / dependencies, and other metrics for heuristics for a total of [10 ranking factors](## Multi-Signal Ranking). 
 
 None of tenets's functionality costs API credits - all processing is done locally. There are optional LLM integrations for summarizing, but the recommended route is using the built-in [summarizer algorithms](https://github.com/jddunn/tenets/blob/master/tenets/core/summarizer/strategies.py) first.
 
@@ -148,7 +150,7 @@ BM25 can't extract keywords from a single prompt because it needs corpus statist
 
 ## Multi-Signal Ranking
 
-tenets combines [10 different factors](#multi-signal-ranking) with configurable weights:
+tenets combines 10 different factors with configurable weights:
 
 ```python
 class RankingFactors:
