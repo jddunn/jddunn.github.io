@@ -16,6 +16,8 @@ const Model = (props: { game: any, onSceneInit?: (scene: any) => void }) => {
     // Track initialization to prevent double mount in StrictMode
     const [isInitialized, setIsInitialized] = useState(false);
     const [potionScale, setPotionScale] = useState(1);
+    const [forceUseSVG, setForceUseSVG] = useState(false);
+    const [isBubbling, setIsBubbling] = useState(false);
 
     const router = useRouter();
 
@@ -124,6 +126,21 @@ const Model = (props: { game: any, onSceneInit?: (scene: any) => void }) => {
     }, []
   );
   
+  // Check if potion can change state
+  const canPotionChangeState = () => {
+    if (!props.game || !props.game.Player) return false;
+    const currentRoom = props.game.Player?.currentRoom;
+    const hasSmallPotion = props.game.Player?.inventory?.items?.includes("drunkSmallPotion");
+    const hasBigPotion = props.game.Player?.inventory?.items?.includes("drunkBigPotion");
+
+    // Can drink in DungeonAdventureRoom always
+    if (currentRoom === 'DungeonAdventureRoom') return true;
+    // Can drink in WelcomeRoom if not already small
+    if ((currentRoom === 'WelcomeRoom' || currentRoom === 'WelcomeRoom2') && !hasSmallPotion) return true;
+
+    return false;
+  };
+
   return (
     <>
     <div id="scene-container" style={{
@@ -134,10 +151,55 @@ const Model = (props: { game: any, onSceneInit?: (scene: any) => void }) => {
       position: 'relative',
       pointerEvents: 'auto',
       display: 'flex',
+      flexDirection: 'column',
       alignItems: 'center',
-      justifyContent: 'center'
+      justifyContent: 'center',
+      gap: '20px'
     }}>
-      {!isInitialized && (
+      {/* Neumorphic Toggle Button */}
+      <button
+        onClick={() => setForceUseSVG(!forceUseSVG)}
+        style={{
+          position: 'absolute',
+          top: '10px',
+          right: '10px',
+          width: '60px',
+          height: '60px',
+          borderRadius: '20px',
+          border: 'none',
+          background: forceUseSVG
+            ? 'linear-gradient(145deg, rgba(var(--accent-primary-rgb), 0.1), rgba(var(--accent-secondary-rgb), 0.05))'
+            : 'linear-gradient(145deg, rgba(var(--bg-primary-rgb), 0.9), rgba(var(--page-bg-rgb), 0.8))',
+          boxShadow: forceUseSVG
+            ? 'inset 8px 8px 16px rgba(0,0,0,0.2), inset -8px -8px 16px rgba(255,255,255,0.05)'
+            : '8px 8px 16px rgba(0,0,0,0.15), -8px -8px 16px rgba(255,255,255,0.05), inset 2px 2px 4px rgba(255,255,255,0.1)',
+          cursor: 'pointer',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          fontSize: '24px',
+          transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
+          zIndex: 10,
+          color: 'var(--accent-primary)'
+        }}
+        onMouseEnter={(e) => {
+          e.currentTarget.style.transform = 'scale(1.05) rotate(5deg)';
+        }}
+        onMouseLeave={(e) => {
+          e.currentTarget.style.transform = 'scale(1) rotate(0deg)';
+        }}
+        title={forceUseSVG ? 'Switch to 3D Mode' : 'Switch to 2D Mode'}
+      >
+        <span style={{
+          display: 'inline-block',
+          transition: 'transform 0.3s ease',
+          transform: forceUseSVG ? 'rotate(180deg)' : 'rotate(0deg)'
+        }}>
+          {forceUseSVG ? '🎨' : '🎮'}
+        </span>
+      </button>
+
+      {(!isInitialized || forceUseSVG) && (
         <div style={{
           cursor: 'pointer',
           transition: 'transform 0.5s cubic-bezier(0.4, 0, 0.2, 1)',
@@ -149,32 +211,57 @@ const Model = (props: { game: any, onSceneInit?: (scene: any) => void }) => {
           transform: `scale(${potionScale})`
         }}
         onClick={() => {
-          if (props.game) {
+          if (props.game && canPotionChangeState()) {
             const currentRoom = props.game.Player?.currentRoom;
             const hasSmallPotion = props.game.Player?.inventory?.items?.includes("drunkSmallPotion");
+            const hasBigPotion = props.game.Player?.inventory?.items?.includes("drunkBigPotion");
+            const previousInventory = [...(props.game.Player?.inventory?.items || [])];
 
-            // Check what room we're in to handle the potion correctly
-            if (currentRoom === 'DungeonAdventureRoom' || (currentRoom === 'WelcomeRoom' && !hasSmallPotion)) {
-              props.game.userSend("drink potion");
+            // Trigger bubbling animation
+            setIsBubbling(true);
+            setTimeout(() => setIsBubbling(false), 2000);
 
-              // Add a nice animation effect
-              const potionElement = document.querySelector('#potion-svg');
-              if (potionElement) {
-                potionElement.classList.add('drinking-animation');
-                setTimeout(() => {
-                  potionElement.classList.remove('drinking-animation');
-                }, 600);
+            props.game.userSend("drink potion");
+
+            // Add a nice animation effect
+            const potionElement = document.querySelector('#potion-svg');
+            if (potionElement) {
+              potionElement.classList.add('drinking-animation');
+              setTimeout(() => {
+                potionElement.classList.remove('drinking-animation');
+              }, 600);
+            }
+
+            setTimeout(() => {
+              const currentInventory = props.game.Player?.inventory?.items || [];
+              // Check if inventory changed (potion had an effect)
+              const inventoryChanged = previousInventory.length !== currentInventory.length ||
+                                      !previousInventory.every(item => currentInventory.includes(item));
+
+              if (inventoryChanged) {
+                // Scroll to bottom if potion had an effect
+                const displayEl = document.getElementById('display');
+                if (displayEl) {
+                  displayEl.scrollTop = displayEl.scrollHeight;
+                }
               }
 
+              const event = new CustomEvent('gameStateUpdate', {
+                detail: {
+                  currentRoom: props.game.Player?.currentRoom,
+                  inventory: props.game.Player?.inventory?.items
+                }
+              });
+              window.dispatchEvent(event);
+            }, 300);
+          } else if (props.game && !canPotionChangeState()) {
+            // Just wiggle the potion if it can't change state
+            const potionElement = document.querySelector('#potion-svg');
+            if (potionElement) {
+              potionElement.style.animation = 'wiggle 0.5s ease-in-out';
               setTimeout(() => {
-                const event = new CustomEvent('gameStateUpdate', {
-                  detail: {
-                    currentRoom: props.game.Player?.currentRoom,
-                    inventory: props.game.Player?.inventory?.items
-                  }
-                });
-                window.dispatchEvent(event);
-              }, 100);
+                potionElement.style.animation = '';
+              }, 500);
             }
           }
         }}
@@ -193,14 +280,50 @@ const Model = (props: { game: any, onSceneInit?: (scene: any) => void }) => {
               .drinking-animation {
                 animation: drink 0.6s ease-in-out;
               }
+              @keyframes wiggle {
+                0%, 100% { transform: rotate(0deg); }
+                25% { transform: rotate(-5deg); }
+                75% { transform: rotate(5deg); }
+              }
+              @keyframes intenseBubble {
+                0% { transform: translateY(0) scale(1); opacity: 0.8; }
+                50% { transform: translateY(-20px) scale(1.2); opacity: 1; }
+                100% { transform: translateY(-40px) scale(0.8); opacity: 0; }
+              }
+              @keyframes colorShift {
+                0% { stop-color: rgb(138, 43, 226); }
+                33% { stop-color: rgb(255, 20, 147); }
+                66% { stop-color: rgb(0, 191, 255); }
+                100% { stop-color: rgb(138, 43, 226); }
+              }
             `}
           </style>
-          <svg id="potion-svg" width="200" height="300" viewBox="0 0 200 300" xmlns="http://www.w3.org/2000/svg">
+          <svg id="potion-svg" width="200" height="300" viewBox="0 0 200 300" xmlns="http://www.w3.org/2000/svg"
+            style={{
+              filter: canPotionChangeState() ? 'drop-shadow(0 0 20px rgba(138, 43, 226, 0.6))' : 'none',
+              transition: 'filter 0.3s ease'
+            }}>
             <defs>
               <linearGradient id="potionGradient" x1="0%" y1="0%" x2="0%" y2="100%">
-                <stop offset="0%" style={{stopColor: 'rgb(138, 43, 226)', stopOpacity: 0.8}} />
-                <stop offset="50%" style={{stopColor: 'rgb(218, 165, 32)', stopOpacity: 0.6}} />
-                <stop offset="100%" style={{stopColor: 'rgb(138, 43, 226)', stopOpacity: 0.8}} />
+                <stop offset="0%" style={{
+                  stopColor: isBubbling ? 'rgb(255, 20, 147)' : 'rgb(138, 43, 226)',
+                  stopOpacity: 0.8,
+                  transition: 'stop-color 0.5s ease'
+                }}>
+                  {isBubbling && <animate attributeName="stop-color" values="rgb(138,43,226);rgb(255,20,147);rgb(0,191,255);rgb(138,43,226)" dur="2s" />}
+                </stop>
+                <stop offset="50%" style={{
+                  stopColor: isBubbling ? 'rgb(0, 191, 255)' : 'rgb(218, 165, 32)',
+                  stopOpacity: 0.6
+                }}>
+                  {isBubbling && <animate attributeName="stop-color" values="rgb(218,165,32);rgb(0,191,255);rgb(255,20,147);rgb(218,165,32)" dur="2s" />}
+                </stop>
+                <stop offset="100%" style={{
+                  stopColor: isBubbling ? 'rgb(255, 20, 147)' : 'rgb(138, 43, 226)',
+                  stopOpacity: 0.8
+                }}>
+                  {isBubbling && <animate attributeName="stop-color" values="rgb(138,43,226);rgb(0,191,255);rgb(255,20,147);rgb(138,43,226)" dur="2s" />}
+                </stop>
               </linearGradient>
               <filter id="glow">
                 <feGaussianBlur stdDeviation="4" result="coloredBlur"/>
@@ -210,15 +333,30 @@ const Model = (props: { game: any, onSceneInit?: (scene: any) => void }) => {
                 </feMerge>
               </filter>
               <pattern id="bubbles" x="0" y="0" width="40" height="40" patternUnits="userSpaceOnUse">
-                <circle cx="5" cy="5" r="2" fill="rgba(255,255,255,0.3)">
-                  <animate attributeName="cy" from="40" to="-5" dur="3s" repeatCount="indefinite"/>
+                <circle cx="5" cy="5" r={isBubbling ? "3" : "2"} fill="rgba(255,255,255,0.3)">
+                  <animate attributeName="cy" from="40" to="-5" dur={isBubbling ? "1.5s" : "3s"} repeatCount="indefinite"/>
+                  {isBubbling && <animate attributeName="r" values="2;4;2" dur="1s" repeatCount="indefinite"/>}
                 </circle>
-                <circle cx="15" cy="20" r="1.5" fill="rgba(255,255,255,0.2)">
-                  <animate attributeName="cy" from="40" to="-5" dur="2.5s" repeatCount="indefinite"/>
+                <circle cx="15" cy="20" r={isBubbling ? "2.5" : "1.5"} fill="rgba(255,255,255,0.2)">
+                  <animate attributeName="cy" from="40" to="-5" dur={isBubbling ? "1.2s" : "2.5s"} repeatCount="indefinite"/>
+                  {isBubbling && <animate attributeName="r" values="1.5;3;1.5" dur="1.2s" repeatCount="indefinite"/>}
                 </circle>
-                <circle cx="30" cy="30" r="1" fill="rgba(255,255,255,0.25)">
-                  <animate attributeName="cy" from="40" to="-5" dur="4s" repeatCount="indefinite"/>
+                <circle cx="30" cy="30" r={isBubbling ? "2" : "1"} fill="rgba(255,255,255,0.25)">
+                  <animate attributeName="cy" from="40" to="-5" dur={isBubbling ? "2s" : "4s"} repeatCount="indefinite"/>
+                  {isBubbling && <animate attributeName="r" values="1;2.5;1" dur="1.5s" repeatCount="indefinite"/>}
                 </circle>
+                {isBubbling && (
+                  <>
+                    <circle cx="25" cy="10" r="2.5" fill="rgba(255,255,255,0.4)">
+                      <animate attributeName="cy" from="40" to="-5" dur="1s" repeatCount="indefinite"/>
+                      <animate attributeName="r" values="2;3.5;2" dur="0.8s" repeatCount="indefinite"/>
+                    </circle>
+                    <circle cx="35" cy="25" r="1.8" fill="rgba(255,255,255,0.35)">
+                      <animate attributeName="cy" from="40" to="-5" dur="1.3s" repeatCount="indefinite"/>
+                      <animate attributeName="r" values="1.5;2.8;1.5" dur="1s" repeatCount="indefinite"/>
+                    </circle>
+                  </>
+                )}
               </pattern>
             </defs>
 
@@ -236,10 +374,12 @@ const Model = (props: { game: any, onSceneInit?: (scene: any) => void }) => {
 
             {/* Liquid inside with animation */}
             <ellipse cx="100" cy="210" rx="26" ry="45" fill="url(#potionGradient)" opacity="0.9">
-              <animate attributeName="ry" values="45;48;45" dur="2s" repeatCount="indefinite"/>
+              <animate attributeName="ry" values={isBubbling ? "45;52;45" : "45;48;45"} dur={isBubbling ? "1s" : "2s"} repeatCount="indefinite"/>
+              {canPotionChangeState() && <animate attributeName="opacity" values="0.9;1;0.9" dur="1.5s" repeatCount="indefinite"/>}
             </ellipse>
             <rect x="77" y="120" width="46" height="90" fill="url(#potionGradient)" opacity="0.9">
-              <animate attributeName="height" values="90;95;90" dur="2s" repeatCount="indefinite"/>
+              <animate attributeName="height" values={isBubbling ? "90;100;90" : "90;95;90"} dur={isBubbling ? "1s" : "2s"} repeatCount="indefinite"/>
+              {canPotionChangeState() && <animate attributeName="opacity" values="0.9;1;0.9" dur="1.5s" repeatCount="indefinite"/>}
             </rect>
 
             {/* Bubbles overlay */}
@@ -261,31 +401,46 @@ const Model = (props: { game: any, onSceneInit?: (scene: any) => void }) => {
               <animate attributeName="ry" values="100;105;100" dur="3s" repeatCount="indefinite"/>
             </ellipse>
 
-            {/* Sparkles */}
-            <circle cx="120" cy="100" r="1" fill="white" opacity="0">
-              <animate attributeName="opacity" values="0;1;0" dur="2s" repeatCount="indefinite"/>
+            {/* Sparkles - more active when potion can change state */}
+            <circle cx="120" cy="100" r={canPotionChangeState() ? "2" : "1"} fill="white" opacity="0">
+              <animate attributeName="opacity" values="0;1;0" dur={canPotionChangeState() ? "1s" : "2s"} repeatCount="indefinite"/>
             </circle>
-            <circle cx="80" cy="150" r="1" fill="white" opacity="0">
-              <animate attributeName="opacity" values="0;1;0" dur="2s" begin="0.5s" repeatCount="indefinite"/>
+            <circle cx="80" cy="150" r={canPotionChangeState() ? "2" : "1"} fill="white" opacity="0">
+              <animate attributeName="opacity" values="0;1;0" dur={canPotionChangeState() ? "1s" : "2s"} begin="0.5s" repeatCount="indefinite"/>
             </circle>
-            <circle cx="110" cy="200" r="1" fill="white" opacity="0">
-              <animate attributeName="opacity" values="0;1;0" dur="2s" begin="1s" repeatCount="indefinite"/>
+            <circle cx="110" cy="200" r={canPotionChangeState() ? "2" : "1"} fill="white" opacity="0">
+              <animate attributeName="opacity" values="0;1;0" dur={canPotionChangeState() ? "1s" : "2s"} begin="1s" repeatCount="indefinite"/>
             </circle>
+            {canPotionChangeState() && (
+              <>
+                <circle cx="90" cy="120" r="1.5" fill="gold" opacity="0">
+                  <animate attributeName="opacity" values="0;0.8;0" dur="0.8s" begin="0.2s" repeatCount="indefinite"/>
+                </circle>
+                <circle cx="130" cy="180" r="1.5" fill="cyan" opacity="0">
+                  <animate attributeName="opacity" values="0;0.8;0" dur="0.8s" begin="0.7s" repeatCount="indefinite"/>
+                </circle>
+              </>
+            )}
           </svg>
 
           <div style={{
-            color: 'var(--accent-secondary)',
+            color: canPotionChangeState() ? 'var(--accent-primary)' : 'var(--accent-secondary)',
             fontSize: potionScale === 0.5 ? '10px' : '12px',
             textAlign: 'center',
             fontFamily: 'Crimson Text, serif',
             fontStyle: 'italic',
-            opacity: 0.7,
+            opacity: canPotionChangeState() ? 0.9 : 0.7,
             marginTop: '10px',
-            transition: 'font-size 0.5s ease'
+            transition: 'all 0.5s ease',
+            textShadow: canPotionChangeState() ? '0 0 10px rgba(138, 43, 226, 0.5)' : 'none'
           }}>
             {potionScale === 0.5
               ? "🔬 You feel smaller... The potion shrunk too! 🔬"
-              : "✨ WebGL disabled - Click the 2D potion to drink ✨"
+              : canPotionChangeState()
+                ? "✨ The potion is ready to drink! ✨"
+                : forceUseSVG
+                  ? "🎨 2D Mode - The potion awaits... 🎨"
+                  : "✨ WebGL disabled - Click the 2D potion ✨"
             }
           </div>
         </div>

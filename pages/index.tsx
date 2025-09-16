@@ -251,19 +251,26 @@ export default function Home() {
               game.userSend(promptData.command);
               setTimeout(() => {
                 const currentRoom = game.Player.currentRoom;
+                console.log('[DEBUG] Room check - Previous:', previousRoom, 'Current:', currentRoom);
                 const displayEl = document.getElementById('display');
                 if (displayEl) {
-                  if (previousRoom === currentRoom) {
-                    // Same room - scroll to bottom to show the result/error
-                    displayEl.scrollTop = displayEl.scrollHeight;
-                  } else {
+                  if (previousRoom !== currentRoom) {
                     // New room - scroll to top to show new room description
+                    console.log('[DEBUG] New room - forcing scroll to top');
                     displayEl.scrollTop = 0;
+                    // Double-check scroll position after a tiny delay
+                    setTimeout(() => {
+                      displayEl.scrollTop = 0;
+                    }, 50);
+                  } else {
+                    // Same room - scroll to bottom to show the result/error
+                    console.log('[DEBUG] Same room - scrolling to bottom');
+                    displayEl.scrollTop = displayEl.scrollHeight;
                   }
                 }
                 updateStatuses();
                 ensurePromptsVisible();
-              }, 100);
+              }, 400);
             };
             promptsContainer.appendChild(promptEl);
             console.log('[DEBUG] Added manual prompt:', promptData.text);
@@ -315,23 +322,30 @@ export default function Home() {
     (document.getElementById('input') as HTMLInputElement).value = '';
     setTimeout(() => {
       const currentRoom = game.Player.currentRoom;
+      console.log('[DEBUG] Command typed - Previous room:', previousRoom, 'Current room:', currentRoom);
       const displayEl = document.getElementById('display');
-      
+
       // If we're in the same room (action failed or examining), scroll to bottom
       // If we changed rooms, scroll to top
       if (displayEl) {
-        if (previousRoom === currentRoom) {
-          // Same room - scroll to bottom to show the result/error
-          displayEl.scrollTop = displayEl.scrollHeight;
-        } else {
+        if (previousRoom !== currentRoom) {
           // New room - scroll to top to show new room description
+          console.log('[DEBUG] New room - forcing scroll to top');
           displayEl.scrollTop = 0;
+          // Double-check scroll position after a tiny delay
+          setTimeout(() => {
+            displayEl.scrollTop = 0;
+          }, 50);
+        } else {
+          // Same room - scroll to bottom to show the result/error
+          console.log('[DEBUG] Same room - scrolling to bottom');
+          displayEl.scrollTop = displayEl.scrollHeight;
         }
       }
-      
+
       updateStatuses();
       ensurePromptsVisible();
-    }, 100);
+    }, 400);
 }
 
 function ensurePromptsVisible() {
@@ -460,21 +474,32 @@ function ensurePromptsVisible() {
           console.log('[DEBUG] Sending to game:', command);
           const previousRoom = game.Player.currentRoom;
           game.userSend(command);
+
+          // Use a slightly longer timeout to ensure the game has updated
           setTimeout(() => {
             const currentRoom = game.Player.currentRoom;
+            console.log('[DEBUG] Prompt click - Previous room:', previousRoom, 'Current room:', currentRoom);
+
             const displayEl = document.getElementById('display');
             if (displayEl) {
-              if (previousRoom === currentRoom) {
-                // Same room - scroll to bottom to show the result/error
-                displayEl.scrollTop = displayEl.scrollHeight;
-              } else {
-                // New room - scroll to top to show new room description
+              // Always scroll to top if room changed
+              if (previousRoom !== currentRoom) {
+                console.log('[DEBUG] Room changed - forcing scroll to top');
+                // Force scroll to top with a small additional delay to ensure content is rendered
                 displayEl.scrollTop = 0;
+                // Double-check scroll position after a tiny delay
+                setTimeout(() => {
+                  displayEl.scrollTop = 0;
+                }, 50);
+              } else {
+                // Same room - scroll to bottom to show the result/error
+                console.log('[DEBUG] Same room - scrolling to bottom');
+                displayEl.scrollTop = displayEl.scrollHeight;
               }
             }
             updateStatuses();
             ensurePromptsVisible();
-          }, 100);
+          }, 400);
         });
         prompt.setAttribute('data-handler-added', 'true');
       }

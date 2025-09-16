@@ -14,7 +14,7 @@ ogImage:
 
 <a href="https://manic.agency/blog/tutorials/building-magiclogger-and-magic" style="text-align: center" target="_blank" class="md-link">Full blog post</a>
 
-![MagicLogger Terminal demo](/assets/projects/magiclogger-terminal-demo.gif)
+![MagicLogger Terminal demo](https://raw.githubusercontent.com/manicinc/magiclogger/master/website/static/img/magiclogger-terminal-demo.gif)
 
 MagicLogger is a library based on an experimental philosophy: **what if better-designed logs meant we needed fewer of them?**
 

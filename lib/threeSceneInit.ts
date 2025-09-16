@@ -227,13 +227,18 @@ export default class SceneInit {
           // DungeonAdventureRoom logic - can drink potion when small to become big again
           if (currentRoom === 'DungeonAdventureRoom') {
             // In DungeonAdventureRoom, always allow drinking
+            const previousSmallState = hasSmallPotion;
+            const previousBigState = hasBigPotion;
             this.game.userSend("drink potion");
-            
+
             setTimeout(() => {
               // Check state after drinking
               const nowHasBigPotion = this.game.Player.inventory.items.includes('drunkBigPotion');
               const nowHasSmallPotion = this.game.Player.inventory.items.includes('drunkSmallPotion');
-              
+
+              // Check if potion state actually changed
+              const stateChanged = (previousSmallState !== nowHasSmallPotion) || (previousBigState !== nowHasBigPotion);
+
               for (let i = 0; i < this.scene.children.length; i++) {
                 if (this.scene.children[i].name === 'Sketchfab_Scene') {
                   if (nowHasBigPotion && !nowHasSmallPotion) {
@@ -245,22 +250,38 @@ export default class SceneInit {
                   }
                 }
               }
+
+              // If potion changed state, scroll to bottom to show status
+              if (stateChanged) {
+                const displayEl = document.getElementById('display');
+                if (displayEl) {
+                  displayEl.scrollTop = displayEl.scrollHeight;
+                }
+              }
+
               this.updateGameState();
               this.isProcessingClick = false;
             }, 300);
           } else if (currentRoom === 'WelcomeRoom' || currentRoom === 'WelcomeRoom2') {
             // In welcome rooms, drink potion to become small if not already
             if (!hasSmallPotion) {
+              const previousSmallState = hasSmallPotion;
               this.game.userSend("drink potion");
-              
+
               setTimeout(() => {
                 // After drinking, check if we're now small
-                if (this.game.Player.inventory.items.includes('drunkSmallPotion')) {
+                const nowHasSmallPotion = this.game.Player.inventory.items.includes('drunkSmallPotion');
+                if (nowHasSmallPotion) {
                   for (let i = 0; i < this.scene.children.length; i++) {
                     if (this.scene.children[i].name === 'Sketchfab_Scene') {
                       // Make potion smaller since player is now small
                       this.scene.children[i].scale.set(0.075, 0.075, 0.075);
                     }
+                  }
+                  // Scroll to bottom since potion changed state
+                  const displayEl = document.getElementById('display');
+                  if (displayEl) {
+                    displayEl.scrollTop = displayEl.scrollHeight;
                   }
                 }
                 this.updateGameState();
@@ -272,8 +293,22 @@ export default class SceneInit {
             }
           } else {
             // In other rooms, try to drink if there's a potion available
+            const previousInventory = [...this.game.Player.inventory.items];
             this.game.userSend("drink potion");
             setTimeout(() => {
+              const currentInventory = this.game.Player.inventory.items;
+              // Check if inventory changed (potion had an effect)
+              const inventoryChanged = previousInventory.length !== currentInventory.length ||
+                                      !previousInventory.every(item => currentInventory.includes(item));
+
+              if (inventoryChanged) {
+                // Scroll to bottom if potion had an effect
+                const displayEl = document.getElementById('display');
+                if (displayEl) {
+                  displayEl.scrollTop = displayEl.scrollHeight;
+                }
+              }
+
               this.updateGameState();
               this.isProcessingClick = false;
             }, 300);
@@ -339,13 +374,18 @@ export default class SceneInit {
           // DungeonAdventureRoom logic - can drink potion when small to become big again
           if (currentRoom === 'DungeonAdventureRoom') {
             // In DungeonAdventureRoom, always allow drinking
+            const previousSmallState = hasSmallPotion;
+            const previousBigState = hasBigPotion;
             this.game.userSend("drink potion");
-            
+
             setTimeout(() => {
               // Check state after drinking
               const nowHasBigPotion = this.game.Player.inventory.items.includes('drunkBigPotion');
               const nowHasSmallPotion = this.game.Player.inventory.items.includes('drunkSmallPotion');
-              
+
+              // Check if potion state actually changed
+              const stateChanged = (previousSmallState !== nowHasSmallPotion) || (previousBigState !== nowHasBigPotion);
+
               for (let i = 0; i < this.scene.children.length; i++) {
                 if (this.scene.children[i].name === 'Sketchfab_Scene') {
                   if (nowHasBigPotion && !nowHasSmallPotion) {
@@ -357,22 +397,38 @@ export default class SceneInit {
                   }
                 }
               }
+
+              // If potion changed state, scroll to bottom to show status
+              if (stateChanged) {
+                const displayEl = document.getElementById('display');
+                if (displayEl) {
+                  displayEl.scrollTop = displayEl.scrollHeight;
+                }
+              }
+
               this.updateGameState();
               this.isProcessingClick = false;
             }, 300);
           } else if (currentRoom === 'WelcomeRoom' || currentRoom === 'WelcomeRoom2') {
             // In welcome rooms, drink potion to become small if not already
             if (!hasSmallPotion) {
+              const previousSmallState = hasSmallPotion;
               this.game.userSend("drink potion");
-              
+
               setTimeout(() => {
                 // After drinking, check if we're now small
-                if (this.game.Player.inventory.items.includes('drunkSmallPotion')) {
+                const nowHasSmallPotion = this.game.Player.inventory.items.includes('drunkSmallPotion');
+                if (nowHasSmallPotion) {
                   for (let i = 0; i < this.scene.children.length; i++) {
                     if (this.scene.children[i].name === 'Sketchfab_Scene') {
                       // Make potion smaller since player is now small
                       this.scene.children[i].scale.set(0.075, 0.075, 0.075);
                     }
+                  }
+                  // Scroll to bottom since potion changed state
+                  const displayEl = document.getElementById('display');
+                  if (displayEl) {
+                    displayEl.scrollTop = displayEl.scrollHeight;
                   }
                 }
                 this.updateGameState();
@@ -384,8 +440,22 @@ export default class SceneInit {
             }
           } else {
             // In other rooms, try to drink if there's a potion available
+            const previousInventory = [...this.game.Player.inventory.items];
             this.game.userSend("drink potion");
             setTimeout(() => {
+              const currentInventory = this.game.Player.inventory.items;
+              // Check if inventory changed (potion had an effect)
+              const inventoryChanged = previousInventory.length !== currentInventory.length ||
+                                      !previousInventory.every(item => currentInventory.includes(item));
+
+              if (inventoryChanged) {
+                // Scroll to bottom if potion had an effect
+                const displayEl = document.getElementById('display');
+                if (displayEl) {
+                  displayEl.scrollTop = displayEl.scrollHeight;
+                }
+              }
+
               this.updateGameState();
               this.isProcessingClick = false;
             }, 300);
