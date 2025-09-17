@@ -491,18 +491,30 @@
   .backButton {
     top: 1rem;
     left: 1rem;
-    
+
     button {
-      width: 40px;
-      height: 40px;
-      
+      // Remove fixed dimensions for better icon centering
+      padding: 0.6rem;
+      min-width: 40px;
+      min-height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0;
+
       svg {
-        width: 20px;
-        height: 20px;
+        width: 22px;
+        height: 22px;
+        margin: 0;
+        display: block;
+      }
+
+      // Hide text on mobile for cleaner icon-only display
+      .backText {
+        display: none;
       }
     }
-  }
-  
+  }  
   .postTitle {
     font-size: 1.8rem;
     
