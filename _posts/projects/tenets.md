@@ -119,7 +119,7 @@ score = IDF(term) × [TF × (k1 + 1)] / [TF + k1 × (1 - b + b × docLength/avgD
 
 Code is inherently redundant. A test file with 50 instances of `assert response.status == 200` shouldn't dominate searches for "response". BM25's term saturation prevents this.
 
-We also support tf-idf analysis (though this is less recommended as it does not account for issues like what we just mentioned). 
+We also support tf-idf analysis with sparse cosine similarity (though this is less recommended as it does not account as well for issues like what we just mentioned). 
 
 ```python
 # BM25: Stores raw tokens, calculates scores on-the-fly
@@ -190,6 +190,8 @@ def smart_truncate(method, max_tokens):
 ```
 
 ## RAKE vs YAKE: keyword extraction 
+
+Note: For our core modes (`fast` and `balanced`) keyword extraction we are not considering any ML-related dependencies, relying on statistical algorithms since this will be the basis of our search / ranking systems. Only in `thorough` mode do we consider embeddings.
 
 | Algorithm | Speed | Quality | Memory | Python 3.13 | How It Works |
 |-----------|-------|---------|---------|-------------|--------------|
@@ -303,6 +305,57 @@ elif intent == "test":
     weights["path_relevance"] *= 2.0  # test/ directories
     weights["ast_relevance"] *= 1.5   # assert statements
 ```
+
+## ML embeddings / semantic similarity
+
+## ML embeddings / semantic similarity
+
+For now, the ML features in tenets weren't a priority for pre-v1.0 release, but will be ramped up (gracefully with lazy loading) in future versions.
+
+We use `sentence-transformers` with a default model in `all-MiniLM-L6-v2` which provides general-purpose embeddings and can be configured to use other models like `microsoft/codebert-base` (trained on code), `microsoft/unixcoder-base` (better for code search), and future support for `codellama-13b` (for heavier workloads).
+
+Dense embeddings convert your code into numerical vectors where similar code ends up nearby in vector space. We pre-compute embeddings for all files once, then at search time only need to embed your query and find the closest matches - fast but sometimes misses nuanced relationships since query and document are processed separately.
+
+tenets employs a multi-stage ranking system that combines lexical (priority) and semantic signals:
+
+| Stage | Method | Weight | Speed | Use Case |
+|-------|--------|--------|-------|----------|
+| Primary | BM25 | 25% | Fast | Exact matches, keywords |
+| Secondary | Dense Embeddings | 10% | Fast* | Semantic similarity |
+| Optional | Cross-Encoder Reranking | N/A | Slower | Maximum precision |
+
+*After initial embedding computation
+
+Enable different modes based on your needs:
+```bash
+tenets distill "query" --mode quick     # BM25 only
+tenets distill "query" --mode balanced  # BM25 + embeddings (default)
+tenets distill "query" --mode thorough  # All signals + optional reranking
+tenets distill "query" --rerank         # Force reranking for precision
+```
+
+Cross-encoder reranking (cross-encoder/ms-marco-MiniLM-L-6-v2) works like a judge that reads both things at once to score relevance. Instead of converting query and document into separate vectors and comparing them, it literally concatenates them.
+
+**Dense embeddings compress everything into one vector and hope similar things land nearby:**
+```
+"implement OAuth2" → [0.2, 0.5, -0.3, ...]
+"def oauth2_authenticate()" → [0.3, 0.4, -0.2, ...]
+Similarity = high
+```
+
+The model made those vectors separately without ever seeing them together. It's guessing they're related based on vector proximity.
+
+**Cross-encoders actually read both and make a judgment:**
+
+```
+Input: "implement OAuth2 [SEP] def oauth2_authenticate(client_id, secret):..."
+Output: 0.95 (this function directly implements OAuth2)
+
+Input: "implement OAuth2 [SEP] # OAuth2 is deprecated, use OAuth3"  
+Output: 0.15 (mentions OAuth2 but has the **opposite** intent)
+```
+
+Thus, the optional re-ranking takes additional time but is recommended for best accuracy.
 
 ## Architecture challenge: A functional CLI + Python API
 
