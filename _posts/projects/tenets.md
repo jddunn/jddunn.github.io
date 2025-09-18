@@ -11,20 +11,18 @@ tags: 'python,llms,ai,dev-tools'
 ogImage:
   url: '/assets/projects/tenets/tenets_dark_icon.png'
 ---
+
 <a href="https://github.com/jddunn/tenets" style="text-align: center" target="_blank" class="md-link">GitHub link</a>
 
 <a href="https://tenets.dev" style="text-align: center" target="_blank" class="md-link">Website / docs link</a>
 
 # Building tenets: Intelligent Context Aggregation for AI Pair Programming
 
-**GitHub: [github.com/jddunn/tenets](https://github.com/jddunn/tenets)**
-**Website: [tenets.dev](https://tenets.dev)**
+## Uncanny AI coding assistants
 
-## The Problem with AI Code Assistants
+I work often with AI pair programming tools - CoPilot Chat, Cursor, Codex, Claude Code, aider, Windsurf (not so much anymore), etc. They all have access to your Git repos and basic terminal commands (if you give it to them, though from anecdotes on the web and my personal experiences as well, it's clear that *permissions* unfortunately isn't exactly deterministic in these tools) like `ls` and `grep`, and of course `nano` or `rmv`.
 
-I work often with AI pair programming tools - CoPilot Chat, Cursor, Codex, Claude Code, aider, Windsurf (not anymore), etc. They all have access to your Git repos and CLI, with full permissions to run commands like `ls` and `grep`.
-
-An incredibly strange thing with LLMs is you will tell them something very specific, like: "logic in the summarizer is looping twice because the batch processor isn't clearing the processed_chunks, fix it", and then you'll see the tool calling commands running:
+An incredibly strange thing with LLMs is you will tell them something very specific, like: "logic in the summarizer is looping twice because the batch processor isn't clearing the processed_chunks var, fix it", which is not a great prompt but gets things started, and then you'll see the tool calling commands running:
 
 ```bash
 # First attempt - literal string matching
@@ -50,13 +48,17 @@ grep -r "processed_chunks\|process_chunks\|chunk_process\|chunks_processed"
 grep -r "self\.processed_chunks"
 ```
 
-Usually it'll find it after like 1-2 attempts after the first failed honestly, it's not such a hindrance you find yourself needing to use a new tool. But it's a symptom of a larger issue at play interacting with LLMs.
+Usually it'll find it after like 1-2 attempts after the first failed honestly, it's not such a hindrance you find yourself needing to use a new tool. The example's exaggerated to demonstrate a symptom of a larger issue at play interacting with LLMs, cause I guess what **really** gets me is the first step *always* (at the moment) seems to be, query the exact phrase the user's looking for in every file. That just seems dumb, even for a first move, even for a LLM. Then of course it has graceful escalation from there, regexing multiple synonyms or breaking down the phrase into manageable chunks.
 
-Imagine you're in a new conversation, and maybe the LLM has full access to your Git repo / codebase; however, they won't go too exploratory in this process. LLMs won't (importantly it's won't not can't) even recursively search the filenames in your directory to build a tree structure to *understand* what the codebase actually looks like, at most it'll look at the imports, aggregate what it thinks is relevant, and calls it complete. At least right now, none of these tools for AI pair programming bother to do it, which to me seems like an obvious initial first step.
+What's also strange is the LLM has full access to your files, to read at least however, they won't go too exploratory in the process of finding and collecting the data (even after you give them permission!). LLMs won't (importantly it's won't not can't) even recursively walk a directory and at least check for file names (reading contents might be too much to ask for) to build a tree structure to *understand* what the codebase actually looks like; at most it'll look at the imports in a relevant file or two, traces some key methods, and calls it good (which it often does work well).
 
-(They will find matching files with your query, then trace the imports and methods used and go from there, which works pretty well but is obviously imperfect).
+It seems a surprisingly weak process for document similarity, a problem with a lot of thought about solutions, and something that's a core utility of AI programming assistants.
 
-It seems a incredibly weak process for document similarity matching from a NLP engineering perspective, let alone not even thinking about the costs of additional LLM calls, especially when conversations get larger and LLMs start summarizing with more LLMs when extractive summarization algorithms or something like BERT (though BERT's significantly slower) could work.
+And we're not even going to think about the costs of additional LLM calls when static tools could do the job, especially when conversations get larger and LLMs start summarizing with more LLMs (when extractive summarization algorithms or something like BERT, though BERT's significantly slower could work fine). 
+
+Sometimes, AI-oriented platforms *insist* on LLMs ingesting and outputting every solution, which in some cases makes sense, and in others seems stubborn and backwards. And sometimes, more often than not, these sort of barriers are almost intended consequences stemming from safeguards or system instructions to optimize token windows.
+
+## What is
 
 **tenets** is a Python library that intelligently navigates repos (or any directory of files) to match, analyze, summarize, and aggregate the most relevant context based on speed, accuracy, or token limits. It uses deterministic algorithms (regex, BM25, cosine similarity) with optional ML embeddings for semantic understanding, and extractive summarization as well as optional LLM summarization that takes into account hierarchy in high-level metadata (how many times a function is referenced, how complex a function may be, etc.), imports / dependencies, and other metrics for heuristics for a total of [10 ranking factors](## Multi-Signal Ranking).
 
@@ -553,6 +555,10 @@ It seems like being in favor of "cleanliness" or perhaps laziness or just plain 
 
 The future of AI pair programming isn't about throwing more compute at the problem or simply relying on models to get bigger and better.
 
+As for the future of tenets, there are clear applications for document similarity matching at the performance and complexity that this library can perform at beyond building developer tools. While tenets is currently fully implemented *just* to support programming contexts, the modules can easily be packaged out into something composable for any type or genre of documents. At some point I think I'll be using tenets in some capacity for [PKMS](https://www.reddit.com/r/PKMS/) and other personal bookkeeping.
+
 **Install:** `pip install tenets`
+
 **Docs:** [tenets.dev](https://tenets.dev)
+
 **GitHub:** [github.com/jddunn/tenets](https://github.com/jddunn/tenets)
