@@ -67,6 +67,8 @@ When you run `tenets distill "add mistral api to summarizer"`, tenets analyzes y
 
 ![Building optimized context with intelligent summarization](/assets/projects/tenets/context-building-2.png)
 
+You can also provide GitHub issue or Jira links, and tenets will fetch and extract those contents and consider them in the rankings of the files as well as contents to output as well in the final `distillation`.
+
 ### File Ranking
 `tenets rank "fix summarizing truncation bug" --tree`
 
@@ -94,7 +96,7 @@ Sessions maintain context across multiple interactions:
 
 ![Interactive D3.js dependency graph visualization](/assets/projects/tenets/visualization.png)
 
-## Technical Design: Why BM25 Over TF-IDF
+## Technical Design
 
 BM25 is a probabilistic ranking algorithm that scores documents for relevancy. Since code files vary from 10 to 10,000+ lines, length shouldn't bias relevance. BM25 adds term saturation (diminishing returns for repeated terms) and document length normalization.
 
