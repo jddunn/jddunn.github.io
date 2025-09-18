@@ -66,6 +66,8 @@ None of tenets's functionality costs API credits - all processing is done locall
 
 tenets is able to perform its full `distillation` (aggregation of context, without ML embeddings) functionality on complex repos with hundreds of source files typically in 30-40 seconds, making it usable as a programmatic API for pair programming tools like aider or Claude CLI (which is intended as one of its end goals).
 
+And yes, at some late midway point in tenet's development, I dogfooded the tool to help it build itself. Tenets was built with the help of Copilot Chat (GPT-5) and Claude Opus / Sonnet.
+
 ## Features in Action
 
 ### Context Building
