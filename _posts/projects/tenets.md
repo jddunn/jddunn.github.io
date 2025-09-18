@@ -20,7 +20,7 @@ ogImage:
 
 ## Uncanny AI coding assistants
 
-I work often with AI pair programming tools - CoPilot Chat, Cursor, Codex, Claude Code, aider, Windsurf (not so much anymore), etc. They all have access to your Git repos and basic terminal commands (if you give it to them, though from anecdotes on the web and my personal experiences as well, it's clear that *permissions* unfortunately isn't exactly deterministic in these tools) like `ls` and `grep`, and of course `nano` or `rmv`.
+I work often with AI pair programming tools - CoPilot Chat, Cursor, Codex, Claude Code, aider, Windsurf (not so much anymore). They all have access to your Git repos and basic terminal commands (if you give it to them, though from anecdotes on the web and my personal experiences as well, it's clear that *permissions* unfortunately isn't exactly deterministic in these tools, but this is a way different discussion) like `ls` and `grep`, and of course `nano` or `rmv`.
 
 An incredibly strange thing with LLMs is you will tell them something very specific, like: "logic in the summarizer is looping twice because the batch processor isn't clearing the processed_chunks var, fix it", which is not a great prompt but gets things started, and then you'll see the tool calling commands running:
 
@@ -48,19 +48,21 @@ grep -r "processed_chunks\|process_chunks\|chunk_process\|chunks_processed"
 grep -r "self\.processed_chunks"
 ```
 
-Usually it'll find it after like 1-2 attempts after the first failed honestly, it's not such a hindrance you find yourself needing to use a new tool. The example's exaggerated to demonstrate a symptom of a larger issue at play interacting with LLMs, cause I guess what **really** gets me is the first step *always* (at the moment) seems to be, query the exact phrase the user's looking for in every file. That just seems dumb, even for a first move, even for a LLM. Then of course it has graceful escalation from there, regexing multiple synonyms or breaking down the phrase into manageable chunks.
+Usually it'll find it after like 1-2 attempts after the first failed honestly, it's not such a hindrance you find it to be a real issue. 
 
-What's also strange is the LLM has full access to your files, to read at least however, they won't go too exploratory in the process of finding and collecting the data (even after you give them permission!). LLMs won't (importantly it's won't not can't) even recursively walk a directory and at least check for file names (reading contents might be too much to ask for) to build a tree structure to *understand* what the codebase actually looks like; at most it'll look at the imports in a relevant file or two, traces some key methods, and calls it good (which it often does work well).
+The example's exaggerated to demonstrate a symptom of a larger issue at play interacting with LLMs, cause I guess what **really** gets me is the first step *always* (at the moment) seems to be, query the exact phrase the user's looking for in every file. That is dumb, even for a first move, even for a LLM. Then of course it has graceful escalation from there, regexing multiple synonyms or breaking down the phrase into manageable chunks.
 
-It seems a surprisingly weak process for document similarity, a problem with a lot of thought about solutions, and something that's a core utility of AI programming assistants.
+What's also strange is the LLM has full access to your files (read at least) but they won't go too exploratory in the process of finding and collecting the data (even after you give them permission!). LLMs won't (importantly it's *won't* not *can't*) even recursively walk a directory and at least check for file names (reading contents is too much to ask for) to build a tree structure to *understand* what the codebase actually looks like; at most it'll look at the imports in a relevant file or two and trace some key methods. Claude Opus at this point oftentimes just tries to read the first 100 lines or so before it stops, hoping it's gotten enough.
 
-And we're not even going to think about the costs of additional LLM calls when static tools could do the job, especially when conversations get larger and LLMs start summarizing with more LLMs (when extractive summarization algorithms or something like BERT, though BERT's significantly slower could work fine). 
+This is insanely weak for document similarity, a problem with a lot of innovated on solutions already, and something that's a foundational utility of AI programming assistants.
 
-Sometimes, AI-oriented platforms *insist* on LLMs ingesting and outputting every solution, which in some cases makes sense, and in others seems stubborn and backwards. And sometimes, more often than not, these sort of barriers are almost intended consequences stemming from safeguards or system instructions to optimize token windows.
+And we're not even going to think about the costs of additional LLM calls when static tools could do the job, especially when conversations get larger and LLMs start summarizing with more LLMs (just extractive summarization algorithms or something like BERT, though BERT's significantly slower, work great if not better since they are more deterministic, which in code, absolutely you do not want paraphrasing). 
+
+We'll see AI platforms *insist* on LLMs ingesting and outputting every solution, which does makes sense sometimes, and other times seems stubborn and backwards. And more often than not these sort of barriers are intended consequences stemming from safeguards or system instructions to optimize token windows.
 
 ## What is
 
-**tenets** is a Python library that intelligently navigates repos (or any directory of files) to match, analyze, summarize, and aggregate the most relevant context based on speed, accuracy, or token limits. It uses deterministic algorithms (regex, BM25, cosine similarity) with optional ML embeddings for semantic understanding, and extractive summarization as well as optional LLM summarization that takes into account hierarchy in high-level metadata (how many times a function is referenced, how complex a function may be, etc.), imports / dependencies, and other metrics for heuristics for a total of [10 ranking factors](## Multi-Signal Ranking).
+**tenets** is a Python library that intelligently navigates repos (or any directory of files) to match, analyze, summarize, and aggregate the most relevant context based on speed, accuracy, and token limits. It uses deterministic algorithms (regex, BM25, cosine similarity) with optional ML embeddings for semantic understanding, and extractive summarization as well as optional LLM summarization that takes into account hierarchy in high-level metadata (how many times a function is referenced, how complex a function may be, etc.), imports / dependencies, and other metrics for heuristics for a total of [10 ranking factors](## Multi-Signal Ranking).
 
 None of tenets's functionality costs API credits - all processing is done locally. There are optional LLM integrations for summarizing, but the recommended route is using the built-in [summarizer algorithms](https://github.com/jddunn/tenets/blob/master/tenets/core/summarizer/strategies.py) first.
 
@@ -77,9 +79,9 @@ When you run `tenets distill "add mistral api to summarizer"`, tenets analyzes y
 
 ![Building optimized context with intelligent summarization](/assets/projects/tenets/context-building-2.png)
 
-You can also provide GitHub issue or Jira links, and tenets will fetch and extract those contents and consider them in the rankings of the files as well as contents to output as well in the final `distillation`.
+You can also provide GitHub issue or Jira links in a query and tenets will fetch and extract those contents and consider them in the rankings of the files as well as contents to output in the final `distillation`.
 
-We also use regex and keyword matching to classify different programming intents in the inputs, for things like documentation, testing, bug fixing, feature creation, refactoring, etc. Naturally, this is a tricky thing to capture when not using models trained to catch intents (which might be reserved for future versions as an optional step), and as such, a weighted system is in place, and classifications are only a partial factor in the rankings.
+We use regex and keyword matching to classify different programming intents in the inputs, for things like documentation, testing, bug fixing, feature creation, refactoring, etc. Naturally, this is a tricky thing to capture correctly when not using models trained for intents (which might be reserved for future versions as an optional step), and as such, a weighted system is in place, and classifications are only a partial factor in the rankings.
 
 We also use the same system to match temporal patterns for time, and factor all that into the analysis / ranking (you can ask about changes from a few days ago and it will rank recently changed files higher).
 
@@ -112,9 +114,11 @@ Sessions maintain context across multiple interactions.
 
 ## Technical Design
 
+Tenets operates in 3 modes, `fast`, `balanced`, and `thorough`. Balanced is about 1.5x slower than fast, and thorough is about 4x slower. Thorough utilizes ML embeddings for semantic searching and matching.
+
 ### Ranking / similarity
 
-BM25 is a probabilistic ranking algorithm that scores documents for relevancy. Since code files vary from 10 to 10,000+ lines, length shouldn't bias relevance. BM25 adds term saturation (diminishing returns for repeated terms) and document length normalization.
+BM25 is a probabilistic ranking algorithm that scores documents for relevancy. Since code files vary from 10 to 10,000+ lines, length shouldn't bias relevance *too* much. BM25 adds term saturation (diminishing returns for repeated terms) and document length normalization.
 
 For each term:
 ```
@@ -139,11 +143,11 @@ def sparse_cosine_similarity(vec1, vec2):
     return dot_product / (norm1 * norm2)
 ```
 
-No stemming or lemmatization - the difference between `summary()` method and `Summary()` class matters in code.
+No stemming or lemmatization, normalizing text so all word forms become base words only; the difference between `summary()` method and `Summary()` class, or `summarize` method versus `summarized` var matters greatly in code, not so much in something like academic research. Using tenets for querying against research papers over source code would technically work but result in poorly matched results.
 
-It's **important** to note that I advertise *thorough* mode in the features of tenets as being the best at exploring and finding relationships between code, not necessarily finding the most accurate context for your prompts. 
+It's **important** to note that I advertise *thorough* mode of tenets as being the best at *exploring* and *discovering* relationships between code, not necessarily finding the most accurate context for your prompts, hence calling it thorough over accurate.
 
-Embeddings see `process_batch()` and `handle_batch()` as semantically similar when you may need or want exact matches. 
+In thorough mode, embeddings see `process_batch()` and `handle_batch()` as semantically similar when you may need or want exact matches. Usually `balanced` is exactly what a day-to-day user of tenets would need.
 
 ## Configurable output with smart truncating
 
