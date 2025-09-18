@@ -69,7 +69,7 @@ tenets is able to perform its full `distillation` (aggregation of context, witho
 ## Features in Action
 
 ### Context Building
-When you run `tenets distill "add mistral api to summarizer"`, tenets analyzes your codebase:
+When you run `tenets distill "add mistral api to summarizer"`, tenets analyzes your codebase.
 
 ![Analyzing and ranking relevant files](/assets/projects/tenets/context-building-1.png)
 
@@ -94,7 +94,7 @@ We also use the same system to match temporal patterns for time, and factor all 
 ![Code quality dashboard](/assets/projects/tenets/quality.png)
 
 ### Session Management
-Sessions maintain context across multiple interactions:
+Sessions maintain context across multiple interactions.
 
 ![Creating a session and adding project-specific tenets](/assets/projects/tenets/sessions-1.png)
 
@@ -145,7 +145,7 @@ Embeddings see `process_batch()` and `handle_batch()` as semantically similar wh
 
 ## Configurable output with smart truncating
 
-tenets can preserve complete methods or intelligently truncate:
+tenets can preserve complete methods or intelligently truncate.
 
 ```bash
 # Never truncate - full methods only
@@ -155,7 +155,8 @@ tenets distill "refactor auth" --no-truncate --preserve-structure
 tenets distill "refactor auth" --smart-summary --max-tokens 4000
 ```
 
-With `--no-truncate`, we select whole methods by relevance:
+With `--no-truncate`, we select whole methods by relevance.
+
 ```python
 def extract_methods_smart(file, token_budget):
     methods = parse_ast(file)
@@ -174,7 +175,8 @@ def extract_methods_smart(file, token_budget):
     return selected  # Complete methods only
 ```
 
-Smart truncation preserves structure while condensing:
+Smart truncation preserves structure while condensing.
+
 ```python
 def smart_truncate(method, max_tokens):
     # Always keep signature + docstring
@@ -203,7 +205,8 @@ Note: For our core modes (`fast` and `balanced`) keyword extraction we are not c
 
 RAKE is primary because it's simpler, predictable, and has no external dependencies beyond stopwords.
 
-RAKE analyzes word co-occurrence to find multi-word phrases:
+RAKE analyzes word co-occurrence to find multi-word phrases.
+
 ```python
 text = "Python web framework Django handles authentication"
 # Split by stopwords → candidate phrases
@@ -237,7 +240,10 @@ class RankingFactors:
     ast_relevance: float     # 0.02 - AST structure matching
 ```
 
-Import centrality identifies core abstractions:
+Import centrality is a metric to identify which files are most important to a codebase, which we use to figure out core abstractions.
+
+We count how many files import each file (incoming) and how many it imports (outgoing), with a default 70-30 ratio of weight.
+
 ```python
 def calculate_import_centrality(file, import_graph):
     imported_by = sum(1 for deps in import_graph.values() if file in deps)
@@ -252,7 +258,7 @@ def calculate_import_centrality(file, import_graph):
 
 ## Parallel navigation, analysis, and aggressive file caching based on Git history
 
-We use parallelization in multiple stages:
+We use parallelization in multiple stages.
 
 ```python
 def rank_files_parallel(files, query, workers=8):
@@ -277,7 +283,7 @@ def rank_files_parallel(files, query, workers=8):
 
     return sorted(ranked, key=lambda x: x[1], reverse=True)
 ```
-We stream results as they become available instead of waiting:
+We stream results as they become available instead of waiting.
 
 ```python
 def scan_and_analyze(self, path: Path):
@@ -294,7 +300,7 @@ def scan_and_analyze(self, path: Path):
                 progress.advance(scan_task)
 ```
 
-And based on the intentions classified in the prompt, rankings are adjusted with some weights:
+And based on the intentions classified in the prompt, rankings are adjusted with some weights.
 
 ```python
 if intent == "debug":
