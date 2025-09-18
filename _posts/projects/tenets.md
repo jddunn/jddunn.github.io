@@ -328,7 +328,7 @@ We use `sentence-transformers` with a default model in `all-MiniLM-L6-v2` which 
 
 Dense embeddings convert your code into numerical vectors where similar code ends up nearby in vector space. We pre-compute embeddings for all files once, then at search time only need to embed your query and find the closest matches - fast but sometimes misses nuanced relationships since query and document are processed separately.
 
-tenets employs a multi-stage ranking system that combines lexical (priority) and semantic signals:
+tenets employs a multi-stage ranking system that combines lexical (priority) and semantic signals.
 
 | Stage | Method | Weight | Speed | Use Case |
 |-------|--------|--------|-------|----------|
@@ -348,7 +348,7 @@ tenets distill "query" --rerank         # Force reranking for precision
 
 Cross-encoder reranking (cross-encoder/ms-marco-MiniLM-L-6-v2) works like a judge that reads both things at once to score relevance. Instead of converting query and document into separate vectors and comparing them, it literally concatenates them.
 
-**Dense embeddings compress everything into one vector and hope similar things land nearby:**
+**Dense embeddings compress everything into one vector and hope similar things land nearby.**
 ```
 "implement OAuth2" → [0.2, 0.5, -0.3, ...]
 "def oauth2_authenticate()" → [0.3, 0.4, -0.2, ...]
@@ -357,7 +357,7 @@ Similarity = high
 
 The model made those vectors separately without ever seeing them together. It's guessing they're related based on vector proximity.
 
-**Cross-encoders actually read both and make a judgment:**
+**Cross-encoders actually read both and make a judgment.**
 
 ```
 Input: "implement OAuth2 [SEP] def oauth2_authenticate(client_id, secret):..."
