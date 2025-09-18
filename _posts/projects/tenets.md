@@ -343,8 +343,6 @@ else:
 
 The import time problem is real - `import transformers` cascades to torch (500ms), numpy (100ms), CUDA (200ms), totaling over 1 second. Our solution: defer until needed.
 
-## Key Innovations
-
 ### Import Condensing
 
 Large files with dozens of imports waste precious tokens. We intelligently condense:
