@@ -119,13 +119,14 @@ score = IDF(term) × [TF × (k1 + 1)] / [TF + k1 × (1 - b + b × docLength/avgD
 
 Code is inherently redundant. A test file with 50 instances of `assert response.status == 200` shouldn't dominate searches for "response". BM25's term saturation prevents this.
 
-We use sparse representations to cut memory by 10x:
+We also support tf-idf analysis (though this is less recommended as it does not account for issues like what we just mentioned). 
+
 ```python
 # BM25: Stores raw tokens, calculates scores on-the-fly
 doc_tokens = ["Summarizer", "summary", "summarize", "tenets", ...]
 doc_tf = Counter(doc_tokens)  # Sparse: {'Summarizer': 3, 'summary': 5, ...}
 
-# Sparse vector comparison for tf-idf:
+# Sparse vector comparison for tf-idf cuts down memory usage by multiple 10x factors
 def sparse_cosine_similarity(vec1, vec2):
     common = set(vec1.keys()) & set(vec2.keys())
     dot_product = sum(vec1[t] * vec2[t] for t in common)
