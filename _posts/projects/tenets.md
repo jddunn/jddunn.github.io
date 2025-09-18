@@ -308,8 +308,6 @@ elif intent == "test":
 
 ## ML embeddings / semantic similarity
 
-## ML embeddings / semantic similarity
-
 For now, the ML features in tenets weren't a priority for pre-v1.0 release, but will be ramped up (gracefully with lazy loading) in future versions.
 
 We use `sentence-transformers` with a default model in `all-MiniLM-L6-v2` which provides general-purpose embeddings and can be configured to use other models like `microsoft/codebert-base` (trained on code), `microsoft/unixcoder-base` (better for code search), and future support for `codellama-13b` (for heavier workloads).
