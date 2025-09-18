@@ -17,12 +17,12 @@ ogImage:
 
 # Building tenets: Intelligent Context Aggregation for AI Pair Programming
 
-**GitHub: [github.com/jddunn/tenets](https://github.com/jddunn/tenets)**  
+**GitHub: [github.com/jddunn/tenets](https://github.com/jddunn/tenets)**
 **Website: [tenets.dev](https://tenets.dev)**
 
 ## The Problem with AI Code Assistants
 
-I work often with AI pair programming tools - CoPilot Chat, Cursor, Claude Code, aider. They all have access to your Git repos and CLI, with full permissions to run commands like `ls` and `grep`. 
+I work often with AI pair programming tools - CoPilot Chat, Cursor, Codex, Claude Code, aider, Windsurf (not anymore), etc. They all have access to your Git repos and CLI, with full permissions to run commands like `ls` and `grep`.
 
 An incredibly strange thing with LLMs is you will tell them something very specific, like: "logic in the summarizer is looping twice because the batch processor isn't clearing the processed_chunks, fix it", and then you'll see the tool calling commands running:
 
@@ -50,13 +50,19 @@ grep -r "processed_chunks\|process_chunks\|chunk_process\|chunks_processed"
 grep -r "self\.processed_chunks"
 ```
 
-Usually it'll find it in 2-3 attempts, and this example the LLM would likely get it on the second try not third. But, imagine you're in a new conversation, and maybe the LLM has full access to your Git repo / codebase; however, they won't go too exploratory in this process. LLMs won't (importantly it's not can't) even recursively search the filenames in your directory to build a tree structure to *understand* what the codebase actually looks like, at most it'll look at the imports, aggregate what it thinks is relevant, and calls it complete.
+Usually it'll find it after like 1-2 attempts after the first failed honestly, it's not such a hindrance you find yourself needing to use a new tool. But it's a symptom of a larger issue at play interacting with LLMs.
 
-It seems a incredibly weak process for document similarity matching from a NLP engineering perspective, let alone the costs of summarization through more LLM calls when extractive summarization algorithms or BERT, though BERT's significantly slower, could work.
+Imagine you're in a new conversation, and maybe the LLM has full access to your Git repo / codebase; however, they won't go too exploratory in this process. LLMs won't (importantly it's won't not can't) even recursively search the filenames in your directory to build a tree structure to *understand* what the codebase actually looks like, at most it'll look at the imports, aggregate what it thinks is relevant, and calls it complete. At least right now, none of these tools for AI pair programming bother to do it, which to me seems like an obvious initial first step.
 
-**tenets** is a Python library that intelligently navigates repos to match, analyze, summarize, and aggregate the most relevant context based on speed, accuracy, or token limits. It uses deterministic algorithms (regex, BM25, cosine similarity) with optional ML embeddings for semantic understanding, and extractive summarization as well as optional LLM summarization that takes into account hierarchy in high-level metadata (how many times a function is referenced, how complex a function may be, etc.), imports / dependencies, and other metrics for heuristics for a total of [10 ranking factors](## Multi-Signal Ranking). 
+(They will find matching files with your query, then trace the imports and methods used and go from there, which works pretty well but is obviously imperfect).
+
+It seems a incredibly weak process for document similarity matching from a NLP engineering perspective, let alone not even thinking about the costs of additional LLM calls, especially when conversations get larger and LLMs start summarizing with more LLMs when extractive summarization algorithms or something like BERT (though BERT's significantly slower) could work.
+
+**tenets** is a Python library that intelligently navigates repos (or any directory of files) to match, analyze, summarize, and aggregate the most relevant context based on speed, accuracy, or token limits. It uses deterministic algorithms (regex, BM25, cosine similarity) with optional ML embeddings for semantic understanding, and extractive summarization as well as optional LLM summarization that takes into account hierarchy in high-level metadata (how many times a function is referenced, how complex a function may be, etc.), imports / dependencies, and other metrics for heuristics for a total of [10 ranking factors](## Multi-Signal Ranking).
 
 None of tenets's functionality costs API credits - all processing is done locally. There are optional LLM integrations for summarizing, but the recommended route is using the built-in [summarizer algorithms](https://github.com/jddunn/tenets/blob/master/tenets/core/summarizer/strategies.py) first.
+
+tenets is able to perform its full `distillation` (aggregation of context, without ML embeddings) functionality on complex repos with hundreds of source files typically in 30-40 seconds, making it usable as a programmatic API for pair programming tools like aider or Claude CLI (which is intended as one of its end goals).
 
 ## Features in Action
 
@@ -124,6 +130,58 @@ def sparse_cosine_similarity(vec1, vec2):
 
 No stemming or lemmatization - the difference between `summary()` method and `Summary()` class matters in code.
 
+It's **important** to note that I advertise *thorough* mode in the features of tenets as being the best at exploring and finding relationships between code, not necessarily finding the most accurate context for your prompts. 
+
+Embeddings see `process_batch()` and `handle_batch()` as semantically similar when you may need or want exact matches. 
+
+## Configurable Output: Full Methods vs Smart Truncation
+
+tenets can preserve complete methods or intelligently truncate:
+
+```bash
+# Never truncate - full methods only
+tenets distill "refactor auth" --no-truncate --preserve-structure
+
+# Smart truncation within token budget
+tenets distill "refactor auth" --smart-summary --max-tokens 4000
+```
+
+With `--no-truncate`, we select whole methods by relevance:
+```python
+def extract_methods_smart(file, token_budget):
+    methods = parse_ast(file)
+    # Score each method
+    for method in methods:
+        method.score = calculate_relevance(method, query)
+        method.tokens = count_tokens(method.body)
+
+    # Greedy selection - highest value first
+    selected = []
+    remaining_tokens = token_budget
+    for method in sorted(methods, key=lambda m: m.score, reverse=True):
+        if method.tokens <= remaining_tokens:
+            selected.append(method)
+            remaining_tokens -= method.tokens
+    return selected  # Complete methods only
+```
+
+Smart truncation preserves structure while condensing:
+```python
+def smart_truncate(method, max_tokens):
+    # Always keep signature + docstring
+    essential = extract_signature(method) + extract_docstring(method)
+
+    # Prioritize: errors > control flow > implementation
+    for line in method.body:
+        if is_error_handling(line):
+            priority = 3
+        elif is_control_flow(line):
+            priority = 2
+        else:
+            priority = 1
+    # Take highest priority lines within budget
+```
+
 ## RAKE vs YAKE: Keyword Extraction Without a Corpus
 
 | Algorithm | Speed | Quality | Memory | Python 3.13 | How It Works |
@@ -173,12 +231,53 @@ Import centrality identifies core abstractions:
 def calculate_import_centrality(file, import_graph):
     imported_by = sum(1 for deps in import_graph.values() if file in deps)
     imports_others = len(import_graph.get(file, set()))
-    
+
     # Weight incoming more - being imported signals importance
     centrality = (imported_by * 0.7 + imports_others * 0.3) / total_edges
-    
+
     # Logarithmic scaling to prevent dominant nodes
     return min(1.0, math.log(1 + centrality * 10) / 3)
+```
+
+## Hundreds of Files Searched, Ranked, Analyzed, Aggregated, and Summarized in Seconds
+
+The magic is aggressive parallelization at every stage:
+
+```python
+def rank_files_parallel(files, query, workers=8):
+    # Phase 1: Build indices (sequential, 2-3s)
+    bm25_corpus = BM25Corpus(files)
+    import_graph = build_import_graph(files)
+
+    # Phase 2: Parallel factor calculation (2-3s for 500 files)
+    with ThreadPoolExecutor(max_workers=workers) as executor:
+        futures = []
+        for file in files:
+            future = executor.submit(calculate_all_factors,
+                                   file, query, bm25_corpus, import_graph)
+            futures.append((file, future))
+
+        # Collect as they complete
+        ranked = []
+        for file, future in futures:
+            factors = future.result(timeout=1.0)
+            score = compute_weighted_score(factors)
+            ranked.append((file, score, factors))
+
+    return sorted(ranked, key=lambda x: x[1], reverse=True)
+```
+
+Weights dynamically adjust based on intent:
+```python
+if intent == "debug":
+    weights["git_recency"] *= 2.0     # Recent changes matter
+    weights["code_patterns"] *= 1.5   # Error handling patterns
+elif intent == "refactor":
+    weights["complexity_relevance"] *= 2.0  # Complex code needs refactoring
+    weights["import_centrality"] *= 1.5     # Core abstractions
+elif intent == "test":
+    weights["path_relevance"] *= 2.0  # test/ directories
+    weights["ast_relevance"] *= 1.5   # assert statements
 ```
 
 ## Architecture Challenge: CLI + Python API
@@ -242,6 +341,8 @@ else:
         return ctx.invoke(distill, prompt=prompt)
 ```
 
+The import time problem is real - `import transformers` cascades to torch (500ms), numpy (100ms), CUDA (200ms), totaling over 1 second. Our solution: defer until needed.
+
 ## Key Innovations
 
 ### Import Condensing
@@ -267,6 +368,22 @@ from collections import Counter, defaultdict
 
 Saves hundreds of tokens per file while preserving essential dependency information.
 
+### AST-Aware Summarization
+
+Rather than naive line truncation, we understand code structure:
+
+```python
+def summarize_with_ast(file_content, max_tokens):
+    tree = ast.parse(file_content)
+
+    # Extract and score structural elements
+    for node in ast.walk(tree):
+        if isinstance(node, ast.FunctionDef):
+            score = calculate_relevance(node, query)
+            tokens = estimate_tokens(node)
+            # Greedy selection within budget
+```
+
 ### Streaming Architecture
 
 Stream results as they become available instead of waiting:
@@ -276,11 +393,11 @@ def scan_and_analyze(self, path: Path):
     """Stream files as they're discovered and analyzed"""
     with Progress() as progress:
         scan_task = progress.add_task("Scanning", total=None)
-        
+
         for file_batch in self.scanner.scan_parallel(path, batch_size=50):
             # Process batch while next batch is being discovered
             results = self.analyze_batch(file_batch)
-            
+
             for result in results:
                 yield result
                 progress.advance(scan_task)
@@ -291,7 +408,7 @@ def scan_and_analyze(self, path: Path):
 The caching system evolved through iterations:
 
 1. **Memory-only** (v0.1): Fast but limited
-2. **SQLite-backed** (v0.2): Persistent but slower  
+2. **SQLite-backed** (v0.2): Persistent but slower
 3. **Hybrid multi-tier** (v0.3+): Memory for hot, SQLite for warm, disk for cold
 
 ```python
@@ -300,19 +417,29 @@ class HybridCache:
         self.memory = {}  # Hot: <100ms
         self.sqlite = SQLiteCache()  # Warm: <500ms
         self.disk = DiskCache()  # Cold: <2s
-        
+
     def get(self, key):
         if key in self.memory:
             return self.memory[key]
-        
+
         if value := self.sqlite.get(key):
             self.memory[key] = value  # Promote to hot
             return value
-            
+
         if value := self.disk.get(key):
             self.sqlite.set(key, value)  # Promote to warm
             return value
 ```
+
+## Real-World Performance
+
+On actual codebases:
+
+| Codebase | Files | Lines | Initial | Cached | Full Analysis |
+|----------|-------|-------|---------|--------|---------------|
+| FastAPI | 487 | 98K | 8.2s | 1.3s | 12.4s |
+| Django | 2,841 | 584K | 42.1s | 4.7s | 67.3s |
+| Small Project | 73 | 8K | 1.1s | 0.2s | 1.8s |
 
 ## Usage Examples
 
@@ -332,6 +459,21 @@ tenets distill "implement caching layer" \
 tenets distill "refactor authentication" \
   --glob "**/*auth*.py" \
   --exclude "tests/*"
+```
+
+### Advanced Configuration
+```bash
+# Custom ranking weights
+tenets rank "optimize queries" \
+  --weight-keyword 0.3 \
+  --weight-imports 0.2 \
+  --weight-complexity 0.2
+
+# Preserve full methods
+tenets distill "understand payment flow" \
+  --no-truncate \
+  --preserve-structure \
+  --include-docstrings
 ```
 
 ### Code Quality Analysis
@@ -363,12 +505,14 @@ tenets viz complexity --format svg --output complexity.svg
 tenets session export payment-integration --format markdown
 ```
 
-## Takeaways
+### Closing
 
-Performance is more than the right data structures - it's understanding your application's full lifecycle. The lazy loading architecture combined with aggressive caching, intelligent fallbacks, and streaming multiprocessing allows **tenets** to perform at scale. The `tenets tenet add` command starts in ~1.2 seconds while the heaviest `distill` command lazily loads ML imports only when needed.
+We're closing in on a future where LLMs are becoming the glue to hold other pieces and services together that fundamentally should be deterministic, even to the point where it can become LLM calls verifying other LLM calls in guardrails or other forms of abstractions.
 
-The future of AI pair programming isn't about throwing more compute at the problem - it's about being intelligent with context selection and deterministic where it counts.
+It seems like being in favor of "cleanliness" or perhaps laziness or just plain intentional design decisions to *not* utilize anything but LLMs for agency when we build and use AI agents, **choosing** to ignore existing, well-documented static solutions in text analysis and natural language processing, is going to be a decision that compounds in slight effects overtime to snowball into something contentious.
 
-**Install:** `pip install tenets`  
-**Docs:** [tenets.dev](https://tenets.dev)  
+The future of AI pair programming isn't about throwing more compute at the problem or simply relying on models to get bigger and better.
+
+**Install:** `pip install tenets`
+**Docs:** [tenets.dev](https://tenets.dev)
 **GitHub:** [github.com/jddunn/tenets](https://github.com/jddunn/tenets)
