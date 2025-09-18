@@ -75,6 +75,10 @@ When you run `tenets distill "add mistral api to summarizer"`, tenets analyzes y
 
 You can also provide GitHub issue or Jira links, and tenets will fetch and extract those contents and consider them in the rankings of the files as well as contents to output as well in the final `distillation`.
 
+We also use regex and keyword matching to classify different programming intents in the inputs, for things like documentation, testing, bug fixing, feature creation, refactoring, etc. Naturally, this is a tricky thing to capture when not using models trained to catch intents (which might be reserved for future versions as an optional step), and as such, a weighted system is in place, and classifications are only a partial factor in the rankings.
+
+We also use the same system to match temporal patterns for time, and factor all that into the analysis / ranking (you can ask about changes from a few days ago and it will rank recently changed files higher).
+
 ### File Ranking
 `tenets rank "fix summarizing truncation bug" --tree`
 
@@ -103,6 +107,8 @@ Sessions maintain context across multiple interactions:
 ![Interactive D3.js dependency graph visualization](/assets/projects/tenets/visualization.png)
 
 ## Technical Design
+
+### Ranking / similarity
 
 BM25 is a probabilistic ranking algorithm that scores documents for relevancy. Since code files vary from 10 to 10,000+ lines, length shouldn't bias relevance. BM25 adds term saturation (diminishing returns for repeated terms) and document length normalization.
 
@@ -134,7 +140,7 @@ It's **important** to note that I advertise *thorough* mode in the features of t
 
 Embeddings see `process_batch()` and `handle_batch()` as semantically similar when you may need or want exact matches. 
 
-## Configurable Output: Full Methods vs Smart Truncation
+## Configurable output with smart truncating
 
 tenets can preserve complete methods or intelligently truncate:
 
@@ -182,7 +188,7 @@ def smart_truncate(method, max_tokens):
     # Take highest priority lines within budget
 ```
 
-## RAKE vs YAKE: Keyword Extraction Without a Corpus
+## RAKE vs YAKE: keyword extraction 
 
 | Algorithm | Speed | Quality | Memory | Python 3.13 | How It Works |
 |-----------|-------|---------|---------|-------------|--------------|
@@ -208,7 +214,7 @@ candidates = ["Python web framework Django", "handles authentication"]
 
 BM25 can't extract keywords from a single prompt because it needs corpus statistics. RAKE/YAKE work on single documents by analyzing internal structure without needing a corpus.
 
-## Multi-Signal Ranking
+## Intricate ranking with multiple weighted signals
 
 tenets combines 10 different factors with configurable weights:
 
@@ -239,9 +245,9 @@ def calculate_import_centrality(file, import_graph):
     return min(1.0, math.log(1 + centrality * 10) / 3)
 ```
 
-## Hundreds of Files Searched, Ranked, Analyzed, Aggregated, and Summarized in Seconds
+## Parallel navigation, analysis, and aggressive file caching based on Git history
 
-The magic is aggressive parallelization at every stage:
+We use parallelization in multiple stages:
 
 ```python
 def rank_files_parallel(files, query, workers=8):
@@ -266,8 +272,25 @@ def rank_files_parallel(files, query, workers=8):
 
     return sorted(ranked, key=lambda x: x[1], reverse=True)
 ```
+We stream results as they become available instead of waiting:
 
-Weights dynamically adjust based on intent:
+```python
+def scan_and_analyze(self, path: Path):
+    """Stream files as they're discovered and analyzed"""
+    with Progress() as progress:
+        scan_task = progress.add_task("Scanning", total=None)
+
+        for file_batch in self.scanner.scan_parallel(path, batch_size=50):
+            # Process batch while next batch is being discovered
+            results = self.analyze_batch(file_batch)
+
+            for result in results:
+                yield result
+                progress.advance(scan_task)
+```
+
+And based on the intentions classified in the prompt, rankings are adjusted with some weights:
+
 ```python
 if intent == "debug":
     weights["git_recency"] *= 2.0     # Recent changes matter
@@ -280,21 +303,21 @@ elif intent == "test":
     weights["ast_relevance"] *= 1.5   # assert statements
 ```
 
-## Architecture Challenge: CLI + Python API
+## Architecture challenge: A functional CLI + Python API
 
-Building a code intelligence platform needs to be responsive without circular imports. The naive approach fails:
+Building a code intelligence platform needs to be responsive and fast, even as it loads necessary ML dependencies or performs recursive folder searching. 
+
+With tenets, naturally we'd want to build a nice CLI *and* Python API in parallel (one of tenet's major use cases is potential integration into AI tools in IDEs, etc).
 
 ```python
-# Initial approach - looks clean, but circular import hell
+# Initial this is our build - looks clean, but circular import hell
 from tenets import Tenets
 
 @app.command()
 def distill(prompt: str):
-    tenets = Tenets()  # Imports EVERYTHING
+    tenets = Tenets()  # Imports everything
     return tenets.distill(prompt)
 ```
-
-### Solution: Lazy Loading with `__getattr__`
 
 Python 3.7+ enables proper lazy loading without breaking conventions:
 
@@ -322,8 +345,6 @@ from tenets import Distiller  # No import yet
 d = Distiller()  # NOW it imports
 ```
 
-### Command-Specific Import Isolation
-
 The CLI only imports what each command needs:
 
 ```python
@@ -343,9 +364,9 @@ else:
 
 The import time problem is real - `import transformers` cascades to torch (500ms), numpy (100ms), CUDA (200ms), totaling over 1 second. Our solution: defer until needed.
 
-### Import Condensing
+### Import condensation (distilling)
 
-Large files with dozens of imports waste precious tokens. We intelligently condense:
+Large files with dozens of imports waste precious tokens. We intelligently condense based on known file structure patterns in programming langues (we support 15+ languages as core first-class features, and have generic analyzers for logical flows).
 
 ```python
 # Instead of:
@@ -366,9 +387,7 @@ from collections import Counter, defaultdict
 
 Saves hundreds of tokens per file while preserving essential dependency information.
 
-### AST-Aware Summarization
-
-Rather than naive line truncation, we understand code structure:
+Rather than naive line truncation, our summaries are AST-aware and understand code structure:
 
 ```python
 def summarize_with_ast(file_content, max_tokens):
@@ -382,32 +401,13 @@ def summarize_with_ast(file_content, max_tokens):
             # Greedy selection within budget
 ```
 
-### Streaming Architecture
-
-Stream results as they become available instead of waiting:
-
-```python
-def scan_and_analyze(self, path: Path):
-    """Stream files as they're discovered and analyzed"""
-    with Progress() as progress:
-        scan_task = progress.add_task("Scanning", total=None)
-
-        for file_batch in self.scanner.scan_parallel(path, batch_size=50):
-            # Process batch while next batch is being discovered
-            results = self.analyze_batch(file_batch)
-
-            for result in results:
-                yield result
-                progress.advance(scan_task)
-```
-
-### Multi-Tier Caching
+### Multi-tier caching
 
 The caching system evolved through iterations:
 
-1. **Memory-only** (v0.1): Fast but limited
-2. **SQLite-backed** (v0.2): Persistent but slower
-3. **Hybrid multi-tier** (v0.3+): Memory for hot, SQLite for warm, disk for cold
+1. **Memory-only** (first version): Fast but limited
+2. **SQLite-backed** (next iterations): Persistent but slower
+3. **Hybrid multi-tier** (final release): Memory for hot, SQLite for warm, disk for cold
 
 ```python
 class HybridCache:
@@ -428,16 +428,6 @@ class HybridCache:
             self.sqlite.set(key, value)  # Promote to warm
             return value
 ```
-
-## Real-World Performance
-
-On actual codebases:
-
-| Codebase | Files | Lines | Initial | Cached | Full Analysis |
-|----------|-------|-------|---------|--------|---------------|
-| FastAPI | 487 | 98K | 8.2s | 1.3s | 12.4s |
-| Django | 2,841 | 584K | 42.1s | 4.7s | 67.3s |
-| Small Project | 73 | 8K | 1.1s | 0.2s | 1.8s |
 
 ## Usage Examples
 
