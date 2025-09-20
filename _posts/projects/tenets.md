@@ -62,7 +62,9 @@ We'll see AI platforms *insist* on LLMs ingesting and outputting every solution,
 
 ## What is
 
-**tenets** is a Python library that intelligently navigates repos (or any directory of files) to match, analyze, summarize, and aggregate the most relevant context based on speed, accuracy, and token limits. It uses deterministic algorithms (regex, BM25, cosine similarity) with optional ML embeddings for semantic understanding, and extractive summarization as well as optional LLM summarization that takes into account hierarchy in high-level metadata (how many times a function is referenced, how complex a function may be, etc.), imports / dependencies, and other metrics for heuristics for a total of [10 ranking factors](## Multi-Signal Ranking).
+**tenets** is a Python library that intelligently navigates repos (or any directory of files) to match, analyze, summarize, and aggregate the most relevant context based on speed, accuracy, and token limits. It uses deterministic algorithms (regex, BM25, cosine similarity) with optional ML embeddings for semantic understanding, and extractive summarization as well as optional LLM summarization that takes into account hierarchy in high-level metadata (how many times a function is referenced, how complex a function may be, etc.), imports / dependencies, and other metrics for heuristics for a total of [10 ranking factors](## Multi-Signal Ranking). 
+
+Finally, tenets also has optional deep learning techniques in neural re-ranking of relevant with a cross-encoder model, for better accuracy which takes into account attention for both document and query.
 
 None of tenets's functionality costs API credits - all processing is done locally. There are optional LLM integrations for summarizing, but the recommended route is using the built-in [summarizer algorithms](https://github.com/jddunn/tenets/blob/master/tenets/core/summarizer/strategies.py) first.
 
