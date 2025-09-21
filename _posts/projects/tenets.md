@@ -17,9 +17,9 @@ ogImage:
 
 ## Uncanny AI coding assistants
 
-I work often with AI pair programming tools - CoPilot Chat, Cursor, Codex, Claude Code, aider, Windsurf (not so much anymore). They all have access to your Git repos and basic terminal commands (if you give it to them, though from anecdotes on the web and my personal experiences as well, it's clear that *permissions* isn't really a deterministic thing in these tools, but that's a different discussion), like `ls` and `grep`, and of course `nano` or `rmv`.
+I've used all the AI pair programming tools - CoPilot Chat, Cursor, Codex, Claude Code, aider, Windsurf (not so much anymore). They all have access to your Git repos and basic terminal commands (if you give it to them, though from anecdotes on the web and my personal experiences as well, it's clear that *permissions* isn't really a deterministic thing in these tools, but that's a different discussion), like `ls` and `grep`, and of course `nano` or `rmv`.
 
-An strange thing with LLMs is you will tell them something very specific, like: "logic in the summarizer is looping twice because the batch processor isn't clearing the processed_chunks var, fix it", which is not a great prompt but gets things started, and then you'll see the tool calling commands running:
+A strange thing with LLMs, when working with Copilot Chat at least, is you will tell them something specific: "logic in the summarizer is looping twice because the batch processor isn't clearing the processed_chunks var, fix it", which is not a great prompt but gets things started, and then you'll see the tool calling commands running:
 
 ```bash
 # First attempt - literal string matching
@@ -43,30 +43,30 @@ grep -r "processed_chunks\|process_chunks\|chunk_process\|chunks_processed"
 grep -r "self\.processed_chunks"
 ```
 
-Usually it'll find it after like 1-2 attempts after the first failed honestly, it's not such a hindrance you find it to be a real issue. 
+It usually finds a good match 1-2 attempts after the first failed honestly, it's not such a hindrance you find it to be a real issue. 
 
-The example's exaggerated to demonstrate a symptom of a larger issue at play interacting with LLMs, cause I guess what **really** gets me is the first step *always* (at the moment) seems to be, query the exact phrase the user's looking for in every file. That is dumb, even for a first move, even for a LLM.
+The example's exaggerated to demonstrate a symptom of something larger at play, cause I guess what **really** gets me is the first step *always* (at the moment) seems to be, query the exact phrase the user's looking for in every file. That is dumb, even for a first move, even for a LLM. (Of course, this is subject to change, but as of the time of this writing, that's the common behavior of Copilot Chat).
 
-What's also strange is LLMs won't (probably being discouraged from ingesting too many tokens) try too hard in navigating your directory structure to fully understand the context of your code. Claude Opus at this point oftentimes just tries to read the first 100 lines or so before it stops, hoping it's gotten enough (I don't remember this happening last month..).
+What's also strange is LLMs won't (probably discouraged from ingesting too many tokens) try too hard in navigating your directory structure to fully understand your code. Claude Opus (as of the date of this post) will literally just try to read the first 100 lines of any relevant file or so before it stops (by default), assuming it's gotten enough information from that to move forward.
 
-And we're not even going to think about the costs of additional LLM calls when static tools could do the job, especially when conversations get larger and LLMs start summarizing with more LLMs (just extractive summarization algorithms or something like BERT, though BERT's significantly slower, work great if not better since they are more deterministic, which in code, absolutely you do not want paraphrasing).
+And we're not even going to think about the costs of additional LLM calls when static tools could do the job, especially when conversations get larger and LLMs start summarizing with more LLMs.
 
 ## What is
 
 **tenets** is a Python library and CLI tool that intelligently navigates repos (or any directory of files) to match, analyze, summarize, and aggregate the most relevant context for a query. It's currently tuned to work with coding with AI assistants, but the core functionality can be applied for any document matching service.
 
-It uses deterministic algorithms (regex in some paths, BM25) with optional deep learning embeddings for semantic understanding, and extractive summarization as well as optional LLM summarization that takes into account hierarchy in high-level metadata (how many times a function is referenced, how complex a function may be, etc.), imports / dependencies, and other metrics for heuristics.
+It uses deterministic algorithms (regex, BM25) with optional deep learning embeddings for semantic understanding, and extractive summarization and factors high-level metadata (how many times a function is referenced, how complex a function may be, imports / dependencies) and other metrics for heuristics in its rankings.
 
 Beyond basic BM25, tenets implements:
 - **Code-aware tokenization** that splits `camelCase` and `snake_case` while preserving originals for exact matching
 - **Multi-signal ranking** combining 10+ orthogonal factors (import centrality, git signals, AST complexity)
-- **Dynamic programming for file packing** to optimize which files to include full vs summarized within token budgets
+- **Dynamic programming for file packing** to optimize which files to include in full vs summarized within token budgets
 - **Task-specific weight adjustments** - different factors for `debug` vs `refactor` vs `feature` tasks
 - **Intelligent summarization** that preserves signatures, docstrings, and complex functions over simple ones
 
 None of tenets's functionality costs API credits - all processing is done locally. There are optional LLM integrations for summarizing, but the recommended route is using the built-in [summarizer algorithms](https://github.com/jddunn/tenets/blob/master/tenets/core/summarizer/strategies.py) first.
 
-tenets is able to perform its full `distillation` (aggregation of context, without ML embeddings) functionality on complex repos with hundreds of source files typically in 30-40 seconds, making it usable as a programmatic API for pair programming tools like aider or Claude CLI (which is intended as one of its end goals).
+tenets is able to perform its full `distillation` functionality on complex repos with hundreds of source files typically in 30-40 seconds, making it usable as a programmatic API for pair programming tools like aider or Claude CLI (which is intended as one of its end goals).
 
 And yes at some late midway point in tenet's development, I dogfooded the tool to help it build itself. Tenets was built with the help of Copilot Chat (GPT-5) and Claude Opus / Sonnet.
 
@@ -79,7 +79,7 @@ When you run `tenets distill "add mistral api to summarizer"`, tenets analyzes y
 
 ![Building optimized context with intelligent summarization](/assets/projects/tenets/context-building-2.png)
 
-You can also provide GitHub issue or Jira links in a query and tenets will fetch and extract those contents and consider them in the rankings of the files as well as contents to output in the final `distillation`.
+Link GitHub issue or Jira issues in a query and tenets will fetch and extract those contents automatically.
 
 ### File Ranking
 `tenets rank "fix summarizing truncation bug" --tree`
@@ -114,17 +114,19 @@ Tenets operates in 3 modes, `fast`, `balanced`, and `thorough`. Balanced is abou
 
 ### Ranking / similarity
 
-BM25 is a probabilistic ranking algorithm that scores documents for relevancy. Since code files vary from 10 to 10,000+ lines, length shouldn't bias relevance *too* much. BM25 adds term saturation (diminishing returns for repeated terms) and document length normalization.
+BM25 is a probabilistic ranking algorithm that scores documents for relevancy. Since code files vary from 10 to 10,000+ lines, length shouldn't bias relevance *too* much. BM25 adds term saturation (diminishing returns for repeated terms) and document length normalization, making it a superior choice over tf-idf.
 
-Code is inherently redundant. A test file with 50 instances of `assert response.status == 200` shouldn't dominate searches for "response". BM25's term saturation prevents this.
+Code is inherently redundant. A test file with 50 instances of `assert response.status == 200` shouldn't dominate searches for "response", of course.
 
-We also support TF-IDF with sparse cosine similarity (saves 10x memory over dense vectors), but BM25 is objectively better for information retrieval. The weird thing is TF-IDF is everywhere - scikit-learn defaults to it, Elasticsearch did until recently. BM25 requires tuning two parameters (k1 and b) and the math looks scarier, so people stick with "good enough" TF-IDF even though papers since the 90s show BM25 winning.
+We also support TF-IDF with sparse cosine similarity (saves 10x memory over dense vectors), but BM25 is recommended.
 
-No stemming or lemmatization, normalizing text so all word forms become base words only; the difference between `summary()` method and `Summary()` class, or `summarize` method versus `summarized` var matters greatly in code, not so much in something like academic research.
+We purposefully exclude stemming / lemmatization, which is normalizing text so all word forms become base words only. This is because the difference between `summary()` method and `Summary()` class, or `summarize` method versus `summarized` var matters greatly in code, not so much in something like academic research (which tenets would have to be reconfigured to support better). Sentence transformers in optional ML embeddings path would be the best way, given it can differentiate but also still matches them closely in vector space. Exact matches (capitalization) impacts rankings as well. 
+
+**All that in mind, the tip when using tenets is to be clear with your variable names, casings, and make absolutely zero typos (unlike interacting with LLMs).**
 
 ## Code-Aware Tokenization
 
-Standard NLP tokenizers destroy code semantics. They see `getUserAuthToken` as one meaningless blob, missing that it's really `get`, `user`, `auth`, and `token`. 
+Tenets has custom code-aware tokenizing. A standard NLP tokenizer would not maintain code understanding. They'd see `getUserAuthToken` as one meaningless blob, missing that it's really `get`, `user`, `auth`, and `token`. 
 
 ```python
 # The problem we're solving
@@ -173,7 +175,7 @@ This means searching for "auth" finds `authenticate()`, `user_auth`, `AuthHandle
 
 Say you have 8K tokens. Three files: A (highly relevant, 6K tokens), B (very relevant, 3K tokens), C (very relevant, 3K tokens). 
 
-Given a token budget, which files should be included full vs summarized? This is the knapsack problem with a twist - files can be "packed" in two sizes. We use dynamic programming to maximize total relevance score within the token constraint. Each file can be included in full (100% tokens, 100% relevance), summarized (~25% tokens, ~60% relevance), or skipped.
+Given a token budget, which files should be included full vs summarized? This is the knapsack problem with a twist - files can be "packed" in two sizes. We use dynamic programming to maximize total relevance score within the token constraint and still be algorithmically viable. Each file can be included in full (100% tokens, 100% relevance), summarized (~25% tokens, ~60% relevance), or skipped.
 
 The algorithm builds a table where `dp[i][j]` = "maximum relevance using first i files with j tokens". For each file, it picks the best option: skip it, include it full, or include a summary. 
 
@@ -208,8 +210,6 @@ def optimize_packing(files: List[FileAnalysis], max_tokens: int) -> List[Tuple[F
     return backtrack_solution(dp, files, max_tokens)
 ```
 
-This helps guarantees maximum total relevance within token budget constraints.
-
 ## Multi-Signal Ranking
 
 tenets combines 10 different factors with configurable weights:
@@ -227,7 +227,7 @@ complexity_relevance: 0.03 # Cyclomatic complexity
 ast_relevance: 0.02     # AST structure matching
 ```
 
-Import centrality is a metric to identify which files are most important to a codebase. We count how many files import each file (incoming) and how many it imports (outgoing), with incoming weighted higher because being imported signals importance.
+Import centrality is a metric to identify which files are most important to a codebase. We count how many files import each file (incoming) and how many it imports (outgoing), with incoming weighted higher as `imported` signals `importance`.
 
 Based on the task intent, weights adjust:
 ```python
@@ -243,16 +243,32 @@ elif intent == "refactor":
 
 We use parallelization in multiple stages. Building indices is sequential (2-3s), but ranking factors calculate in parallel across available cores.
 
-We stream results as they become available instead of waiting for everything to complete. Cache is multi-tier: memory for hot data (<100ms), SQLite for warm (<500ms), disk for cold (<2s).
+We stream results as they become available instead of waiting for everything to complete. Cache is multi-tier: memory for hot data which is very fast, SQLite for warm which is fast, disk for cold which is slower.
 
 ## Architecture challenge: A functional CLI + Python API
 
-Building a code intelligence platform needs to be responsive and fast, even as it loads necessary ML dependencies. Python 3.7+ enables proper lazy loading:
+
+Building a code intelligence platform needs to be responsive and fast, even as it loads necessary ML dependencies or performs recursive folder searching. 
+
+With tenets, naturally we'd want to build a nice CLI *and* Python API in parallel (one of tenet's major use cases is potential integration into AI tools in IDEs, etc).
+
+```python
+# Initial this is our build - looks clean, but circular import hell
+from tenets import Tenets
+
+@app.command()
+def distill(prompt: str):
+    tenets = Tenets()  # Imports everything
+    return tenets.distill(prompt)
+```
+
+Python 3.7+ enables proper lazy loading without breaking conventions:
 
 ```python
 # tenets/__init__.py
 _LAZY_IMPORTS = {
     'Distiller': 'tenets.core.distiller.Distiller',
+    'Instiller': 'tenets.core.instiller.Instiller',
     'CodeAnalyzer': 'tenets.core.analysis.analyzer.CodeAnalyzer',
 }
 
@@ -265,13 +281,29 @@ def __getattr__(name):
         attr = getattr(module, attr_name)
         globals()[name] = attr  # Cache for future
         return attr
+    raise AttributeError(f"module {__name__!r} has no attribute {name!r}")
 
 # Usage remains clean:
 from tenets import Distiller  # No import yet
 d = Distiller()  # NOW it imports
 ```
 
-The import time problem is real - `import transformers` cascades to torch, numpy, CUDA, totaling over 1 second.
+The CLI only imports what each command needs:
+
+```python
+# app.py - Conditional command loading
+import sys as _sys
+if len(_sys.argv) > 1 and _sys.argv[1] in ["distill", "instill"]:
+    from tenets.cli.commands.distill import distill
+    app.command()(distill)
+else:
+    # Lightweight placeholder for help text
+    @app.command(name="distill")
+    def distill_placeholder(ctx: typer.Context, prompt: str):
+        """Distill relevant context from codebase."""
+        from tenets.cli.commands.distill import distill
+        return ctx.invoke(distill, prompt=prompt)
+```
 
 ## Smart Summarization
 
