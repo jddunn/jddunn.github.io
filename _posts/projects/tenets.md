@@ -241,49 +241,11 @@ elif intent == "refactor":
     weights["import_centrality"] *= 1.5     # Core abstractions
 ```
 
-### Git Signals and Test Detection
-
-Recent changes matter more for debugging, but frequency matters for understanding core files. This is how tenets calculates git signals:
-
-```python
-def calculate_git_signals(file_path: str, commits: List[Commit]) -> Dict[str, float]:
-    # Recency: exponential decay with 30-day half-life
-    if last_modified := get_last_modified(file_path, commits):
-        days_ago = (datetime.now() - last_modified).days
-        recency = math.exp(-days_ago / 30)  # e^(-t/τ)
-    else:
-        recency = 0.0
-    
-    # Frequency: logarithmic scaling to prevent outliers
-    commit_count = count_commits_touching_file(file_path, commits)
-    if commit_count <= 5:
-        frequency = 0.3
-    elif commit_count <= 20:
-        frequency = 0.6
-    else:
-        # Log scale for very active files
-        frequency = min(1.0, 0.8 + math.log(commit_count / 20) / 10)
-    
-    return {
-        'recency': recency,
-        'frequency': frequency,
-        'combined': recency * 0.4 + frequency * 0.4
-    }
-```
-
 ## Parallel Processing & Caching
 
 We use parallelization in multiple stages. Building indices is sequential (2-3s), but ranking factors calculate in parallel across available cores.
 
 We stream results as they become available instead of waiting for everything to complete. Cache is multi-tier: memory for hot data (<100ms), SQLite for warm (<500ms), disk for cold (<2s).
-
-## ML embeddings / semantic similarity
-
-For now, the ML features in tenets weren't a priority for pre-v1.0 release, but will be ramped up (gracefully with lazy loading) in future versions.
-
-We use `sentence-transformers` with `all-MiniLM-L6-v2` by default. Dense embeddings convert code into numerical vectors where similar code ends up nearby in vector space. 
-
-Optional cross-encoder reranking works like a judge that reads query and document together to score relevance, rather than converting them separately and hoping similar things land nearby. Much slower but catches things like "OAuth2 is deprecated" having opposite intent from "implement OAuth2" despite sharing keywords.
 
 ## Architecture challenge: A functional CLI + Python API
 
@@ -313,7 +275,7 @@ d = Distiller()  # NOW it imports
 
 The import time problem is real - `import transformers` cascades to torch, numpy, CUDA, totaling over 1 second.
 
-### Smart Summarization
+## Smart Summarization
 
 Rather than naive line truncation, our summaries are AST-aware. We keep function signatures, complex functions (cyclomatic > 10), frequently-called functions, and drop simple getters/setters and duplicate test cases first.
 
@@ -326,7 +288,7 @@ Large files with dozens of imports waste tokens. We intelligently condense:
 # Local imports: 3
 ```
 
-### Session Management
+## Session Management
 
 Sessions maintain context across multiple interactions, with pinned files guaranteed inclusion. Here's the core concept i9n code:
 
@@ -356,6 +318,81 @@ class SessionContext:
             if can_fit(file, token_budget):
                 included.append(file)
                 token_budget -= file.tokens
+```
+
+## Git Signals and Test Detection
+
+Recent changes matter more for debugging, but frequency matters for understanding core files. This is how tenets calculates git signals:
+
+```python
+def calculate_git_signals(file_path: str, commits: List[Commit]) -> Dict[str, float]:
+    # Recency: exponential decay with 30-day half-life
+    if last_modified := get_last_modified(file_path, commits):
+        days_ago = (datetime.now() - last_modified).days
+        recency = math.exp(-days_ago / 30)  # e^(-t/τ)
+    else:
+        recency = 0.0
+    
+    # Frequency: logarithmic scaling to prevent outliers
+    commit_count = count_commits_touching_file(file_path, commits)
+    if commit_count <= 5:
+        frequency = 0.3
+    elif commit_count <= 20:
+        frequency = 0.6
+    else:
+        # Log scale for very active files
+        frequency = min(1.0, 0.8 + math.log(commit_count / 20) / 10)
+    
+    return {
+        'recency': recency,
+        'frequency': frequency,
+        'combined': recency * 0.4 + frequency * 0.4
+    }
+```
+
+## ML embeddings / semantic similarity
+
+We use `sentence-transformers` with `all-MiniLM-L6-v2` by default. Dense embeddings convert code into numerical vectors where similar code ends up nearby in vector space. 
+
+The model was trained on millions of code/text pairs to learn that `authenticate()`, `login()`, and `verify_user()` should cluster near each other in high-dimensional space, even though they share zero characters. When you search for "user auth" with ML enabled, your query finds files with embeddings that have high cosine similarity.
+
+The problem with standard embedding search (bi-encoders) is they encode query and document separately, and *then* compare. They have *no* understanding of context between them. The query "implement OAuth2" and document "DEPRECATED: OAuth2 removed in v3.0" will score high because both encode OAuth2 strongly, when the two have opposite intentions.
+
+### Cross-Encoder Architecture
+
+Cross-encoders solve this by processing query and document *together* through transformer self-attention:
+
+```python
+# Bi-encoder (standard embeddings) - processes separately
+query_embedding = model.encode("implement OAuth2")  # [0.23, -0.45, ...]
+doc_embedding = model.encode("OAuth2 is deprecated")  # [0.21, -0.43, ...]
+similarity = cosine_similarity(query_embedding, doc_embedding)  # High! 0.95
+
+# Cross-encoder - processes together
+combined_input = f"Query: implement OAuth2 [SEP] Document: OAuth2 is deprecated"
+relevance = cross_encoder.predict(combined_input)  # Low! 0.15
+```
+
+Through self-attention layers, "implement" attends to "deprecated" and realizes they're opposites. The model outputs a single relevance score, not embeddings.
+
+The tradeoff is speed. Bi-encoders compute embeddings once and reuse them - O(n) for n documents. Cross-encoders must process every query-document pair - O(n²). That's why we only use them to re-rank the top K results from the bi-encoder:
+
+```python
+def semantic_rerank(query: str, documents: List[str], top_k: int = 50):
+    # Step 1: Fast bi-encoder gets top candidates (milliseconds)
+    query_emb = bi_encoder.encode(query)
+    doc_embs = bi_encoder.encode(documents)  # Can be cached!
+    similarities = cosine_similarity(query_emb, doc_embs)
+    top_indices = np.argsort(similarities)[-top_k:]
+    
+    # Step 2: Slow cross-encoder re-ranks just top 50 (seconds)
+    pairs = [[query, documents[i]] for i in top_indices]
+    cross_scores = cross_encoder.predict(pairs)
+    
+    # Step 3: Return re-ranked results
+    reranked = sorted(zip(top_indices, cross_scores), 
+                     key=lambda x: x[1], reverse=True)
+    return reranked
 ```
 
 ## Usage Examples
