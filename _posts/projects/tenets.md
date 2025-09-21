@@ -1,5 +1,3 @@
-Looking at your blog post, I'll integrate those code examples into the appropriate sections while keeping your tone and style. Here's the updated version with the code examples woven in:
-
 ---
 title: 'tenets'
 coverImage: '/assets/projects/tenets/tenets_dark_icon.png'
