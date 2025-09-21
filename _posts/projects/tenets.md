@@ -1,3 +1,5 @@
+Looking at your blog post, I'll integrate those code examples into the appropriate sections while keeping your tone and style. Here's the updated version with the code examples woven in:
+
 ---
 title: 'tenets'
 coverImage: '/assets/projects/tenets/tenets_dark_icon.png'
@@ -141,13 +143,74 @@ text = "class UserAuthHandler implements getUserAuthToken"
 # Now "auth" matches, but exact match "auth" variables score higher
 ```
 
+Here's a simplified version of how tenets handles this in practice:
+
+```python
+def tokenize_code(text: str) -> List[str]:
+    tokens = []
+    
+    # Extract all identifiers
+    for match in re.findall(r'\b[a-zA-Z_][a-zA-Z0-9_]*\b', text):
+        # Handle camelCase/PascalCase
+        if any(c.isupper() for c in match) and not match.isupper():
+            parts = re.findall(r'[A-Z][a-z]+|[a-z]+|[A-Z]+(?=[A-Z][a-z]|\b)', match)
+            tokens.extend([p.lower() for p in parts])
+            tokens.append(match.lower())  # Keep original for exact matching
+        
+        # Handle snake_case
+        elif '_' in match:
+            parts = match.split('_')
+            tokens.extend([p.lower() for p in parts if p])
+            tokens.append(match.lower())  # Original preserved
+        
+        else:
+            tokens.append(match.lower())
+    
+    return list(dict.fromkeys(tokens))  # Dedupe while preserving order
+```
+
+This means searching for "auth" finds `authenticate()`, `user_auth`, `AuthHandler`, and `getUserAuth()` - but each scores differently based on exact vs partial matches.
+
 ## Optimal File Packing
 
-You have 8K tokens. Three files: A (highly relevant, 6K tokens), B (very relevant, 3K tokens), C (very relevant, 3K tokens). 
+Say you have 8K tokens. Three files: A (highly relevant, 6K tokens), B (very relevant, 3K tokens), C (very relevant, 3K tokens). 
 
-Greedy algorithm takes A, then can't fit B or C. You get one file.
+Given a token budget, which files should be included full vs summarized? This is the knapsack problem with a twist - files can be "packed" in two sizes. We use dynamic programming to maximize total relevance score within the token constraint. Each file can be included in full (100% tokens, 100% relevance), summarized (~25% tokens, ~60% relevance), or skipped.
 
-Our dynamic programming approach realizes it's better to take B+C (maybe summarizing C) for higher total relevance. This is the knapsack problem but items have two sizes - full or summarized.
+The algorithm builds a table where `dp[i][j]` = "maximum relevance using first i files with j tokens". For each file, it picks the best option: skip it, include it full, or include a summary. 
+
+Here's a demo of the actual implementation:
+
+```python
+def optimize_packing(files: List[FileAnalysis], max_tokens: int) -> List[Tuple[File, bool]]:
+    n = len(files)
+    # dp[i][j] = max relevance using first i files with j tokens
+    dp = [[0.0] * (max_tokens + 1) for _ in range(n + 1)]
+    
+    for i in range(1, n + 1):
+        file = files[i-1]
+        full_tokens = count_tokens(file.content)
+        summary_tokens = full_tokens // 4  # Rough estimate
+        
+        for j in range(max_tokens + 1):
+            # Option 1: Skip file
+            dp[i][j] = dp[i-1][j]
+            
+            # Option 2: Include full
+            if j >= full_tokens:
+                score = dp[i-1][j-full_tokens] + file.relevance_score
+                dp[i][j] = max(dp[i][j], score)
+            
+            # Option 3: Include summary (degraded value)
+            if j >= summary_tokens:
+                score = dp[i-1][j-summary_tokens] + file.relevance_score * 0.6
+                dp[i][j] = max(dp[i][j], score)
+    
+    # Backtrack to find selection
+    return backtrack_solution(dp, files, max_tokens)
+```
+
+This helps guarantees maximum total relevance within token budget constraints.
 
 ## Multi-Signal Ranking
 
@@ -176,6 +239,36 @@ if intent == "debug":
 elif intent == "refactor":
     weights["complexity_relevance"] *= 2.0  # Complex code needs refactoring
     weights["import_centrality"] *= 1.5     # Core abstractions
+```
+
+### Git Signals and Test Detection
+
+Recent changes matter more for debugging, but frequency matters for understanding core files. This is how tenets calculates git signals:
+
+```python
+def calculate_git_signals(file_path: str, commits: List[Commit]) -> Dict[str, float]:
+    # Recency: exponential decay with 30-day half-life
+    if last_modified := get_last_modified(file_path, commits):
+        days_ago = (datetime.now() - last_modified).days
+        recency = math.exp(-days_ago / 30)  # e^(-t/τ)
+    else:
+        recency = 0.0
+    
+    # Frequency: logarithmic scaling to prevent outliers
+    commit_count = count_commits_touching_file(file_path, commits)
+    if commit_count <= 5:
+        frequency = 0.3
+    elif commit_count <= 20:
+        frequency = 0.6
+    else:
+        # Log scale for very active files
+        frequency = min(1.0, 0.8 + math.log(commit_count / 20) / 10)
+    
+    return {
+        'recency': recency,
+        'frequency': frequency,
+        'combined': recency * 0.4 + frequency * 0.4
+    }
 ```
 
 ## Parallel Processing & Caching
@@ -233,6 +326,38 @@ Large files with dozens of imports waste tokens. We intelligently condense:
 # Local imports: 3
 ```
 
+### Session Management
+
+Sessions maintain context across multiple interactions, with pinned files guaranteed inclusion. Here's the core concept i9n code:
+
+```python
+class SessionContext:
+    def __init__(self, session_name: str):
+        self.name = session_name
+        self.pinned_files: List[Path] = []
+        self.tenets: List[Tenet] = []
+        self.history: List[DistillResult] = []
+        
+    def distill_with_context(self, prompt: str, max_tokens: int):
+        # Pinned files get first priority
+        token_budget = max_tokens
+        included = []
+        
+        # Include pinned files first (with safety check)
+        for pinned in self.pinned_files:
+            file_tokens = count_tokens(pinned.read_text())
+            if file_tokens < token_budget * 0.5:  # No single file > 50% budget
+                included.append(pinned)
+                token_budget -= file_tokens
+        
+        # Then rank and add other files
+        remaining_files = rank_files(prompt, exclude=self.pinned_files)
+        for file in remaining_files:
+            if can_fit(file, token_budget):
+                included.append(file)
+                token_budget -= file.tokens
+```
+
 ## Usage Examples
 
 ### Basic Context Building
@@ -254,7 +379,7 @@ tenets instill --session payment-feature --add-file src/core/payment.py
 tenets distill "add refund flow" --session payment-feature
 ```
 
-### Closing
+## Closing
 
 We're closing in on a future where LLMs are becoming the glue to hold other pieces and services together that fundamentally should be deterministic, even to the point where it can become LLM calls verifying other LLM calls in guardrails or other forms of abstractions.
 

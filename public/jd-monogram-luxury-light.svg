@@ -1,6 +1,11 @@
 <svg width="128" height="128" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
+                    <defs>
+                        <linearGradient id="gradient-1758479491706" x1="0%" y1="0%" x2="100%" y2="100%">
+                            <stop offset="0%" style="stop-color:#2a2a2a;stop-opacity:1" /><stop offset="25%" style="stop-color:#4a4a4a;stop-opacity:1" /><stop offset="50%" style="stop-color:#3a3a3a;stop-opacity:1" /><stop offset="75%" style="stop-color:#5a5a5a;stop-opacity:1" /><stop offset="100%" style="stop-color:#3a3a3a;stop-opacity:1" />
+                        </linearGradient>
+                    </defs>
                     <g transform="translate(256, 256)">
-                        <!-- Luxury J - simplified without flourish -->
+                        <!-- Luxury J -->
                         <path d="M -90 -100
                                  L -70 -100
                                  C -65 -100, -62 -97, -62 -92
@@ -19,9 +24,9 @@
                                  C -106 -97, -103 -100, -98 -100
                                  L -90 -100
                                  Z"
-                              fill="#1a1a1a"/>
+                              fill="url(#gradient-1758479491706)"/>
                         
-                        <!-- Luxury D - extended down to match J -->
+                        <!-- Luxury D -->
                         <path d="M 20 -100
                                  L 30 -100
                                  C 95 -100, 145 -55, 145 10
@@ -42,6 +47,6 @@
                                  C 125 -45, 95 -84, 50 -84
                                  L 45 -84
                                  Z"
-                              fill="#1a1a1a"/>
+                              fill="url(#gradient-1758479491706)"/>
                     </g>
                 </svg>
