@@ -17,7 +17,7 @@ ogImage:
 
 ## Uncanny AI coding assistants
 
-I've used all the AI pair programming tools - CoPilot Chat, Cursor, Codex, Claude Code, aider, Windsurf (not so much anymore). They all have access to your Git repos and basic terminal commands (if you give it to them, though from anecdotes on the web and my personal experiences as well, it's clear that *permissions* isn't really a deterministic thing in these tools, but that's a different discussion), like `ls` and `grep`, and of course `nano` or `rmv`.
+I've used all the AI pair programming tools - CoPilot Chat, Cursor, Codex, Claude Code, aider, Windsurf (not so much anymore). They all have access to your Git repos and basic terminal commands (if you give it to them, though from anecdotes on the web and my personal experiences as well, it's clear that *permissions* isn't really a deterministic thing in these tools though that's a different discussion), like `ls` and `grep`, and of course `nano` or `rmv`.
 
 A strange thing with LLMs, when working with Copilot Chat at least, is you will tell them something specific: "logic in the summarizer is looping twice because the batch processor isn't clearing the processed_chunks var, fix it", which is not a great prompt but gets things started, and then you'll see the tool calling commands running:
 
@@ -53,7 +53,7 @@ And we're not even going to think about the costs of additional LLM calls when s
 
 ## What is
 
-**tenets** is a Python library and CLI tool that intelligently navigates repos (or any directory of files) to match, analyze, summarize, and aggregate the most relevant context for a query. It's currently tuned to work with coding with AI assistants, but the core functionality can be applied for any document matching service.
+**tenets** is a Python library and CLI tool that intelligently navigates repos (or any directory of files) to match, analyze, summarize, and aggregate the most relevant context (set of documents) for a query. It's currently tuned to work with coding with AI assistants, but the core functionality can be applied for any document matching service, including search engines.
 
 It uses deterministic algorithms (regex, BM25) with optional deep learning embeddings for semantic understanding, and extractive summarization and factors high-level metadata (how many times a function is referenced, how complex a function may be, imports / dependencies) and other metrics for heuristics in its rankings.
 
@@ -62,11 +62,11 @@ Beyond basic BM25, tenets implements:
 - **Multi-signal ranking** combining 10+ orthogonal factors (import centrality, git signals, AST complexity)
 - **Dynamic programming for file packing** to optimize which files to include in full vs summarized within token budgets
 - **Task-specific weight adjustments** - different factors for `debug` vs `refactor` vs `feature` tasks
-- **Intelligent summarization** that preserves signatures, docstrings, and complex functions over simple ones
+- **File structure aware summarization** that preserves signatures, docstrings, and complex functions over simple ones
 
 None of tenets's functionality costs API credits - all processing is done locally. There are optional LLM integrations for summarizing, but the recommended route is using the built-in [summarizer algorithms](https://github.com/jddunn/tenets/blob/master/tenets/core/summarizer/strategies.py) first.
 
-tenets is able to perform its full `distillation` functionality on complex repos with hundreds of source files typically in 30-40 seconds, making it usable as a programmatic API for pair programming tools like aider or Claude CLI (which is intended as one of its end goals).
+tenets is able to perform its full `distillation` functionality on complex repos with hundreds of source files typically in 30-40 seconds, making it usable as a programmatic API (in `fast` mode) for pair programming tools like aider or Claude CLI.
 
 And yes at some late midway point in tenet's development, I dogfooded the tool to help it build itself. Tenets was built with the help of Copilot Chat (GPT-5) and Claude Opus / Sonnet.
 
@@ -110,19 +110,21 @@ Sessions maintain context across multiple interactions.
 
 ## Technical Design
 
-Tenets operates in 3 modes, `fast`, `balanced`, and `thorough`. Balanced is about 1.5x slower than fast, and thorough is about 4x slower. Thorough utilizes ML embeddings for semantic searching and matching.
+Tenets operates in 3 modes, `fast`, `balanced`, and `thorough`. Balanced is about 1.5x slower than fast, and thorough is about 4x slower. **Thorough** utilizes ML (deep learning) embeddings (sentence transformers bi-encoders and cross-encoders) for semantic searching and matching.
 
 ### Ranking / similarity
 
-BM25 is a probabilistic ranking algorithm that scores documents for relevancy. Since code files vary from 10 to 10,000+ lines, length shouldn't bias relevance *too* much. BM25 adds term saturation (diminishing returns for repeated terms) and document length normalization, making it a superior choice over tf-idf.
+BM25 is a probabilistic ranking algorithm that scores documents for relevancy, with term saturation so there's diminishing returns for repeated terms, and document length normalization, making BM25 superior over tf-idf in this case, and in many general cases (but not always). Since code files vary from 10 to 10,000+ lines, length shouldn't bias relevance *too* much.
 
 Code is inherently redundant. A test file with 50 instances of `assert response.status == 200` shouldn't dominate searches for "response", of course.
 
-We also support TF-IDF with sparse cosine similarity (saves 10x memory over dense vectors), but BM25 is recommended.
+We also support TF-IDF with sparse cosine similarity (can be but is not usually faster with pre-compute, uses more memory), but BM25 is recommended.
 
-We purposefully exclude stemming / lemmatization, which is normalizing text so all word forms become base words only. This is because the difference between `summary()` method and `Summary()` class, or `summarize` method versus `summarized` var matters greatly in code, not so much in something like academic research (which tenets would have to be reconfigured to support better). Sentence transformers in optional ML embeddings path would be the best way, given it can differentiate but also still matches them closely in vector space. Exact matches (capitalization) impacts rankings as well. 
+We purposefully exclude stemming / lemmatization, the process of normalizing text so all word forms become base words only, because the difference between `summary()` method and `Summary()`, or `summarize` versus `summarized` matters greatly in code, not so much in something like journalism and news for example (which tenets would have to be reconfigured to support better). 
 
-**All that in mind, the tip when using tenets is to be clear with your variable names, casings, and make absolutely zero typos (unlike interacting with LLMs).**
+Sentence transformers in optional ML embeddings path would be the best way, given it can differentiate these aspects while also still understanding they match closely in vector space. Exact matches (capitalization) impact rankings as well, but *aren't* required for a match.
+
+**All that in mind, the tip when using tenets is to be clear with your variable names, capitalization for variables / classes / methods, and make absolutely zero typos (unlike interacting with LLMs).**
 
 ## Code-Aware Tokenization
 
@@ -237,16 +239,16 @@ if intent == "debug":
 elif intent == "refactor":
     weights["complexity_relevance"] *= 2.0  # Complex code needs refactoring
     weights["import_centrality"] *= 1.5     # Core abstractions
+..
 ```
 
 ## Parallel Processing & Caching
 
-We use parallelization in multiple stages. Building indices is sequential (2-3s), but ranking factors calculate in parallel across available cores.
+We use parallelization in multiple stages. Building indices is sequential but ranking factors calculate in parallel across available cores.
 
 We stream results as they become available instead of waiting for everything to complete. Cache is multi-tier: memory for hot data which is very fast, SQLite for warm which is fast, disk for cold which is slower.
 
 ## Architecture challenge: A functional CLI + Python API
-
 
 Building a code intelligence platform needs to be responsive and fast, even as it loads necessary ML dependencies or performs recursive folder searching. 
 
@@ -448,9 +450,7 @@ tenets distill "add refund flow" --session payment-feature
 
 ## Closing
 
-We're closing in on a future where LLMs are becoming the glue to hold other pieces and services together that fundamentally should be deterministic, even to the point where it can become LLM calls verifying other LLM calls in guardrails or other forms of abstractions.
-
-It seems like being in favor of "cleanliness" or perhaps laziness or just plain intentional design decisions to *not* utilize anything but LLMs for agency when we build and use AI agents, **choosing** to ignore existing, well-documented static solutions in text analysis and natural language processing, is going to be a decision that compounds in slight effects overtime to snowball into something contentious.
+We're closing in on a future where LLMs are becoming the glue to hold other pieces and services together that fundamentally should be deterministic, even to the point where it can become LLM calls verifying other LLM calls in guardrails that require predictability.
 
 The future of AI pair programming isn't about throwing more compute at the problem or simply relying on models to get bigger and better.
 
