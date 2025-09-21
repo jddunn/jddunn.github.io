@@ -1,5 +1,3 @@
-You're right, I over-edited and killed the voice. Let me fix this - keeping your original style but just cutting the actually redundant bits:
-
 ---
 title: 'tenets'
 coverImage: '/assets/projects/tenets/tenets_dark_icon.png'
