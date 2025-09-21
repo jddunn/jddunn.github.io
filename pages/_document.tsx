@@ -21,17 +21,17 @@ export default function Document() {
       </Script>
       <Head>
         <link rel="icon" type="image/x-icon" href="/favicon.ico" />
-        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-light-16x16.png" />
-        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-light-32x32.png" />
-        <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon-light.png" />
-        
-        <link rel="icon" href="/favicon-light-16x16.png" sizes="16x16" media="(prefers-color-scheme: light)" />
-        <link rel="icon" href="/favicon-light-32x32.png" sizes="32x32" media="(prefers-color-scheme: light)" />
-        <link rel="icon" href="/favicon-light-16x16.png" sizes="16x16" media="(prefers-color-scheme: dark)" />
-        <link rel="icon" href="/favicon-light-32x32.png" sizes="32x32" media="(prefers-color-scheme: dark)" />
-        
-        <link rel="apple-touch-icon" href="/apple-touch-icon-light.png" media="(prefers-color-scheme: light)" />
-        <link rel="apple-touch-icon" href="/apple-touch-icon-light.png" media="(prefers-color-scheme: dark)" />
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-dark-16x16.png" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-dark-32x32.png" />
+        <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon-dark.png" />
+
+        <link rel="icon" href="/favicon-dark-16x16.png" sizes="16x16" media="(prefers-color-scheme: light)" />
+        <link rel="icon" href="/favicon-dark-32x32.png" sizes="32x32" media="(prefers-color-scheme: light)" />
+        <link rel="icon" href="/favicon-dark-16x16.png" sizes="16x16" media="(prefers-color-scheme: dark)" />
+        <link rel="icon" href="/favicon-dark-32x32.png" sizes="32x32" media="(prefers-color-scheme: dark)" />
+
+        <link rel="apple-touch-icon" href="/apple-touch-icon-dark.png" media="(prefers-color-scheme: light)" />
+        <link rel="apple-touch-icon" href="/apple-touch-icon-dark.png" media="(prefers-color-scheme: dark)" />
         
         <link rel="manifest" href="/site.webmanifest" />
         <meta name="theme-color" content="#000000" media="(prefers-color-scheme: dark)" />
@@ -55,15 +55,15 @@ export default function Document() {
                     icons.forEach(function(icon) {
                       var href = icon.getAttribute('href');
                       if (href && (href.includes('favicon-16x16') || href.includes('favicon-32x32') || href.includes('favicon-light') || href.includes('favicon-dark'))) {
-                        // Always use light favicon as requested
-                        icon.setAttribute('href', '/favicon-light-' + (href.includes('16x16') ? '16x16' : '32x32') + '.png');
+                        // Always use dark favicon as requested
+                        icon.setAttribute('href', '/favicon-dark-' + (href.includes('16x16') ? '16x16' : '32x32') + '.png');
                       }
                     });
-                    
+
                     var touchIcon = document.querySelector('link[rel="apple-touch-icon"]:not([media])');
                     if (touchIcon) {
-                      // Always use light touch icon as requested
-                      touchIcon.setAttribute('href', '/apple-touch-icon-light.png');
+                      // Always use dark touch icon as requested
+                      touchIcon.setAttribute('href', '/apple-touch-icon-dark.png');
                     }
                   };
                   
