@@ -139,7 +139,7 @@ const About = () => {
             <ul className={style.achievements}>
               <li>Linkby: Built unified ML pipeline automating feature engineering and model training from SQL</li>
               <li>Grapple Research: Improved AI text detection accuracy from 55% to 71%, reduced costs by 64%</li>
-              <li>EmergeX: Built RAG pipeline using Weaviate for conversational AI memory</li>
+              <li>ImmenseX: Built RAG pipeline using Weaviate for conversational AI memory</li>
               <li>Edelman: Developed an interactive photobooth app for an exhibition using neural style transfer to apply filters from film visuals onto selfies.</li>
               <li>HereAfterLegacy: Achieved 74% accuracy on sentiment analysis with random forest</li>
             </ul>
