@@ -1,10 +1,10 @@
 ---
 title: 'tenets'
 coverImage: '/assets/projects/tenets/tenets_dark_icon.png'
-excerpt: 'Using NLP and semantic understanding with embeddings and similarity to automatically aggregate context from any folder / repo to feed into a prompt.'
-date: '2025-09-17'
+excerpt: 'A local MCP server using NLP and semantic understanding with embeddings and similarity to automatically aggregate context from any folder / repo to feed into a prompt.'
+date: '2025-12-11'
 createdDate: '2025-09-16'
-tags: 'python,llms,ai,dev-tools'
+tags: 'python,llms,ai,dev-tools,mcp'
 ogImage:
   url: '/assets/projects/tenets/tenets_dark_icon.png'
 ---
@@ -16,8 +16,6 @@ ogImage:
 # Building tenets: Intelligent Context Aggregation for AI Pair Programming
 
 ## Uncanny AI coding assistants
-
-I've used all the AI pair programming tools - CoPilot Chat, Cursor, Codex, Claude Code, aider, Windsurf (not so much anymore). They all have access to your Git repos and basic terminal commands (if you give it to them, though from anecdotes on the web and my personal experiences as well, it's clear that *permissions* isn't really a deterministic thing in these tools though that's a different discussion), like `ls` and `grep`, and of course `nano` or `rm`.
 
 A strange thing with LLMs, when working with Copilot Chat at least, is you will tell them something specific: "logic in the summarizer is looping twice because the batch processor isn't clearing the processed_chunks var, fix it", which is not a great prompt but gets things started, and then you'll see the tool calling commands running:
 
@@ -43,7 +41,7 @@ grep -r "processed_chunks\|process_chunks\|chunk_process\|chunks_processed"
 grep -r "self\.processed_chunks"
 ```
 
-It usually finds a good match 1-2 attempts after the first failed honestly, it's not such a hindrance you find it to be a real issue. 
+It usually finds a good match 1-2 attempts after the first failed honestly, it's not such a hindrance you find it to be a real issue.
 
 The example's exaggerated to demonstrate a symptom of something larger at play, cause I guess what **really** gets me is the first step *always* (at the moment) seems to be, query the exact phrase the user's looking for in every file. That is dumb, even for a first move, even for a LLM. (Of course, this is subject to change, but as of the time of this writing, that's the common behavior of Copilot Chat).
 
@@ -51,11 +49,139 @@ What's also strange is LLMs won't (probably discouraged from ingesting too many 
 
 And we're not even going to think about the costs of additional LLM calls when static tools could do the job, especially when conversations get larger and LLMs start summarizing with more LLMs.
 
+## MCP Servers: The Promise vs My Reality
+
+Model Context Protocol (MCP) is Anthropic's open standard for connecting AI assistants to external tools and data sources. When it first was out I was a bit skeptical myself, considering we already had RAG and coding assistants like Claude Code and Codex were able to read and interact with files, search the web, etc.
+
+I've installed several MCP servers, context7, filesystem servers, etc. and most of the time, we forget they're even there. AI assistants often find and invoke direct CLI or programmatic calls, which I think is a more of a symptom of incomprehensive prompting and chain of thought templating than an issue with the protocol itself.
+
+"Prompt engineering" problems aside, most MCP servers are just thin wrappers around file system operations or CLIs, when they could and should be more. They give AI assistants the *ability* to read files but no structure or guidance to know which files matter. They don't do any ranking. They don't understand code structure. They don't consider import graphs or git history or semantic similarity.
+
+Agentic AIs are empowered with terrible lexical search tools putting the burden on the user to write a prompt that actually encourages exploration and documentation searching, literally by dropping in keywords that match what they know they want to look for and saying, try to find anything that matches this.
+
+**A generative AI model should use deterministic NLP tools at their disposal.**
+
+I originally built out tenets as a CLI and programmatic library, something completely separate from pair programming, meant to enhance and provide contexts for prompts but not actually build or send the prompts themselves.
+
+It would be an intelligent context aggregator that does the hard work of figuring out *what's relevant* before handing anything to the AI. It was started just about the time MCP was taking off, which is a strong sign of product validation.
+
+**tenets** is a free, open source, 100% local MCP server (and Python library / CLI tool) that solves two critical problems for AI coding:
+
+1. **Intelligent Code Context** — NLP-powered ranking finds and aggregates the most relevant code automatically
+2. **Automatic Guiding Principles** — Your tenets (coding standards, rules) are injected into every prompt context that's built with the "distill" commands, preventing context drift
+
+The difference in practice:
+
+**Without tenets MCP:**
+1. You ask: "Fix the bug in the summarizer that's causing double processing"
+2. AI runs `grep -r "summarizer"` — finds 47 files
+3. AI runs `grep -r "double processing"` — finds nothing
+4. AI starts reading random files containing "summarizer"
+5. Eventually stumbles onto the right file after 3-4 attempts
+6. Context window is now polluted with irrelevant file contents
+
+**With tenets MCP:**
+1. You ask: "Fix the bug in the summarizer that's causing double processing"
+2. AI calls `distill("summarizer double processing bug")`
+3. tenets returns 5 ranked files with the most relevant code, summarized to fit token budget
+4. AI has immediate, focused context and can start working
+
+## Quick Setup
+
+### Installation
+
+```bash
+pip install tenets[mcp]
+```
+
+### Claude Desktop
+
+Add to `~/Library/Application Support/Claude/claude_desktop_config.json` (macOS):
+
+```json
+{
+  "mcpServers": {
+    "tenets": {
+      "command": "tenets-mcp"
+    }
+  }
+}
+```
+
+If you installed in a virtual environment:
+
+```json
+{
+  "mcpServers": {
+    "tenets": {
+      "command": "/path/to/venv/bin/tenets-mcp"
+    }
+  }
+}
+```
+
+### Cursor
+
+Add to `~/.cursor/mcp.json`:
+
+```json
+{
+  "mcpServers": {
+    "tenets": {
+      "command": "tenets-mcp"
+    }
+  }
+}
+```
+
+### Windsurf
+
+Add to Windsurf MCP settings:
+
+```json
+{
+  "mcp": {
+    "servers": {
+      "tenets": {
+        "command": "tenets-mcp"
+      }
+    }
+  }
+}
+```
+
+### Verify Installation
+
+```bash
+tenets-mcp --version
+```
+
+After configuring, restart your IDE. Ask your AI assistant: "Use tenets to find files relevant to authentication" — if it invokes the distill tool, you're set.
+
+### Available MCP Tools
+
+The MCP server exposes these tools to AI assistants:
+
+| Tool | Description |
+|------|-------------|
+| `distill` | Build ranked, token-optimized context from codebase |
+| `rank_files` | Rank files by relevance without full content |
+| `examine` | Analyze codebase structure and complexity |
+| `chronicle` | Analyze git history and patterns |
+| `momentum` | Track development velocity |
+| `session_create` | Create a development session |
+| `session_list` | List all sessions |
+| `session_pin_file` | Pin a file to a session |
+| `session_pin_folder` | Pin a folder to a session |
+| `tenet_add` | Add a guiding principle |
+| `tenet_list` | List all tenets |
+| `tenet_instill` | Activate pending tenets |
+
+---
+
 ## What is
 
-**tenets** is a Python library and CLI tool that intelligently navigates repos (or any directory of files) to match, analyze, summarize, and aggregate the most relevant context (set of documents) for a query. It's currently tuned to work with coding with AI assistants, but the core functionality can be applied for any document matching service, including search engines.
-
-It uses deterministic algorithms (regex, BM25) with optional deep learning embeddings for semantic understanding, and extractive summarization and factors high-level metadata (how many times a function is referenced, how complex a function may be, imports / dependencies) and other metrics for heuristics in its rankings.
+**tenets** uses deterministic algorithms (regex, BM25) with optional deep learning embeddings for semantic understanding, and extractive summarization and factors high-level metadata (how many times a function is referenced, how complex a function may be, imports / dependencies) and other metrics for heuristics in its rankings.
 
 Beyond basic BM25, tenets implements:
 - **Code-aware tokenization** that splits `camelCase` and `snake_case` while preserving originals for exact matching
@@ -454,9 +580,7 @@ We're closing in on a future where LLMs are becoming the glue to hold other piec
 
 The future of AI pair programming isn't about throwing more compute at the problem or simply relying on models to get bigger and better.
 
-As for the future of tenets, there are clear applications for document similarity matching at the performance and complexity that this library can perform at beyond building developer tools. While tenets is currently fully implemented *just* to support programming contexts, the modules can easily be packaged out into something composable for any type or genre of documents. At some point I think I'll be using tenets in some capacity for [PKMS](https://www.reddit.com/r/PKMS/) and other personal bookkeeping.
-
-**Install:** `pip install tenets`
+**Install:** `pip install tenets[mcp]`
 
 **Docs:** [tenets.dev](https://tenets.dev)
 
