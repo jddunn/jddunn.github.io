@@ -9,9 +9,13 @@ ogImage:
   url: '/assets/projects/tenets/tenets_dark_icon.png'
 ---
 
-<a href="https://github.com/jddunn/tenets" style="text-align: center" target="_blank" class="md-link">GitHub link</a>
+<a href="https://github.com/jddunn/tenets" style="text-align: center" target="_blank" class="md-link">GitHub</a>
+
+<a href="https://pypi.org/project/tenets/" style="text-align: center" target="_blank" class="md-link">PyPi</a>
 
 <a href="https://tenets.dev" style="text-align: center" target="_blank" class="md-link">Website / docs link</a>
+
+<a href="https://marketplace.visualstudio.com/items?itemName=ManicAgency.tenets-mcp-server" style="text-align: center" target="_blank" class="md-link">VS Code Extension</a>
 
 # Building tenets: Intelligent Context Aggregation for AI Pair Programming
 
