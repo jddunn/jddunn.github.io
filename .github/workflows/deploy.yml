@@ -51,3 +51,5 @@ jobs:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           # Specifies the directory containing the built site
           publish_dir: ./out
+          # Add CNAME file for custom domain
+          cname: johnny.mov
