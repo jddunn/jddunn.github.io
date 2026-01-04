@@ -40,8 +40,7 @@ jobs:
       # Environment variables set at the job level are available here
       - name: Build
         run: |
-          npm run build
-          npm run export
+          NODE_ENV=production npm run build
           touch out/.nojekyll # Create .nojekyll file for GitHub Pages
 
       # --- Step 5: Deploy the built site to gh-pages branch ---
