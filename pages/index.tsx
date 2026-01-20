@@ -27,7 +27,7 @@ export default function Home() {
 
   let counter = 0;
   const texts = [
-    "a full-stack dev specializing in machine learning and generative AI works", 
+    "a full-stack dev specializing in machine learning and generative AI projects", 
     "a co-founder at manic.agency an open-source and writing collective", 
     'an artist formerly known as an "artist" formerly known as an artifice', 
     "a persona non grata to myself looking for forgiveness",
@@ -1031,7 +1031,7 @@ function updateStatuses() {
                   <h1 style={{marginLeft: '6px', display: 'inline', fontSize: '1.6em', letterSpacing: '1px', fontWeight: '700', fontFamily: 'Playfair Display, serif'}} className="willHide">DUNN</h1>
                 </div>
                 <div className={styles.subHeadingContainer} style={{marginTop: '3px'}}>
-                  <h3 id="subHeading" className="shimmer" style={{fontSize: '0.95em'}}>a full-stack dev specializing in web3 and machine learning projects</h3>
+                  <h3 id="subHeading" className="shimmer" style={{fontSize: '0.95em'}}>a full-stack dev specializing in machine learning and generative AI projects</h3>
                 </div>
               </motion.div>
             </AnimatePresence>
