@@ -358,8 +358,7 @@
   font-style: italic;
 }
 
-// Special link styling with animated borders
-.markdown a,
+// Special button-style links (for explicit CTA buttons with .md-link class)
 .markdown :global(.md-link) {
   display: inline-block;
   color: var(--accent-primary);
@@ -367,8 +366,8 @@
   font-weight: 600;
   padding: 0.5rem 1.2rem;
   margin: 0.5rem 0.25rem;
-  background: linear-gradient(135deg, 
-    rgba(var(--bg-primary-rgb), 0.9) 0%, 
+  background: linear-gradient(135deg,
+    rgba(var(--bg-primary-rgb), 0.9) 0%,
     rgba(var(--bg-secondary-rgb), 0.9) 100%);
   border: 2px solid var(--accent-primary);
   position: relative;
@@ -377,7 +376,9 @@
   font-family: 'Crimson Text', serif;
   letter-spacing: 0.03em;
   border-radius: 4px;
-  
+  text-align: center;
+  max-width: 300px;
+
   // Hand-drawn corner effect
   clip-path: polygon(
     0 0,
@@ -387,7 +388,7 @@
     8px 100%,
     0 calc(100% - 8px)
   );
-  
+
   // Animated background fill
   &::before {
     content: '';
@@ -396,13 +397,13 @@
     left: -100%;
     width: 100%;
     height: 100%;
-    background: linear-gradient(135deg, 
-      var(--accent-primary), 
+    background: linear-gradient(135deg,
+      var(--accent-primary),
       var(--accent-secondary));
     transition: left 0.4s ease;
     z-index: -1;
   }
-  
+
   // Animated icon on hover
   &::after {
     content: '→';
@@ -414,40 +415,32 @@
     transition: all 0.4s ease;
     font-size: 1.2rem;
   }
-  
+
   &:hover {
     color: var(--bg-primary);
     transform: translateY(-3px);
     padding-right: 2.5rem;
-    box-shadow: 
+    box-shadow:
       0 15px 30px rgba(var(--accent-primary-rgb), 0.3),
       0 5px 15px rgba(0, 0, 0, 0.1),
       inset 0 1px 0 rgba(255, 255, 255, 0.1);
-    
+
     &::before {
       left: 0;
     }
-    
+
     &::after {
       opacity: 1;
       transform: translateY(-50%) translateX(0);
     }
   }
-  
+
   &:active {
     transform: translateY(-1px);
-    box-shadow: 
+    box-shadow:
       0 5px 15px rgba(var(--accent-primary-rgb), 0.2),
       0 2px 5px rgba(0, 0, 0, 0.1);
   }
-}
-
-// Center-aligned links (for GitHub/Download links)
-.markdown :global(.md-link) {
-  display: block;
-  text-align: center;
-  max-width: 300px;
-  margin: 1.5rem auto;
 }
 
 // Light mode - also uses gold theme

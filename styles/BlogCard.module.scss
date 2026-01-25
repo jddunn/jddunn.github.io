@@ -357,7 +357,7 @@
 // Grid layout for blog cards
 .blog_cards_grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
   gap: 2.5rem;
   margin-top: 2rem;
   padding: 1rem;
@@ -494,36 +494,61 @@
   }
 }
 
-// Responsive design
+// Responsive design - tablet
+@media (max-width: 1024px) {
+  .blog_cards_grid {
+    gap: 2rem;
+    padding: 0.75rem;
+  }
+
+  .blog_card_title {
+    font-size: 1.6rem;
+  }
+
+  .blog_card_excerpt {
+    font-size: 1rem;
+    -webkit-line-clamp: 2;
+  }
+
+  .blog_cards_list .blog_card {
+    grid-template-columns: 280px 1fr;
+  }
+}
+
+// Responsive design - mobile
 @media (max-width: 768px) {
   .blog_cards_grid {
     grid-template-columns: 1fr;
-    gap: 2rem;
+    gap: 1.5rem;
     padding: 0.5rem;
   }
-  
+
   .blog_cards_list .blog_card {
     grid-template-columns: 1fr;
-    
+
     .blog_card_image_container {
       height: 200px;
       border-right: none;
       border-bottom: 1px solid rgba(var(--accent-primary-rgb), 0.2);
     }
   }
-  
+
   .blog_card_hero {
     .blog_card_image_container {
       height: 250px;
     }
-    
+
     .blog_card_content {
       padding: 1.5rem;
     }
-    
+
     .blog_card_title {
-      font-size: 2rem;
+      font-size: 1.8rem;
     }
+  }
+
+  .blog_card_title {
+    font-size: 1.5rem;
   }
 }
 

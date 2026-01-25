@@ -545,6 +545,81 @@
     height: 42px;
     min-width: 42px;
   }
+
+  // Game container mobile optimization
+  #game {
+    padding: 1rem;
+    max-width: 100%;
+    margin: 0.5rem auto;
+  }
+
+  #display {
+    max-height: 250px;
+    padding: 1rem;
+    font-size: 0.95rem;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  #inputContainer {
+    padding: 0.75rem;
+    gap: 0.75rem;
+    flex-wrap: nowrap;
+  }
+
+  #input {
+    height: 44px;
+    font-size: 1rem;
+    padding: 0.5rem 1rem;
+  }
+
+  #sendButton {
+    width: 48px;
+    height: 48px;
+    min-width: 48px;
+    flex-shrink: 0;
+
+    svg {
+      width: 22px;
+      height: 22px;
+    }
+  }
+
+  // Prompt touch optimization for tablet/mobile
+  .prompt {
+    min-height: 44px;
+    padding: 0.75rem 1rem;
+    font-size: 0.95rem;
+    width: 100%;
+    margin: 0.5rem 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    white-space: normal;
+    line-height: 1.4;
+
+    // Hide the arrow on mobile to save space
+    &::before {
+      display: none;
+    }
+
+    // Touch-friendly hover state
+    &:hover {
+      transform: none;
+    }
+
+    &:active {
+      background: rgba(var(--accent-primary-rgb), 0.2);
+      transform: scale(0.98);
+    }
+  }
+
+  #prompts {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    padding: 0.5rem 0;
+  }
 }
 
 @media (max-width: 480px) {
@@ -589,16 +664,36 @@
     }
   }
   
-  // Better touch targets for prompts on mobile
+  // Better touch targets for prompts on small mobile
   .prompt {
-    padding: 0.75rem 1rem;
+    padding: 0.65rem 0.75rem;
+    font-size: 0.85rem;
+    min-height: 44px;
+    width: 100%;
+    margin: 0.4rem 0;
+    line-height: 1.35;
+  }
+
+  #display {
+    max-height: 200px;
+    padding: 0.75rem;
     font-size: 0.9rem;
-    min-height: 44px; // iOS touch target minimum
-    width: calc(100% - 0.5rem) !important;
-    margin-bottom: 0.5rem;
-    text-align: center;
-    white-space: normal;
-    line-height: 1.3;
+  }
+
+  #input {
+    height: 44px;
+    font-size: 0.95rem;
+  }
+
+  #sendButton {
+    width: 44px;
+    height: 44px;
+    min-width: 44px;
+
+    svg {
+      width: 20px;
+      height: 20px;
+    }
   }
 }
 

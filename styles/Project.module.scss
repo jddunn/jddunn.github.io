@@ -171,7 +171,7 @@
 
 .project_card_container {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
   gap: 2.5rem;
   margin-top: 3rem;
 }
@@ -453,26 +453,71 @@
   }
 }
 
-// Responsive design
+// Responsive design - tablet
+@media screen and (max-width: 1024px) {
+  .project_container {
+    width: 92%;
+  }
+
+  .introSection {
+    margin: 5rem 0 4rem 0;
+  }
+
+  .pageTitle {
+    font-size: clamp(2rem, 3.5vw, 3rem);
+  }
+
+  .project_card_container {
+    gap: 2rem;
+  }
+
+  .project_title {
+    font-size: 1.5rem;
+  }
+
+  .project_card_body {
+    font-size: 1rem;
+  }
+}
+
+// Responsive design - mobile
 @media screen and (max-width: 768px) {
   .project_container {
     width: 95%;
     padding: 0 1rem;
   }
-  
+
+  .introSection {
+    margin: 3rem 0 2rem 0;
+    padding: 0 1rem;
+  }
+
+  .pageTitle {
+    font-size: 1.8rem;
+  }
+
+  .subtitle {
+    position: relative;
+    bottom: auto;
+    right: auto;
+    text-align: center;
+    margin-top: 1rem;
+    max-width: 100%;
+  }
+
   .project_card_container {
     grid-template-columns: 1fr;
-    gap: 2rem;
+    gap: 1.5rem;
   }
-  
+
   .project_card_top {
     padding: 1.5rem;
   }
-  
+
   .project_title {
     font-size: 1.4rem;
   }
-  
+
   .project_card_body {
     p {
       text-align: left;
