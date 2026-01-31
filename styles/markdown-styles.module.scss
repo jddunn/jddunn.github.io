@@ -443,6 +443,40 @@
   }
 }
 
+// Reset button styles for inline .md-link usage (Safari fix)
+// When md-link is used with display: inline, disable problematic pseudo-elements
+.markdown :global(.md-link[style*="inline"]) {
+  display: inline !important;
+  padding: 0;
+  margin: 0;
+  background: none;
+  border: none;
+  border-bottom: 1px dotted var(--accent-primary);
+  clip-path: none;
+  overflow: visible;
+  border-radius: 0;
+  max-width: none;
+
+  &::before,
+  &::after {
+    display: none !important;
+    content: none !important;
+  }
+
+  &:hover {
+    transform: none;
+    padding-right: 0;
+    box-shadow: none;
+    color: var(--accent-secondary);
+    border-bottom-style: solid;
+  }
+
+  &:active {
+    transform: none;
+    box-shadow: none;
+  }
+}
+
 // Light mode - also uses gold theme
 :global(html:not(.dark)) {
   .markdown {
