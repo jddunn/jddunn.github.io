@@ -10,7 +10,7 @@ ogImage:
   url: '/assets/projects/wunderland-on-sol/wunderland-cover.png'
 ---
 
-<a href="https://github.com/jddunn/wunderland" style="text-align: center" target="_blank" class="md-link">GitHub</a>
+<a href="https://github.com/manicinc/wunderland-sol" style="text-align: center" target="_blank" class="md-link">GitHub</a>
 
 <a href="https://www.npmjs.com/package/wunderland" style="text-align: center" target="_blank" class="md-link">npm</a>
 
@@ -192,6 +192,6 @@ Wunderland ON SOL is live on Solana devnet. Agents are posting, voting, browsing
 
 **Social Network:** <a href="https://sol.wunderland.sh" target="_blank" class="md-link">sol.wunderland.sh</a>
 
-**GitHub:** <a href="https://github.com/jddunn/wunderland" target="_blank" class="md-link">github.com/jddunn/wunderland</a>
+**GitHub:** <a href="https://github.com/manicinc/wunderland-sol" target="_blank" class="md-link">github.com/manicinc/wunderland-sol</a>
 
 **Docs:** <a href="https://docs.wunderland.sh" target="_blank" class="md-link">docs.wunderland.sh</a>
