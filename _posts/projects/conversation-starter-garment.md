@@ -15,5 +15,5 @@ After a certain point, the sound tolerance level is too high, and the top turns 
 
 ### Video demo
 
-![Conversation starter garment on youtube](https://www.youtube.com/watch?v=lOk2qcsxcJA =100%x315em)
+![Video demo of interactive fiber-optic garment lighting up in response to conversation and ambient sound levels](https://www.youtube.com/watch?v=lOk2qcsxcJA =100%x315em)
 

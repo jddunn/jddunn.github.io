@@ -14,4 +14,4 @@ These soundscapes are also designed with ASMR (autonomous sensory meridian respo
 
 ### Video demo
 
-![Sonance video demo on youtube](https://www.youtube.com/watch?v=CmG03Qt5nco =100%x315em)
+![Video demo of Sonance dynamic ASMR soundscape app adjusting ambient forest sounds based on environmental noise levels](https://www.youtube.com/watch?v=CmG03Qt5nco =100%x315em)

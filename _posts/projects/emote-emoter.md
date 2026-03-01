@@ -14,7 +14,7 @@ Emote / Emoter / A Poor Sort of Memory were all created during my undergraduate 
 
 While the code and dataset was open-source while I was in school, the IP for Emote and Emoter was sold to the startup <a class="md-link" href="https://hereafterlegacy.ai" target="_blank" style="margin-left: 0; margin-right: 0; display: inline">HAL</a>, and so is no longer open-source.
 
-<a href="/assets/projects/emoter-talking-demo.gif" target="_blank"><img src="/assets/projects/emoter-talking-demo.gif" class="img-shadow" style="display: block; margin-left: auto; margin-right: auto;" width="800" alt="Emoter digital personality replica chatbot"></img></a>
+<a href="/assets/projects/emoter-talking-demo.gif" target="_blank"><img src="/assets/projects/emoter-talking-demo.gif" class="img-shadow" style="display: block; margin-left: auto; margin-right: auto;" width="800" alt="Animated demo of Emoter chatbot responding with empathy, showing real-time sentiment analysis of conversation messages"></img></a>
 
 I had originally wanted to create a wearable product integrated with a talking AI, and while looking at all the existing chatbot solutions, I felt dissatisfied. I felt that chatbots should have some way to comprehend messages for some higher meaning, as an actual human mind would. Naturally, empathy seemed like a great way to answer for that higher meaning.
 
@@ -28,7 +28,7 @@ Emote was written in Python and uses the TextBlob / NLTK, NumPy, pandas, and sci
 
 Based off these tone clusters, a further 10 additional tone classifications are derived, allowing for 36 different tones to be detected.
 
-<a href="/assets/projects/emoter-empathy-diagram.png" target="_blank"><img src="/assets/projects/emoter-empathy-diagram.png" class="img-shadow" style="display: block; margin-left: auto; margin-right: auto;" width="300" alt="Emote empathy classification chart"></img></a>
+<a href="/assets/projects/emoter-empathy-diagram.png" target="_blank"><img src="/assets/projects/emoter-empathy-diagram.png" class="img-shadow" style="display: block; margin-left: auto; margin-right: auto;" width="300" alt="Emote sentiment analysis classification diagram showing 13 pairs of opposite emotional tones clustered into tone groups"></img></a>
 <span style="text-align: center; color: grey; margin-left: auto; margin-right: auto; display: block; width: 80%">How the emotional tones were clustered and classified in Emote.</span>
 
 I developed the training data for this by classifying ~10,000 quotes of dialog and text from literature and film texts. It was fed into a Naive Bayes classifier. I also developed an algorithm to parse 70,000 of my Facebook messages, in order to "clone" a digital replica of myself that would respond with messages I have said before. It also was integrated with Emote's sentiment analysis, to judge the emotions behind a user's message and respond accordingly with appropriate emotional tones.
@@ -51,10 +51,10 @@ In the future, a Naive Bayes model based on bigrams or even trigrams with a 100k
 
 ## Emote image gallery
 
-<a href="/assets/projects/emote-demo-2.png" target="_blank"><img src="/assets/projects/emote-demo-2.png" class="img-shadow" style="display: block; margin-left: auto; margin-right: auto;" width="500" alt="Emote web interface demo"></img></a>
+<a href="/assets/projects/emote-demo-2.png" target="_blank"><img src="/assets/projects/emote-demo-2.png" class="img-shadow" style="display: block; margin-left: auto; margin-right: auto;" width="500" alt="Emote web interface built with Flask showing sentiment analysis results with detected emotional tone percentages"></img></a>
 <span style="text-align: center; color: grey; margin-left: auto; margin-right: auto; display: block; width: 80%">Emote has a web interface built in Flask and with Bootstrap.</span>
 
-<a href="/assets/projects/emote-demo-4.png" target="_blank"><img src="/assets/projects/emote-demo-4.png" class="img-shadow" style="display: block; margin-left: auto; margin-right: auto;" width="700" alt="Emote bulk analysis feature"></img></a>
+<a href="/assets/projects/emote-demo-4.png" target="_blank"><img src="/assets/projects/emote-demo-4.png" class="img-shadow" style="display: block; margin-left: auto; margin-right: auto;" width="700" alt="Emote mass analysis feature processing CSV text files and PDFs with batch sentiment classification results"></img></a>
 <span style="text-align: center; color: grey; margin-left: auto; margin-right: auto; display: block; width: 80%">Emote has a mass analysis feature for analyzing CSV or text files, including PDFs / books.</span>
 
 ## Emoter: Chatbots with empathy and memory
@@ -67,34 +67,34 @@ Within these conversations, Emoter looks for matching text in its database and c
 
 The combined approach of cosine similarity and tf-idf filtering worked well, as the similarity threshold required for matching an appropriate response was much lower than if it checked for the entire text without filtering, so often multiple appropriate responses were matched even with a relatively small dataset, and the response chosen was randomized from the appropriate ones found, allowing for a dynamic conversation experience.
 
-<a href="/assets/projects/emoter_demo_5.png" target="_blank"><img src="/assets/projects/emoter_demo_5.png" class="img-shadow" style="display: block; margin-left: auto; margin-right: auto;" width="800" alt="Emoter agent with the personality of a fitness coach"></img></a>
+<a href="/assets/projects/emoter_demo_5.png" target="_blank"><img src="/assets/projects/emoter_demo_5.png" class="img-shadow" style="display: block; margin-left: auto; margin-right: auto;" width="800" alt="Emoter chatbot agent configured as a fitness coach persona responding with motivational tone based on detected user emotions"></img></a>
 <span style="text-align: center; color: grey; margin-left: auto; margin-right: auto; display: block; width: 80%">A demo 'Emoter agent' with a persona of a fitness coach.</span>
 
 In Emoter's training data, values can be passed into the list of lists (2D array) after any input-response pair, and checked for before Emoter gives out a response. In my interactive fiction game demo Eden, I used this to create a branching narrative driven by the mechanic of talking to the only other interactable character.
 
 The Emoter bot was able to keep track of whether or not certain things were said by the user previously, and how often each thing was said. Thus, Emoter bots can be written with limited short-term "memory" features, so that they can continue speaking on the same conversations.
 
-<a href="/assets/projects/eden_demo_3.png" target="_blank"><img src="/assets/projects/eden_demo_3.png" class="img-shadow" style="display: block; margin-left: auto; margin-right: auto;" width="600" alt="Emoter agent in interactive fiction game Eden"></img></a>
+<a href="/assets/projects/eden_demo_3.png" target="_blank"><img src="/assets/projects/eden_demo_3.png" class="img-shadow" style="display: block; margin-left: auto; margin-right: auto;" width="600" alt="Emoter chatbot powering branching narrative dialogue in the interactive fiction game Eden"></img></a>
 
 ## A poor sort of memory, or, how to build a digital replica of yourself with empathy
 
 Finally, while developing Emoter, I became more fascinated with the idea of automatically generating digital personalities of individual people, specifically given their archived data on social media (inspired by Black Mirror's episode Be Right Back. I developed an algorithm to parse 70,000 of my Facebook messages (downloaded from their official service), to create a database Emoter could use that was specifically mined from my words. This project was deployed as an interactive exhibit in a gallery.
 
-<a href="/assets/projects/emote-facebook-messages.png" target="_blank"><img src="/assets/projects/emote-facebook-messages.png" class="img-shadow" style="display: block; margin-left: auto; margin-right: auto;" width="800" alt="Emoter Facebook messages cloning></img></a>
+<a href="/assets/projects/emote-facebook-messages.png" target="_blank"><img src="/assets/projects/emote-facebook-messages.png" class="img-shadow" style="display: block; margin-left: auto; margin-right: auto;" width="800" alt="Algorithm parsing 70,000 Facebook messages into message-response pairs for Emoter digital personality cloning"></img></a>
 <span style="text-align: center; color: grey; margin-left: auto; margin-right: auto; display: block; width: 80%">Facebook message records transformed into message-pair responses for the chatbot using a parsing algorithm.</span>
 
-<a href="/assets/projects/emoter-web-demo-1.png" target="_blank"><img src="/assets/projects/emoter-web-demo-1.png" class="img-shadow" style="display: block; margin-left: auto; margin-right: auto;" width="800" alt="Emoter personality clone demo 1"></img></a>
+<a href="/assets/projects/emoter-web-demo-1.png" target="_blank"><img src="/assets/projects/emoter-web-demo-1.png" class="img-shadow" style="display: block; margin-left: auto; margin-right: auto;" width="800" alt="Emoter web interface showing digital personality replica responding to messages with sentiment-aware empathy"></img></a>
 
-<a href="/assets/projects/emoter-web-demo-2.png" target="_blank"><img src="/assets/projects/emoter-web-demo-2.png" class="img-shadow" style="display: block; margin-left: auto; margin-right: auto;" width="800" alt="Emoter personality clone demo 2"></img></a>
+<a href="/assets/projects/emoter-web-demo-2.png" target="_blank"><img src="/assets/projects/emoter-web-demo-2.png" class="img-shadow" style="display: block; margin-left: auto; margin-right: auto;" width="800" alt="Emoter digital personality clone web demo showing conversation with emotional context awareness"></img></a>
 
-<a href="/assets/projects/a_poor_sort_of_memory_only_backwards.jpeg" target="_blank"><img src="/assets/projects/a_poor_sort_of_memory_only_backwards.jpeg" class="img-shadow" style="display: block; margin-left: auto; margin-right: auto;" width="800" alt="Emoter personality clone demo 2"></img></a>
+<a href="/assets/projects/a_poor_sort_of_memory_only_backwards.jpeg" target="_blank"><img src="/assets/projects/a_poor_sort_of_memory_only_backwards.jpeg" class="img-shadow" style="display: block; margin-left: auto; margin-right: auto;" width="800" alt="A Poor Sort of Memory interactive exhibit at Parsons BFA thesis show featuring the Emoter digital personality chatbot"></img></a>
 <span style="text-align: center; color: grey; margin-left: auto; margin-right: auto; display: block; width: 80%">A poor sort of memory that only works backwards.</span>
 
 <b>Users talking to the chatbot during the gallery, and the chatbot demonstrating emotional understanding of the message intents and responding accordingly (logs saved from the backend):</b>
 
-<a href="/assets/projects/emoter-demo-1.png" target="_blank"><img src="/assets/projects/emoter-demo-1.png" class="img-shadow" style="display: block; margin-left: auto; margin-right: auto;" width="800" alt="Emoter personality clone empathy demo 1"></img></a>
+<a href="/assets/projects/emoter-demo-1.png" target="_blank"><img src="/assets/projects/emoter-demo-1.png" class="img-shadow" style="display: block; margin-left: auto; margin-right: auto;" width="800" alt="Gallery visitor conversation log showing Emoter detecting emotional intent and responding with appropriate empathy"></img></a>
 
 
-<a href="/assets/projects/emoter-demo-2.png" target="_blank"><img src="/assets/projects/emoter-demo-2.png" class="img-shadow" style="display: block; margin-left: auto; margin-right: auto;" width="800" alt="Emoter personality clone empathy demo 2"></img></a>
+<a href="/assets/projects/emoter-demo-2.png" target="_blank"><img src="/assets/projects/emoter-demo-2.png" class="img-shadow" style="display: block; margin-left: auto; margin-right: auto;" width="800" alt="Backend log of Emoter chatbot demonstrating sentiment analysis during live gallery interaction with visitor"></img></a>
 
-<a href="/assets/projects/emoter-demo-3.png" target="_blank"><img src="/assets/projects/emoter-demo-3.png" class="img-shadow" style="display: block; margin-left: auto; margin-right: auto;" width="800" alt="Emoter personality clone empathy demo 3"></img></a>
+<a href="/assets/projects/emoter-demo-3.png" target="_blank"><img src="/assets/projects/emoter-demo-3.png" class="img-shadow" style="display: block; margin-left: auto; margin-right: auto;" width="800" alt="Emoter conversation log showing emotional tone detection and context-aware responses during Parsons thesis exhibit"></img></a>

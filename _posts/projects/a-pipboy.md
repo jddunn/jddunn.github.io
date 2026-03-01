@@ -13,11 +13,11 @@ A more functional redesign of the famous wristworn computer your player has in t
 
 ### Image gallery
 
-<a href="/assets/projects/pipboy-1.png" target="_blank"><img src="/assets/projects/pipboy-1.png" class="img-shadow" style="display: block; margin-left: auto; margin-right: auto;" width="320" alt="A Pipboy photo 1"></img></a>
+<a href="/assets/projects/pipboy-1.png" target="_blank"><img src="/assets/projects/pipboy-1.png" class="img-shadow" style="display: block; margin-left: auto; margin-right: auto;" width="320" alt="Wearable Pip-Boy device prototype with 5-inch touchscreen display, Raspberry Pi, and modular sensor housing"></img></a>
 
-<a href="/assets/projects/pipboy-2.png" target="_blank"><img src="/assets/projects/pipboy-2.png" style="display: block; margin-left: auto; margin-right: auto;" width="320" alt="A Pipboy photo 2 showing internal components"></img></a>
+<a href="/assets/projects/pipboy-2.png" target="_blank"><img src="/assets/projects/pipboy-2.png" style="display: block; margin-left: auto; margin-right: auto;" width="320" alt="Pip-Boy internal hardware showing Raspberry Pi, software-defined radio receiver, GPS module, and sensor wiring"></img></a>
 
-<a href="/assets/projects/pipboy-3.png" target="_blank"><img src="/assets/projects/pipboy-3.png" style="display: block; margin-left: auto; margin-right: auto;" width="320" alt="A Pipboy photo 3"></img></a>
+<a href="/assets/projects/pipboy-3.png" target="_blank"><img src="/assets/projects/pipboy-3.png" style="display: block; margin-left: auto; margin-right: auto;" width="320" alt="Pip-Boy wrist-mounted computer fully assembled showing touchscreen interface running Jasper voice assistant"></img></a>
 
 ## Specs
 

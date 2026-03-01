@@ -13,7 +13,7 @@ This is an expansion of the Jasper library (written in Python) built into a lo-t
 
 ### Video demo of Jasper 2.0
 
-![Video demo of Jasper 2.0 robot on youtube](https://www.youtube.com/watch?v=xSaKdExKoXo&t=257s =100%x315em)
+![Video demo of Jasper 2.0 homemade robot responding to voice commands and holding natural conversation using speech synthesis](https://www.youtube.com/watch?v=xSaKdExKoXo&t=257s =100%x315em)
 
 
 Components include a webcam, a microphone, speakers, a Raspberry Pi, a motion detector. Jasper 2.0 is always listening; just say his name and tell it something. 

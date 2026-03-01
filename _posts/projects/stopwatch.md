@@ -15,10 +15,10 @@ StopWatch is a web app that automatically goes through curated content from YouT
 
 ### Image gallery
 
-<a href="/assets/projects/stopwatch-site-demo-2.png" target="_blank"><img src="/assets/projects/stopwatch-site-demo-2.png" class="img-shadow" style="display: block; margin-left: auto; margin-right: auto;" width="320" alt="Stopwatch site demo 2"></img></a>
+<a href="/assets/projects/stopwatch-site-demo-2.png" target="_blank"><img src="/assets/projects/stopwatch-site-demo-2.png" class="img-shadow" style="display: block; margin-left: auto; margin-right: auto;" width="320" alt="Stopwatch web app detecting viewer emotions via webcam using Affectiva SDK to curate YouTube content"></img></a>
 
-<a href="/assets/projects/stopwatch-site-demo-3.png" target="_blank"><img src="/assets/projects/stopwatch-site-demo-2.png" style="display: block; margin-left: auto; margin-right: auto;" width="320" alt="Stopwatch site demo 3"></img></a>
+<a href="/assets/projects/stopwatch-site-demo-3.png" target="_blank"><img src="/assets/projects/stopwatch-site-demo-2.png" style="display: block; margin-left: auto; margin-right: auto;" width="320" alt="Stopwatch emotion-driven video player showing real-time facial expression analysis and playlist curation"></img></a>
 
-<a href="/assets/projects/stopwatch-site-demo-4.png" target="_blank"><img src="/assets/projects/stopwatch-site-demo-4.png" style="display: block; margin-left: auto; margin-right: auto;" width="320" alt="Stopwatch site demo 4"></img></a>
+<a href="/assets/projects/stopwatch-site-demo-4.png" target="_blank"><img src="/assets/projects/stopwatch-site-demo-4.png" style="display: block; margin-left: auto; margin-right: auto;" width="320" alt="Stopwatch interface showing emotion detection metrics and YouTube video recommendation based on viewer mood"></img></a>
 
 If positive feelings are detected in the viewer, then the current video in the playlist continues playing. If it reaches the end, then the most similar video found on YouTube to the video is played next. If negative emotions are detected, then the current video is skipped, and the next video in the randomized playlist of 50 videos (generated from keywords specified by the user) is played.

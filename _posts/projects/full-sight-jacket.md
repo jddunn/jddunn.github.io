@@ -17,4 +17,4 @@ A sewable / attachable (with adhesives) electrical system that allows wearers to
 
 ### Video demo
 
-![Video demo of Full Sight Jacket working on youtube](https://www.youtube.com/watch?v=zZs2bT8cg00 =100%x315em)
+![Video demo of Full-Sight Jacket detecting motion behind the wearer and illuminating corresponding LED rings on the front](https://www.youtube.com/watch?v=zZs2bT8cg00 =100%x315em)

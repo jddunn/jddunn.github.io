@@ -15,7 +15,7 @@ Made in Unity, SOLITARY is meant to be projected in a large, dark room with surr
 
 ### Video demo
 
-![Solitary video demo on youtube](https://www.youtube.com/watch?v=4isawYJyDG4 =100%x315em)
+![Video demo of Solitary immersive audio-visual experience simulating the disorientation of solitary confinement in Unity](https://www.youtube.com/watch?v=4isawYJyDG4 =100%x315em)
 
 This was coded in C# in Unity3D, with a lot of consideration placed into environment design and atmospheric audio.
 

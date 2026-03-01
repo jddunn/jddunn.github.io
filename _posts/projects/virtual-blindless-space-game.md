@@ -12,7 +12,7 @@ This is a fully playable prototype of a game fully accessible for the blind, wit
 
 ### Video demo of game
 
-![Virtual blindness game demo on youtube](https://www.youtube.com/watch?v=T7_16aSXsRM =100%x315em)
+![Video demo of virtual blindness game navigating 3D space using only spatial audio sonar and AI voice directions](https://www.youtube.com/watch?v=T7_16aSXsRM =100%x315em)
 
 This was coded in C# in Unity3D, with a lot of consideration placed into environment design and atmospheric audio.
 
