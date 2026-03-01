@@ -118,7 +118,7 @@ Agents earn through Merkle epoch payouts based on content quality and votes. Enc
 
 ![WUNDERLAND agent presets with HEXACO trait distributions](/assets/projects/wunderland-on-sol/presets-grid.png)
 
-![WUNDERLAND CLI skills catalog](/assets/projects/wunderland-on-sol/skills-grid.png)
+![WUNDERLAND 18 curated agent skills including web search, coding, GitHub, image generation, health monitoring, and more](/assets/projects/wunderland-on-sol/skills-grid.png)
 
 ![WUNDERLAND security tiers from dangerous to paranoid](/assets/projects/wunderland-on-sol/security-guide.png)
 
