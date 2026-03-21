@@ -48,6 +48,8 @@ The stack spans five repositories:
 
 ![AgentOS landing page — emergent intelligence for adaptive agents, showcasing the orchestration runtime and cognitive memory system](/assets/projects/wunderland-on-sol/agentos-sh.png)
 
+![Architecture diagram showing how the five repositories in the AgentOS/Wunderland ecosystem connect — the core runtime powers the CLI, workbench, docs, and on-chain social network](/assets/projects/wunderland-on-sol/diagram-ecosystem.svg)
+
 ## By the numbers
 
 | Metric | Count |
@@ -84,6 +86,8 @@ Host App → AgentOS (facade)
 ```
 
 A request hits **input guardrails** first — a sequential chain of `IGuardrailService` evaluators that can ALLOW, FLAG, SANITIZE, or BLOCK. If it passes, the orchestrator selects a **GMI** (Generalized Mind Instance — the agent's "mind") and loads conversation context. Then three phases run in parallel: **rolling summary** compacts long message history, **long-term memory** retrieves RAG context via top-K search, and **prompt profile** selects model/temperature based on conversation state. The agent processes the turn, potentially calling tools through the **ToolOrchestrator** (which checks permissions per-tool before execution). Text streams back through **output guardrails** — same chain, same actions, but wrapping each chunk so the stream can be terminated mid-flight if needed. Finally, the full exchange persists to conversation memory. Every guardrail decision is recorded in metadata so hosts can audit the full decision stack.
+
+![Request lifecycle pipeline diagram — from input guardrails through GMI selection, parallel memory phases, tool orchestration loop with permission checks, output guardrails wrapping the stream, and memory persistence](/assets/projects/wunderland-on-sol/diagram-pipeline.svg)
 
 ### The core modules
 
@@ -141,6 +145,8 @@ interface ExtensionDescriptor<TPayload = unknown> {
 
 Packs load from three sources: **factory** (inline function), **package** (npm package exporting `createExtensionPack()`), or **module** (local ESM file). Multiple descriptors with the same `(kind, id)` stack by priority — so you can override a built-in tool with a custom one just by registering at a higher priority. Extensions can share heavyweight resources (ML models, DB pools) through a lazy-loaded `SharedServiceRegistry`.
 
+![Extension system architecture diagram — three loading sources feed the ExtensionManager, which populates per-kind registries with priority stacking, dispatching to 10 extension kinds including tools, guardrails, channels, workflows, and speech providers](/assets/projects/wunderland-on-sol/diagram-extensions.svg)
+
 The curated registry spans 60+ extension packs organized by domain:
 
 - **Research & media:** web-search, web-browser, news-search, deep-research, image/video/music/sound-search, content-extraction, browser-automation
@@ -164,6 +170,8 @@ Every guardrail implements `IGuardrailService` with optional `evaluateInput()` a
 | **BLOCK** | Reject entirely — terminates the stream |
 
 The dispatcher runs guardrails sequentially on input, stops on BLOCK, and wraps the output stream so each chunk passes through output evaluators before reaching the client. All decisions are recorded in `AgentOSResponse.metadata.guardrail[]` so you get a full audit trail of what each guardrail decided and why.
+
+![Guardrails and safety pipeline diagram — composable input/output chain with ALLOW, FLAG, SANITIZE, and BLOCK actions, plus six operational safety primitives protecting against runaway agent behavior](/assets/projects/wunderland-on-sol/diagram-guardrails.svg)
 
 On top of content guardrails, six **operational safety primitives** protect against runaway agent behavior:
 

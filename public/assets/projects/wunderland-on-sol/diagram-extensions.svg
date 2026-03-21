@@ -1,0 +1,120 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 500" font-family="'SF Mono','Fira Code','Consolas',monospace" font-size="12">
+  <defs>
+    <linearGradient id="bg3" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#0a0a0f"/>
+      <stop offset="100%" style="stop-color:#12121f"/>
+    </linearGradient>
+    <marker id="arr3" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-auto">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#818cf8"/>
+    </marker>
+  </defs>
+
+  <rect width="900" height="500" fill="url(#bg3)" rx="12"/>
+
+  <text x="450" y="36" fill="#e2e8f0" font-size="17" font-weight="bold" text-anchor="middle" letter-spacing="2">EXTENSION SYSTEM ARCHITECTURE</text>
+  <line x1="280" y1="46" x2="620" y2="46" stroke="#6366f1" stroke-width="1" opacity="0.5"/>
+
+  <!-- Loading Sources (top) -->
+  <text x="450" y="72" fill="#94a3b8" font-size="11" text-anchor="middle">LOADING SOURCES</text>
+
+  <rect x="60" y="82" width="200" height="42" rx="5" fill="#1e1b4b" opacity="0.5" stroke="#818cf8" stroke-width="1"/>
+  <text x="160" y="99" fill="#c7d2fe" font-size="11" text-anchor="middle" font-weight="bold">factory</text>
+  <text x="160" y="115" fill="#a5b4fc" font-size="9" text-anchor="middle">Inline function → ExtensionPack</text>
+
+  <rect x="290" y="82" width="200" height="42" rx="5" fill="#1e1b4b" opacity="0.5" stroke="#818cf8" stroke-width="1"/>
+  <text x="390" y="99" fill="#c7d2fe" font-size="11" text-anchor="middle" font-weight="bold">package</text>
+  <text x="390" y="115" fill="#a5b4fc" font-size="9" text-anchor="middle">npm → createExtensionPack()</text>
+
+  <rect x="520" y="82" width="200" height="42" rx="5" fill="#1e1b4b" opacity="0.5" stroke="#818cf8" stroke-width="1"/>
+  <text x="620" y="99" fill="#c7d2fe" font-size="11" text-anchor="middle" font-weight="bold">module</text>
+  <text x="620" y="115" fill="#a5b4fc" font-size="9" text-anchor="middle">Local ESM → createExtensionPack()</text>
+
+  <!-- Arrows down -->
+  <line x1="160" y1="124" x2="390" y2="155" stroke="#818cf8" stroke-width="1" marker-end="url(#arr3)" opacity="0.5"/>
+  <line x1="390" y1="124" x2="390" y2="155" stroke="#818cf8" stroke-width="1" marker-end="url(#arr3)" opacity="0.5"/>
+  <line x1="620" y1="124" x2="390" y2="155" stroke="#818cf8" stroke-width="1" marker-end="url(#arr3)" opacity="0.5"/>
+
+  <!-- ExtensionManager -->
+  <rect x="270" y="155" width="240" height="50" rx="6" fill="#6366f1" opacity="0.2" stroke="#6366f1" stroke-width="1.5"/>
+  <text x="390" y="176" fill="#c7d2fe" font-size="13" font-weight="bold" text-anchor="middle">ExtensionManager</text>
+  <text x="390" y="196" fill="#a5b4fc" font-size="9" text-anchor="middle">Loads packs sequentially, emits descriptors</text>
+
+  <!-- Arrow to registry -->
+  <line x1="390" y1="205" x2="390" y2="230" stroke="#818cf8" stroke-width="1.5" marker-end="url(#arr3)"/>
+
+  <!-- ExtensionRegistry (center) -->
+  <rect x="200" y="232" width="380" height="55" rx="6" fill="#6366f1" opacity="0.2" stroke="#6366f1" stroke-width="1.5"/>
+  <text x="390" y="252" fill="#c7d2fe" font-size="13" font-weight="bold" text-anchor="middle">ExtensionRegistry</text>
+  <text x="390" y="268" fill="#a5b4fc" font-size="10" text-anchor="middle">One registry per kind — priority stacking: highest active</text>
+  <text x="390" y="280" fill="#a5b4fc" font-size="9" text-anchor="middle">Multiple (kind, id) stack → higher priority overrides</text>
+
+  <!-- SharedServiceRegistry (right) -->
+  <rect x="640" y="155" width="220" height="50" rx="6" fill="#052e16" opacity="0.4" stroke="#34d399" stroke-width="1"/>
+  <text x="750" y="176" fill="#a7f3d0" font-size="11" font-weight="bold" text-anchor="middle">SharedServiceRegistry</text>
+  <text x="750" y="196" fill="#6ee7b7" font-size="9" text-anchor="middle">Lazy-load ML models, DB pools once</text>
+  <line x1="510" y1="180" x2="640" y2="180" stroke="#34d399" stroke-width="1" stroke-dasharray="4,3" opacity="0.4"/>
+
+  <!-- Extension Kinds (bottom) -->
+  <text x="450" y="315" fill="#94a3b8" font-size="11" text-anchor="middle">EXTENSION KINDS (descriptor.kind)</text>
+
+  <!-- Kind boxes - row 1 -->
+  <rect x="30" y="328" width="120" height="55" rx="5" fill="#1e1b4b" opacity="0.5" stroke="#f59e0b" stroke-width="1"/>
+  <text x="90" y="348" fill="#fde68a" font-size="11" text-anchor="middle" font-weight="bold">tool</text>
+  <text x="90" y="363" fill="#fcd34d" font-size="8" text-anchor="middle">23+ built-in</text>
+  <text x="90" y="375" fill="#fcd34d" font-size="8" text-anchor="middle">→ ToolOrchestrator</text>
+
+  <rect x="162" y="328" width="120" height="55" rx="5" fill="#450a0a" opacity="0.4" stroke="#f87171" stroke-width="1"/>
+  <text x="222" y="348" fill="#fca5a5" font-size="11" text-anchor="middle" font-weight="bold">guardrail</text>
+  <text x="222" y="363" fill="#fca5a5" font-size="8" text-anchor="middle">PII, content safety</text>
+  <text x="222" y="375" fill="#fca5a5" font-size="8" text-anchor="middle">→ guardrailDispatcher</text>
+
+  <rect x="294" y="328" width="120" height="55" rx="5" fill="#1e1b4b" opacity="0.5" stroke="#818cf8" stroke-width="1"/>
+  <text x="354" y="348" fill="#c7d2fe" font-size="11" text-anchor="middle" font-weight="bold">workflow</text>
+  <text x="354" y="363" fill="#a5b4fc" font-size="8" text-anchor="middle">Multi-step tasks</text>
+  <text x="354" y="375" fill="#a5b4fc" font-size="8" text-anchor="middle">→ WorkflowEngine</text>
+
+  <rect x="426" y="328" width="120" height="55" rx="5" fill="#052e16" opacity="0.4" stroke="#34d399" stroke-width="1"/>
+  <text x="486" y="348" fill="#a7f3d0" font-size="10" text-anchor="middle" font-weight="bold">messaging-channel</text>
+  <text x="486" y="363" fill="#6ee7b7" font-size="8" text-anchor="middle">28+ platforms</text>
+  <text x="486" y="375" fill="#6ee7b7" font-size="8" text-anchor="middle">→ ChannelRouter</text>
+
+  <rect x="558" y="328" width="120" height="55" rx="5" fill="#1e1b4b" opacity="0.5" stroke="#06b6d4" stroke-width="1"/>
+  <text x="618" y="348" fill="#a5f3fc" font-size="10" text-anchor="middle" font-weight="bold">memory-provider</text>
+  <text x="618" y="363" fill="#67e8f9" font-size="8" text-anchor="middle">Custom backends</text>
+  <text x="618" y="375" fill="#67e8f9" font-size="8" text-anchor="middle">→ ConversationMgr</text>
+
+  <rect x="690" y="328" width="120" height="55" rx="5" fill="#1e1b4b" opacity="0.5" stroke="#a78bfa" stroke-width="1"/>
+  <text x="750" y="348" fill="#c4b5fd" font-size="11" text-anchor="middle" font-weight="bold">provenance</text>
+  <text x="750" y="363" fill="#c4b5fd" font-size="8" text-anchor="middle">Audit / immutability</text>
+  <text x="750" y="375" fill="#c4b5fd" font-size="8" text-anchor="middle">→ AnchorManager</text>
+
+  <!-- Kind boxes - row 2 -->
+  <rect x="162" y="395" width="120" height="40" rx="5" fill="#1e1b4b" opacity="0.4" stroke="#94a3b8" stroke-width="0.5"/>
+  <text x="222" y="413" fill="#94a3b8" font-size="10" text-anchor="middle">stt-provider</text>
+  <text x="222" y="427" fill="#94a3b8" font-size="8" text-anchor="middle">Speech-to-Text</text>
+
+  <rect x="294" y="395" width="120" height="40" rx="5" fill="#1e1b4b" opacity="0.4" stroke="#94a3b8" stroke-width="0.5"/>
+  <text x="354" y="413" fill="#94a3b8" font-size="10" text-anchor="middle">tts-provider</text>
+  <text x="354" y="427" fill="#94a3b8" font-size="8" text-anchor="middle">Text-to-Speech</text>
+
+  <rect x="426" y="395" width="120" height="40" rx="5" fill="#1e1b4b" opacity="0.4" stroke="#94a3b8" stroke-width="0.5"/>
+  <text x="486" y="413" fill="#94a3b8" font-size="10" text-anchor="middle">vad-provider</text>
+  <text x="486" y="427" fill="#94a3b8" font-size="8" text-anchor="middle">Voice Activity Det.</text>
+
+  <rect x="558" y="395" width="120" height="40" rx="5" fill="#1e1b4b" opacity="0.4" stroke="#94a3b8" stroke-width="0.5"/>
+  <text x="618" y="413" fill="#94a3b8" font-size="10" text-anchor="middle">wake-word</text>
+  <text x="618" y="427" fill="#94a3b8" font-size="8" text-anchor="middle">Wake Word Det.</text>
+
+  <!-- Arrows from registry to kinds -->
+  <line x1="250" y1="287" x2="90" y2="328" stroke="#818cf8" stroke-width="0.8" opacity="0.3"/>
+  <line x1="300" y1="287" x2="222" y2="328" stroke="#818cf8" stroke-width="0.8" opacity="0.3"/>
+  <line x1="370" y1="287" x2="354" y2="328" stroke="#818cf8" stroke-width="0.8" opacity="0.3"/>
+  <line x1="420" y1="287" x2="486" y2="328" stroke="#818cf8" stroke-width="0.8" opacity="0.3"/>
+  <line x1="480" y1="287" x2="618" y2="328" stroke="#818cf8" stroke-width="0.8" opacity="0.3"/>
+  <line x1="530" y1="287" x2="750" y2="328" stroke="#818cf8" stroke-width="0.8" opacity="0.3"/>
+
+  <!-- Curated packs summary -->
+  <rect x="30" y="450" width="840" height="38" rx="5" fill="#1e1b4b" opacity="0.3" stroke="#818cf8" stroke-width="0.5"/>
+  <text x="450" y="466" fill="#94a3b8" font-size="10" text-anchor="middle">CURATED PACKS: research &amp; media | channels (28+) | cloud &amp; devops (9) | domain registrars (4) | auth &amp; productivity | system &amp; security | orchestration &amp; provenance</text>
+  <text x="450" y="480" fill="#94a3b8" font-size="10" text-anchor="middle">60+ extension packs across all categories — loaded dynamically at runtime, zero coupling to core</text>
+</svg>

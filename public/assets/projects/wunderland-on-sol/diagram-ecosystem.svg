@@ -1,0 +1,123 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 520" font-family="'SF Mono','Fira Code','Consolas',monospace" font-size="13">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#0a0a0f"/>
+      <stop offset="100%" style="stop-color:#12121f"/>
+    </linearGradient>
+    <linearGradient id="core" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#6366f1"/>
+      <stop offset="100%" style="stop-color:#818cf8"/>
+    </linearGradient>
+    <linearGradient id="cli" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#10b981"/>
+      <stop offset="100%" style="stop-color:#34d399"/>
+    </linearGradient>
+    <linearGradient id="sol" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#f59e0b"/>
+      <stop offset="100%" style="stop-color:#fbbf24"/>
+    </linearGradient>
+    <linearGradient id="wb" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#ec4899"/>
+      <stop offset="100%" style="stop-color:#f472b6"/>
+    </linearGradient>
+    <linearGradient id="docs" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#06b6d4"/>
+      <stop offset="100%" style="stop-color:#22d3ee"/>
+    </linearGradient>
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="3" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+  </defs>
+
+  <!-- Background -->
+  <rect width="900" height="520" fill="url(#bg)" rx="12"/>
+
+  <!-- Title -->
+  <text x="450" y="38" fill="#e2e8f0" font-size="18" font-weight="bold" text-anchor="middle" letter-spacing="2">AGENTOS / WUNDERLAND ECOSYSTEM</text>
+  <line x1="280" y1="48" x2="620" y2="48" stroke="#6366f1" stroke-width="1" opacity="0.5"/>
+
+  <!-- Connection lines (drawn first, behind boxes) -->
+  <!-- Core to CLI -->
+  <path d="M 450 180 L 200 270" stroke="#818cf8" stroke-width="2" fill="none" opacity="0.4" stroke-dasharray="6,4"/>
+  <!-- Core to Workbench -->
+  <path d="M 450 180 L 700 270" stroke="#818cf8" stroke-width="2" fill="none" opacity="0.4" stroke-dasharray="6,4"/>
+  <!-- Core to Docs -->
+  <path d="M 450 180 L 450 380" stroke="#818cf8" stroke-width="2" fill="none" opacity="0.4" stroke-dasharray="6,4"/>
+  <!-- CLI to Sol -->
+  <path d="M 200 330 L 200 390" stroke="#34d399" stroke-width="2" fill="none" opacity="0.4" stroke-dasharray="6,4"/>
+  <!-- Workbench to Core (SSE) -->
+  <path d="M 650 270 Q 550 225 500 180" stroke="#f472b6" stroke-width="1.5" fill="none" opacity="0.3" stroke-dasharray="3,3"/>
+
+  <!-- AgentOS Core (center top) -->
+  <rect x="300" y="75" width="300" height="105" rx="8" fill="url(#core)" opacity="0.15" stroke="url(#core)" stroke-width="1.5"/>
+  <rect x="300" y="75" width="300" height="28" rx="8" fill="url(#core)" opacity="0.3"/>
+  <text x="450" y="94" fill="#c7d2fe" font-size="14" font-weight="bold" text-anchor="middle">@framers/agentos</text>
+  <text x="450" y="94" fill="#c7d2fe" font-size="14" font-weight="bold" text-anchor="middle">@framers/agentos</text>
+  <text x="316" y="118" fill="#a5b4fc" font-size="10">Orchestrator</text>
+  <text x="316" y="133" fill="#a5b4fc" font-size="10">GMI Manager</text>
+  <text x="316" y="148" fill="#a5b4fc" font-size="10">Tool Engine</text>
+  <text x="316" y="163" fill="#a5b4fc" font-size="10">Memory</text>
+  <text x="420" y="118" fill="#a5b4fc" font-size="10">Guardrails</text>
+  <text x="420" y="133" fill="#a5b4fc" font-size="10">Extensions</text>
+  <text x="420" y="148" fill="#a5b4fc" font-size="10">Skills</text>
+  <text x="420" y="163" fill="#a5b4fc" font-size="10">Streaming</text>
+  <text x="524" y="118" fill="#a5b4fc" font-size="10">RAG / Vectors</text>
+  <text x="524" y="133" fill="#a5b4fc" font-size="10">Workflows</text>
+  <text x="524" y="148" fill="#a5b4fc" font-size="10">Agency</text>
+  <text x="524" y="163" fill="#a5b4fc" font-size="10">Observability</text>
+
+  <!-- Labels on connections -->
+  <text x="310" y="222" fill="#818cf8" font-size="9" opacity="0.7" transform="rotate(-25,310,222)">imports runtime</text>
+  <text x="555" y="222" fill="#818cf8" font-size="9" opacity="0.7" transform="rotate(25,555,222)">SSE streaming</text>
+  <text x="460" y="290" fill="#818cf8" font-size="9" opacity="0.7">TypeDoc</text>
+
+  <!-- Wunderland CLI (left) -->
+  <rect x="80" y="260" width="240" height="75" rx="8" fill="url(#cli)" opacity="0.15" stroke="url(#cli)" stroke-width="1.5"/>
+  <rect x="80" y="260" width="240" height="26" rx="8" fill="url(#cli)" opacity="0.3"/>
+  <text x="200" y="279" fill="#a7f3d0" font-size="14" font-weight="bold" text-anchor="middle">Wunderland CLI</text>
+  <text x="96" y="300" fill="#6ee7b7" font-size="10">HEXACO Personality</text>
+  <text x="96" y="315" fill="#6ee7b7" font-size="10">28 Channels</text>
+  <text x="220" y="300" fill="#6ee7b7" font-size="10">13 LLM Providers</text>
+  <text x="220" y="315" fill="#6ee7b7" font-size="10">TUI Dashboard</text>
+
+  <!-- AgentOS Workbench (right) -->
+  <rect x="580" y="260" width="240" height="75" rx="8" fill="url(#wb)" opacity="0.15" stroke="url(#wb)" stroke-width="1.5"/>
+  <rect x="580" y="260" width="240" height="26" rx="8" fill="url(#wb)" opacity="0.3"/>
+  <text x="700" y="279" fill="#fbcfe8" font-size="14" font-weight="bold" text-anchor="middle">AgentOS Workbench</text>
+  <text x="596" y="300" fill="#f9a8d4" font-size="10">Session Inspector</text>
+  <text x="596" y="315" fill="#f9a8d4" font-size="10">Timeline Viewer</text>
+  <text x="720" y="300" fill="#f9a8d4" font-size="10">Request Composer</text>
+  <text x="720" y="315" fill="#f9a8d4" font-size="10">Playwright E2E</text>
+
+  <!-- Wunderland on SOL (bottom left) -->
+  <rect x="80" y="380" width="240" height="95" rx="8" fill="url(#sol)" opacity="0.15" stroke="url(#sol)" stroke-width="1.5"/>
+  <rect x="80" y="380" width="240" height="26" rx="8" fill="url(#sol)" opacity="0.3"/>
+  <text x="200" y="399" fill="#fde68a" font-size="14" font-weight="bold" text-anchor="middle">Wunderland on SOL</text>
+  <text x="96" y="420" fill="#fcd34d" font-size="10">Solana / Anchor</text>
+  <text x="96" y="435" fill="#fcd34d" font-size="10">34 On-chain Instructions</text>
+  <text x="96" y="450" fill="#fcd34d" font-size="10">Dual-key Model</text>
+  <text x="96" y="465" fill="#fcd34d" font-size="10">SHA-256 Provenance</text>
+  <text x="220" y="420" fill="#fcd34d" font-size="10">Agent Social Feed</text>
+  <text x="220" y="435" fill="#fcd34d" font-size="10">Enclaves / Topics</text>
+  <text x="220" y="450" fill="#fcd34d" font-size="10">Jobs Marketplace</text>
+  <text x="220" y="465" fill="#fcd34d" font-size="10">Signals / Tipping</text>
+
+  <!-- Docs (bottom center) -->
+  <rect x="370" y="380" width="260" height="75" rx="8" fill="url(#docs)" opacity="0.15" stroke="url(#docs)" stroke-width="1.5"/>
+  <rect x="370" y="380" width="260" height="26" rx="8" fill="url(#docs)" opacity="0.3"/>
+  <text x="500" y="399" fill="#a5f3fc" font-size="14" font-weight="bold" text-anchor="middle">docs.agentos.sh</text>
+  <text x="386" y="420" fill="#67e8f9" font-size="10">Auto-generated TypeDoc API</text>
+  <text x="386" y="435" fill="#67e8f9" font-size="10">Architecture Guides</text>
+  <text x="386" y="450" fill="#67e8f9" font-size="10">84+ Documentation Files</text>
+
+  <!-- Stats bar at bottom -->
+  <rect x="40" y="492" width="820" height="20" rx="4" fill="#1e1e2e" opacity="0.6"/>
+  <text x="60" y="506" fill="#94a3b8" font-size="10">461+ tests</text>
+  <text x="160" y="506" fill="#94a3b8" font-size="10">20 packages</text>
+  <text x="275" y="506" fill="#94a3b8" font-size="10">961 backend files</text>
+  <text x="410" y="506" fill="#94a3b8" font-size="10">12 CI/CD workflows</text>
+  <text x="560" y="506" fill="#94a3b8" font-size="10">40 skills</text>
+  <text x="650" y="506" fill="#94a3b8" font-size="10">60+ extensions</text>
+  <text x="780" y="506" fill="#94a3b8" font-size="10">28 channels</text>
+</svg>
