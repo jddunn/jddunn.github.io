@@ -1,0 +1,122 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 600" font-family="'SF Mono','Fira Code','Consolas',monospace" font-size="12">
+  <defs>
+    <linearGradient id="bg2" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#0a0a0f"/>
+      <stop offset="100%" style="stop-color:#12121f"/>
+    </linearGradient>
+    <linearGradient id="phase" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#6366f1;stop-opacity:0.3"/>
+      <stop offset="100%" style="stop-color:#6366f1;stop-opacity:0.05"/>
+    </linearGradient>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-auto">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#818cf8"/>
+    </marker>
+    <marker id="arrowGreen" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-auto">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#34d399"/>
+    </marker>
+    <marker id="arrowRed" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-auto">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#f87171"/>
+    </marker>
+    <marker id="arrowYellow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-auto">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#fbbf24"/>
+    </marker>
+  </defs>
+
+  <rect width="900" height="600" fill="url(#bg2)" rx="12"/>
+
+  <!-- Title -->
+  <text x="450" y="36" fill="#e2e8f0" font-size="17" font-weight="bold" text-anchor="middle" letter-spacing="2">AGENTOS REQUEST LIFECYCLE</text>
+  <line x1="300" y1="46" x2="600" y2="46" stroke="#6366f1" stroke-width="1" opacity="0.5"/>
+
+  <!-- Phase 1: Input -->
+  <rect x="30" y="62" width="160" height="50" rx="6" fill="#1e1b4b" opacity="0.6" stroke="#6366f1" stroke-width="1"/>
+  <text x="110" y="82" fill="#c7d2fe" font-size="12" font-weight="bold" text-anchor="middle">1. INPUT</text>
+  <text x="110" y="98" fill="#a5b4fc" font-size="10" text-anchor="middle">Host App Request</text>
+
+  <!-- Arrow -->
+  <line x1="190" y1="87" x2="220" y2="87" stroke="#818cf8" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+  <!-- Phase 2: Input Guardrails -->
+  <rect x="222" y="55" width="200" height="65" rx="6" fill="#450a0a" opacity="0.4" stroke="#f87171" stroke-width="1"/>
+  <text x="322" y="76" fill="#fca5a5" font-size="12" font-weight="bold" text-anchor="middle">2. INPUT GUARDRAILS</text>
+  <text x="322" y="92" fill="#fca5a5" font-size="9" text-anchor="middle">Sequential chain: ALLOW | FLAG | SANITIZE | BLOCK</text>
+  <text x="322" y="106" fill="#fca5a5" font-size="9" text-anchor="middle">Pre-LLM classification, dual-LLM audit</text>
+
+  <!-- BLOCK path -->
+  <line x1="322" y1="120" x2="322" y2="145" stroke="#f87171" stroke-width="1" stroke-dasharray="4,3"/>
+  <rect x="280" y="145" width="84" height="22" rx="4" fill="#7f1d1d" opacity="0.6" stroke="#f87171" stroke-width="0.5"/>
+  <text x="322" y="160" fill="#fca5a5" font-size="9" text-anchor="middle">BLOCKED</text>
+
+  <!-- Arrow to GMI -->
+  <line x1="422" y1="87" x2="452" y2="87" stroke="#818cf8" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+  <!-- Phase 3: GMI Selection -->
+  <rect x="454" y="62" width="170" height="50" rx="6" fill="#1e1b4b" opacity="0.6" stroke="#6366f1" stroke-width="1"/>
+  <text x="539" y="82" fill="#c7d2fe" font-size="12" font-weight="bold" text-anchor="middle">3. GMI SELECTION</text>
+  <text x="539" y="98" fill="#a5b4fc" font-size="10" text-anchor="middle">Persona + Conversation</text>
+
+  <!-- Arrow -->
+  <line x1="624" y1="87" x2="654" y2="87" stroke="#818cf8" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+  <!-- Phase 4: Parallel Memory -->
+  <rect x="656" y="55" width="220" height="65" rx="6" fill="#052e16" opacity="0.4" stroke="#34d399" stroke-width="1"/>
+  <text x="766" y="76" fill="#a7f3d0" font-size="12" font-weight="bold" text-anchor="middle">4. MEMORY (parallel)</text>
+  <text x="672" y="93" fill="#6ee7b7" font-size="9">Rolling Summary</text>
+  <text x="672" y="106" fill="#6ee7b7" font-size="9">Long-term RAG</text>
+  <text x="790" y="93" fill="#6ee7b7" font-size="9">Prompt Profile</text>
+  <text x="790" y="106" fill="#6ee7b7" font-size="9">Episodic Recall</text>
+
+  <!-- Arrow down from Memory -->
+  <path d="M 766 120 L 766 160 L 450 160 L 450 190" stroke="#818cf8" stroke-width="1.5" fill="none" marker-end="url(#arrow)"/>
+
+  <!-- Phase 5: Tool Orchestration (large center box) -->
+  <rect x="160" y="192" width="580" height="155" rx="8" fill="url(#phase)" stroke="#6366f1" stroke-width="1"/>
+  <text x="450" y="215" fill="#c7d2fe" font-size="14" font-weight="bold" text-anchor="middle">5. TOOL ORCHESTRATION LOOP</text>
+
+  <!-- Inner loop visualization -->
+  <rect x="185" y="228" width="150" height="45" rx="5" fill="#1e1b4b" opacity="0.5" stroke="#818cf8" stroke-width="0.5"/>
+  <text x="260" y="248" fill="#a5b4fc" font-size="11" text-anchor="middle">GMI Process Turn</text>
+  <text x="260" y="263" fill="#a5b4fc" font-size="9" text-anchor="middle">LLM inference</text>
+
+  <line x1="335" y1="250" x2="370" y2="250" stroke="#818cf8" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+  <rect x="372" y="228" width="150" height="45" rx="5" fill="#1e1b4b" opacity="0.5" stroke="#818cf8" stroke-width="0.5"/>
+  <text x="447" y="248" fill="#a5b4fc" font-size="11" text-anchor="middle">Permission Check</text>
+  <text x="447" y="263" fill="#a5b4fc" font-size="9" text-anchor="middle">ToolPermissionManager</text>
+
+  <line x1="522" y1="250" x2="557" y2="250" stroke="#818cf8" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+  <rect x="559" y="228" width="150" height="45" rx="5" fill="#1e1b4b" opacity="0.5" stroke="#818cf8" stroke-width="0.5"/>
+  <text x="634" y="248" fill="#a5b4fc" font-size="11" text-anchor="middle">Tool Execution</text>
+  <text x="634" y="263" fill="#a5b4fc" font-size="9" text-anchor="middle">ToolExecutor + guards</text>
+
+  <!-- Loop arrow -->
+  <path d="M 634 273 L 634 300 L 260 300 L 260 273" stroke="#fbbf24" stroke-width="1" fill="none" marker-end="url(#arrowYellow)" stroke-dasharray="5,3"/>
+  <text x="450" y="314" fill="#fbbf24" font-size="9" text-anchor="middle">loop until no more tool calls or max iterations</text>
+
+  <!-- Safety primitives sidebar -->
+  <rect x="185" y="322" width="530" height="18" rx="3" fill="#1e1b4b" opacity="0.3"/>
+  <text x="200" y="335" fill="#94a3b8" font-size="9">Safety: CircuitBreaker | CostGuard | StuckDetector | ActionDeduplicator | ToolExecGuard | AuditLog</text>
+
+  <!-- Arrow down to streaming -->
+  <line x1="450" y1="347" x2="450" y2="375" stroke="#818cf8" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+  <!-- Phase 6: Streaming + Output Guardrails -->
+  <rect x="160" y="377" width="580" height="65" rx="6" fill="#450a0a" opacity="0.3" stroke="#f87171" stroke-width="1"/>
+  <text x="450" y="398" fill="#fca5a5" font-size="13" font-weight="bold" text-anchor="middle">6. OUTPUT GUARDRAILS + STREAMING</text>
+  <text x="450" y="416" fill="#fca5a5" font-size="10" text-anchor="middle">Each chunk evaluated: ALLOW | FLAG | SANITIZE | BLOCK (terminates stream mid-flight)</text>
+  <text x="450" y="432" fill="#fca5a5" font-size="10" text-anchor="middle">SSE / WebSocket / In-memory → Client</text>
+
+  <!-- Arrow down -->
+  <line x1="450" y1="442" x2="450" y2="470" stroke="#818cf8" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+  <!-- Phase 7: Persistence -->
+  <rect x="280" y="472" width="340" height="50" rx="6" fill="#052e16" opacity="0.4" stroke="#34d399" stroke-width="1"/>
+  <text x="450" y="492" fill="#a7f3d0" font-size="12" font-weight="bold" text-anchor="middle">7. MEMORY PERSISTENCE</text>
+  <text x="450" y="508" fill="#6ee7b7" font-size="10" text-anchor="middle">Conversation save + Guardrail audit trail in metadata</text>
+
+  <!-- Output -->
+  <line x1="450" y1="522" x2="450" y2="548" stroke="#34d399" stroke-width="1.5" marker-end="url(#arrowGreen)"/>
+  <rect x="370" y="550" width="160" height="30" rx="6" fill="#052e16" opacity="0.6" stroke="#34d399" stroke-width="1"/>
+  <text x="450" y="570" fill="#a7f3d0" font-size="12" font-weight="bold" text-anchor="middle">AsyncIterable&lt;&gt;</text>
+</svg>

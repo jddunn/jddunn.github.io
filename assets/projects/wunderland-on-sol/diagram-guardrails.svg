@@ -1,0 +1,140 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 440" font-family="'SF Mono','Fira Code','Consolas',monospace" font-size="12">
+  <defs>
+    <linearGradient id="bg4" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#0a0a0f"/>
+      <stop offset="100%" style="stop-color:#12121f"/>
+    </linearGradient>
+    <marker id="a4" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-auto">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#818cf8"/>
+    </marker>
+    <marker id="a4r" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-auto">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#f87171"/>
+    </marker>
+    <marker id="a4g" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-auto">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#34d399"/>
+    </marker>
+  </defs>
+
+  <rect width="900" height="440" fill="url(#bg4)" rx="12"/>
+
+  <text x="450" y="34" fill="#e2e8f0" font-size="17" font-weight="bold" text-anchor="middle" letter-spacing="2">GUARDRAILS + SAFETY PIPELINE</text>
+  <line x1="280" y1="44" x2="620" y2="44" stroke="#f87171" stroke-width="1" opacity="0.5"/>
+
+  <!-- Input side label -->
+  <text x="450" y="68" fill="#fca5a5" font-size="12" text-anchor="middle" font-weight="bold">INPUT GUARDRAIL CHAIN</text>
+
+  <!-- Input -->
+  <rect x="20" y="80" width="100" height="36" rx="5" fill="#1e1b4b" opacity="0.5" stroke="#818cf8" stroke-width="1"/>
+  <text x="70" y="103" fill="#c7d2fe" font-size="11" text-anchor="middle">Input</text>
+  <line x1="120" y1="98" x2="150" y2="98" stroke="#818cf8" stroke-width="1.5" marker-end="url(#a4)"/>
+
+  <!-- Guardrail 1 -->
+  <rect x="152" y="76" width="140" height="45" rx="5" fill="#450a0a" opacity="0.35" stroke="#f87171" stroke-width="1"/>
+  <text x="222" y="95" fill="#fca5a5" font-size="10" text-anchor="middle" font-weight="bold">Service 1</text>
+  <text x="222" y="112" fill="#fca5a5" font-size="8" text-anchor="middle">PreLLM Classifier</text>
+  <line x1="292" y1="98" x2="318" y2="98" stroke="#818cf8" stroke-width="1.5" marker-end="url(#a4)"/>
+
+  <!-- Guardrail 2 -->
+  <rect x="320" y="76" width="140" height="45" rx="5" fill="#450a0a" opacity="0.35" stroke="#f87171" stroke-width="1"/>
+  <text x="390" y="95" fill="#fca5a5" font-size="10" text-anchor="middle" font-weight="bold">Service 2</text>
+  <text x="390" y="112" fill="#fca5a5" font-size="8" text-anchor="middle">Dual-LLM Audit</text>
+  <line x1="460" y1="98" x2="486" y2="98" stroke="#818cf8" stroke-width="1.5" marker-end="url(#a4)"/>
+
+  <!-- Guardrail 3 -->
+  <rect x="488" y="76" width="140" height="45" rx="5" fill="#450a0a" opacity="0.35" stroke="#f87171" stroke-width="1"/>
+  <text x="558" y="95" fill="#fca5a5" font-size="10" text-anchor="middle" font-weight="bold">Service 3</text>
+  <text x="558" y="112" fill="#fca5a5" font-size="8" text-anchor="middle">PII Redaction</text>
+  <line x1="628" y1="98" x2="654" y2="98" stroke="#818cf8" stroke-width="1.5" marker-end="url(#a4)"/>
+
+  <!-- Guardrail N -->
+  <rect x="656" y="76" width="100" height="45" rx="5" fill="#450a0a" opacity="0.35" stroke="#f87171" stroke-width="1" stroke-dasharray="4,3"/>
+  <text x="706" y="103" fill="#fca5a5" font-size="10" text-anchor="middle">Service N...</text>
+  <line x1="756" y1="98" x2="790" y2="98" stroke="#34d399" stroke-width="1.5" marker-end="url(#a4g)"/>
+
+  <!-- Clean input -->
+  <rect x="792" y="80" width="90" height="36" rx="5" fill="#052e16" opacity="0.5" stroke="#34d399" stroke-width="1"/>
+  <text x="837" y="103" fill="#a7f3d0" font-size="10" text-anchor="middle">Clean Input</text>
+
+  <!-- BLOCK arrows down from each -->
+  <line x1="222" y1="121" x2="222" y2="142" stroke="#f87171" stroke-width="1" stroke-dasharray="3,2" opacity="0.5"/>
+  <line x1="390" y1="121" x2="390" y2="142" stroke="#f87171" stroke-width="1" stroke-dasharray="3,2" opacity="0.5"/>
+  <line x1="558" y1="121" x2="558" y2="142" stroke="#f87171" stroke-width="1" stroke-dasharray="3,2" opacity="0.5"/>
+  <text x="222" y="155" fill="#f87171" font-size="8" text-anchor="middle" opacity="0.6">BLOCK?</text>
+  <text x="390" y="155" fill="#f87171" font-size="8" text-anchor="middle" opacity="0.6">BLOCK?</text>
+  <text x="558" y="155" fill="#f87171" font-size="8" text-anchor="middle" opacity="0.6">BLOCK?</text>
+
+  <!-- Actions legend -->
+  <rect x="20" y="145" width="110" height="22" rx="3" fill="#1e1b4b" opacity="0.3"/>
+  <text x="30" y="160" fill="#94a3b8" font-size="9">Stops on first BLOCK</text>
+
+  <!-- Separator -->
+  <line x1="40" y1="178" x2="860" y2="178" stroke="#334155" stroke-width="0.5"/>
+
+  <!-- Actions reference -->
+  <text x="450" y="198" fill="#94a3b8" font-size="11" text-anchor="middle">GUARDRAIL ACTIONS</text>
+
+  <rect x="100" y="208" width="140" height="34" rx="4" fill="#052e16" opacity="0.3" stroke="#34d399" stroke-width="0.8"/>
+  <text x="170" y="222" fill="#a7f3d0" font-size="10" text-anchor="middle" font-weight="bold">ALLOW</text>
+  <text x="170" y="235" fill="#6ee7b7" font-size="8" text-anchor="middle">Pass through unchanged</text>
+
+  <rect x="260" y="208" width="140" height="34" rx="4" fill="#1e1b4b" opacity="0.3" stroke="#f59e0b" stroke-width="0.8"/>
+  <text x="330" y="222" fill="#fde68a" font-size="10" text-anchor="middle" font-weight="bold">FLAG</text>
+  <text x="330" y="235" fill="#fcd34d" font-size="8" text-anchor="middle">Pass + record metadata</text>
+
+  <rect x="420" y="208" width="140" height="34" rx="4" fill="#1e1b4b" opacity="0.3" stroke="#06b6d4" stroke-width="0.8"/>
+  <text x="490" y="222" fill="#a5f3fc" font-size="10" text-anchor="middle" font-weight="bold">SANITIZE</text>
+  <text x="490" y="235" fill="#67e8f9" font-size="8" text-anchor="middle">Replace content (PII, etc.)</text>
+
+  <rect x="580" y="208" width="140" height="34" rx="4" fill="#450a0a" opacity="0.3" stroke="#f87171" stroke-width="0.8"/>
+  <text x="650" y="222" fill="#fca5a5" font-size="10" text-anchor="middle" font-weight="bold">BLOCK</text>
+  <text x="650" y="235" fill="#fca5a5" font-size="8" text-anchor="middle">Reject — terminate stream</text>
+
+  <!-- Separator -->
+  <line x1="40" y1="258" x2="860" y2="258" stroke="#334155" stroke-width="0.5"/>
+
+  <!-- Operational Safety Primitives -->
+  <text x="450" y="280" fill="#e2e8f0" font-size="13" text-anchor="middle" font-weight="bold">OPERATIONAL SAFETY PRIMITIVES</text>
+  <text x="450" y="296" fill="#94a3b8" font-size="9" text-anchor="middle">Separate from content guardrails — these protect against runaway agent behavior</text>
+
+  <!-- 6 primitives -->
+  <rect x="30" y="308" width="130" height="58" rx="5" fill="#1e1b4b" opacity="0.4" stroke="#f59e0b" stroke-width="0.8"/>
+  <text x="95" y="326" fill="#fde68a" font-size="10" text-anchor="middle" font-weight="bold">CircuitBreaker</text>
+  <text x="95" y="340" fill="#fcd34d" font-size="8" text-anchor="middle">Fail-fast on repeated</text>
+  <text x="95" y="352" fill="#fcd34d" font-size="8" text-anchor="middle">errors (5 in 60s)</text>
+  <text x="95" y="364" fill="#94a3b8" font-size="7" text-anchor="middle">→ CircuitOpenError</text>
+
+  <rect x="172" y="308" width="130" height="58" rx="5" fill="#1e1b4b" opacity="0.4" stroke="#f59e0b" stroke-width="0.8"/>
+  <text x="237" y="326" fill="#fde68a" font-size="10" text-anchor="middle" font-weight="bold">CostGuard</text>
+  <text x="237" y="340" fill="#fcd34d" font-size="8" text-anchor="middle">Spending caps per</text>
+  <text x="237" y="352" fill="#fcd34d" font-size="8" text-anchor="middle">session/day ($5/day)</text>
+  <text x="237" y="364" fill="#94a3b8" font-size="7" text-anchor="middle">→ CostCapExceededError</text>
+
+  <rect x="314" y="308" width="130" height="58" rx="5" fill="#1e1b4b" opacity="0.4" stroke="#f59e0b" stroke-width="0.8"/>
+  <text x="379" y="326" fill="#fde68a" font-size="10" text-anchor="middle" font-weight="bold">StuckDetector</text>
+  <text x="379" y="340" fill="#fcd34d" font-size="8" text-anchor="middle">Detects infinite loops</text>
+  <text x="379" y="352" fill="#fcd34d" font-size="8" text-anchor="middle">3 identical in 5 min</text>
+  <text x="379" y="364" fill="#94a3b8" font-size="7" text-anchor="middle">→ Callback pause</text>
+
+  <rect x="456" y="308" width="130" height="58" rx="5" fill="#1e1b4b" opacity="0.4" stroke="#f59e0b" stroke-width="0.8"/>
+  <text x="521" y="326" fill="#fde68a" font-size="10" text-anchor="middle" font-weight="bold">Deduplicator</text>
+  <text x="521" y="340" fill="#fcd34d" font-size="8" text-anchor="middle">Prevents duplicate</text>
+  <text x="521" y="352" fill="#fcd34d" font-size="8" text-anchor="middle">actions (1hr, 10K)</text>
+  <text x="521" y="364" fill="#94a3b8" font-size="7" text-anchor="middle">→ Boolean check</text>
+
+  <rect x="598" y="308" width="130" height="58" rx="5" fill="#1e1b4b" opacity="0.4" stroke="#f59e0b" stroke-width="0.8"/>
+  <text x="663" y="326" fill="#fde68a" font-size="10" text-anchor="middle" font-weight="bold">ToolExecGuard</text>
+  <text x="663" y="340" fill="#fcd34d" font-size="8" text-anchor="middle">Timeout + per-tool</text>
+  <text x="663" y="352" fill="#fcd34d" font-size="8" text-anchor="middle">circuit breaker (30s)</text>
+  <text x="663" y="364" fill="#94a3b8" font-size="7" text-anchor="middle">→ ToolTimeoutError</text>
+
+  <rect x="740" y="308" width="130" height="58" rx="5" fill="#1e1b4b" opacity="0.4" stroke="#f59e0b" stroke-width="0.8"/>
+  <text x="805" y="326" fill="#fde68a" font-size="10" text-anchor="middle" font-weight="bold">AuditLog</text>
+  <text x="805" y="340" fill="#fcd34d" font-size="8" text-anchor="middle">Ring buffer + persist</text>
+  <text x="805" y="352" fill="#fcd34d" font-size="8" text-anchor="middle">Every action logged</text>
+  <text x="805" y="364" fill="#94a3b8" font-size="7" text-anchor="middle">→ Observability</text>
+
+  <!-- Bottom note -->
+  <rect x="30" y="388" width="840" height="38" rx="5" fill="#1e1b4b" opacity="0.2" stroke="#818cf8" stroke-width="0.5"/>
+  <text x="450" y="404" fill="#94a3b8" font-size="10" text-anchor="middle">All guardrail decisions recorded in AgentOSResponse.metadata.guardrail[] — full audit trail per request</text>
+  <text x="450" y="419" fill="#94a3b8" font-size="10" text-anchor="middle">Content guardrails composable as extension descriptors (kind: 'guardrail') — register custom policies at runtime</text>
+</svg>
