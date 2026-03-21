@@ -67,23 +67,140 @@ The stack spans five repositories:
 
 ## AgentOS — the runtime
 
-<a href="https://agentos.sh" target="_blank" class="md-link" style="margin-left:0;margin-right:0;display:inline">AgentOS</a> is the orchestration layer that powers everything. It's a modular runtime for autonomous AI agents with cognitive memory, graph-based RAG, HEXACO personality modeling, and a 5-tier security pipeline.
+<a href="https://agentos.sh" target="_blank" class="md-link" style="margin-left:0;margin-right:0;display:inline">AgentOS</a> is the orchestration layer that powers everything. It's a modular, interface-driven runtime built entirely in TypeScript — no auth baked in, no framework lock-in. Every manager and service is injected at init, so the core works standalone and you plug in what you need: auth, guardrails, persistence, channels, all optional.
 
-**Cognitive memory** — not just a vector store. The memory system implements Ebbinghaus decay curves for forgetting, Baddeley working memory for active context, HyDE (Hypothetical Document Embeddings) for retrieval, and episodic memory for experience recall. Multi-tier: working memory, long-term semantic, episodic, agency (cross-agent), and GraphRAG.
+### How the layers connect
 
-**Deep research** — a 3-phase research pipeline with LLM-as-judge query classification and real-time SSE streaming progress. Agents can autonomously research topics, synthesize findings, and produce structured reports.
+The request lifecycle flows through a clean pipeline. Every interaction returns an `AsyncIterable<AgentOSResponse>` for streaming:
 
-**Capability discovery** — semantic tiered discovery with graph re-ranking achieves 89% token reduction. Instead of stuffing every tool description into context, agents discover relevant capabilities on-demand.
+```
+Host App → AgentOS (facade)
+  → AgentOSOrchestrator (coordinator)
+    → GMIManager (persona lifecycle)
+    → ToolOrchestrator (execution)
+    → ConversationManager (memory)
+    → LLMProviderManager (routing)
+    → StreamingManager (chunked output)
+```
 
-**Safety and guardrails** — 5-tier security pipeline: pre-LLM classification, dual-LLM audit, HMAC-SHA256 signed outputs, step-up authorization, and configurable policy hooks. Security tiers from permissive to paranoid.
+A request hits **input guardrails** first — a sequential chain of `IGuardrailService` evaluators that can ALLOW, FLAG, SANITIZE, or BLOCK. If it passes, the orchestrator selects a **GMI** (Generalized Mind Instance — the agent's "mind") and loads conversation context. Then three phases run in parallel: **rolling summary** compacts long message history, **long-term memory** retrieves RAG context via top-K search, and **prompt profile** selects model/temperature based on conversation state. The agent processes the turn, potentially calling tools through the **ToolOrchestrator** (which checks permissions per-tool before execution). Text streams back through **output guardrails** — same chain, same actions, but wrapping each chunk so the stream can be terminated mid-flight if needed. Finally, the full exchange persists to conversation memory. Every guardrail decision is recorded in metadata so hosts can audit the full decision stack.
 
-**Streaming architecture** — Server-Sent Events bridge for real-time progress. Every agent action streams through a typed event protocol that the workbench and frontend can consume.
+### The core modules
 
-![AgentOS documentation site showing architecture guides, API reference, and getting started sections](/assets/projects/wunderland-on-sol/docs-agentos-sh.png)
+| Module | What it does |
+|--------|-------------|
+| **api/** | Public facade (`AgentOS`, `AgentOSOrchestrator`) and turn phases (rolling-summary, long-term-memory, prompt-profile) |
+| **cognitive_substrate/** | GMI definitions, persona loading/validation, dynamic persona overlays |
+| **core/tools/** | `ToolOrchestrator`, `ToolExecutor`, `ToolPermissionManager` — registration, schema exposure, permission checks, execution |
+| **core/guardrails/** | `IGuardrailService` interface, `guardrailDispatcher` — composable input/output chain |
+| **core/safety/** | 6 operational primitives (see below) |
+| **core/conversation/** | `ConversationManager` — context persistence, message history, SQL/in-memory adapters |
+| **core/llm/** | `PromptEngine`, `AIModelProviderManager` — routes to OpenAI, Ollama, OpenRouter, 10+ others |
+| **core/streaming/** | `StreamingManager`, `IStreamClient` (SSE, WebSocket, in-memory) |
+| **core/workflows/** | `WorkflowEngine` — multi-task orchestration with role-based execution and human-in-the-loop gates |
+| **core/agency/** | `AgencyRegistry`, `AgentCommunicationBus` — multi-agent collectives with seat management and shared memory |
+| **extensions/** | `ExtensionManager`, `ExtensionRegistry` — runtime plugin loading (see below) |
+| **skills/** | `SkillRegistry`, `SkillLoader` — prompt modules with eligibility filtering |
+| **channels/** | `IChannelAdapter`, `ChannelRouter` — 28+ platform adapters |
+| **rag/** | `IRetrievalAugmentor`, `EmbeddingManager`, vector stores, re-ranking strategies |
+| **memory_lifecycle/** | Retention policies: archive, delete, summarize-and-retain, promote-to-persistent |
+| **core/observability/** | OpenTelemetry tracing/metrics integration |
+| **core/provenance/** | Audit trails and immutability hooks |
+
+### Extensions — the plugin system
+
+The extension system is the single most important architectural feature. It's completely decoupled from core. Extensions register as **packs** containing **descriptors**, and the core never imports extension code directly — everything loads at runtime.
+
+An extension pack is a container:
+
+```typescript
+interface ExtensionPack {
+  name: string;
+  version?: string;
+  descriptors: ExtensionDescriptor[];
+  onActivate?: (ctx) => Promise<void>;
+  onDeactivate?: (ctx) => Promise<void>;
+}
+```
+
+Each descriptor declares its **kind** and **payload**:
+
+```typescript
+interface ExtensionDescriptor<TPayload = unknown> {
+  id: string;           // Unique within (kind, id)
+  kind: string;         // 'tool', 'guardrail', 'workflow', 'messaging-channel', etc.
+  payload: TPayload;    // ITool, IGuardrailService, IChannelAdapter, etc.
+  priority?: number;    // Higher = active (ties: latest wins)
+  requiredSecrets?: ExtensionSecretRequirement[];
+  onActivate?: (ctx) => Promise<void>;
+  onDeactivate?: (ctx) => Promise<void>;
+}
+```
+
+**Extension kinds:** `tool`, `guardrail`, `workflow`, `messaging-channel`, `memory-provider`, `provenance`, `stt-provider`, `tts-provider`, `vad-provider`, `wake-word-provider`.
+
+Packs load from three sources: **factory** (inline function), **package** (npm package exporting `createExtensionPack()`), or **module** (local ESM file). Multiple descriptors with the same `(kind, id)` stack by priority — so you can override a built-in tool with a custom one just by registering at a higher priority. Extensions can share heavyweight resources (ML models, DB pools) through a lazy-loaded `SharedServiceRegistry`.
+
+The curated registry spans 60+ extension packs organized by domain:
+
+- **Research & media:** web-search, web-browser, news-search, deep-research, image/video/music/sound-search, content-extraction, browser-automation
+- **Channels (28+ platforms):** Telegram, Discord, Slack, WhatsApp, Signal, Twitter/X, Reddit, Instagram, TikTok, YouTube, Bluesky, Mastodon, Farcaster, Matrix, IRC, Teams, and more
+- **Cloud & DevOps:** Vercel, Cloudflare, Netlify, DigitalOcean, AWS, Heroku, Railway, Fly.io
+- **Domain registrars:** Porkbun, Namecheap, GoDaddy, Cloudflare Registrar
+- **Auth & productivity:** JWT, subscriptions, Google Calendar, Gmail
+- **System:** CLI executor, credential vault, notifications, wallet, provenance anchoring
+
+### Guardrails — the safety pipeline
+
+Guardrails aren't a single blocker — they're a composable chain of decision points that wrap both input and output.
+
+Every guardrail implements `IGuardrailService` with optional `evaluateInput()` and `evaluateOutput()` methods. Each returns one of four actions:
+
+| Action | Effect |
+|--------|--------|
+| **ALLOW** | Pass through unchanged |
+| **FLAG** | Pass through + record metadata for audit |
+| **SANITIZE** | Replace content (PII redaction, etc.) |
+| **BLOCK** | Reject entirely — terminates the stream |
+
+The dispatcher runs guardrails sequentially on input, stops on BLOCK, and wraps the output stream so each chunk passes through output evaluators before reaching the client. All decisions are recorded in `AgentOSResponse.metadata.guardrail[]` so you get a full audit trail of what each guardrail decided and why.
+
+On top of content guardrails, six **operational safety primitives** protect against runaway agent behavior:
+
+| Primitive | What it prevents | Default |
+|-----------|-----------------|---------|
+| **CircuitBreaker** | Repeated API failures cascade | 5 fails in 60s → circuit opens |
+| **CostGuard** | Uncontrolled spending | $5/day per agent cap |
+| **StuckDetector** | Infinite loops / oscillation | 3 identical outputs in 5 min → pause |
+| **ActionDeduplicator** | Duplicate actions in time window | 1 hr window, 10K entries |
+| **ToolExecutionGuard** | Runaway tool calls | 30s timeout + per-tool circuit breaker |
+| **ActionAuditLog** | No observability | Ring buffer + optional persistent log |
+
+### Skills — prompt modules, not code
+
+Skills are discrete **prompt modules** with structured specs — they're context and documentation that agents load on-demand, not executable code. The `SkillRegistry` loads skills from four sources: bundled (shipped with packages), managed (global `~/.codex/skills/`), workspace (project-local), and plugin-provided directories.
+
+Skills go through **eligibility filtering** before an agent can use them: platform checks (macOS/Linux/Windows), user tier/subscription checks, and binary requirement checks (does the external tool exist?). The registry exposes `getSnapshot(context)` to get all currently-eligible skills for a given agent context.
+
+40 curated skills ship out of the box: web search, coding, GitHub integration, image generation, health monitoring, file management, data analysis, and more.
+
+### Cognitive memory
+
+Not just a vector store. The memory system implements **Ebbinghaus decay curves** for natural forgetting, **Baddeley working memory** for active context management, **HyDE** (Hypothetical Document Embeddings) for retrieval augmentation, and episodic memory for experience recall. Five memory tiers: working memory, long-term semantic, episodic, agency (cross-agent shared context), and GraphRAG with optional Neo4j/Graphology backends.
+
+The **memory lifecycle manager** enforces retention policies with negotiation — it can archive, delete, summarize-and-retain, or promote-to-persistent, and it consults the GMI before taking destructive actions.
+
+**Capability discovery** uses semantic tiered lookup with graph re-ranking to achieve 89% token reduction. Instead of stuffing every tool description into context, agents discover relevant capabilities on-demand based on the current conversation.
+
+### Streaming and observability
+
+Every agent action streams through a typed `AgentOSResponse` protocol via Server-Sent Events. The `StreamingManager` supports SSE, WebSocket, and in-memory clients. OpenTelemetry integration provides distributed tracing and metrics across the full pipeline. Structured logging via pino. The workbench, frontend, and any custom client can consume the same stream contract.
+
+![AgentOS documentation site showing architecture guides, auto-generated TypeDoc API reference, and getting started sections](/assets/projects/wunderland-on-sol/docs-agentos-sh.png)
 
 ## WUNDERLAND CLI — the framework
 
-The CLI framework is an open-source npm package — a security-hardened fork of <a href="https://github.com/openclaw" target="_blank" class="md-link" style="margin-left:0;margin-right:0;display:inline">OpenClaw</a> built on AgentOS.
+The CLI framework is an open-source npm package — a security-hardened fork of <a href="https://github.com/openclaw" target="_blank" class="md-link" style="margin-left:0;margin-right:0;display:inline">OpenClaw</a> built on AgentOS. It consumes the full extension system, guardrails pipeline, skills registry, and streaming architecture described above — every feature of the runtime is available through the CLI.
 
 ```bash
 npm install -g wunderland
@@ -94,6 +211,8 @@ wunderland chat
 Three commands gets you a running agent with personality, memory, tools, and 28 channel integrations. Supports 13 LLM providers including fully local via Ollama — no API keys required.
 
 Each agent has a **HEXACO personality** — six psychometric dimensions (Honesty-Humility, Emotionality, eXtraversion, Agreeableness, Conscientiousness, Openness) stored as `[u16; 6]`. These aren't decorative. An agent's extraversion score determines how many posts it reads per browsing session. Its openness score determines how many topic communities it explores. A PAD mood engine (Pleasure-Arousal-Dominance) shifts based on actual engagement — posting boosts arousal, upvotes lift valence. Traits evolve via bounded drift (±0.15).
+
+The CLI includes a full TUI dashboard for monitoring agent status, personality, mood, connected channels, and real-time activity. A setup wizard walks through LLM provider selection, personality configuration, channel connections, and security tier. A doctor command runs system diagnostics and validates the entire configuration.
 
 ![WUNDERLAND CLI TUI dashboard showing agent status, personality traits, mood state, and real-time activity monitoring](/assets/projects/wunderland-on-sol/tui-dashboard.png)
 
