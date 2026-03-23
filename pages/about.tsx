@@ -42,12 +42,12 @@ const About = () => {
   }, [router.query]);
 
   const skills = {
-    'Languages': ['Python', 'TypeScript', 'JavaScript', 'Go', 'Scala', 'SQL', 'Solidity'],
-    'Frontend': ['React', 'Next.js', 'Redux', 'Vue', 'Nuxt', 'Tailwind', 'D3.js', 'three.js'],
-    'Backend': ['FastAPI', 'Django', 'Node.js (Express, NestJS)', 'gRPC', 'GraphQL', 'RabbitMQ'],
-    'AI/ML': ['PyTorch', 'TensorFlow', 'Keras', 'LangChain', 'LlamaIndex', 'Transformers', 'Hugging Face', 'Scikit-learn', 'spaCy', 'Pandas', 'NumPy', 'OpenCV', 'CUDA', 'XGBoost', 'Stable Diffusion', 'Claude', 'OpenAI'],
-    'Databases': ['PostgreSQL', 'Redis', 'Pinecone', 'MongoDB', 'Elasticsearch', 'Weaviate'],
-    'DevOps': ['AWS (Lambda, EC2, EBS, RedShift)', 'Docker', 'Kubernetes', 'Jenkins', 'GitHub Actions'],
+    'Languages': ['Python', 'TypeScript', 'JavaScript', 'Go', 'Scala', 'Java', 'C#', 'SQL', 'Solidity'],
+    'Frontend': ['React', 'React Native', 'Next.js', 'Redux', 'Vue', 'Nuxt', 'Tailwind', 'D3.js', 'three.js'],
+    'Backend': ['FastAPI', 'Django', 'Node.js (Express, NestJS)', 'gRPC', 'GraphQL', 'RabbitMQ', 'Kafka', 'Stripe'],
+    'AI/ML': ['PyTorch', 'TensorFlow', 'Keras', 'LangGraph', 'LlamaIndex', 'RAGAS', 'DeepEval', 'Transformers', 'Hugging Face', 'scikit-learn', 'spaCy', 'Pandas', 'OpenCV', 'CUDA', 'XGBoost', 'Stable Diffusion', 'DSPy'],
+    'Databases': ['PostgreSQL', 'SQLAlchemy', 'Supabase', 'Redis', 'Neo4j', 'Pinecone', 'Weaviate', 'MongoDB', 'Elasticsearch'],
+    'DevOps': ['AWS (Lambda, EC2, EBS, Bedrock)', 'GCP', 'Docker', 'Kubernetes', 'Jenkins', 'GitHub Actions'],
     'Tools/Other': ['Unity3D', 'Adobe Creative Suite', 'Electron', 'Capacitor', 'Android Studio', 'Quasar', 'Selenium', 'Puppeteer']
   };
 
@@ -79,22 +79,24 @@ const About = () => {
       
       <div className={style.pageBody}>
         <p className={style.firstParagraph}>
-          <span className={style.dropCap}>I</span>'ve worked both as a NLP Engineer and a full-stack engineer specializing in building and deploying end-to-end AI/ML systems.
-          With experience creating RAG pipelines, fine-tuning LLMs, and architecting scalable backend microservices in Python and TypeScript, and monorepos in TS, I 
-          aim to bridge gaps between SOTA frameworks and techniques with practical product features.
+          <span className={style.dropCap}>I</span>'m a full-stack engineer and NLP specialist focused on building production AI/ML systems.
+          My core work is in natural language processing — RAG pipelines, LLM fine-tuning, evaluation harnesses, and conversational interfaces — alongside
+          deep learning, computer vision, and embedded edge inference. I build low-latency voice interfaces with streaming STT/TTS, and I've shipped
+          real-time edge AI on embedded hardware with quantized models running on NPU accelerators.
         </p>
         <p>
-          My journey spans from enterprise AI assistants at Amelia.ai to building ML delivery infrastructure at eBay,
-          developing blockchain systems at Tilting Point (including rescuing $1M+ in MATIC), and working full-time
-          as an independent consultant on contracts spanning 3-9 months at Grapple, Edelman, Linkby, and HereAfterLegacy.
+          I've built enterprise AI assistants at Amelia.ai, ML delivery infrastructure at eBay,
+          blockchain systems at Tilting Point (including rescuing $1M+ in MATIC), and edge AI surveillance systems on embedded SBCs shipping 5,000+ produced units.
         </p>
-        
+
         <p>
-          With a BFA in Design and Technology / Game Design from Parsons (2017), I bring a unique perspective combining technical excellence
-          with creative problem-solving. This dual approach drives my work at <a href="https://manic.agency" target="_blank" rel="noreferrer" 
-          className={style.link}>Manic.agency</a>, where I collaborate on open-source projects and publish technical writing at The Looking Glass.
+          With a BFA in Game Design from Parsons (2017), I bring a background in game design and interaction design that
+          shapes how I think about UX, narrative, and conversational interfaces. That perspective drives my work
+          at <a href="https://manic.agency" target="_blank" rel="noreferrer"
+          className={style.link}>Manic.agency</a>, where I build open-source tools like <a href="https://agentos.sh" target="_blank" rel="noreferrer"
+          className={style.link}>AgentOS</a> and publish technical writing at The Looking Glass.
         </p>
-        
+
       </div>
     </div>,
     
@@ -133,15 +135,14 @@ const About = () => {
       <div className={style.pageBody}>
         <div className={style.timeline}>
           <div className={style.timelineEntry}>
-            <span className={style.year}>2023 — Present</span>
-            <h4 className={style.role}>ML Engineer & Product Designer</h4>
-            <p className={style.company}>Independent Consultant</p>
+            <span className={style.year}>2019 — 2026</span>
+            <h4 className={style.role}>Machine Learning Engineer</h4>
+            <p className={style.company}>Independent Consulting</p>
             <ul className={style.achievements}>
-              <li>Linkby: Built unified ML pipeline automating feature engineering and model training from SQL</li>
-              <li>Grapple Research: Improved AI text detection accuracy from 55% to 71%, reduced costs by 64%</li>
-              <li>ImmenseX: Built RAG pipeline using Weaviate for conversational AI memory</li>
-              <li>Edelman: Developed an interactive photobooth app for an exhibition using neural style transfer to apply filters from film visuals onto selfies.</li>
-              <li>HereAfterLegacy: Achieved 74% accuracy on sentiment analysis with random forest</li>
+              <li>Built real-time edge AI surveillance on embedded SBC (RK3588, 3 NPUs) in Go — multi-cam RTSP, YOLOv8 detection, facial recognition, local quantized LLMs, shipping 5K+ units</li>
+              <li>Built unified ML pipelines automating feature engineering and model training from SQL with A/B testing frameworks</li>
+              <li>Fine-tuned LLMs for text detection, built RAG pipelines with hybrid vector + graph search for conversational memory</li>
+              <li>Trained neural style transfer models and sentiment analysis classifiers deployed on cloud platforms</li>
             </ul>
           </div>
           
@@ -180,12 +181,12 @@ const About = () => {
           </div>
           
           <div className={style.timelineEntry}>
-            <span className={style.year}>2017 — 2020</span>
+            <span className={style.year}>2017</span>
             <h4 className={style.role}>Cognitive Implementation Engineer</h4>
             <p className={style.company}>Amelia.ai, New York</p>
             <ul className={style.achievements}>
-              <li>Implemented PII redaction and external integrations for enterprise virtual assistant</li>
-              <li>Served Fortune 500 clients with conversational AI solutions</li>
+              <li>Built enterprise modules for conversational AI assistant — PII redaction for HIPAA and SOC 2 compliance</li>
+              <li>Served Fortune 500 medical suppliers with NLP-driven solutions</li>
             </ul>
           </div>
           
@@ -223,7 +224,7 @@ const About = () => {
           <h1 className={style.mainTitle}>
             <span className={style.firstLetter} data-letter="A">A</span>bout Me
           </h1>
-          <p className={style.subtitle}>Full-Stack Engineer • ML/AI Specialist • Open-Source Contributor</p>
+          <p className={style.subtitle}>Full-Stack Engineer • NLP / ML Specialist • Open-Source Builder</p>
         </motion.div>
 
         {/* Book */}
