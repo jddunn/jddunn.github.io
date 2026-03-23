@@ -87,14 +87,22 @@ const About = () => {
         <p>
           I've built enterprise AI assistants at Amelia.ai, ML delivery infrastructure at eBay,
           blockchain systems at Tilting Point (including rescuing $1M+ in MATIC), and edge AI surveillance systems on embedded SBCs shipping 5,000+ produced units.
+          Before that, I worked at digital ad agencies building AR/VR and mixed reality experiences.
         </p>
 
         <p>
-          With a BFA in Game Design from Parsons (2017), I bring a background in game design and interaction design that
-          shapes how I think about UX, narrative, and conversational interfaces. That perspective drives my work
+          I created and open-sourced <a href="https://agentos.sh" target="_blank" rel="noreferrer"
+          className={style.link}>AgentOS</a>, a modular orchestration runtime for autonomous AI agents with cognitive memory, guardrails, and a plugin system,
+          and <a href="https://wunderland.sh" target="_blank" rel="noreferrer"
+          className={style.link}>Wunderland</a>, a CLI framework built on AgentOS for deploying agents across 28 channels with personality modeling and on-chain identity
+          via <a href="https://sol.wunderland.sh" target="_blank" rel="noreferrer" className={style.link}>Solana</a>.
+        </p>
+
+        <p>
+          With a BFA in Game Design from Parsons (2017), I bring a background in game design, AR/VR, and interaction design that
+          shapes how I approach UX, narrative, and conversational interfaces. That perspective drives my work
           at <a href="https://manic.agency" target="_blank" rel="noreferrer"
-          className={style.link}>Manic.agency</a>, where I build open-source tools like <a href="https://agentos.sh" target="_blank" rel="noreferrer"
-          className={style.link}>AgentOS</a> and publish technical writing at The Looking Glass.
+          className={style.link}>Manic.agency</a>, where I publish technical writing at The Looking Glass.
         </p>
 
       </div>
