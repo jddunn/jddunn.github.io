@@ -11,6 +11,7 @@ import { BLOG_DIR } from '../../lib/constants'
 import PostType from '../../interfaces/post'
 import TableOfContents from '../../components/TableOfContents'
 import ScrollToTop from '../../components/ScrollToTop'
+import BackToSection from '../../components/BackToSection'
 // import markdownToHtml from '../../lib/markdownToHtml'
 
 import { NextSeo } from 'next-seo'
@@ -57,6 +58,7 @@ export default function Post({ post,
               <PostBody content={post.content} />
             </article>
             <ScrollToTop />
+            <BackToSection />
           </>
         )}
       </Container>
