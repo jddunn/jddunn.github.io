@@ -206,6 +206,81 @@ Every agent action streams through a typed `AgentOSResponse` protocol via Server
 
 ![AgentOS documentation site showing architecture guides, auto-generated TypeDoc API reference, and getting started sections](/assets/projects/wunderland-on-sol/docs-agentos-sh.png)
 
+### Developer-facing APIs
+
+AgentOS exposes two levels of API depending on what you need. The high-level API feels like Vercel's AI SDK — provider-first, minimal config, batteries included:
+
+```typescript
+import { generateText, streamText, agent } from '@framers/agentos';
+
+// One-shot generation — provider auto-resolves the model
+const { text, usage } = await generateText({
+  provider: 'openai',
+  prompt: 'Summarize TCP three-way handshake in 3 bullets.',
+});
+
+// Streaming with tool calling
+for await (const delta of streamText({
+  provider: 'anthropic',
+  prompt: 'Search for quantum computing news',
+  tools: { webSearch },
+  maxSteps: 5,
+}).textStream) {
+  process.stdout.write(delta);
+}
+
+// Stateful agent with personality
+const tutor = agent({
+  provider: 'openai',
+  instructions: 'You are a networking tutor.',
+  personality: { honesty: 0.9, analyticalness: 0.8 },
+});
+const session = tutor.session('tcp-demo');
+const reply = await session.send('Compare TCP and UDP.');
+```
+
+When you need the full runtime — guardrails, memory, extensions, multi-agent orchestration — you use the `AgentOS` class directly. Same streaming contract, but with the full pipeline underneath:
+
+```typescript
+const os = new AgentOS();
+await os.initialize(config);
+
+for await (const chunk of os.processRequest({
+  userId: 'user-1',
+  textInput: 'Explain TCP handshakes',
+})) {
+  if (chunk.type === 'TEXT_DELTA') process.stdout.write(chunk.textDelta);
+}
+```
+
+Both levels share the same provider resolution, cost tracking, and token usage reporting. You start simple and graduate to the full runtime when you need it.
+
+### Emergent capabilities
+
+The newest and most interesting part of AgentOS: agents that autonomously create their own tools at runtime.
+
+The **Emergent Capability Engine** lets agents detect when they're missing a capability and forge a new tool on the fly. An agent invokes a meta-tool called `ForgeToolMetaTool`, which can either compose existing tools into a pipeline or write sandboxed code from scratch. A **SandboxedToolForge** executes the code in a memory/time-bounded environment with an explicit API allowlist. Then an **EmergentJudge** — an LLM-as-judge — validates the tool actually works before it can be used.
+
+New tools progress through a tier system:
+
+| Tier | Scope | Promotion requirement |
+|------|-------|----------------------|
+| **session** | Current conversation only | Auto-created |
+| **agent** | Persists for this agent | Judge approval |
+| **shared** | Available to all agents | Multi-reviewer sign-off |
+
+This means a research agent that discovers it needs a "fact aggregator" can create one on the fly, have it validated, and eventually promote it so other agents in the system can use it too.
+
+### Voice pipeline
+
+Real-time voice I/O with streaming STT/TTS, natural barge-in interruption handling, and adaptive endpoint detection. The `VoicePipelineOrchestrator` manages the full flow over WebSocket — an `AcousticEndpointDetector` handles energy-based silence detection while a `HeuristicEndpointDetector` analyzes speech patterns for natural break points. Two barge-in strategies (hard cut and soft fade) let users interrupt agents mid-response with natural timing.
+
+### Multi-agent orchestration
+
+The **Agency** system lets you spin up agent collectives where multiple GMIs collaborate on a shared goal. An `AgencyRegistry` manages role assignment and seat tracking. An `AgentCommunicationBus` handles agent-to-agent messaging with request/response patterns. An `AgencyMemoryManager` gives all agents in the collective access to shared RAG context.
+
+In practice: a research agent decomposes a goal, a fact-checker verifies claims against external sources, and a publisher formats and posts results — all coordinated through the agency bus, streaming progress in real-time, with cross-agent cost tracking.
+
 ## WUNDERLAND CLI — the framework
 
 The CLI framework is an open-source npm package — a security-hardened fork of <a href="https://github.com/openclaw" target="_blank" class="md-link" style="margin-left:0;margin-right:0;display:inline">OpenClaw</a> built on AgentOS. It consumes the full extension system, guardrails pipeline, skills registry, and streaming architecture described above — every feature of the runtime is available through the CLI.
