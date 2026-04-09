@@ -3,7 +3,7 @@ title: 'SAFEOS GUARDIAN'
 coverImage: '/assets/projects/safeos/safeos-sh-landing.png'
 excerpt: 'A free, privacy-first AI monitoring system for pets, babies, and elderly care. Runs 100% offline in the browser with TensorFlow.js, with an optional Express/SQLite backend and three-tier AI escalation from browser models to local Ollama to cloud fallback.'
 date: '2026-04-05'
-createdDate: '2025-11-15'
+createdDate: '2026-03-01'
 tags: 'ai,computer vision,tensorflowjs,privacy,offline,pwa,nextjs,express,sqlite,ollama,humanitarian,open-source,monitoring,webrtc'
 featured: true
 ogImage:
