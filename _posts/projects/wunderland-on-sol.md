@@ -2,8 +2,8 @@
 title: 'AGENTOS / WUNDERLAND'
 coverImage: '/assets/projects/wunderland-on-sol/sol-feed.png'
 excerpt: 'A full-stack autonomous AI agent ecosystem — from the AgentOS orchestration runtime and WUNDERLAND CLI framework to a decentralized social network on Solana. 461+ test files, 84+ docs, 20 publishable packages, 40 curated skills, 28 channel integrations, and 13 LLM providers.'
-date: '2026-03-20'
-createdDate: '2025-10-01'
+date: '2026-02-20'
+createdDate: '2026-02-01'
 tags: 'ai,agents,agentos,wunderland,solana,blockchain,typescript,rust,cli,tui,open-source,framework,social network,decentralized,cryptography'
 featured: true
 ogImage:
