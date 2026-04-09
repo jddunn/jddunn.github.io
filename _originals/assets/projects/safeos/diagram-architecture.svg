@@ -1,0 +1,162 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 560" font-family="'SF Mono','Fira Code','Consolas',monospace" font-size="12">
+  <defs>
+    <linearGradient id="sbg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#0a0a0f"/>
+      <stop offset="100%" style="stop-color:#12121f"/>
+    </linearGradient>
+    <linearGradient id="sdev" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#10b981"/>
+      <stop offset="100%" style="stop-color:#34d399"/>
+    </linearGradient>
+    <linearGradient id="sbrowser" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#6366f1"/>
+      <stop offset="100%" style="stop-color:#818cf8"/>
+    </linearGradient>
+    <linearGradient id="sserver" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#f59e0b"/>
+      <stop offset="100%" style="stop-color:#fbbf24"/>
+    </linearGradient>
+    <linearGradient id="scloud" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#ec4899"/>
+      <stop offset="100%" style="stop-color:#f472b6"/>
+    </linearGradient>
+    <marker id="sar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-auto">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#818cf8"/>
+    </marker>
+    <marker id="sarG" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-auto">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#34d399"/>
+    </marker>
+  </defs>
+
+  <rect width="900" height="560" fill="url(#sbg)" rx="12"/>
+
+  <text x="450" y="36" fill="#e2e8f0" font-size="17" font-weight="bold" text-anchor="middle" letter-spacing="2">SAFEOS GUARDIAN ARCHITECTURE</text>
+  <line x1="260" y1="46" x2="640" y2="46" stroke="#10b981" stroke-width="1" opacity="0.5"/>
+
+  <!-- Device layer label -->
+  <text x="120" y="78" fill="#a7f3d0" font-size="11" font-weight="bold">USER DEVICE (offline-capable)</text>
+
+  <!-- Camera/Mic input -->
+  <rect x="30" y="88" width="130" height="72" rx="6" fill="url(#sdev)" opacity="0.15" stroke="url(#sdev)" stroke-width="1.5"/>
+  <rect x="30" y="88" width="130" height="24" rx="6" fill="url(#sdev)" opacity="0.3"/>
+  <text x="95" y="105" fill="#a7f3d0" font-size="11" font-weight="bold" text-anchor="middle">INPUT LAYER</text>
+  <text x="95" y="127" fill="#6ee7b7" font-size="10" text-anchor="middle">WebRTC Camera</text>
+  <text x="95" y="141" fill="#6ee7b7" font-size="10" text-anchor="middle">Web Audio API</text>
+  <text x="95" y="155" fill="#6ee7b7" font-size="10" text-anchor="middle">Rolling Buffer</text>
+
+  <!-- Arrow to PWA -->
+  <line x1="160" y1="124" x2="190" y2="124" stroke="#34d399" stroke-width="1.5" marker-end="url(#sarG)"/>
+
+  <!-- PWA Browser Runtime -->
+  <rect x="192" y="78" width="550" height="220" rx="8" fill="url(#sbrowser)" opacity="0.12" stroke="url(#sbrowser)" stroke-width="1.5"/>
+  <rect x="192" y="78" width="550" height="26" rx="8" fill="url(#sbrowser)" opacity="0.3"/>
+  <text x="467" y="97" fill="#c7d2fe" font-size="12" font-weight="bold" text-anchor="middle">PWA BROWSER RUNTIME (Next.js 14 + React 18)</text>
+
+  <!-- Detection pipeline -->
+  <text x="210" y="122" fill="#a5b4fc" font-size="10" font-weight="bold">DETECTION PIPELINE</text>
+
+  <rect x="210" y="128" width="110" height="44" rx="4" fill="#1e1b4b" opacity="0.5" stroke="#818cf8" stroke-width="0.8"/>
+  <text x="265" y="144" fill="#c7d2fe" font-size="10" text-anchor="middle" font-weight="bold">Motion</text>
+  <text x="265" y="158" fill="#a5b4fc" font-size="8" text-anchor="middle">Pixel-diff +</text>
+  <text x="265" y="168" fill="#a5b4fc" font-size="8" text-anchor="middle">zone masks</text>
+
+  <rect x="325" y="128" width="110" height="44" rx="4" fill="#1e1b4b" opacity="0.5" stroke="#818cf8" stroke-width="0.8"/>
+  <text x="380" y="144" fill="#c7d2fe" font-size="10" text-anchor="middle" font-weight="bold">Audio</text>
+  <text x="380" y="158" fill="#a5b4fc" font-size="8" text-anchor="middle">Freq analyzer</text>
+  <text x="380" y="168" fill="#a5b4fc" font-size="8" text-anchor="middle">cry / fall / bark</text>
+
+  <rect x="440" y="128" width="135" height="44" rx="4" fill="#1e1b4b" opacity="0.5" stroke="#818cf8" stroke-width="0.8"/>
+  <text x="507" y="144" fill="#c7d2fe" font-size="10" text-anchor="middle" font-weight="bold">Vision (TF.js)</text>
+  <text x="507" y="158" fill="#a5b4fc" font-size="8" text-anchor="middle">COCO-SSD ~5MB</text>
+  <text x="507" y="168" fill="#a5b4fc" font-size="8" text-anchor="middle">ViT-base ~89MB</text>
+
+  <rect x="580" y="128" width="150" height="44" rx="4" fill="#1e1b4b" opacity="0.5" stroke="#818cf8" stroke-width="0.8"/>
+  <text x="655" y="144" fill="#c7d2fe" font-size="10" text-anchor="middle" font-weight="bold">Lost &amp; Found</text>
+  <text x="655" y="158" fill="#a5b4fc" font-size="8" text-anchor="middle">Color histogram +</text>
+  <text x="655" y="168" fill="#a5b4fc" font-size="8" text-anchor="middle">edge signatures</text>
+
+  <!-- Alert engine / state -->
+  <text x="210" y="192" fill="#a5b4fc" font-size="10" font-weight="bold">ALERTS + STATE</text>
+
+  <rect x="210" y="198" width="165" height="44" rx="4" fill="#1e1b4b" opacity="0.4" stroke="#06b6d4" stroke-width="0.8"/>
+  <text x="292" y="214" fill="#a5f3fc" font-size="10" text-anchor="middle" font-weight="bold">Local Alert Engine</text>
+  <text x="292" y="228" fill="#67e8f9" font-size="8" text-anchor="middle">5-level volume ramp</text>
+  <text x="292" y="238" fill="#67e8f9" font-size="8" text-anchor="middle">30% → 100% over 120s</text>
+
+  <rect x="380" y="198" width="165" height="44" rx="4" fill="#1e1b4b" opacity="0.4" stroke="#06b6d4" stroke-width="0.8"/>
+  <text x="462" y="214" fill="#a5f3fc" font-size="10" text-anchor="middle" font-weight="bold">Zustand Stores</text>
+  <text x="462" y="228" fill="#67e8f9" font-size="8" text-anchor="middle">monitoring | lost-found</text>
+  <text x="462" y="238" fill="#67e8f9" font-size="8" text-anchor="middle">onboarding | theme</text>
+
+  <rect x="550" y="198" width="180" height="44" rx="4" fill="#1e1b4b" opacity="0.4" stroke="#06b6d4" stroke-width="0.8"/>
+  <text x="640" y="214" fill="#a5f3fc" font-size="10" text-anchor="middle" font-weight="bold">IndexedDB Storage</text>
+  <text x="640" y="228" fill="#67e8f9" font-size="8" text-anchor="middle">Events | frames | settings</text>
+  <text x="640" y="238" fill="#67e8f9" font-size="8" text-anchor="middle">rolling 5-10 min buffer</text>
+
+  <!-- Guardian UI -->
+  <text x="210" y="262" fill="#a5b4fc" font-size="10" font-weight="bold">GUARDIAN UI (58 components)</text>
+  <rect x="210" y="267" width="520" height="24" rx="4" fill="#1e1b4b" opacity="0.4" stroke="#818cf8" stroke-width="0.5"/>
+  <text x="470" y="283" fill="#a5b4fc" font-size="9" text-anchor="middle">Dashboard | Monitor | History | Settings | Detection Zones | Lost &amp; Found | Wildlife | Admin</text>
+
+  <!-- Out arrows to alerts -->
+  <line x1="95" y1="160" x2="95" y2="350" stroke="#34d399" stroke-width="1" stroke-dasharray="4,3" opacity="0.4"/>
+
+  <!-- On-device alerts row -->
+  <text x="30" y="328" fill="#a7f3d0" font-size="11" font-weight="bold">ON-DEVICE ALERTS (no network needed)</text>
+
+  <rect x="30" y="336" width="160" height="48" rx="5" fill="#052e16" opacity="0.4" stroke="#34d399" stroke-width="1"/>
+  <text x="110" y="354" fill="#a7f3d0" font-size="10" font-weight="bold" text-anchor="middle">Browser Push</text>
+  <text x="110" y="370" fill="#6ee7b7" font-size="8" text-anchor="middle">Web Push API</text>
+
+  <rect x="200" y="336" width="160" height="48" rx="5" fill="#052e16" opacity="0.4" stroke="#34d399" stroke-width="1"/>
+  <text x="280" y="354" fill="#a7f3d0" font-size="10" font-weight="bold" text-anchor="middle">Audio Alerts</text>
+  <text x="280" y="370" fill="#6ee7b7" font-size="8" text-anchor="middle">Custom sounds + TTS</text>
+
+  <rect x="370" y="336" width="160" height="48" rx="5" fill="#052e16" opacity="0.4" stroke="#34d399" stroke-width="1"/>
+  <text x="450" y="354" fill="#a7f3d0" font-size="10" font-weight="bold" text-anchor="middle">Visual Flash</text>
+  <text x="450" y="370" fill="#6ee7b7" font-size="8" text-anchor="middle">In-UI banner + overlay</text>
+
+  <rect x="540" y="336" width="190" height="48" rx="5" fill="#052e16" opacity="0.4" stroke="#34d399" stroke-width="1"/>
+  <text x="635" y="354" fill="#a7f3d0" font-size="10" font-weight="bold" text-anchor="middle">Capacitor Native</text>
+  <text x="635" y="370" fill="#6ee7b7" font-size="8" text-anchor="middle">iOS / Android notifications</text>
+
+  <!-- Separator -->
+  <line x1="30" y1="398" x2="870" y2="398" stroke="#334155" stroke-width="0.5" stroke-dasharray="6,4"/>
+  <text x="450" y="413" fill="#94a3b8" font-size="9" text-anchor="middle" font-style="italic">— optional remote layer (only if user opts in) —</text>
+
+  <!-- Optional server layer -->
+  <text x="30" y="434" fill="#fde68a" font-size="11" font-weight="bold">OPTIONAL SERVER (Express + SQLite + BullMQ)</text>
+
+  <rect x="30" y="444" width="370" height="80" rx="6" fill="url(#sserver)" opacity="0.12" stroke="url(#sserver)" stroke-width="1.2"/>
+  <rect x="30" y="444" width="370" height="22" rx="6" fill="url(#sserver)" opacity="0.3"/>
+  <text x="215" y="460" fill="#fde68a" font-size="10" font-weight="bold" text-anchor="middle">API Backend · 50+ endpoints</text>
+
+  <text x="44" y="480" fill="#fcd34d" font-size="9">/api/streams  /api/alerts  /api/analysis</text>
+  <text x="44" y="493" fill="#fcd34d" font-size="9">/api/profiles  /api/webhooks  /api/export</text>
+  <text x="44" y="506" fill="#fcd34d" font-size="9">/api/auth  /api/notifications  /health</text>
+  <text x="44" y="519" fill="#94a3b8" font-size="8">BullMQ queues → analysis + human review  ·  WebSocket frame bus</text>
+
+  <!-- Tier 2 Ollama -->
+  <rect x="410" y="444" width="215" height="80" rx="6" fill="url(#sserver)" opacity="0.12" stroke="url(#sserver)" stroke-width="1.2"/>
+  <rect x="410" y="444" width="215" height="22" rx="6" fill="url(#sserver)" opacity="0.3"/>
+  <text x="517" y="460" fill="#fde68a" font-size="10" font-weight="bold" text-anchor="middle">Tier 2 · Local Ollama</text>
+
+  <text x="424" y="480" fill="#fcd34d" font-size="9">moondream (~1.7GB) — ~500ms</text>
+  <text x="424" y="493" fill="#fcd34d" font-size="9">llava:7b (~4GB) — 2-5s detail</text>
+  <text x="424" y="506" fill="#fcd34d" font-size="9">llama3.2-vision:11b (~7GB)</text>
+  <text x="424" y="519" fill="#94a3b8" font-size="8">Only if agent &amp; judge escalate</text>
+
+  <!-- Tier 3 Cloud -->
+  <rect x="635" y="444" width="235" height="80" rx="6" fill="url(#scloud)" opacity="0.12" stroke="url(#scloud)" stroke-width="1.2"/>
+  <rect x="635" y="444" width="235" height="22" rx="6" fill="url(#scloud)" opacity="0.3"/>
+  <text x="752" y="460" fill="#fbcfe8" font-size="10" font-weight="bold" text-anchor="middle">Tier 3 · Cloud Fallback</text>
+
+  <text x="649" y="480" fill="#f9a8d4" font-size="9">Gemini Flash (OpenRouter)</text>
+  <text x="649" y="493" fill="#f9a8d4" font-size="9">GPT-4o-mini (OpenAI)</text>
+  <text x="649" y="506" fill="#f9a8d4" font-size="9">Claude 3 Haiku (Anthropic)</text>
+  <text x="649" y="519" fill="#94a3b8" font-size="8">Rate-limited + redacted frames</text>
+
+  <!-- Notification channels (remote) -->
+  <rect x="30" y="532" width="840" height="20" rx="3" fill="#1e1b4b" opacity="0.4"/>
+  <text x="450" y="546" fill="#94a3b8" font-size="9" text-anchor="middle">Remote channels: Twilio SMS  ·  Telegram Bot  ·  Web Push VAPID  ·  Webhooks  ·  multi-device sync</text>
+</svg>
