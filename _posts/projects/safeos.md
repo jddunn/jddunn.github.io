@@ -16,9 +16,12 @@ ogImage:
 
 <a href="https://frame.dev" style="text-align: center" target="_blank" rel="noopener" class="md-link">frame.dev</a>
 
-A baby monitor shouldn't need a $9.99/month subscription, a cloud account hosted in some opaque region, and a SoC that nobody on a security team has ever audited. The actual job is straightforward: watch the crib, flag the cry, page mom. The recurring revenue model is what keeps that simple thing from being free.
+> "Empathy, evidently, existed only within the human community."
+> — Philip K. Dick, *Do Androids Dream of Electric Sheep?* (1968)
 
-SafeOS Guardian is the alternative I built. MIT-licensed, runs in a browser tab you already have open, escalates to a local Ollama server you already have running, and only hits a cloud API as a last resort if you've explicitly opted in. Part of [Frame's 10% for Humanity initiative](https://safeos.sh).
+A monitor is the substitute relationship. The thing that watches when you're not in the room. Every baby monitor, pet cam, fall sensor, and elder-care system is the same answer to the same question: how do I keep paying attention when I have to look away. Outsourcing care to a piece of hardware is a heavy thing already — the commercial market has spent fifteen years learning it can charge a recurring fee for the relief and never has to deliver more than the bare minimum to keep collecting it.
+
+SafeOS Guardian is the same answer, free. The laptop you already own does the watching. Detection runs in the browser tab. If a local Ollama is installed, frames escalate there. Cloud APIs only if you've explicitly opted in. MIT-licensed, [github.com/framersai/safeos](https://github.com/framersai/safeos), part of [Frame's 10% for Humanity initiative](https://safeos.sh).
 
 ![SafeOS Guardian landing page with supplemental monitoring tool messaging, six use cases for baby, pet, elderly, lost and found, security, and wildlife, and privacy-first open-source positioning](/assets/projects/safeos/safeos-sh-landing.png)
 
@@ -146,7 +149,10 @@ History is stored in IndexedDB for offline-first mode. Events are timestamped, f
 
 ## Privacy: the part most monitors get wrong on purpose
 
-Frames never leave the device unless you explicitly opt in, and even then, only with the minimum necessary data:
+> "If you have nothing to hide, you have nothing to fear."
+> — variously attributed, always wrong
+
+You have a body, a child, a routine, an apartment. Someone hostile with a feed of all of that can do real harm. The monitor that watches your kid is also the monitor that knows when nobody's home. Frames never leave the device unless you explicitly opt in, and even then, only with the minimum necessary data:
 
 1. **Local-first.** Tier 1 inference runs entirely in the browser. Zero network calls.
 2. **Rolling buffer.** Only 5–10 minutes of frames are ever in memory. Old frames discarded.
