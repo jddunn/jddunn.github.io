@@ -1,7 +1,7 @@
 ---
 title: 'tenets'
 coverImage: '/assets/projects/tenets/tenets_dark_icon.png'
-excerpt: 'A local MCP server using NLP and semantic understanding with embeddings and similarity to automatically aggregate context from any folder / repo to feed into a prompt.'
+excerpt: 'A local MCP server that uses NLP, embeddings, and similarity to auto-aggregate context from any folder or repo into your prompts. Free, open source.'
 date: '2025-12-11'
 createdDate: '2025-09-16'
 tags: 'python,llms,ai,dev-tools,mcp'
@@ -9,15 +9,15 @@ ogImage:
   url: '/assets/projects/tenets/tenets_dark_icon.png'
 ---
 
-<a href="https://github.com/jddunn/tenets" style="text-align: center" target="_blank" class="md-link">GitHub</a>
+<a href="https://github.com/jddunn/tenets" style="text-align: center" target="_blank" rel="noopener" class="md-link">GitHub</a>
 
-<a href="https://pypi.org/project/tenets/" style="text-align: center" target="_blank" class="md-link">PyPi</a>
+<a href="https://pypi.org/project/tenets/" style="text-align: center" target="_blank" rel="noopener" class="md-link">PyPi</a>
 
-<a href="https://tenets.dev" style="text-align: center" target="_blank" class="md-link">Website / docs link</a>
+<a href="https://tenets.dev" style="text-align: center" target="_blank" rel="noopener" class="md-link">Website / docs link</a>
 
-<a href="https://marketplace.visualstudio.com/items?itemName=ManicAgency.tenets-mcp-server" style="text-align: center" target="_blank" class="md-link">VS Code Extension</a>
+<a href="https://marketplace.visualstudio.com/items?itemName=ManicAgency.tenets-mcp-server" style="text-align: center" target="_blank" rel="noopener" class="md-link">VS Code Extension</a>
 
-# Building tenets: Intelligent Context Aggregation for AI Pair Programming
+## Building tenets: intelligent context aggregation for AI pair programming
 
 ## Uncanny AI coding assistants
 
@@ -55,7 +55,7 @@ And we're not even going to think about the costs of additional LLM calls when s
 
 ## MCP Servers: The Promise vs My Reality
 
-Model Context Protocol (MCP) is Anthropic's open standard for connecting AI assistants to external tools and data sources. When it first was out I was a bit skeptical myself, considering we already had RAG and coding assistants like Claude Code and Codex were able to read and interact with files, search the web, etc.
+[Model Context Protocol (MCP)](https://modelcontextprotocol.io) is Anthropic's open standard for connecting AI assistants to external tools and data sources. (For a much bigger MCP-shaped runtime, see the [AgentOS / Wunderland post](/posts/projects/wunderland-on-sol) — same protocol family, different scope.) When it first was out I was a bit skeptical myself, considering we already had RAG and coding assistants like Claude Code and Codex were able to read and interact with files, search the web, etc.
 
 I've installed several MCP servers, context7, filesystem servers, etc. and most of the time, we forget they're even there. AI assistants often find and invoke direct CLI or programmatic calls, which I think is a more of a symptom of incomprehensive prompting and chain of thought templating than an issue with the protocol itself.
 
@@ -183,7 +183,7 @@ The MCP server exposes these tools to AI assistants:
 
 ---
 
-## What is
+## What it actually is
 
 **tenets** uses deterministic algorithms (regex, BM25) with optional deep learning embeddings for semantic understanding, and extractive summarization and factors high-level metadata (how many times a function is referenced, how complex a function may be, imports / dependencies) and other metrics for heuristics in its rankings.
 
@@ -452,7 +452,7 @@ Large files with dozens of imports waste tokens. We intelligently condense:
 
 ## Session Management
 
-Sessions maintain context across multiple interactions, with pinned files guaranteed inclusion. Here's the core concept i9n code:
+Sessions maintain context across multiple interactions, with pinned files guaranteed inclusion. Here's the core concept in code:
 
 ```python
 class SessionContext:
