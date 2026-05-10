@@ -16,42 +16,29 @@ ogImage:
 
 <a href="https://frame.dev" style="text-align: center" target="_blank" rel="noopener" class="md-link">frame.dev</a>
 
-> "Empathy, evidently, existed only within the human community."
-> — Philip K. Dick, *Do Androids Dream of Electric Sheep?* (1968)
-
-A monitor is the substitute relationship. The thing that watches when you're not in the room. Every baby monitor, pet cam, fall sensor, and elder-care system is the same answer to the same question: how do I keep paying attention when I have to look away. Outsourcing care to a piece of hardware is a heavy thing already — the commercial market has spent fifteen years learning it can charge a recurring fee for the relief and never has to deliver more than the bare minimum to keep collecting it.
-
-SafeOS Guardian is the same answer, free. The laptop you already own does the watching. Detection runs in the browser tab. If a local Ollama is installed, frames escalate there. Cloud APIs only if you've explicitly opted in. MIT-licensed, [github.com/framersai/safeos](https://github.com/framersai/safeos), part of [Frame's 10% for Humanity initiative](https://safeos.sh).
+SafeOS Guardian is a free, MIT-licensed monitoring system for pets, babies, and elderly care. The detection pipeline runs in the browser via TensorFlow.js. If a local Ollama server is available, frames escalate to it. Cloud APIs are used only as a last-resort fallback, and only if the user has explicitly opted in. Source: [github.com/framersai/safeos](https://github.com/framersai/safeos). Part of [Frame's 10% for Humanity initiative](https://safeos.sh).
 
 ![SafeOS Guardian landing page with supplemental monitoring tool messaging, six use cases for baby, pet, elderly, lost and found, security, and wildlife, and privacy-first open-source positioning](/assets/projects/safeos/safeos-sh-landing.png)
 
-## What it actually does, in one paragraph
+## What it does
 
-You open `safeos.sh`, grant camera and microphone permission, and the page is now a baby monitor — or a pet cam, or a fall-detector for an elderly parent, or a lost-and-found scanner that watches for a specific dog by visual fingerprint. Inference runs in the browser via TensorFlow.js. When the local model thinks something interesting happened, the frame escalates — first to a local Ollama vision model on your LAN if you have one, then to a cloud LLM only if you've enabled it. Alerts ramp from quiet to loud over two minutes until you acknowledge them. Everything is in a [single open-source repo](https://github.com/framersai/safeos).
+Open `safeos.sh`, grant camera and microphone permission, and the page becomes a monitor — baby, pet, fall detector, or a lost-and-found scanner that watches for a specific subject by visual fingerprint. Inference runs in the browser via TensorFlow.js. When the local model crosses a concern threshold, the frame escalates: first to a local Ollama vision model on the LAN, then to a cloud LLM only if the user has enabled it. Alerts ramp from quiet to loud over a 120-second window until acknowledged. Everything is in a [single open-source repo](https://github.com/framersai/safeos).
 
-## Why I built this instead of buying a Nest Cam
+## Three-tier escalation
 
-Commercial baby monitors and pet cams have a structural conflict of interest. The hardware is sold near cost. The recurring revenue is the cloud subscription. So the cloud path becomes the *only* path — even when local inference would be faster, cheaper, and more private. The frame is uploaded, transcoded, fed through a model in some other country, and the alert comes back over a polled HTTPS connection that fails when your wifi flakes. People who can't afford the subscription get nothing.
-
-The math doesn't work that way anymore. A 45MB COCO-SSD model runs on a phone GPU in around 50 milliseconds. A `~1.7GB` moondream model runs on a laptop CPU. None of this needs the cloud for the easy 99% of frames. The only reason to design a system that makes the cloud mandatory is so you can charge for it.
-
-## Three tiers, and why most frames never leave the browser
-
-This is the core architectural call: route every frame through the cheapest possible tier first, only escalate when the cheap tier is uncertain. Most frames are boring — empty room, sleeping baby, still pet — so spending cloud compute on them is wasteful and slow.
+Frames route through the cheapest possible tier first; the system only escalates when the cheap tier is uncertain. Most frames are boring (empty room, sleeping subject, no motion), so cloud spend stays effectively zero for the default case.
 
 ![Three-tier AI escalation diagram showing camera frames flowing through Tier 1 browser models (COCO-SSD, ViT-base, motion, audio), escalating on concern detection to Tier 2 local Ollama (moondream, llava, llama-vision), and falling back to Tier 3 cloud APIs for ambiguous cases](/assets/projects/safeos/diagram-tiers.svg)
 
-**Tier 1 — Browser, always on, free.** Every frame runs through TensorFlow.js COCO-SSD (~45MB downloaded once, cached forever) for object detection and Transformers.js ViT-base-patch16-224 (~89MB) for scene classification. Motion runs as a pixel-diff with user-defined detection zones. Audio runs through the Web Audio API's `AnalyserNode` with a frequency-band analyzer tuned for cries (300–600Hz, fundamental ~450Hz), pet sounds, or impact transients. None of this hits the network after first load.
+**Tier 1 — Browser.** Every frame runs through TensorFlow.js COCO-SSD (~45MB, cached) for object detection and Transformers.js ViT-base-patch16-224 (~89MB) for scene classification. Motion runs as a pixel-diff with user-defined detection zones. Audio runs through the Web Audio API's `AnalyserNode` with a frequency-band analyzer tuned for cries (300–600Hz, fundamental ~450Hz), pet sounds, or impact transients. No network calls after first load.
 
-**Tier 2 — Local Ollama, optional, user-hosted.** If a Tier 1 signal crosses a concern threshold, the frame forwards to a local Ollama server running [`moondream`](https://ollama.com/library/moondream) (~1.7GB) for fast triage. If triage flags something worth a closer look, [`llava:7b`](https://ollama.com/library/llava) (~4GB) runs scenario-specific analysis with a prompt that depends on whether you picked baby, pet, elderly, or security mode. For complex reasoning, [`llama3.2-vision:11b`](https://ollama.com/library/llama3.2-vision) (~8GB) is supported.
+**Tier 2 — Local Ollama (optional).** If a Tier 1 signal crosses a concern threshold, the frame forwards to a local Ollama server running [`moondream`](https://ollama.com/library/moondream) (~1.7GB) for triage. If triage flags something worth a closer look, [`llava:7b`](https://ollama.com/library/llava) (~4GB) runs scenario-specific analysis with a prompt selected from baby, pet, elderly, or security mode. For complex reasoning, [`llama3.2-vision:11b`](https://ollama.com/library/llama3.2-vision) (~8GB) is supported.
 
-**Tier 3 — Cloud fallback, opt-in.** Only for genuinely ambiguous cases that Tier 2 couldn't resolve, and only if you've turned it on. Three providers are wired through a single client in [`cloud-fallback.ts`](https://github.com/framersai/safeos/blob/master/src/lib/analysis/cloud-fallback.ts): `google/gemini-flash-1.5` via OpenRouter, `gpt-4o-mini` via OpenAI, and `claude-3-haiku-20240307` via Anthropic. (The Anthropic model is the older Haiku — there's a follow-up to bump that, but the cloud path is rare enough by design that the model choice matters less than you'd think.) Frames are redacted before transit and rate-limited aggressively.
+**Tier 3 — Cloud fallback (opt-in).** Used only for ambiguous cases that Tier 2 cannot resolve, and only if cloud fallback has been enabled. Three providers wire through a single client in [`cloud-fallback.ts`](https://github.com/framersai/safeos/blob/master/src/lib/analysis/cloud-fallback.ts): `google/gemini-flash-1.5` via OpenRouter, `gpt-4o-mini` via OpenAI, and `claude-3-haiku-20240307` via Anthropic. Frames are redacted before transit and rate-limited.
 
 ![SafeOS AI Models settings page showing processing mode selection between local instant, AI queue, and hybrid modes, Ollama server connection status, and recommended local vision models with install commands](/assets/projects/safeos/safeos-models.png)
 
-## How motion, audio, and vision actually run
-
-The browser runtime is where most of the work happens. Users never see it — they just see alerts.
+## Detection pipeline
 
 ### Motion with zones
 
@@ -67,17 +54,17 @@ The audio pipeline does FFT in real time via the Web Audio API. Cry detection is
 
 Two models run in sequence. COCO-SSD handles fast object detection — person, dog, cat, chair, couch. If the scenario needs scene-level understanding ("is the baby still in the crib, or did they climb out?"), Transformers.js ViT runs classification. Both models pull from their CDNs once and cache in the service worker for offline use.
 
-### Lost & Found, or: visual fingerprinting that isn't face recognition
+### Lost & Found
 
-You upload photos of a missing pet or person. The system extracts a visual fingerprint — color histogram, dominant colors, edge signatures, size ratios. The camera then continuously watches for matches. On a hit, you get an alert with the matched frame.
+The user uploads photos of a missing pet or person. The system extracts a visual fingerprint — color histogram, dominant colors, edge signatures, size ratios. The camera then continuously watches for matches. On a hit, the user gets an alert with the matched frame.
 
-It's not face recognition. It's a lightweight visual matcher that works for pets (where face ID is unreliable) as well as people. The honest limitation: it works well for visually distinct subjects (a brown-and-white dog) and middling for uniform ones (any short-haired tabby).
+It's not face recognition. It's a lightweight visual matcher that works for pets (where face ID is unreliable) as well as people. Limitation: works well for visually distinct subjects, less well for uniform ones.
 
 ![SafeOS Lost and Found page with step-by-step workflow for uploading photos of a lost pet or person, visual fingerprinting, and continuous camera monitoring for matches](/assets/projects/safeos/safeos-lost-found.png)
 
-## The alert pipeline, or: how to wake someone up without burning out their attention
+## Alert pipeline
 
-Detection is half the problem. Getting the right person's attention at the right level is the other half. SafeOS uses a four-level severity system — `info`, `warning`, `critical`, `emergency` — with a volume ramp from quiet to loud over a 120-second window until acknowledged.
+SafeOS uses a four-level severity system — `info`, `warning`, `critical`, `emergency` — with a volume ramp from quiet to loud over a 120-second window until acknowledged.
 
 ![Alert escalation pipeline diagram showing five volume levels from 30% to 100% across a 120-second timeline, trigger sources (motion, audio, AI detection, lost and found, webhooks), severity classifier with per-severity cooldowns, and six notification delivery channels](/assets/projects/safeos/diagram-alert-pipeline.svg)
 
@@ -87,9 +74,9 @@ The Monitor view surfaces this live — motion percentage, audio levels, pixel d
 
 ![SafeOS Live Monitor page showing real-time detection metrics (motion, audio, pixel threshold, stream state, mode), five monitoring presets (infant, pet, silent, night, max, ultimate), five detection toggles with AI tags, sensitivity sliders for motion audio and pixel, five audio frequency profiles, quiet hours configuration, and timing and alert controls with per-severity cooldowns](/assets/projects/safeos/safeos-monitor.png)
 
-## What's behind the API
+## Backend
 
-The optional Express backend is around 12,400 lines of TypeScript across 45 files. Clean domain boundary: API routes handle transport, library services handle logic, queues handle background work. It uses [`@framers/sql-storage-adapter`](https://github.com/framersai/agentos) (the same SQLite layer used by [AgentOS](/posts/projects/wunderland-on-sol)) for persistence, BullMQ for frame analysis and human review jobs, and Socket.io for real-time WebSocket delivery.
+The optional Express backend is ~12,400 lines of TypeScript across 45 files. Clean domain boundary: API routes handle transport, library services handle logic, queues handle background work. It uses [`@framers/sql-storage-adapter`](https://github.com/framersai/agentos) (the same SQLite layer used by [AgentOS](/posts/projects/wunderland-on-sol)) for persistence, BullMQ for frame analysis and human review jobs, and Socket.io for real-time WebSocket delivery.
 
 ```
 src/
@@ -135,9 +122,9 @@ src/
 
 Every frame is written to a rolling 5–10 minute buffer and then discarded. Nothing is stored long-term unless you explicitly export it. The GDPR export endpoint builds a complete user data package on demand, can compress it, mark frames as exported for incremental sync, and hand back a signed bundle.
 
-## Settings: the part that decides whether you trust this
+## Settings
 
-The settings surface is broad on purpose. The trust model depends on you being able to see and change everything. General settings, detection tuning, AI model selection, detection zones, notification channels, alert thresholds, escalation timing, privacy controls, appearance, schedule, sounds — all separate pages, all version-controlled in the open repo.
+The settings surface is broad — every detection rule, model choice, threshold, and notification channel is independently configurable. General settings, detection tuning, AI model selection, detection zones, notification channels, alert thresholds, escalation timing, privacy controls, appearance, schedule, sounds — all separate pages, all version-controlled in the open repo.
 
 ![SafeOS Settings page showing the general settings with display name field, theme selection (dark, light, system), and a left nav with sections for detection, AI models, detection zones, notifications, alerts, escalation, privacy, appearance, schedule, and sounds](/assets/projects/safeos/safeos-settings.png)
 
@@ -147,12 +134,9 @@ History is stored in IndexedDB for offline-first mode. Events are timestamped, f
 
 ![SafeOS History page with local timeline viewer, offline bundle export controls, incremental and full frame export toggles, gzip compression option, and empty-state messaging for new users](/assets/projects/safeos/safeos-history.png)
 
-## Privacy: the part most monitors get wrong on purpose
+## Privacy
 
-> "If you have nothing to hide, you have nothing to fear."
-> — variously attributed, always wrong
-
-You have a body, a child, a routine, an apartment. Someone hostile with a feed of all of that can do real harm. The monitor that watches your kid is also the monitor that knows when nobody's home. Frames never leave the device unless you explicitly opt in, and even then, only with the minimum necessary data:
+Frames never leave the device unless the user has explicitly opted in, and even then only with the minimum necessary data:
 
 1. **Local-first.** Tier 1 inference runs entirely in the browser. Zero network calls.
 2. **Rolling buffer.** Only 5–10 minutes of frames are ever in memory. Old frames discarded.
@@ -162,17 +146,13 @@ You have a body, a child, a routine, an apartment. Someone hostile with a feed o
 6. **GDPR export.** One-click full data export and deletion.
 7. **Abuse prevention.** The service monitors for misuse patterns and can restrict access. Documented openly.
 
-## What's still wonky
+## Limitations
 
-Tier 2 escalation requires a user-managed Ollama install. Most users won't have one. So in practice the system runs in Tier 1 + Tier 3 mode for most installs — which is fine, but it means the local-LLM tier is a power-user feature, not a default.
-
-The four-level severity is calibrated against my own thresholds. It probably needs per-scenario tuning that I haven't built yet. An "info" alert for the baby scenario should be much more aggressive than an "info" alert for the pet scenario.
-
-The lost-and-found visual fingerprint is great for visually distinct subjects and middling for uniform ones. A separate path for a small fine-tuned matching model would help, but that's a meaningful step up in complexity.
-
-The Capacitor mobile shells exist but I haven't shipped to either app store. The PWA install path is good enough for most use cases, but a real iOS app would unlock background processing.
-
-The GDPR export is hand-rolled and will need maintenance as schemas evolve. There's no migration story for that yet — the export format is what it is, until I write a v2.
+- Tier 2 escalation requires a user-managed Ollama install. Without it, the system runs Tier 1 + Tier 3 only.
+- The four-level severity system uses a single threshold profile. Per-scenario tuning is not yet implemented.
+- Lost-and-found visual fingerprinting performs well on visually distinct subjects, less well on uniform ones.
+- Capacitor iOS/Android shells exist but are not yet published to either app store. The PWA install path is the supported mobile experience.
+- GDPR export format has no v2 migration path yet.
 
 ## Tech stack
 
