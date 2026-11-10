@@ -100,9 +100,9 @@ const About = () => {
 
         <p>
           With a BFA in Game Design from Parsons (2017), I bring a background in game design, AR/VR, and interaction design that
-          shapes how I approach UX, narrative, and conversational interfaces. That perspective drives my work
-          at <a href="https://manic.agency" target="_blank" rel="noreferrer"
-          className={style.link}>Manic.agency</a>, where I publish technical writing at The Looking Glass.
+          shapes how I approach UX, narrative, and conversational interfaces. I publish technical writing
+          at <a href="https://manic.agency/blog" target="_blank" rel="noreferrer"
+          className={style.link}>The Looking Glass</a>.
         </p>
 
       </div>
@@ -175,17 +175,6 @@ const About = () => {
             </ul>
           </div>
           
-          <div className={style.timelineEntry}>
-            <span className={style.year}>2020 — Present</span>
-            <h4 className={style.role}>Co-Founder</h4>
-            <p className={style.company}>Manic.agency</p>
-            <ul className={style.achievements}>
-              <li>Building open-source tools and creative projects</li>
-              <li>Publishing technical articles and documentation at The Looking Glass</li>
-              <li>Operating the Synthetic Publishing Platform (The Rabbit Hole)</li>
-              <li>Fostering collaboration between artists and developers</li>
-            </ul>
-          </div>
           
           <div className={style.timelineEntry}>
             <span className={style.year}>2018 — 2020</span>
