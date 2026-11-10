@@ -210,7 +210,7 @@ const About = () => {
           
           <div className={style.timelineEntry}>
             <span className={style.year}>2013 — 2017</span>
-            <h4 className={style.role}>Bachelor of Fine Arts in Design and Technology</h4>
+            <h4 className={style.role}>Bachelor of Fine Arts in Game Design</h4>
             <p className={style.company}>Parsons School of Design</p>
             <ul className={style.achievements}>
               <li>5th Place, AT&T National VR and AR Challenge (2017)</li>
