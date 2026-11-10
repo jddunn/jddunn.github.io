@@ -176,7 +176,7 @@ const About = () => {
           </div>
           
           <div className={style.timelineEntry}>
-            <span className={style.year}>2020 — Present</span>
+            <span className={style.year}>2023 — Present</span>
             <h4 className={style.role}>Co-Founder</h4>
             <p className={style.company}>Manic.agency</p>
             <ul className={style.achievements}>
