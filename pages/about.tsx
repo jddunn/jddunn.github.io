@@ -42,12 +42,12 @@ const About = () => {
   }, [router.query]);
 
   const skills = {
-    'Languages': ['Python', 'TypeScript', 'JavaScript', 'Go', 'Scala', 'Java', 'C#', 'SQL', 'Solidity'],
-    'Frontend': ['React', 'React Native', 'Next.js', 'Redux', 'Vue', 'Nuxt', 'Tailwind', 'D3.js', 'three.js'],
+    'Languages': ['Python', 'TypeScript', 'JavaScript', 'Go', 'Scala', 'SQL', 'Bash', 'Java', 'C#', 'Solidity'],
+    'Frontend': ['React', 'Next.js', 'React Native', 'Vite', 'Redux', 'Vue', 'Nuxt', 'Tailwind', 'D3.js', 'three.js'],
     'Backend': ['FastAPI', 'Django', 'Node.js (Express, NestJS)', 'gRPC', 'GraphQL', 'RabbitMQ', 'Kafka', 'Stripe'],
-    'AI/ML': ['PyTorch', 'TensorFlow', 'Keras', 'LangGraph', 'LlamaIndex', 'RAGAS', 'DeepEval', 'Transformers', 'Hugging Face', 'scikit-learn', 'spaCy', 'Pandas', 'OpenCV', 'CUDA', 'XGBoost', 'Stable Diffusion', 'DSPy'],
-    'Databases': ['PostgreSQL', 'SQLAlchemy', 'Supabase', 'Redis', 'Neo4j', 'Pinecone', 'Weaviate', 'MongoDB', 'Elasticsearch'],
-    'DevOps': ['AWS (Lambda, EC2, EBS, Bedrock)', 'GCP', 'Docker', 'Kubernetes', 'Jenkins', 'GitHub Actions'],
+    'AI/ML': ['LLM agents and tool use (MCP, DSPy)', 'RAG', 'evals', 'fine-tuning', 'vLLM', 'PyTorch', 'Transformers', 'scikit-learn', 'OpenAI', 'Anthropic', 'TensorFlow', 'Keras', 'LangGraph', 'LlamaIndex', 'RAGAS', 'DeepEval', 'Hugging Face', 'spaCy', 'Pandas', 'OpenCV', 'CUDA', 'XGBoost', 'Stable Diffusion'],
+    'Databases': ['PostgreSQL (pgvector)', 'DynamoDB', 'Redis', 'MongoDB', 'Elasticsearch', 'SQLAlchemy', 'Supabase', 'Neo4j', 'Pinecone', 'Weaviate'],
+    'DevOps': ['AWS (Lambda, EC2, EBS, Bedrock)', 'GCP', 'Terraform', 'Docker', 'Kubernetes', 'GitHub Actions', 'CI/CD', 'Jenkins'],
     'Tools/Other': ['Unity3D', 'Adobe Creative Suite', 'Electron', 'Capacitor', 'Android Studio', 'Quasar', 'Selenium', 'Puppeteer']
   };
 
@@ -86,7 +86,7 @@ const About = () => {
         </p>
         <p>
           I've built enterprise AI assistants at Amelia.ai, ML delivery infrastructure at eBay,
-          blockchain systems at Tilting Point (including rescuing $1M+ in MATIC), and edge AI surveillance systems on embedded SBCs shipping 5,000+ produced units.
+          blockchain systems at Tilting Point (including rescuing $1M+ in MATIC), and, as acting tech lead, an edge AI vision product on a Rockchip RK3588 that is live with 50+ users in UK retail.
           Before that, I worked at digital ad agencies building AR/VR and mixed reality experiences.
         </p>
 
@@ -143,14 +143,13 @@ const About = () => {
       <div className={style.pageBody}>
         <div className={style.timeline}>
           <div className={style.timelineEntry}>
-            <span className={style.year}>2019 — 2026</span>
-            <h4 className={style.role}>Machine Learning Engineer</h4>
-            <p className={style.company}>Independent Consulting</p>
+            <span className={style.year}>2023 — Present</span>
+            <h4 className={style.role}>Applied AI Engineer</h4>
+            <p className={style.company}>Independent Consulting (Contract), Los Angeles</p>
             <ul className={style.achievements}>
-              <li>Built real-time edge AI surveillance on embedded SBC (RK3588, 3 NPUs) in Go — multi-cam RTSP, YOLOv8 detection, facial recognition, local quantized LLMs, shipping 5K+ units</li>
+              <li>Acting tech lead on an edge AI vision product: Go daemon on a Rockchip RK3588, multi-cam streams, WebRTC, NPU inference (PyTorch to ONNX to INT8), quantized LLM voice interface, React / TypeScript dashboard; live with 50+ users in UK retail.</li>
               <li>Built unified ML pipelines automating feature engineering and model training from SQL with A/B testing frameworks</li>
               <li>Fine-tuned LLMs for text detection, built RAG pipelines with hybrid vector + graph search for conversational memory</li>
-              <li>Trained neural style transfer models and sentiment analysis classifiers deployed on cloud platforms</li>
             </ul>
           </div>
           
@@ -167,7 +166,7 @@ const About = () => {
           
           <div className={style.timelineEntry}>
             <span className={style.year}>2020 — 2021</span>
-            <h4 className={style.role}>Software Engineer 2 (Full-Stack)</h4>
+            <h4 className={style.role}>Software Engineer 2</h4>
             <p className={style.company}>eBay, New York</p>
             <ul className={style.achievements}>
               <li>Built REST APIs in Scala/Spring-Boot for real-time ad rendering (&lt;1s latency)</li>
@@ -185,6 +184,17 @@ const About = () => {
               <li>Publishing technical articles and documentation at The Looking Glass</li>
               <li>Operating the Synthetic Publishing Platform (The Rabbit Hole)</li>
               <li>Fostering collaboration between artists and developers</li>
+            </ul>
+          </div>
+          
+          <div className={style.timelineEntry}>
+            <span className={style.year}>2018 — 2020</span>
+            <h4 className={style.role}>Machine Learning Engineer</h4>
+            <p className={style.company}>Independent Consulting (Contract), New York</p>
+            <ul className={style.achievements}>
+              <li>Reached 77% sentiment analysis accuracy with a random forest trained on 10K texts; built the MVP with scrapers for TV scripts, recreated TV characters as digital personas, and deployed it on Google Cloud Platform.</li>
+              <li>Trained neural style transfer models for an exhibit that applied film-inspired filters to selfies through a REST API.</li>
+              <li>Delivered user research, animated Figma wireframes and a working MVP demo.</li>
             </ul>
           </div>
           

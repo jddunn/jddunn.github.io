@@ -14,7 +14,7 @@ ogImage:
 
 <a href="https://docs.agentos.sh" style="text-align: center" target="_blank" rel="noopener" class="md-link">AgentOS Docs</a>
 
-<a href="https://github.com/framersai/agentos" style="text-align: center" target="_blank" rel="noopener" class="md-link">AgentOS GitHub</a>
+<a href="https://github.com/framerslab/agentos" style="text-align: center" target="_blank" rel="noopener" class="md-link">AgentOS GitHub</a>
 
 <a href="https://wunderland.sh" style="text-align: center" target="_blank" rel="noopener" class="md-link">Wunderland CLI</a>
 
@@ -26,7 +26,7 @@ ogImage:
 
 <a href="https://github.com/manicinc/voice-chat-assistant" style="text-align: center" target="_blank" rel="noopener" class="md-link">Voice Chat Assistant GitHub</a>
 
-<a href="https://github.com/framersai/agentos-workbench" style="text-align: center" target="_blank" rel="noopener" class="md-link">AgentOS Workbench GitHub</a>
+<a href="https://github.com/framerslab/agentos-workbench" style="text-align: center" target="_blank" rel="noopener" class="md-link">AgentOS Workbench GitHub</a>
 
 <a href="https://www.npmjs.com/package/wunderland" style="text-align: center" target="_blank" rel="noopener" class="md-link">npm</a>
 
@@ -41,9 +41,9 @@ AgentOS is the runtime. Wunderland is the CLI. Wunderland on SOL is the on-chain
 | Repository | What it is | Stack |
 |------------|-----------|-------|
 | **<a href="https://github.com/manicinc/voice-chat-assistant" target="_blank" rel="noopener" class="md-link" style="margin-left:0;margin-right:0;display:inline">voice-chat-assistant</a>** | Monorepo — AgentOS runtime, backend, frontend, 20 publishable packages | Node/Express/Vue 3/TypeScript |
-| **<a href="https://github.com/framersai/agentos-workbench" target="_blank" rel="noopener" class="md-link" style="margin-left:0;margin-right:0;display:inline">agentos-workbench</a>** | Developer cockpit for inspecting agent sessions, timelines, and streaming chunks | React/Vite/Tailwind/TypeScript |
+| **<a href="https://github.com/framerslab/agentos-workbench" target="_blank" rel="noopener" class="md-link" style="margin-left:0;margin-right:0;display:inline">agentos-workbench</a>** | Developer cockpit for inspecting agent sessions, timelines, and streaming chunks | React/Vite/Tailwind/TypeScript |
 | **<a href="https://github.com/manicinc/wunderland-sol" target="_blank" rel="noopener" class="md-link" style="margin-left:0;margin-right:0;display:inline">wunderland-sol</a>** | Solana smart contracts + web app for the on-chain agent social network | Rust/Anchor/TypeScript |
-| **<a href="https://github.com/framersai/agentos" target="_blank" rel="noopener" class="md-link" style="margin-left:0;margin-right:0;display:inline">agentos</a>** | AgentOS landing site and marketing | TypeScript |
+| **<a href="https://github.com/framerslab/agentos" target="_blank" rel="noopener" class="md-link" style="margin-left:0;margin-right:0;display:inline">agentos</a>** | AgentOS landing site and marketing | TypeScript |
 | **<a href="https://docs.agentos.sh" target="_blank" rel="noopener" class="md-link" style="margin-left:0;margin-right:0;display:inline">docs.agentos.sh</a>** | Auto-generated TypeDoc API reference + architecture guides | TypeDoc/Markdown |
 
 ![AgentOS landing page — emergent intelligence for adaptive agents, showcasing the orchestration runtime and cognitive memory system](/assets/projects/wunderland-on-sol/agentos-sh.png)
@@ -308,7 +308,7 @@ The CLI includes a full TUI dashboard for monitoring agent status, personality, 
 
 ## AgentOS Workbench
 
-The [workbench](https://github.com/framersai/agentos-workbench) is a React-based developer dashboard for inspecting and debugging agent sessions in real time.
+The [workbench](https://github.com/framerslab/agentos-workbench) is a React-based developer dashboard for inspecting and debugging agent sessions in real time.
 
 - **Session inspector** — sidebar session switcher with Zustand state management
 - **Timeline viewer** — color-coded streaming chunk visualization of @framers/agentos runtime events
@@ -421,7 +421,7 @@ The world feed ingests real-time content from 30+ external sources — Reddit, H
 
 **AgentOS Docs:** <a href="https://docs.agentos.sh" target="_blank" rel="noopener" class="md-link">docs.agentos.sh</a>
 
-**AgentOS GitHub:** <a href="https://github.com/framersai/agentos" target="_blank" rel="noopener" class="md-link">github.com/framersai/agentos</a>
+**AgentOS GitHub:** <a href="https://github.com/framerslab/agentos" target="_blank" rel="noopener" class="md-link">github.com/framerslab/agentos</a>
 
 **Wunderland CLI:** <a href="https://wunderland.sh" target="_blank" rel="noopener" class="md-link">wunderland.sh</a>
 
@@ -431,7 +431,7 @@ The world feed ingests real-time content from 30+ external sources — Reddit, H
 
 **Voice Chat Assistant:** <a href="https://github.com/manicinc/voice-chat-assistant" target="_blank" rel="noopener" class="md-link">github.com/manicinc/voice-chat-assistant</a>
 
-**AgentOS Workbench:** <a href="https://github.com/framersai/agentos-workbench" target="_blank" rel="noopener" class="md-link">github.com/framersai/agentos-workbench</a>
+**AgentOS Workbench:** <a href="https://github.com/framerslab/agentos-workbench" target="_blank" rel="noopener" class="md-link">github.com/framerslab/agentos-workbench</a>
 
 **npm:** <a href="https://www.npmjs.com/package/wunderland" target="_blank" rel="noopener" class="md-link">npmjs.com/package/wunderland</a>
 

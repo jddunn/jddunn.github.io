@@ -12,17 +12,17 @@ ogImage:
 
 <a href="https://safeos.sh" style="text-align: center" target="_blank" rel="noopener" class="md-link">safeos.sh</a>
 
-<a href="https://github.com/framersai/safeos" style="text-align: center" target="_blank" rel="noopener" class="md-link">GitHub</a>
+<a href="https://github.com/framerslab/safeos" style="text-align: center" target="_blank" rel="noopener" class="md-link">GitHub</a>
 
 <a href="https://frame.dev" style="text-align: center" target="_blank" rel="noopener" class="md-link">frame.dev</a>
 
-SafeOS Guardian is a free, MIT-licensed monitoring system for pets, babies, and elderly care. The detection pipeline runs in the browser via TensorFlow.js. If a local Ollama server is available, frames escalate to it. Cloud APIs are used only as a last-resort fallback, and only if the user has explicitly opted in. Source: [github.com/framersai/safeos](https://github.com/framersai/safeos). Part of [Frame's 10% for Humanity initiative](https://safeos.sh).
+SafeOS Guardian is a free, MIT-licensed monitoring system for pets, babies, and elderly care. The detection pipeline runs in the browser via TensorFlow.js. If a local Ollama server is available, frames escalate to it. Cloud APIs are used only as a last-resort fallback, and only if the user has explicitly opted in. Source: [github.com/framerslab/safeos](https://github.com/framerslab/safeos). Part of [Frame's 10% for Humanity initiative](https://safeos.sh).
 
 ![SafeOS Guardian landing page with supplemental monitoring tool messaging, six use cases for baby, pet, elderly, lost and found, security, and wildlife, and privacy-first open-source positioning](/assets/projects/safeos/safeos-sh-landing.png)
 
 ## What it does
 
-Open `safeos.sh`, grant camera and microphone permission, and the page becomes a monitor — baby, pet, fall detector, or a lost-and-found scanner that watches for a specific subject by visual fingerprint. Inference runs in the browser via TensorFlow.js. When the local model crosses a concern threshold, the frame escalates: first to a local Ollama vision model on the LAN, then to a cloud LLM only if the user has enabled it. Alerts ramp from quiet to loud over a 120-second window until acknowledged. Everything is in a [single open-source repo](https://github.com/framersai/safeos).
+Open `safeos.sh`, grant camera and microphone permission, and the page becomes a monitor — baby, pet, fall detector, or a lost-and-found scanner that watches for a specific subject by visual fingerprint. Inference runs in the browser via TensorFlow.js. When the local model crosses a concern threshold, the frame escalates: first to a local Ollama vision model on the LAN, then to a cloud LLM only if the user has enabled it. Alerts ramp from quiet to loud over a 120-second window until acknowledged. Everything is in a [single open-source repo](https://github.com/framerslab/safeos).
 
 ## Three-tier escalation
 
@@ -34,7 +34,7 @@ Frames route through the cheapest possible tier first; the system only escalates
 
 **Tier 2 — Local Ollama (optional).** If a Tier 1 signal crosses a concern threshold, the frame forwards to a local Ollama server running [`moondream`](https://ollama.com/library/moondream) (~1.7GB) for triage. If triage flags something worth a closer look, [`llava:7b`](https://ollama.com/library/llava) (~4GB) runs scenario-specific analysis with a prompt selected from baby, pet, elderly, or security mode. For complex reasoning, [`llama3.2-vision:11b`](https://ollama.com/library/llama3.2-vision) (~8GB) is supported.
 
-**Tier 3 — Cloud fallback (opt-in).** Used only for ambiguous cases that Tier 2 cannot resolve, and only if cloud fallback has been enabled. Three providers wire through a single client in [`cloud-fallback.ts`](https://github.com/framersai/safeos/blob/master/src/lib/analysis/cloud-fallback.ts): `google/gemini-flash-1.5` via OpenRouter, `gpt-4o-mini` via OpenAI, and `claude-3-haiku-20240307` via Anthropic. Frames are redacted before transit and rate-limited.
+**Tier 3 — Cloud fallback (opt-in).** Used only for ambiguous cases that Tier 2 cannot resolve, and only if cloud fallback has been enabled. Three providers wire through a single client in [`cloud-fallback.ts`](https://github.com/framerslab/safeos/blob/master/src/lib/analysis/cloud-fallback.ts): `google/gemini-flash-1.5` via OpenRouter, `gpt-4o-mini` via OpenAI, and `claude-3-haiku-20240307` via Anthropic. Frames are redacted before transit and rate-limited.
 
 ![SafeOS AI Models settings page showing processing mode selection between local instant, AI queue, and hybrid modes, Ollama server connection status, and recommended local vision models with install commands](/assets/projects/safeos/safeos-models.png)
 
@@ -76,7 +76,7 @@ The Monitor view surfaces this live — motion percentage, audio levels, pixel d
 
 ## Backend
 
-The optional Express backend is ~12,400 lines of TypeScript across 45 files. Clean domain boundary: API routes handle transport, library services handle logic, queues handle background work. It uses [`@framers/sql-storage-adapter`](https://github.com/framersai/agentos) (the same SQLite layer used by [AgentOS](/posts/projects/wunderland-on-sol)) for persistence, BullMQ for frame analysis and human review jobs, and Socket.io for real-time WebSocket delivery.
+The optional Express backend is ~12,400 lines of TypeScript across 45 files. Clean domain boundary: API routes handle transport, library services handle logic, queues handle background work. It uses [`@framers/sql-storage-adapter`](https://github.com/framerslab/agentos) (the same SQLite layer used by [AgentOS](/posts/projects/wunderland-on-sol)) for persistence, BullMQ for frame analysis and human review jobs, and Socket.io for real-time WebSocket delivery.
 
 ```
 src/
@@ -170,7 +170,7 @@ Frames never leave the device unless the user has explicitly opted in, and even 
 | **Validation** | Zod 3.23 schemas |
 | **DevOps** | Docker 7-stage multi-stage build, pnpm monorepo, Caddy reverse proxy |
 
-The monorepo is around 100 .tsx components in the Next.js frontend (~70k LOC), 45 backend TypeScript files (~12k LOC), 41 test files between Vitest and Playwright, and ten markdown docs anchored by a 462-line [`ARCHITECTURE.md`](https://github.com/framersai/safeos/blob/master/docs/ARCHITECTURE.md) that walks through every layer.
+The monorepo is around 100 .tsx components in the Next.js frontend (~70k LOC), 45 backend TypeScript files (~12k LOC), 41 test files between Vitest and Playwright, and ten markdown docs anchored by a 462-line [`ARCHITECTURE.md`](https://github.com/framerslab/safeos/blob/master/docs/ARCHITECTURE.md) that walks through every layer.
 
 ![SafeOS About page with mission statement, values, 10% for Humanity pledge, tech stack showcase, how-it-works walkthrough, abuse prevention policy, and Frame.dev team context](/assets/projects/safeos/safeos-about.png)
 
@@ -178,6 +178,6 @@ The monorepo is around 100 .tsx components in the Next.js frontend (~70k LOC), 4
 
 **Website:** <a href="https://safeos.sh" target="_blank" rel="noopener" class="md-link">safeos.sh</a>
 
-**GitHub:** <a href="https://github.com/framersai/safeos" target="_blank" rel="noopener" class="md-link">github.com/framersai/safeos</a>
+**GitHub:** <a href="https://github.com/framerslab/safeos" target="_blank" rel="noopener" class="md-link">github.com/framerslab/safeos</a>
 
 **Frame.dev:** <a href="https://frame.dev" target="_blank" rel="noopener" class="md-link">frame.dev</a>
